@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to use the moshcode CLI &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-14T11:58:00Z">
+<meta name="description" content="A practical tour of the moshcode CLI: installing it, driving coding engines, keeping agent sessions alive with the herd, logging in at app.moshcode.sh, and claiming a name on the Pit network.">
+</head>
+<body>
+
+<article>
+
+<h1>How to use the moshcode CLI</h1>
+
+<p><em>2026-08-14, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my notes and from the
+CLI's own help output, then checked against a real install. Commands below were run against
+moshcode 0.56.0.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>What moshcode actually is</h2>
+
+<p>moshcode calls itself &ldquo;a metal wrapper for coding engines.&rdquo; That is the honest
+description. It is not another coding agent competing with the ones you already use &mdash; it
+<em>installs and drives</em> them. opencode, Claude Code, codex, gemini, kimi, qwen, deepseek,
+aider and a few more all sit behind one command surface, so you stop memorising five different
+CLIs with five different flag conventions.</p>
+
+<p>On top of that it adds the things you actually need around an agent: sessions that survive a
+closed terminal, an account you can sync settings to, and a namespace where you can park what you
+build. Home page is <a href="https://moshcode.sh">moshcode.sh</a>.</p>
+
+<h2>Installing it</h2>
+
+<pre><code>curl -fsSL https://moshcoding.com/install.sh | sh</code></pre>
+
+<p>Yes, the site is <code>moshcode.sh</code> and the installer is served from
+<code>moshcoding.com</code>. They are two different properties and that trips people up. The
+install script is the one above.</p>
+
+<p>It is zero-dependency ESM, so the only requirement is Node.js 18 or newer. The same script
+handles the other two lifecycle jobs:</p>
+
+<pre><code>curl -fsSL https://moshcoding.com/install.sh | sh -s -- update
+curl -fsSL https://moshcoding.com/install.sh | sh -s -- remove</code></pre>
+
+<p><strong>Do not put <code>sudo</code> in front of that.</strong> moshcode escalates on its own
+for the steps that genuinely need root. If you run the installer or an update as root, it installs
+into root's home directory instead of yours, and then you have two copies and a confusing
+afternoon. Run it as you.</p>
+
+<h2>Finding your way around</h2>
+
+<p>Run it with no command at all and it opens the mosh pit &mdash; the interactive view. When you
+want the map instead:</p>
+
+<pre><code>moshcode help                # the groups
+moshcode help &lt;command&gt;      # flags and examples for one
+moshcode help --all          # the whole wall
+moshcode help --json         # the same thing, for a script</code></pre>
+
+<p>The commands are grouped, which is the fastest way to understand the tool: <strong>engines</strong>
+(agents, install, upgrade), <strong>runtime</strong> (herd, ps, attach, kill, restore),
+<strong>tools</strong> (stocks, crypto, news, rss, trade), <strong>extend</strong> (mcp, skill,
+plugin), <strong>script</strong> (prd, commands, run), <strong>account</strong> (login, whoami,
+save, load), and <strong>hosting</strong> (dns, doh, site, template). There is also an arcade with
+twenty-two games in it, because of course there is.</p>
+
+<p>That <code>--json</code> flag is not decoration. Nearly every command takes it, which is what
+makes moshcode scriptable rather than merely interactive.</p>
+
+<h2>Driving an engine</h2>
+
+<pre><code>moshcode engines             # what exists, and what's installed here
+moshcode install claude      # put one on this machine
+moshcode agents              # engines and their status
+moshcode agents claude       # open that engine's agent view</code></pre>
+
+<p>One warning, straight from the CLI's own help text: <em>autonomous modes bypass approval
+prompts.</em> Use them in a container or a workspace you trust, and not in the checkout you care
+about. That is not me being cautious for the sake of it &mdash; an agent that never asks is exactly
+as dangerous as it sounds.</p>
+
+<h2>The herd: sessions that outlive the terminal</h2>
+
+<p>This is the feature I use most and the one that is hardest to appreciate until you have it. A
+herd session keeps running when you close the window.</p>
+
+<pre><code>moshcode herd start          # start a session, hand the prompt back
+moshcode herd ps             # the roster and every session's state
+moshcode attach              # get back into one
+moshcode herd tile           # every member on screen at once
+moshcode herd ui             # sidebar of members, selected one beside it
+moshcode kill                # stop one
+moshcode restore             # bring sessions back</code></pre>
+
+<p>Once you are running three or four agents at once, <code>herd tile</code> and the roster stop
+being conveniences and start being the only way you keep track of anything.</p>
+
+<h2>Logging in</h2>
+
+<p>An account lives at <a href="https://app.moshcode.sh">app.moshcode.sh</a> and the CLI
+authenticates against it:</p>
+
+<pre><code>moshcode login               # browser flow
+moshcode login --device      # device-code flow, for a headless box
+moshcode whoami              # who am I currently
+moshcode whoami --json       # same, for a script
+moshcode logout</code></pre>
+
+<p>The device flow is the one you want over SSH; moshcode picks it automatically when stdin is not
+a TTY, but you can force it. Once you are signed in, your settings become portable:</p>
+
+<pre><code>moshcode save --dry-run      # what would go up
+moshcode save                # push aliases + herd rules to your account
+moshcode load                # pull them onto another machine</code></pre>
+
+<p>That is the whole reason to bother logging in: set a box up once, then <code>moshcode load</code>
+on the next one instead of doing it all again.</p>
+
+<h2>Joining the Pit network</h2>
+
+<p>The Pit, at <a href="https://app.moshcode.sh/pit">app.moshcode.sh/pit</a>, is the part people
+find strangest, so here is the plain version. It is a namespace that lives <em>outside</em> the
+traditional DNS root. You claim an <em>ending</em> &mdash; the moral equivalent of a TLD, something
+like <code>.eggs</code> &mdash; on a first-come, first-served basis, and then you mint as many names
+under it as you like. Sign in with the same moshcode account the CLI uses, and claim one.</p>
+
+<p>Because these names are not in the public DNS root, a normal machine has no idea what to do with
+them. That is what the <code>dns</code> command is for:</p>
+
+<pre><code>sudo moshcode dns enable     # route Moshpit endings to the local bridge
+moshcode dns status          # what's running, what's routed, does it work
+moshcode dns resolve blue.eggs   # what a machine actually gets, and why
+moshcode dns tlds            # every ending claimed in the Pit
+moshcode dns refresh         # re-apply routing for endings claimed since</code></pre>
+
+<p><code>dns enable</code> is the one command here that genuinely does want <code>sudo</code>, and
+the CLI says so itself &mdash; it is rewriting your machine's resolver configuration. This is worth
+typing deliberately rather than pasting on autopilot: it changes how <em>everything</em> on that box
+resolves names, so do it on a machine where you would be comfortable explaining what changed. It is
+reversible with <code>dns disable</code>.</p>
+
+<p>Then put something behind the name:</p>
+
+<pre><code>moshcode template list                     # available stacks
+moshcode template install bun-caddy-sqlite # scaffold into the current dir
+moshcode site                              # web-server config for a Moshpit name</code></pre>
+
+<p>If you would rather not touch your resolver at all, there is a DNS-over-HTTPS endpoint you can
+point a client at instead &mdash; <code>moshcode help doh</code> covers it.</p>
+
+<h2>The bits nobody mentions</h2>
+
+<p>Some of the most useful surface is filed under &ldquo;tools&rdquo; and easy to miss:</p>
+
+<ul>
+	<li><code>moshcode stocks</code> and <code>moshcode crypto</code> &mdash; market research from
+	advis0r.com, straight in the terminal, <code>--json</code> included</li>
+	<li><code>moshcode news</code> and <code>moshcode rss</code> &mdash; feeds without a reader</li>
+	<li><code>moshcode mcp</code>, <code>skill</code>, <code>plugin</code> &mdash; how you extend an
+	engine rather than replace it</li>
+	<li><code>moshcode secrets</code>, <code>railway</code>, <code>gh</code>, <code>supabase</code>,
+	<code>turso</code> &mdash; the adjacent tools it will install and drive for you</li>
+	<li><code>moshcode upgrade --check</code> &mdash; what is stale, without installing anything</li>
+</ul>
+
+<h2>A sensible first hour</h2>
+
+<ol>
+	<li>Install it with the curl line. No sudo.</li>
+	<li><code>moshcode help</code>, then <code>moshcode help herd</code>.</li>
+	<li><code>moshcode install</code> whichever engine you already pay for.</li>
+	<li><code>moshcode login</code> &mdash; <code>--device</code> if you are on a server.</li>
+	<li>Start one thing under <code>herd start</code> and close the terminal on purpose. Reattach.
+	That moment is when it clicks.</li>
+	<li>Only then go claim an ending in <a href="https://app.moshcode.sh/pit">the Pit</a>.</li>
+</ol>
+
+<p>Leave <code>dns enable</code> until you actually want to reach a Moshpit name from that machine.
+It is the one step with system-wide consequences, and there is no reason to take it on day one.</p>
+
+<hr>
+
+<p><small>Written against moshcode 0.56.0; commands and flags move, so
+<code>moshcode help &lt;command&gt;</code> is always more current than a blog post. Disclosure: I
+build moshcode, so I am hardly a neutral reviewer of it.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>

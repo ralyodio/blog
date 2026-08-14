@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>Chovy's Blog</title>
+		<link>https://dev.profullstack.com/~anthony/blog/</link>
+		<atom:link href="https://dev.profullstack.com/~anthony/blog/feed.xml" rel="self" type="application/rss+xml"/>
+		<description>Tech, agentic coding, and whatever else I'm building. By Anthony "chovy" Ettinger.</description>
+		<language>en-us</language>
+		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
+		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
+		<generator>build-feed.mjs</generator>
+		<lastBuildDate>Fri, 14 Aug 2026 11:59:35 GMT</lastBuildDate>
+
+		<item>
+			<title>How to use the moshcode CLI</title>
+			<link>https://dev.profullstack.com/~anthony/blog/002-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/002-post.html</guid>
+			<pubDate>Fri, 14 Aug 2026 11:58:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A practical tour of the moshcode CLI: installing it, driving coding engines, keeping agent sessions alive with the herd, logging in at app.moshcode.sh, and claiming a name on the Pit network.</description>
+		</item>
+
+		<item>
+			<title>The machinist didn't get any shares</title>
+			<link>https://dev.profullstack.com/~anthony/blog/001-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/001-post.html</guid>
+			<pubDate>Fri, 14 Aug 2026 11:21:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>I bought LNSR because a former machinist mentioned it in a dentist's waiting room. My own research tool scored it 49.53 and called it overbought. I'm up 30% anyway — and the person who actually made the parts never got a share of it.</description>
+		</item>
+	</channel>
+</rss>
