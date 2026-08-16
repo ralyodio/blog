@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 16 Aug 2026 05:01:54 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 16 Aug 2026 05:22:51 GMT</lastBuildDate>
+
+		<item>
+			<title>My left eye is closed for a while</title>
+			<link>https://dev.profullstack.com/~anthony/blog/005-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/005-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 19:30:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A short personal note: a nerve issue has my left eyelid shut for now. Everything is being looked after, and here is what it means for my work in the meantime.</description>
+		</item>
 
 		<item>
 			<title>We hired a security engineer and got back 123 findings</title>
