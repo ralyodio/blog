@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The one task nobody wants to do &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-16T21:00:00Z">
+<meta name="description" content="A Reddit thread asked small business owners which recurring task they would hand off tomorrow. The answer was outreach, and it is the same reason I am building OutreachGraph.">
+</head>
+<body>
+
+<article>
+
+<h1>The one task nobody wants to do</h1>
+
+<p><em>2026-08-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from a Reddit thread I
+took part in and my own notes on the product, then edited by me. Disclosure up front: OutreachGraph
+is mine, so treat this as a builder talking about his own thing.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>The thread</h2>
+
+<p>Someone posted <a href="https://www.reddit.com/r/smallbusinessowner/comments/1vpr3kf/small_business_owners_whats_the_one_task_you_wish/">a
+question in r/smallbusinessowner</a> this morning: <em>what is the ONE task you wish you could stop
+doing?</em> They were a remote virtual assistant &mdash; admin, bookkeeping, customer service, data
+entry, research &mdash; making the honest observation that most small businesses do not need a
+full-time assistant, they need two or three things off the plate.</p>
+
+<p>I answered: <strong>outreach and lead generation.</strong></p>
+
+<p>Their reply was the part worth keeping. Finding the right prospects is one problem; consistently
+researching leads, reaching out, and following up is where the time actually disappears. That is
+exactly it. Nobody quits because they cannot find a list. They quit somewhere around week three of
+maintaining one.</p>
+
+<p>So I said the quiet part: yes, I do all of it myself, and I am bad at it. Which is precisely why
+I have been building a tool for it.</p>
+
+<h2>Why outreach is the task that gets handed off</h2>
+
+<p>Every unloved recurring task shares a shape. It is high-frequency, low-status, and it does not
+fail loudly &mdash; skip a week of outreach and nothing breaks today. It breaks in ninety days, and
+by then you have lost the thread on why.</p>
+
+<p>Outreach has an extra problem on top: the boring half and the hard half are tangled together. The
+boring half is sending, tracking, and following up. The hard half is knowing <em>who</em> and
+<em>why now</em>. Most tooling automates the boring half, which is how we all ended up with inboxes
+full of &ldquo;I came across your profile and was impressed by your work.&rdquo; The sending was
+never the bottleneck. The reason was.</p>
+
+<h2>What I am actually building</h2>
+
+<p><a href="https://outreachgraph.com/">OutreachGraph</a> starts from one line: <strong>you do not
+need more contacts, you need a reason to talk.</strong> Apollo will find someone's email address.
+That is a solved and commoditised problem. The unsolved one is finding the thing they said forty
+minutes ago in public that makes an email worth sending at all.</p>
+
+<p>The pieces that follow from that:</p>
+
+<ul>
+	<li><strong>Evidence or nothing.</strong> Every claim on a prospect card traces back to something
+	that person actually published. No stored evidence, no claim &mdash; if a draft cannot point at a
+	source, it is not shown to you, and you write the message yourself. Identities are linked from
+	what someone published about themselves, never from a name match. Two weak observations get you
+	0.75 confidence, not certainty.</li>
+
+	<li><strong>Signals decay.</strong> A question asked three hours ago is worth something. The same
+	question from March is a landmine. Scoring treats recency as a first-class input rather than
+	pretending a scraped fact is true forever.</li>
+
+	<li><strong>The thing is allowed to tell you no.</strong> The policy engine is arithmetic, not
+	judgement &mdash; there is no model in that loop. An unknown network is a deny by default.
+	LinkedIn automation is not &ldquo;discouraged&rdquo; in a settings page, it is unreachable. If
+	someone asked not to be contacted, that survives deleting the record. And the check runs again at
+	the moment you hit approve, not at the moment the card was created, because the world moves in
+	between. Approving a blocked action gets you a <code>409 policy_denied</code>, which is the
+	feature.</li>
+
+	<li><strong>A human approves everything.</strong> The output is a queue of cards &mdash; here is
+	the person, here is the reason, here is a draft, here are the sources. Approve, edit, or skip.
+	There is no autopilot, and there is not going to be one.</li>
+</ul>
+
+<p>It currently starts from a GitHub handle and aims at developer and technical buyers first, because
+that is the richest public signal there is. It is free while in beta, no card. Plenty is not built:
+the campaign wizard, adapters beyond GitHub, inbound conversation ingestion, billing. I would rather
+say that than imply otherwise.</p>
+
+<h2>The bit I got wrong first</h2>
+
+<p>I mentioned in the thread that I had already tried AI cold calling. It was a horrible failure. Out
+of roughly a hundred calls, exactly one person stayed on the line and talked to it.</p>
+
+<p>That is a useful number to have paid for. It says the market's tolerance for being handled by a
+machine is close to zero at the point of contact, and it says nothing at all about whether machines
+are useful in outreach. They are &mdash; just earlier in the pipeline, where the work is reading
+everything and deciding what is worth a human's attention. The failure was not the AI. It was
+pointing the AI at the one step that a person specifically wants a person for.</p>
+
+<h2>Tool finds it, human works it</h2>
+
+<p>The VA who started the thread landed on the framing better than my landing page does: maybe the
+tool finds the opportunity, and someone makes sure those opportunities actually get worked.</p>
+
+<p>That is the vision, and it is deliberately less ambitious than the pitch decks in this category.
+OutreachGraph is not trying to replace the person doing outreach. It is trying to make the top of
+their funnel <em>defensible</em> &mdash; every prospect with a reason attached, every reason with a
+source, every action checked against rules that do not negotiate. Whether the person working that
+queue is the founder at 6am or a VA on retainer is not my business to decide.</p>
+
+<p>Someday there may be a paid tier that goes further, up to and including booking the call. I am in
+no hurry, and one out of a hundred is why.</p>
+
+<p>If outreach is your one task too, <a href="https://outreachgraph.com/">it is free while in
+beta</a>. Tell me where it is wrong.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>

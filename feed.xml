@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 16 Aug 2026 05:22:51 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 16 Aug 2026 08:26:17 GMT</lastBuildDate>
+
+		<item>
+			<title>The one task nobody wants to do</title>
+			<link>https://dev.profullstack.com/~anthony/blog/006-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/006-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 21:00:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A Reddit thread asked small business owners which recurring task they would hand off tomorrow. The answer was outreach, and it is the same reason I am building OutreachGraph.</description>
+		</item>
 
 		<item>
 			<title>My left eye is closed for a while</title>
