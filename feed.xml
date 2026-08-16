@@ -9,7 +9,7 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 16 Aug 2026 08:26:17 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 16 Aug 2026 09:18:30 GMT</lastBuildDate>
 
 		<item>
 			<title>The one task nobody wants to do</title>
@@ -36,6 +36,24 @@
 			<pubDate>Sun, 16 Aug 2026 18:00:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Eduardo, our new security engineer at Profullstack, audited CoinPay Portal and QryptChat and filed 123 findings across 63 GitHub advisories. Here is what they found, what we fixed, what we deliberately didn't, and the four lessons that generalize.</description>
+		</item>
+
+		<item>
+			<title>Somebody posted my audit writeup to HN, and one comment paid for it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/008-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/008-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 09:05:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>My post about 123 security findings went to Hacker News and went nowhere. The one comment it got described a two-week bug-duty rotation, which is the generalization of the thing I paid an auditor to teach me once.</description>
+		</item>
+
+		<item>
+			<title>Going live now — mosh coding at 1:45am</title>
+			<link>https://dev.profullstack.com/~anthony/blog/007-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/007-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 08:45:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Streaming a live mosh coding session starting 1:45am Pacific. Join link inside, plus what a session actually looks like and why I stream at this hour.</description>
 		</item>
 
 		<item>

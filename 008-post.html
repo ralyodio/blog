@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Somebody posted my audit writeup to HN, and one comment paid for it &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-16T09:05:00Z">
+<meta name="description" content="My post about 123 security findings went to Hacker News and went nowhere. The one comment it got described a two-week bug-duty rotation, which is the generalization of the thing I paid an auditor to teach me once.">
+</head>
+<body>
+
+<article>
+
+<h1>Somebody posted my audit writeup to HN, and one comment paid for it</h1>
+
+<p><em>2026-08-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>What happened</h2>
+
+<p>Someone I don't know &mdash; <code>buffer_overlord</code> &mdash; submitted
+<a href="004-post.html">my post about the 123 security findings</a> to Hacker News. I didn't
+post it and didn't know it was there until later.
+<a href="https://news.ycombinator.com/item?id=49316991">It did not take off.</a> Two points and
+one comment, which on that site is indistinguishable from never having been posted at all.</p>
+
+<p>The one comment was worth more than a front page would have been. I want to write it down
+before the thread scrolls off into wherever dead HN submissions go.</p>
+
+<h2>The comment</h2>
+
+<p><a href="https://news.ycombinator.com/item?id=49316991">jeffreygoesto</a> quoted the bit at the
+end of my post about second-order lessons, and then described what their team actually does:</p>
+
+<blockquote>
+<p>We are taking turns in small teams being on duty for only finding and fixing bugs for two
+weeks. They are working on features with a much sharpened eye after and don't repeat bad habits
+so easily. Having drilled down to the core gives you the necessary understanding.</p>
+</blockquote>
+
+<p>I have been turning that over since I read it, because it is the generalized version of the
+thing I paid an outside engineer to do to me once.</p>
+
+<h2>Why it lands</h2>
+
+<p>The conclusion I reached in the audit post was that most of the value wasn't in the findings.
+It was in what the remediation taught me &mdash; that my <code>REVOKE</code> statements were
+decorative, that a passing CI check only means no <em>new</em> alerts, that quiet database logs
+are not evidence of a harmless schema mismatch. None of that is in an advisory. You learn it by
+doing the fix and then checking whether the fix actually took.</p>
+
+<p>Here is the uncomfortable part I glossed over: that knowledge went into exactly one head. Mine.
+I did the remediation, so I got the education. Everyone else on the project got a merged PR and a
+green checkmark, which teaches nothing.</p>
+
+<p>A rotation fixes that, and it fixes it in the one way that works &mdash; by making people do
+the boring part themselves rather than reading someone else's summary of it. You cannot transfer
+&ldquo;the catalogs disagree with the migration output&rdquo; in a postmortem. You can only
+transfer it by having somebody sit there and query the catalog and feel the small shock of the
+mismatch.</p>
+
+<p>The second thing that comment gets right is the direction of the effect. I would have assumed
+the payoff of bug duty is the bugs you fix. jeffreygoesto's claim is that the payoff is what
+happens <em>after</em> &mdash; people build features differently once they've spent two weeks
+living in the wreckage of how features get built. Bugs fixed is the visible output. Habits
+changed is the actual product.</p>
+
+<h2>What I'm not sure about</h2>
+
+<p>I don't want to write an enthusiastic post about a practice I haven't run, so, honestly:</p>
+
+<ul>
+	<li><strong>The cost is real and it is not hidden.</strong> A team on bug duty is a team not
+	shipping. If you have four small teams, you are permanently running at three quarters
+	capacity on features. I suspect that trade is correct and I am certain it is unpopular.</li>
+	<li><strong>I don't know how it degrades solo.</strong> Most of what I do is one or two people
+	deep. A rotation with a rotation size of one is just &ldquo;spend two weeks on bugs,&rdquo;
+	which loses the part where a fresh pair of eyes inherits somebody else's mess. That inheritance
+	might be the whole mechanism.</li>
+	<li><strong>Two weeks may be load-bearing.</strong> Long enough that you run out of easy bugs
+	and have to go find real ones. A two-day version is probably just triage with extra steps.</li>
+</ul>
+
+<h2>What I'm going to do</h2>
+
+<p>The audit was a one-time purchase of paranoia. It worked, and I am not going to buy one every
+quarter. The rotation is the same mechanism made cheap and repeating, and the honest reason I
+hadn't considered it is that I think of security work as something that arrives from outside on
+an invoice.</p>
+
+<p>So I'm going to try the smallest version that keeps the important property: whoever is on duty
+works on a repo they did not write. Not a two-week block &mdash; I can't afford that shape yet
+&mdash; but a standing slot, on somebody else's code, with the rule that anything found gets
+fixed by the finder rather than filed for the author. If it produces even one lesson of the
+&ldquo;your REVOKE statements are decorative&rdquo; variety, it beats the audit on price by a
+wide margin.</p>
+
+<p>Thanks, jeffreygoesto. And thanks to whoever posted it &mdash; two points was worth it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>
