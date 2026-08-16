@@ -165,7 +165,7 @@ optional and not deferrable: merge and apply together, then
 
 <h2>What we deliberately did not fix</h2>
 
-<p>An audit report is a set of claims, not a set of orders. Five items on the CoinPay Portal list
+<p>An audit report is a set of claims, not a set of orders. A few items on the CoinPay Portal list
 were closed without a code change, and I think saying so publicly is more useful than a clean
 scoreboard:</p>
 
@@ -177,12 +177,6 @@ scoreboard:</p>
 	<li><strong>A public-lookup function reported as an IDOR.</strong> It returns public profile
 	columns and is a lookup by design. Noted in the code so nobody &ldquo;fixes&rdquo; it again in
 	six months.</li>
-	<li><strong>A data retention window.</strong> That is a business decision, not an engineering
-	one. It goes on the roadmap, not into a patch.</li>
-	<li><strong><code>unsafe-inline</code> in our Content-Security-Policy.</strong> The actual XSS
-	sink is fixed. Removing <code>unsafe-inline</code> requires a Next.js nonce rollout, and we
-	don't have a staging environment to prove it out on. Deferred, openly, as too risky to do
-	blind.</li>
 	<li><strong>A dependency CVE with no upstream fix.</strong> The vulnerable package was newest
 	published; there was nowhere to upgrade to. It turned out to be reachable only through four
 	declared wallet-adapter dependencies that <em>nothing in the codebase imported</em> &mdash;
