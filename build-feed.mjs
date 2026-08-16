@@ -65,6 +65,20 @@ for (const file of files) {
 }
 
 posts.sort((a, b) => b.when - a.when);
+
+// A post dated in the future pins itself to the top of the feed and pushes real
+// posts down; readers that hide future items drop it entirely, so the feed looks
+// like it stopped updating. That is silent and easy to miss, so say so loudly —
+// three posts once sat 7-10 hours ahead and made the whole feed look stale.
+const now = Date.now();
+const future = posts.filter((p) => p.when.getTime() > now);
+if (future.length > 0) {
+	console.warn(`\n  ${future.length} post(s) dated in the FUTURE — these will sit above everything`);
+	console.warn('  and may be hidden entirely by feed readers:');
+	for (const p of future) console.warn(`    ${p.file}  ${p.when.toISOString()}`);
+	console.warn('  Fix the <meta name="date"> unless you really mean to schedule them.\n');
+}
+
 const kept = posts.slice(0, KEEP);
 const dropped = posts.length - kept.length;
 
