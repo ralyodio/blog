@@ -1,0 +1,58 @@
+name: Publish summaries to Pages
+
+# The page is built from the live RSS feed, not from this repo's files, so it
+# refreshes on a schedule as well as on push — publishing a post to the blog is
+# enough, mirroring it here is not required for the summaries to update.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/build-pages.mjs'
+      - '.github/workflows/pages.yml'
+      - 'feed.xml'
+  schedule:
+    # Every six hours. GitHub disables cron on repos with no activity for 60
+    # days; re-enable from the Actions tab if the page ever goes stale.
+    - cron: '20 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let a scheduled run and a push run race to deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build the summary page
+        # No dependencies to install — the builder is one file using only the
+        # Node standard library. It falls back to the committed feed.xml if the
+        # blog is unreachable, and fails the build if it parses to zero posts.
+        run: node tools/build-pages.mjs --out site
+        env:
+          FEED_URL: https://dev.profullstack.com/~anthony/blog/feed.xml
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

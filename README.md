@@ -42,6 +42,31 @@ The spec is stricter than browsers are. When adding a post, keep:
 
 Check a page after publishing at <https://smolweb.org/validator/>.
 
+## Summary page on GitHub Pages
+
+<https://ralyodio.github.io/blog/> is a summary index built from the blog's RSS
+feed. It lists the title, date and description of each post in the feed and
+links to the post on the blog — it never hosts the post text itself.
+
+```sh
+node tools/build-pages.mjs          # writes site/index.html from the live feed
+node tools/build-pages.mjs --feed feed.xml --out /tmp/preview
+```
+
+The page is generated rather than fetched in the browser, because the blog does
+not send CORS headers — a client-side `fetch` of `feed.xml` from
+`ralyodio.github.io` would be blocked. That also means the published page needs
+no JavaScript.
+
+`.github/workflows/pages.yml` rebuilds and deploys it every six hours and on
+push, so **publishing a post to the blog is enough** — the summary page picks it
+up from the live feed whether or not the post has been mirrored into this repo.
+If the blog is unreachable at build time the builder falls back to the `feed.xml`
+committed here, and it fails rather than publishing an empty page.
+
+Because the feed keeps only the 10 most recent posts, so does this page. The
+full archive stays on the blog.
+
 ## AI disclosure
 
 Posts here are drafted with AI assistance from my own notes and experience, and
