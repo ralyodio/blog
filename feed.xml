@@ -9,7 +9,25 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 14 Aug 2026 11:59:35 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 16 Aug 2026 04:31:11 GMT</lastBuildDate>
+
+		<item>
+			<title>We hired a security engineer and got back 123 findings</title>
+			<link>https://dev.profullstack.com/~anthony/blog/004-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/004-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 18:00:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Eduardo, our new security engineer at Profullstack, audited CoinPay Portal and QryptChat and filed 123 findings across 63 GitHub advisories. Here is what they found, what we fixed, what we deliberately didn't, and the four lessons that generalize.</description>
+		</item>
+
+		<item>
+			<title>HOPE 26 is live from the New Yorker Hotel</title>
+			<link>https://dev.profullstack.com/~anthony/blog/003-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/003-post.html</guid>
+			<pubDate>Fri, 14 Aug 2026 14:45:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Hackers On Planet Earth is back in Manhattan for the first time since 2018, and the whole thing is being webcast free. What HOPE is, why the venue matters, and what to watch on day one.</description>
+		</item>
 
 		<item>
 			<title>How to use the moshcode CLI</title>

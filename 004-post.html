@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>We hired a security engineer and got back 123 findings &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-16T18:00:00Z">
+<meta name="description" content="Eduardo, our new security engineer at Profullstack, audited CoinPay Portal and QryptChat and filed 123 findings across 63 GitHub advisories. Here is what they found, what we fixed, what we deliberately didn't, and the four lessons that generalize.">
+</head>
+<body>
+
+<article>
+
+<h1>We hired a security engineer and got back 123 findings</h1>
+
+<p><em>2026-08-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from the advisory
+records, the pull requests, and my own notes taken while doing the remediation. Every count in this
+post came out of the GitHub advisory API and the Postgres catalogs, not out of memory. The
+advisories themselves are private to the repos, so you'll have to take the numbers on
+faith.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>The setup</h2>
+
+<p>Eduardo Camarillo joined Profullstack this month as our first dedicated security engineer. I gave
+them two repositories and no scope restrictions: <strong>CoinPay Portal</strong>, our self-hosted
+crypto payment processor, and <strong>QryptChat</strong>, our post-quantum encrypted messenger. Both are
+live. Both handle exactly the kind of thing you do not want handled badly &mdash; one moves money,
+the other is supposed to be the app where the contents are nobody's business but yours.</p>
+
+<p>I expected a report. What arrived over about seventy-two hours was a filing cabinet.</p>
+
+<h2>The count</h2>
+
+<p>Across the two repositories, <strong>123 confirmed findings</strong>, tracked as 63 individual
+GitHub security advisories:</p>
+
+<ul>
+	<li><strong>CoinPay Portal</strong> &mdash; 86 confirmed findings: 3 critical, 39 high, 29 medium,
+	15 low. The critical and high ones were filed individually; the mediums and lows arrived as a single
+	umbrella &ldquo;remediation list&rdquo; document. Three more critical/high reports landed
+	afterward, separately.</li>
+	<li><strong>QryptChat</strong> &mdash; 37 vulnerabilities plus 37 architectural deficiencies,
+	filed as 17 advisories: 2 critical, 11 high, 4 medium.</li>
+</ul>
+
+<p>As of today all 63 advisories are <code>published</code>, which on GitHub is the terminal state
+for a fixed advisory &mdash; there is no separate &ldquo;closed.&rdquo; The fixes went out across
+roughly a dozen pull requests and about ten database migrations applied to production.</p>
+
+<p>I want to be honest about the shape of that number, because &ldquo;123 vulnerabilities&rdquo; is
+the kind of headline that is usually doing marketing work. A meaningful fraction of these were
+<em>latent</em> &mdash; real defects in the code or the schema, genuinely exploitable under a
+plausible near-future configuration, but not reachable in production as it was deployed that
+morning. More on why that distinction nearly tripped me up in a minute. A handful of others were
+duplicates of one root cause across a family of call sites. What is not negotiable is the other
+end: some of these were live, unauthenticated, and bad.</p>
+
+<h2>The five that made my stomach drop</h2>
+
+<p>Ranked by how long I stared at the screen after reading the title.</p>
+
+<p><strong>Unauthenticated remote data destruction.</strong> QryptChat had a
+<code>SECURITY DEFINER</code> Postgres function named <code>delete_encrypted_data_only</code>,
+callable by the <code>anon</code> role. Any person on the internet with the public API key &mdash;
+which ships in the browser bundle, because that is what a public anon key <em>is</em> &mdash; could
+invoke it. That is not a vulnerability so much as an unlabeled button wired to the building's
+demolition charges. It was one of 48 <code>SECURITY DEFINER</code> functions in the public schema
+reachable by <code>anon</code>. All 48 are now unreachable, verified by querying
+<code>has_function_privilege</code> over <code>pg_proc</code> rather than by trusting the
+migration.</p>
+
+<p><strong>Every user's phone number, readable by every user.</strong> QryptChat's row-level
+security policy on the users table was <code>USING (true)</code>. Any authenticated account could
+read every row: phone numbers, identifiers, the lot. It is now own-row OR
+<code>shares_conversation_with(id)</code>. The busiest account on the platform went from being able
+to see all 86 users to seeing 14.</p>
+
+<p><strong>Unauthenticated identity spoofing.</strong> A <code>sync_user_with_auth</code> RPC
+accepted a phone number and overwrote the record. No authentication.</p>
+
+<p><strong>Hardcoded service-role key fallbacks.</strong> On CoinPay Portal, the specific literal
+Eduardo cited had already been removed &mdash; but the pattern hadn't. Sixteen <em>other</em> files fell
+back to the anon key or an empty string when the service-role key was missing. Falling back to anon
+does not throw. It silently downgrades, RLS begins applying to code written on the assumption that
+it does not, and the symptom surfaces three layers away from the cause a week later. Every one of
+them now routes through a client that refuses to construct without a real key.</p>
+
+<p><strong>13,711 rows of payment amounts readable by <code>anon</code>.</strong> A CoinPay Portal
+reputation-receipts table. This one is interesting specifically because almost all of its
+neighbours in the report were <em>not</em> live, and I only know which was which because I stopped
+reading policies and started assuming roles. Which brings me to the actual point of this post.</p>
+
+<h2>Four things I learned that generalize</h2>
+
+<p>The findings themselves are ours. These four are yours too, if you run Postgres behind an app.</p>
+
+<h3>1. Column-level REVOKE is a no-op against a table-level grant</h3>
+
+<p>Supabase grants table-level <code>SELECT</code> to <code>anon</code> and
+<code>authenticated</code>. If you then write <code>REVOKE SELECT (secret_column) ON users FROM
+authenticated</code>, you have subtracted nothing, because the table-level grant already permits
+every column including that one. It applies cleanly. It reports success. It does nothing.</p>
+
+<p>I shipped that mistake and caught it only by checking
+<code>has_column_privilege()</code> afterwards. To actually restrict a column you must revoke the
+table grant and then grant back the specific columns you want. Never assume a REVOKE landed
+&mdash; ask the database whether the privilege is still there.</p>
+
+<h3>2. Verify RLS findings by assuming the role, not by reading the policy</h3>
+
+<p>The technique that made this audit tractable: wrap the check in a <code>DO</code> block,
+<code>set local role anon;</code>, attempt the read, then <code>raise exception</code> to roll the
+whole thing back and carry the result out in the error message. It is safe to run against
+production.</p>
+
+<p>Doing this on CoinPay Portal showed that most of the RLS findings were latent. The app
+authenticates with its own JWT and talks to the database as <code>service_role</code>, so
+<code>auth.uid()</code> is never populated, and every policy keyed on it denies <em>everyone</em>.
+The policies were wrong, they needed fixing, and a future refactor would have detonated them &mdash;
+but they were not currently leaking. That same check isolated the one finding that genuinely was.
+Had I skipped it I would have announced &ldquo;11 vulnerabilities fixed&rdquo; and been wrong in
+both directions at once: overstating the exposure of ten, and burying the one that mattered.</p>
+
+<h3>3. Revoking EXECUTE can cause a silent write outage &mdash; check pg_trigger first</h3>
+
+<p>This is the expensive one, and the reason I am writing this post rather than just closing the
+advisories.</p>
+
+<p>In the sweep that locked down those 48 functions, we revoked <code>EXECUTE</code> on
+<code>calculate_message_expiration</code>. Nothing called it directly. What called it was a
+<code>BEFORE INSERT</code> trigger on the messages table &mdash; and that trigger was the only one
+on the table not marked <code>SECURITY DEFINER</code>, so it executed with the privileges of
+whoever was inserting. Permission denied. The trigger raised. The raise took the entire INSERT down
+with it.</p>
+
+<p><strong>Message sending on QryptChat was dead for two days</strong> and nothing alerted. It
+surfaced as an application 500, and I found it by noticing the newest row in the table was 08-13
+when it was the 16th. The fix was to make the trigger function <code>SECURITY DEFINER</code>,
+matching its sibling, rather than granting the function back.</p>
+
+<p>The general rule: before any EXECUTE revoke, join <code>pg_trigger</code> against the functions
+you are about to revoke and check <code>prosecdef</code> on each trigger's function. A hardening
+sweep that takes production down teaches your team that hardening sweeps take production down, and
+that lesson is much harder to unlearn than the CVE was to fix.</p>
+
+<h3>4. A missing RPC leaves no trace in your database logs</h3>
+
+<p>We merged the CoinPay Portal remediation PR before applying its migration &mdash; about a twenty
+minute gap. In that window, production was calling a database function that did not exist yet, on every
+single payment creation. It fails closed with a 500.</p>
+
+<p>Here is the part worth knowing: <strong>PostgREST rejects a call to an unknown function before it
+ever reaches Postgres</strong>, so it produces <em>no</em> entry in <code>postgres_logs</code>. Quiet
+database logs are not evidence that a schema/code mismatch is harmless. Nothing hit that path in
+those twenty minutes, and that was luck, not design. On a repo like this the migration is not
+optional and not deferrable: merge and apply together, then
+<code>notify pgrst, 'reload schema';</code> so the API's cache picks the function up.</p>
+
+<h2>What we deliberately did not fix</h2>
+
+<p>An audit report is a set of claims, not a set of orders. Five items on the CoinPay Portal list
+were closed without a code change, and I think saying so publicly is more useful than a clean
+scoreboard:</p>
+
+<ul>
+	<li><strong>Arbitrary payee wallet addresses.</strong> Flagged as a vulnerability; it is the
+	product. Paying an invoice to a third party is a real flow. We hardened it instead &mdash; the
+	platform's own wallet can't be targeted, and the authorizing actor is recorded on every
+	invoice &mdash; rather than requiring the payer to own the destination.</li>
+	<li><strong>A public-lookup function reported as an IDOR.</strong> It returns public profile
+	columns and is a lookup by design. Noted in the code so nobody &ldquo;fixes&rdquo; it again in
+	six months.</li>
+	<li><strong>A data retention window.</strong> That is a business decision, not an engineering
+	one. It goes on the roadmap, not into a patch.</li>
+	<li><strong><code>unsafe-inline</code> in our Content-Security-Policy.</strong> The actual XSS
+	sink is fixed. Removing <code>unsafe-inline</code> requires a Next.js nonce rollout, and we
+	don't have a staging environment to prove it out on. Deferred, openly, as too risky to do
+	blind.</li>
+	<li><strong>A dependency CVE with no upstream fix.</strong> The vulnerable package was newest
+	published; there was nowhere to upgrade to. It turned out to be reachable only through four
+	declared wallet-adapter dependencies that <em>nothing in the codebase imported</em> &mdash;
+	they were referenced by one line of build config. Deleting them removed the CVE, and about a
+	dozen transitive packages with it.</li>
+</ul>
+
+<p>That last one is my favourite finding of the whole audit, and it isn't even a vulnerability. The
+fastest way to fix a dependency you can't patch is frequently to discover you were never using
+it.</p>
+
+<h2>Was it worth it?</h2>
+
+<p>We took a two-day messaging outage, I spent a week doing nothing but remediation, and the test
+suite needed 21 tests rewritten because they had been quietly relying on a service client that
+never got constructed.</p>
+
+<p>Against that: an unauthenticated data-destruction endpoint, a table of payment amounts open to
+the world, and every user's phone number one query away from every other user &mdash; all found by
+someone reading our code on purpose, before they were found by someone reading our code on
+purpose.</p>
+
+<p>The thing I did not anticipate is how much of the value was in the second-order lessons. Nobody
+files an advisory titled &ldquo;your REVOKE statements are decorative.&rdquo; You only learn that by
+doing the remediation with a paranoid person looking over your shoulder, and then checking the
+catalogs instead of believing the migration output.</p>
+
+<p>Welcome aboard, Eduardo. Please give me a week before you start on the next repo.</p>
+
+<hr>
+
+<p><small>Counts in this post were pulled from the GitHub security advisory API for
+<code>profullstack/coinpayportal</code> and <code>profullstack/qryptchat-web</code> on 2026-08-16
+(46 and 17 advisories respectively), and from the remediation list enumerated in each repo's
+umbrella advisory. The advisories are private to the repositories. CoinPay Portal is at
+<a href="https://coinpayportal.com/">coinpayportal.com</a> and QryptChat at
+<a href="https://qrypt.chat/">qrypt.chat</a>.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>
