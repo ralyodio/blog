@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 16 Aug 2026 11:07:36 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 16 Aug 2026 11:18:18 GMT</lastBuildDate>
+
+		<item>
+			<title>Leave your screen unlocked, meet developers@paypal.com</title>
+			<link>https://dev.profullstack.com/~anthony/blog/012-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/012-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 11:18:18 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>In the 90s, walking away from an unlocked workstation at PayPal meant an email went out from your account to every engineer in the building. It was the best security training I ever got, and it cost a box of donuts. Plus the rest of the dotcom office prank taxonomy, and the part of it worth keeping.</description>
+		</item>
 
 		<item>
 			<title>The best interface for AI agents was invented in 1978</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 14 Aug 2026 14:45:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Hackers On Planet Earth is back in Manhattan for the first time since 2018, and the whole thing is being webcast free. What HOPE is, why the venue matters, and what to watch on day one.</description>
-		</item>
-
-		<item>
-			<title>How to use the moshcode CLI</title>
-			<link>https://dev.profullstack.com/~anthony/blog/002-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/002-post.html</guid>
-			<pubDate>Fri, 14 Aug 2026 11:58:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A practical tour of the moshcode CLI: installing it, driving coding engines, keeping agent sessions alive with the herd, logging in at app.moshcode.sh, and claiming a name on the Pit network.</description>
 		</item>
 	</channel>
 </rss>
