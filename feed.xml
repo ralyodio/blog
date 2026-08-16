@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 16 Aug 2026 12:32:51 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 16 Aug 2026 14:50:47 GMT</lastBuildDate>
+
+		<item>
+			<title>Backlinks and ads without a card</title>
+			<link>https://dev.profullstack.com/~anthony/blog/014-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/014-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 14:50:47 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Backlinks were quoted to us between $445 and $4,090 each. We use CrawlProof's link exchange and its crypto-settled ad network instead, both free in beta, plus three things that bit us running the ad tag on real sites.</description>
+		</item>
 
 		<item>
 			<title>I built my own root DNS so I could stop renting names</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 16 Aug 2026 05:22:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A short personal note: a nerve issue has my left eyelid shut for now. Everything is being looked after, and here is what it means for my work in the meantime.</description>
-		</item>
-
-		<item>
-			<title>We hired a security engineer and got back 123 findings</title>
-			<link>https://dev.profullstack.com/~anthony/blog/004-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/004-post.html</guid>
-			<pubDate>Sun, 16 Aug 2026 05:01:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Eduardo, our new security engineer at Profullstack, audited CoinPay Portal and QryptChat and filed 123 findings across 63 GitHub advisories. Here is what they found, what we fixed, what we deliberately didn't, and the four lessons that generalize.</description>
 		</item>
 	</channel>
 </rss>

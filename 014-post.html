@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backlinks and ads without a card &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-16T14:50:47Z">
+<meta name="description" content="Backlinks were quoted to us between $445 and $4,090 each. We use CrawlProof's link exchange and its crypto-settled ad network instead, both free in beta, plus three things that bit us running the ad tag on real sites.">
+</head>
+<body>
+
+<article>
+
+<h1>Backlinks and ads without a card</h1>
+
+<p><em>2026-08-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>What a backlink costs</h2>
+
+<p>When we priced backlinks for our own sites, the going rate came back somewhere between
+$445 and $4,090 per link. That is for one link on one site. Nobody at our size is paying that,
+so for a long time we just did without and watched the SEO advice tell us we were leaving
+money on the table.</p>
+
+<p>The usual advice for a small SaaS is the same list every time. Google Ads, LinkedIn Ads,
+Meta. <a href="https://blog.techdella.com/what-is-saas-ads/">Techdella has a decent writeup of
+it</a> if you want the full version. It is fine advice. It also assumes you have a budget,
+and most of the projects I run do not.</p>
+
+<h2>What we do instead</h2>
+
+<p>We use two things on <a href="https://crawlproof.com">CrawlProof</a>, and both are free
+while they are in beta. No card.</p>
+
+<p><strong>The link exchange.</strong> You get matched with other verified sites and you trade
+links. The part that makes it not a link farm is the ledger: every exchange is recorded, both
+sides are verified, and you can see what you gave and what you got. It is the same outcome as
+the $445 link, minus the $445.</p>
+
+<p><strong>The ad network.</strong> Two sides, and we are on both.</p>
+
+<p>As an advertiser you paste a landing page URL and it designs the banners for you, on brand,
+from whatever is already on the page. You edit the copy and colours or upload your own. Then
+you set a daily budget. Clicks get attributed with your own ref tag, and bot and duplicate
+clicks are filtered before billing, which matters more than it sounds like it does.</p>
+
+<p>As a publisher you flip a project on as an ad slot, drop one script tag, and pick a payout
+coin. Earnings accrue per click and withdraw on chain to your wallet through CoinPay. No fiat,
+no invoicing anybody, no minimum payout threshold that quietly eats the balance.</p>
+
+<h2>Three things that bit us</h2>
+
+<p>Running this on real sites turned up a few things that are not in any docs, so here they
+are.</p>
+
+<ul>
+	<li><strong>New ad slots are created inactive.</strong> The serve endpoint answers
+	<code>{"ok":false}</code> for every format until you activate the slot, which looks exactly
+	like a broken embed. Check the slot status before you debug anything else.</li>
+	<li><strong>The script scans the page once.</strong> It fills every ad div at
+	<code>DOMContentLoaded</code> and then stops. Anything that mounts later, tabs, infinite
+	scroll, any React content behind a fetch, has to call
+	<code>window.crawlproofAds.scan()</code> itself.</li>
+	<li><strong>Do not render a desktop and a mobile banner and hide one with CSS.</strong> Both
+	fill. The hidden one burns an impression that no human ever saw. Pick one by viewport and
+	render that.</li>
+</ul>
+
+<h2>Worth it?</h2>
+
+<p>For us, yes, mostly because the alternative was nothing. We were never going to buy a
+$1,300 link. We were never going to fund a Google Ads campaign for a side project. Trading
+links with sites in the same position, and running ads that settle in crypto with no card on
+file, is a version of this that actually fits how we work.</p>
+
+<p>It is in beta and it is free, so the worst case is you waste an afternoon.
+<a href="https://crawlproof.com">crawlproof.com</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>
