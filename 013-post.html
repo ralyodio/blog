@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I built my own root DNS so I could stop renting names &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-16T12:32:51Z">
+<meta name="description" content="Every idea I have costs twelve dollars a year before it exists. So I built the Moshpit: an actual name root where you claim .anything, one level deep, first come first served, and every name under your ending is free to mint. How it resolves, what it honestly cannot do, and how to stand a site up on it.">
+</head>
+<body>
+
+<article>
+
+<h1>I built my own root DNS so I could stop renting names</h1>
+
+<p><em>2026-08-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>I got tired of renting names</h2>
+
+<p>Every idea I have costs twelve dollars a year before it exists. Not hosting &mdash; the
+<em>name</em>. I pay a registrar, who pays a registry, who operates a top-level domain under a
+contract with ICANN, and at the end of that chain I get a string of text that I do not own and
+never will. I lease it. Miss a renewal notice in a spam folder and somebody who has never heard
+of my project owns my namespace and wants four figures for it back.</p>
+
+<p>Multiply that by the number of half-finished things in my home directory and it is a
+subscription to my own imagination. So I stopped paying it and started building the other end of
+the stack.</p>
+
+<p>It is called the <strong>Moshpit</strong>. It is a root. Not a registrar, not a reseller, not
+a wrapper over somebody else's TLD &mdash; an actual name authority with its own root and its own
+resolver, and you can claim <code>.anything</code> in it right now:</p>
+
+<p><a href="https://app.moshcode.sh/pit">app.moshcode.sh/pit</a></p>
+
+<h2>What you actually get</h2>
+
+<p>The namespace is one level deep and first come, first served. You claim an ending &mdash;
+<code>.eggs</code>, <code>.hacker</code>, <code>.rank</code>, whatever nobody took yet &mdash; and
+from that moment every name under it is yours to mint. Not for a dollar each. For nothing.
+<code>scrambled.eggs</code>, <code>over-easy.eggs</code>, four hundred more at 2am because you
+felt like it. Holding the ending <em>is</em> the ownership; the names under it are just rows you
+write.</p>
+
+<p>You can point one ending at another, too. Alias <code>.agentic</code> to <code>.agent</code>
+and the whole namespace follows &mdash; <code>foo.agentic</code> resolves to
+<code>foo.agent</code> &mdash; while any name you specifically exempt stays exactly where it is.
+That is a thing the real DNS root cannot do for you at any price.</p>
+
+<p>As I write this the registry has <strong>5,679 endings</strong> claimed. I am holding most of
+them, which is either land-grabbing or bootstrapping depending on how charitable you feel, and I
+have listed the ones I am sitting on for a couple of dollars so they are not just parked forever
+in my account. Anything nobody has claimed is still free and still first come, first served.</p>
+
+<h2>How it resolves, honestly</h2>
+
+<p>Here is the part most &ldquo;alternative DNS&rdquo; projects are cagey about, so let me be
+blunt: <strong>a Moshpit ending is not in the public DNS root, so nothing resolves it until you
+turn the resolver on.</strong> There is no magic. Your laptop asks a root server about
+<code>.eggs</code> and gets told no such thing exists, because as far as the thirteen root
+servers are concerned, that is true.</p>
+
+<p>So you run the bridge:</p>
+
+<pre><code>sudo moshcode dns enable</code></pre>
+
+<p>That installs a local resolver that answers Moshpit names out of the registry and forwards
+every other lookup untouched. Your <code>github.com</code> still goes where it always went. There
+is also a DNS-over-HTTPS endpoint at <code>https://dns.moshcode.sh/dns-query</code>, standard
+RFC 8484, both the GET and POST forms, if you would rather point a client at it than change your
+system resolver.</p>
+
+<p>It is opt-in and it stays opt-in. It is not in the installer, it does not happen on upgrade,
+and no other command turns it on as a side effect. That rule exists because I once let something
+enable it automatically and handed a colleague a machine whose resolver had been rewritten
+without being asked, which is a spectacular way to ruin somebody's morning. Rewriting how a
+computer resolves names is a thing a human types on purpose or not at all.</p>
+
+<h2>The tradeoffs I am not going to hide</h2>
+
+<p>Living outside the public root has real costs and you should know them before you move
+anything you care about:</p>
+
+<ul>
+	<li><strong>No public CA will issue you a certificate.</strong> Not Let's Encrypt, not anyone
+	&mdash; they can only validate names in the DNS root, and yours is not. So it is
+	<code>http://</code> on port 80. In Caddy you must write the scheme explicitly or it will try
+	to get a cert and fail forever. There is a local CA and a pinned-TLS proxy for real HTTPS on
+	these names, and that is a whole post of its own.</li>
+	<li><strong>Targets are IPv6 or a hostname.</strong> IPv4 literals are refused on purpose: an
+	A record on a small box is usually leased or behind NAT, and it goes stale without telling
+	anybody. A dead name that looks alive is worse than no name.</li>
+	<li><strong>DNS carries an address, not a port.</strong> The browser goes to 80 no matter what
+	you wish. If your thing lives on 3000, put a web server in front of it.</li>
+</ul>
+
+<h2>Standing a site up</h2>
+
+<p>Put your server's IPv6 address in the name's target field &mdash; just the address. Then serve
+the name on port 80. Nothing proxies and nothing redirects; the browser connects straight to your
+box with <code>Host: seo.rank</code>, so your web server needs a block that answers to it.</p>
+
+<pre><code>http://seo.rank {
+	root * /var/www/seo.rank
+	file_server
+}</code></pre>
+
+<p>Or in nginx:</p>
+
+<pre><code>server {
+	listen [::]:80;
+	server_name seo.rank;
+	root /var/www/seo.rank;
+}</code></pre>
+
+<p>Then check your work:</p>
+
+<pre><code>moshcode dns resolve seo.rank
+curl -6 http://seo.rank/</code></pre>
+
+<p>If you would rather not type any of that, <code>moshcode template install
+bun-caddy-sqlite</code> writes the Caddyfile, the systemd units and a Bun + SQLite service
+already wired up correctly. <code>moshcode template list</code> shows the rest.</p>
+
+<h2>No server? The name can still be a site</h2>
+
+<p>This is my favourite part and it was almost an afterthought. Paste an RSS or Atom URL into the
+feed box on any name you hold and the pit draws the site for you. A blog feed renders as posts
+&mdash; date, headline, opening lines, link out to the real article. A podcast feed renders as
+episodes with cover art and a player on each one, from the same URL you already submit to Apple
+and Spotify. It is hosted nowhere and it updates whenever your feed does.</p>
+
+<p>A name with both a target and a feed serves the target &mdash; a server you stood up beats a
+page I drew for you. Clear the target and the feed takes back over, which quietly makes the feed
+a soft landing for a site that has fallen down. The pit fetches and caches it for a few minutes,
+so getting linked somewhere busy does not turn into a traffic bill on your feed host.</p>
+
+<h2>Build on it</h2>
+
+<p>Names are the boring half. The interesting half is that you can develop and ship applications
+on this network with the Moshpit dev stack &mdash; the templates, the resolver, the local
+certificate story and the deploy path, all of it assuming from the first line that your app lives
+at a name nobody rented you. That lives at <a href="https://dev.moshcode.sh">dev.moshcode.sh</a>,
+and the CLI that drives all of it installs the usual way:</p>
+
+<pre><code>curl -fsSL https://moshcoding.com/install.sh | sh</code></pre>
+
+<h2>Why I think this matters</h2>
+
+<p>I am not pretending this replaces ICANN or that your bank should move to
+<code>.money</code>. Names outside the root will not work for someone who has not opted in, and
+that is a permanent, structural property of what I built, not a beta limitation I will fix in
+version two.</p>
+
+<p>But there is something worth having in a namespace with no landlord in it. Nobody invoices
+me. Nobody can take <code>.hacker</code> away because a trademark lawyer sent a letter, or
+because a registry got acquired, or because I was on a plane the day a renewal failed. The
+naming layer of the internet has been a rent-collection business for thirty years and most of us
+just accepted it as physics. It is not physics. It is a file that says who is authoritative for
+what, and anybody can write one.</p>
+
+<p>So I wrote one. Go take <code>.anything</code> &mdash;
+<a href="https://app.moshcode.sh/pit">app.moshcode.sh/pit</a>. It is free, and the only thing I
+ask is that you build something on it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>
