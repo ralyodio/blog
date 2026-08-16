@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>458 repos and a spend cap &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-16T18:10:43Z">
+<meta name="description" content="I have 458 git repos and almost no revenue. That was fine when a bet cost a weekend. Now the ante is metered per token, the losing bets cost the same as the winner, and Anthropic reports a spend cap as a 400.">
+</head>
+<body>
+
+<article>
+
+<h1>458 repos and a spend cap</h1>
+
+<p><em>2026-08-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>The count</h2>
+
+<p>I ran a find over my source directory this morning. 458 git repos, spread across 10 GitHub
+orgs. 271 of them are under one org. Some are dead, some are a README and an idea, a few have
+real users. The number that pay for themselves is small enough that I do not need a spreadsheet
+to track it.</p>
+
+<p>That is not a confession, it is the strategy. I have been building on the assumption that you
+cannot pick the winner in advance, so you buy more tickets. It worked when a ticket cost me a
+weekend.</p>
+
+<h2>Tokens are the new bet size</h2>
+
+<p>What changed is not that I got faster. It is that the price of an attempt moved from my time
+to my token bill, and those two things fail differently.</p>
+
+<p>Time is self-limiting. I can only burn one weekend per weekend. If a project is going badly I
+notice, because the cost is coming out of a bucket I feel. Tokens do not work like that. Six
+agents can run in parallel on six repos, and every one of them is spending, and none of them are
+telling me which of the six is the one worth spending on. The cost per attempt went down and the
+number of simultaneous attempts went way up, so the total went up too.</p>
+
+<p>The part nobody prices in: the losing bet costs the same as the winning one. Getting a project
+to the point where you can tell it is a dud is most of the token spend. You do not get a refund
+for finding out.</p>
+
+<h2>The day the meter ran out</h2>
+
+<p>I found the ceiling the dumbest possible way. Every Anthropic key in our vaults started
+returning this:</p>
+
+<pre><code>HTTP 400 invalid_request_error
+"You have reached your specified API usage limits.
+ You will regain access on 2026-09-01 at 00:00 UTC."
+</code></pre>
+
+<p>Two keys, two different vaults, same message. The limit is account level, so swapping keys
+does nothing and provisioning a new one from the same org does nothing.</p>
+
+<p>Two things about that are worth writing down. It comes back as a 400, not a 429, so every app
+I own logged it as a code error and I spent real time debugging a bad request that was actually a
+billing state. And the apps that degrade gracefully degrade silently. One of mine falls back
+through three providers, another swallows the error to keep the page rendering, so a capped key
+does not look like an outage. It looks like a feature that quietly stopped working, with nothing
+in the logs.</p>
+
+<p>That is the honest version of the gamble. It is not that I might spend too much. It is that I
+had no idea how much I was spending until an HTTP error told me, and my own systems were built to
+hide it.</p>
+
+<h2>So what</h2>
+
+<p>I am not going to stop. 458 repos is not a plan I arrived at by accident, and I still think
+volume beats picking, because I have been wrong about which project would land every single time
+I have had an opinion about it.</p>
+
+<p>What I am changing is small. Set the usage limit on purpose instead of discovering it. Treat a
+400 from a model provider as a budget signal, not a bug. Make the fallback chain log loudly when
+it falls back, because a silent downgrade is worse than an error page. And accept that the token
+line is a marketing budget, not an infrastructure cost, because that is what it actually is: I am
+paying to find out which one of these is the winner.</p>
+
+<p>We are all doing this. Spraying projects into the world and hoping one of them sticks, except
+now the ante is metered per token and the house sends you a 400 when your chips run out.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>
