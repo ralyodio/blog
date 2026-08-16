@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your secrets live in six places and one of them is a DM &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-16T09:55:00Z">
+<meta name="description" content="LogicSRC's Credential Sharing OpenSpec is an MIT-licensed CLI for moving secrets between .env, Doppler, Railway and GitHub Secrets, plus end-to-end-encrypted team vaults. Here's the workflow I actually run across 170-odd vaults.">
+</head>
+<body>
+
+<article>
+
+<h1>Your secrets live in six places and one of them is a DM</h1>
+
+<p><em>2026-08-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me. I work on the tool described below, so read it as what it is &mdash; me
+telling you about a thing I build.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>The actual problem</h2>
+
+<p>Count where a secret for one of your projects currently lives. There is a <code>.env</code> on
+your laptop. There is a copy in Doppler, or in Railway's variables tab, because that's what the
+deploy reads. There is a third copy in GitHub Secrets so CI can run. There is a Slack DM from
+eight months ago containing a fourth copy, sent to whoever joined that week. And there is an SSH
+key on exactly one machine, which is why you can't work from the other one.</p>
+
+<p>None of those four copies agree with each other. You find out which one is stale during an
+outage. Meanwhile the honest onboarding instruction for a new teammate is &ldquo;ask me and I'll
+paste it to you,&rdquo; which is a credential-sharing workflow the same way a shoebox is an
+accounting system.</p>
+
+<p>The paid tools solve one slice of this and then own you. Doppler is good at Doppler. Railway
+is good at Railway. Neither is good at &ldquo;here is my <code>.env</code>, put it in both, tell
+me what changed first, and let me undo it.&rdquo; And none of them will hold an SSH key.</p>
+
+<h2>What we built instead</h2>
+
+<p><a href="https://logicsrc.com/credential-sharing">LogicSRC Credential Sharing</a> is an open
+spec plus an MIT-licensed CLI for exactly that gap: provider-neutral secret sync, plus
+end-to-end-encrypted team vaults, with an audit trail and an undo button. It's part of
+<a href="https://logicsrc.com/">LogicSRC</a>, the Profullstack open-spec project &mdash; open
+schemas and conventions for coordination between humans, agents and hosted services. The code is
+at <a href="https://github.com/profullstack/logicsrc">github.com/profullstack/logicsrc</a>.</p>
+
+<p>Install is a shell line and Node 18+, macOS or Linux:</p>
+
+<pre><code>curl -fsSL https://logicsrc.com/install.sh | sh
+logicsrc login</code></pre>
+
+<h2>The loop I actually run</h2>
+
+<p>Ninety percent of my use is three commands. Link a directory to a team project and environment
+once, then push and pull the <code>.env</code> like it's a branch:</p>
+
+<pre><code>logicsrc secrets teams link      # interactive: team &rarr; project &rarr; env
+logicsrc secrets up              # push .env to the linked environment
+logicsrc secrets down            # pull it back
+logicsrc secrets down staging    # pull a different env of the same project</code></pre>
+
+<p>The link lives in <code>~/.config/logicsrc/secrets-links.json</code>, keyed by the directory's
+real path &mdash; deliberately outside the project, so nothing about your secret storage lands in
+the repo. There's no config file to gitignore because there's no config file.</p>
+
+<p>Onboarding a teammate is four commands and no DMs:</p>
+
+<pre><code>logicsrc teams create acme --name "Acme Inc"
+logicsrc teams push acme web prod --env .env
+logicsrc teams invite acme teammate@example.com
+logicsrc teams grant acme web prod teammate@example.com</code></pre>
+
+<p>They run <code>logicsrc teams pull acme web prod --env .env</code> and they're working. When
+they leave, you rotate rather than hoping:</p>
+
+<pre><code>logicsrc credentials rotate acme web prod --approve</code></pre>
+
+<p>I run north of 170 vaults on one team this way, named <code>&lt;project&gt;--&lt;env&gt;</code>.
+It scales past the point where a shared password manager entry stops being funny.</p>
+
+<h2>The part that matters: the server can't read your secrets</h2>
+
+<p>The vaults are end-to-end encrypted and the server is a zero-knowledge relay. It stores three
+things: each member's X25519 public key, the vault's data-encryption key sealed once per member,
+and ciphertext. Adding a member re-seals the vault key <em>to</em> them; it never unwraps the key
+anywhere but on a member's machine. Removing a member is a rotation, not a permission flag flip.</p>
+
+<p>This is the property that makes me comfortable putting SSH keys in it, which the CLI does as a
+first-class thing:</p>
+
+<pre><code>logicsrc secrets ssh push profullstack    # back up ~/.ssh to vault ssh--&lt;you&gt;
+logicsrc secrets ssh list profullstack    # paths, kinds, modes &mdash; never key bodies
+logicsrc secrets ssh pull profullstack    # restore, permission bits intact
+logicsrc secrets ssh agent profullstack   # load into ssh-agent, never onto disk</code></pre>
+
+<p>That last one is the one I like. New machine, new container, someone else's box &mdash; keys
+into the running agent, nothing written to disk to forget about later.</p>
+
+<h2>Anywhere to anywhere, with a dry run and an undo</h2>
+
+<p>The sync side is provider-neutral. Adapters exist for <code>.env</code> files, Doppler
+(project/config-scoped), Railway service variables, GitHub Secrets (repo, org and environment),
+sh1pt tokens for App Store Connect / Play / npm / Docker / Cloudflare, and SSH keys. Run
+<code>logicsrc credentials providers</code> for the live list and what each one can do.</p>
+
+<p>Every move is a plan you can look at before it happens:</p>
+
+<pre><code>logicsrc credentials diff --from env --from-path .env --to railway \
+  --to-project &lt;projectId&gt; --to-config &lt;environmentId&gt;
+
+logicsrc credentials plan --from env --from-path .env --to doppler \
+  --to-project &lt;project&gt; --to-config &lt;config&gt;
+
+logicsrc credentials sync --plan &lt;planId&gt;             # dry run by default
+logicsrc credentials sync --plan &lt;planId&gt; --approve   # actually writes
+logicsrc credentials audit --run &lt;runId&gt; --format markdown
+logicsrc credentials rollback --run &lt;runId&gt;</code></pre>
+
+<p>Three design decisions in there that I'd defend to anyone:</p>
+
+<ul>
+	<li><strong>Dry run is the default.</strong> <code>sync</code> without
+	<code>--approve</code> writes nothing. You have to say the word.</li>
+	<li><strong>Plans, diffs and audits are redacted.</strong> They show key names, targets,
+	fingerprints and timestamps &mdash; never values. You can paste an audit into a ticket.</li>
+	<li><strong>Rollback captures a pre-image.</strong> Undo is a new plan that restores what was
+	there, not a prayer that someone kept a copy.</li>
+</ul>
+
+<h2>Where it's rough</h2>
+
+<p>I'm not going to oversell an 0.1.x. The CLI reports <code>0.1.2</code> as I write this. Two
+things will bite you early:</p>
+
+<ul>
+	<li><code>teams pull</code> writes the decrypted <code>.env</code> into the
+	<em>current directory</em> unless you pass <code>--env &lt;path&gt;</code>. Cd into the
+	project first.</li>
+	<li><code>push</code> auto-creates a vault when <code>&lt;project&gt;--&lt;env&gt;</code>
+	doesn't exist, which means a typo silently makes a new vault instead of erroring. Check
+	<code>logicsrc teams vaults &lt;team&gt;</code> before pushing somewhere new.</li>
+</ul>
+
+<p>Also: <code>logicsrc --help</code> only lists the top-level groups. The interesting
+subcommands live under <code>logicsrc teams --help</code> and
+<code>logicsrc credentials --help</code>. Don't conclude something is missing from the top-level
+help alone &mdash; I have done exactly that to myself.</p>
+
+<h2>Why open spec</h2>
+
+<p>Credential management is the last place you want a black box, and the second-to-last place you
+want a lock-in. The spec is public and the client is MIT, which means you can read what gets sent
+to the relay, verify that the sealing happens on your machine, and fork the thing if we
+disappear. That's not a marketing position, it's the only arrangement that makes sense for
+software whose entire job is holding the keys.</p>
+
+<p>Spec, adapter list and full command reference:
+<a href="https://logicsrc.com/credential-sharing">logicsrc.com/credential-sharing</a>. If you try
+it and something's wrong, the issues are open.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>

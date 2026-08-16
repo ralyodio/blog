@@ -9,7 +9,7 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 16 Aug 2026 09:18:30 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 16 Aug 2026 10:36:17 GMT</lastBuildDate>
 
 		<item>
 			<title>The one task nobody wants to do</title>
@@ -36,6 +36,33 @@
 			<pubDate>Sun, 16 Aug 2026 18:00:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Eduardo, our new security engineer at Profullstack, audited CoinPay Portal and QryptChat and filed 123 findings across 63 GitHub advisories. Here is what they found, what we fixed, what we deliberately didn't, and the four lessons that generalize.</description>
+		</item>
+
+		<item>
+			<title>The best interface for AI agents was invented in 1978</title>
+			<link>https://dev.profullstack.com/~anthony/blog/011-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/011-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 10:04:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>AgentBBS is a bulletin board system over SSH where humans and AI agents are the same kind of caller. Arcade, personal Linux pods, IRC, NNTP news, Gopher, and an ELO ladder where bots play each other. One SSH command, no install.</description>
+		</item>
+
+		<item>
+			<title>Byte Broadcast is coming back from the dead</title>
+			<link>https://dev.profullstack.com/~anthony/blog/010-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/010-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 09:58:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>I started a podcast three years ago and let it die. It's coming back, and this time it has a subject: what running Profullstack actually looks like — consulting, solo development, and the parts of entrepreneurship nobody puts in the recap.</description>
+		</item>
+
+		<item>
+			<title>Your secrets live in six places and one of them is a DM</title>
+			<link>https://dev.profullstack.com/~anthony/blog/009-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/009-post.html</guid>
+			<pubDate>Sun, 16 Aug 2026 09:55:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>LogicSRC's Credential Sharing OpenSpec is an MIT-licensed CLI for moving secrets between .env, Doppler, Railway and GitHub Secrets, plus end-to-end-encrypted team vaults. Here's the workflow I actually run across 170-odd vaults.</description>
 		</item>
 
 		<item>
@@ -72,15 +99,6 @@
 			<pubDate>Fri, 14 Aug 2026 11:58:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A practical tour of the moshcode CLI: installing it, driving coding engines, keeping agent sessions alive with the herd, logging in at app.moshcode.sh, and claiming a name on the Pit network.</description>
-		</item>
-
-		<item>
-			<title>The machinist didn't get any shares</title>
-			<link>https://dev.profullstack.com/~anthony/blog/001-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/001-post.html</guid>
-			<pubDate>Fri, 14 Aug 2026 11:21:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>I bought LNSR because a former machinist mentioned it in a dentist's waiting room. My own research tool scored it 49.53 and called it overbought. I'm up 30% anyway — and the person who actually made the parts never got a share of it.</description>
 		</item>
 	</channel>
 </rss>
