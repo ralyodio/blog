@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 18 Aug 2026 12:16:14 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 18 Aug 2026 13:06:39 GMT</lastBuildDate>
+
+		<item>
+			<title>I was too broke to buy ads, so I built my own ad network</title>
+			<link>https://dev.profullstack.com/~anthony/blog/018-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/018-post.html</guid>
+			<pubDate>Tue, 18 Aug 2026 13:06:39 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>I could never afford to buy advertising, so I built crawlproof.com/ads instead. Six weeks in it serves 59,012 impressions a month across 22 sites. Here are the real numbers, including the third of them that is my own server talking to itself.</description>
+		</item>
 
 		<item>
 			<title>Puzzle nights are up 151% and my team works alone</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 16 Aug 2026 09:55:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>LogicSRC's Credential Sharing OpenSpec is an MIT-licensed CLI for moving secrets between .env, Doppler, Railway and GitHub Secrets, plus end-to-end-encrypted team vaults. Here's the workflow I actually run across 170-odd vaults.</description>
-		</item>
-
-		<item>
-			<title>Somebody posted my audit writeup to HN, and one comment paid for it</title>
-			<link>https://dev.profullstack.com/~anthony/blog/008-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/008-post.html</guid>
-			<pubDate>Sun, 16 Aug 2026 09:05:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>My post about 123 security findings went to Hacker News and went nowhere. The one comment it got described a two-week bug-duty rotation, which is the generalization of the thing I paid an auditor to teach me once.</description>
 		</item>
 	</channel>
 </rss>

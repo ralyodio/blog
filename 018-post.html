@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I was too broke to buy ads, so I built my own ad network &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-18T13:06:39Z">
+<meta name="description" content="I could never afford to buy advertising, so I built crawlproof.com/ads instead. Six weeks in it serves 59,012 impressions a month across 22 sites. Here are the real numbers, including the third of them that is my own server talking to itself.">
+</head>
+<body>
+
+<article>
+
+<h1>I was too broke to buy ads, so I built my own ad network</h1>
+
+<p><em>2026-08-18, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I have never once been able to afford to buy ads. Not "I chose not to". Could not. Every
+time I have priced a campaign for one of my own products, the number came back somewhere
+between a car payment and a joke, and the joke was me. Search ads for developer tooling
+keywords run a few dollars a click. Spend a hundred bucks, get thirty clicks, get one
+signup, delete the account.</p>
+
+<p>So I did the thing developers do instead of solving a problem the normal way. I built my
+own ad network.</p>
+
+<h2>What it is</h2>
+
+<p>It lives at <a href="https://crawlproof.com/ads">crawlproof.com/ads</a>. Publishers add a
+slot, advertisers run a campaign, and it serves three ways:</p>
+
+<ul>
+	<li><code>/ad.js</code>, the normal JSON path, fills any <code>[data-cp-ad]</code> div.</li>
+	<li>An iframe endpoint for sites that ship no JavaScript at all.</li>
+	<li>A plain text endpoint for terminals, so an ad can land in your MOTD or your shell
+	login banner.</li>
+</ul>
+
+<p>Impressions meter server side at fill time, not in the browser, so JavaScript is never
+required for one to count. On the terminal endpoint curl is not a bot to filter out, curl
+is the audience. That was the fun part to write.</p>
+
+<h2>The numbers</h2>
+
+<p>First impression ever recorded: 2026-07-07. Six weeks ago. Last 30 days it served
+<strong>59,012</strong> impressions across 22 active slots and 92 campaigns. The 30 days
+before that: 4,906.</p>
+
+<p>Per week, browser traffic only: 1,929, then 3,259, then 6,661, then 8,502, then 6,555,
+then 9,000. This week is at 7,684 and it is Tuesday.</p>
+
+<p>Biggest publishers are my own properties, which is the whole point.
+<a href="https://bittorrented.com">bittorrented.com</a> at 23,952 and
+<a href="https://profullstack.com">profullstack.com</a> at 22,931, then
+<a href="https://rssamplifier.com">rssamplifier.com</a> at 6,067 and
+<a href="https://ugig.net">ugig.net</a> at 1,812. Fourteen more sites under that.</p>
+
+<h2>The honest part</h2>
+
+<p>An ad network would show you the 59,012 and stop. Here is the rest.</p>
+
+<p>Of that number, 38,683 came from actual browsers, and those represent 11,283 distinct
+visitor ids. That part I am happy with. Another 18,782 are terminal impressions that came
+from <strong>fourteen IP addresses</strong>, most of them a systemd timer on my own dev box
+curling my own endpoint every ten minutes to refresh a sponsor file. That is not an
+audience. That is my server talking to itself.</p>
+
+<p>I only found out how bad it was after tuning the duplicate window from 60 seconds down
+to 5 and backtesting it. Terminal impressions went from 11,970 in one week to 220 in this
+one. Nothing changed except the counting getting honest.</p>
+
+<p>And the money. Every slot and every campaign on the network belongs to the same account,
+mine. The serving code demotes a self deal to the free tier instead of billing it, so 100%
+of delivery is free, and the last time real money moved was 2026-07-29. I have 1,463
+credits sitting there. Funds are not the constraint. Counterparties are.</p>
+
+<h2>So what did I actually get</h2>
+
+<p>I did not get cheap advertising. I got a distribution channel I own, on 22 sites I also
+own, that costs me nothing per impression forever, and 11,283 real people a month now see
+what I am building without a media buy.</p>
+
+<p>The missing piece is you. If you run a site and want to sell inventory, or you want to
+advertise to developers for a fraction of what a search click costs, the slot manager is
+right there. I would very much like this post to age badly.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>
