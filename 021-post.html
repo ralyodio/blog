@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cloning takes a weekend, finding the 38% took months &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-19T08:57:05Z">
+<meta name="description" content="I posted 'hire us or we'll clone your ass in a weekend' on LinkedIn. The cloning part is true and boring. Here is what a weekend does not buy, using two bugs I found in my own product yesterday.">
+</head>
+<body>
+
+<article>
+
+<h1>Cloning takes a weekend, finding the 38% took months</h1>
+
+<p><em>2026-08-19, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I posted this on
+<a href="https://www.linkedin.com/posts/anthonyettinger_hire-us-or-well-clone-your-ass-in-a-weekend-share-7495764248321638402-moY1/">LinkedIn</a>
+yesterday:</p>
+
+<blockquote>
+<p>Hire us or we&apos;ll clone your ass in a weekend. $150/hour on a c2c.</p>
+</blockquote>
+
+<p>It reads like bravado. It is closer to a complaint, and the complaint is about where the value
+went.</p>
+
+<h2>The cloning part is true and boring</h2>
+
+<p>Pick a SaaS product. Auth, billing, a dashboard, a table with filters, a settings page, an API
+with keys. A competent person with an agent can have that standing up over a weekend. I am not
+bragging about a skill here. Everybody who does this work full time knows it, and the ones selling
+six month rebuild engagements know it best of all.</p>
+
+<p>So if the software is the moat, there is no moat. That part of the pitch is a threat you can
+verify yourself in two days.</p>
+
+<h2>What a weekend does not buy</h2>
+
+<p>Here is what I actually did yesterday, on my own product, and it is the argument.</p>
+
+<p>RSS Amplifier is a feed directory. It carries sponsored items in the feeds it publishes, one per
+ten entries, three at most, never last. That rule shipped weeks ago and looked fine. Yesterday I
+went looking at why one feed had no ads in it, and found that the rule places an ad after every
+tenth post and refuses to let one sit at the end, so a feed with exactly ten posts has its only slot
+at the very end and drops it.</p>
+
+<p>Ten is the number an RSS document conventionally carries. In that directory, 32,114 of the 83,940
+feeds with items carry exactly ten. So 38% of the inventory had been unsellable since the day the
+feature shipped, by arithmetic, with no error anywhere and every test passing.</p>
+
+<p>Later the same day, the author enrichment. It reads each blog to work out who writes it. One
+blog on GitHub Pages published no rel=me, no h-card, and one outbound link, to the theme its author
+used. The pass fetched the page, correctly found nobody, and moved on. The author&apos;s GitHub
+account was sitting in the hostname the feed is served from. Ten out of ten of those feeds went from
+naming nobody to naming a real person with two to seven ways to contact them, off a rule that costs
+no network request at all because it is arithmetic on a URL.</p>
+
+<p>You cannot clone either of those. They are not features. They are things that only exist after
+somebody runs the thing against the real web for months and then goes and looks at what it actually
+did, rather than at what it was supposed to do.</p>
+
+<h2>The pitch, said plainly</h2>
+
+<p>The weekend clone gets you the features. It does not get you the person who notices that a
+default of ten is eating 38% of your revenue, or that the identity you need is in the hostname you
+already have.</p>
+
+<p>That gap is the whole business. It is why the rate is what it is, and it is why I keep writing
+down the mistakes in public rather than the finished screenshots. The finished screenshot is the
+part anybody can copy by Sunday.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

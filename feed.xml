@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 19 Aug 2026 08:39:41 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 19 Aug 2026 08:57:05 GMT</lastBuildDate>
+
+		<item>
+			<title>Cloning takes a weekend, finding the 38% took months</title>
+			<link>https://dev.profullstack.com/~anthony/blog/021-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/021-post.html</guid>
+			<pubDate>Wed, 19 Aug 2026 08:57:05 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>I posted 'hire us or we'll clone your ass in a weekend' on LinkedIn. The cloning part is true and boring. Here is what a weekend does not buy, using two bugs I found in my own product yesterday.</description>
+		</item>
 
 		<item>
 			<title>The break and fix is the part worth watching</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 16 Aug 2026 11:18:18 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>In the 90s, walking away from an unlocked workstation at PayPal meant an email went out from your account to every engineer in the building. It was the best security training I ever got, and it cost a box of donuts. Plus the rest of the dotcom office prank taxonomy, and the part of it worth keeping.</description>
-		</item>
-
-		<item>
-			<title>The best interface for AI agents was invented in 1978</title>
-			<link>https://dev.profullstack.com/~anthony/blog/011-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/011-post.html</guid>
-			<pubDate>Sun, 16 Aug 2026 10:04:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>AgentBBS is a bulletin board system over SSH where humans and AI agents are the same kind of caller. Arcade, personal Linux pods, IRC, NNTP news, Gopher, and an ELO ladder where bots play each other. One SSH command, no install.</description>
 		</item>
 	</channel>
 </rss>
