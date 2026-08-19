@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two hours from idea to a live URL &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-19T22:06:00Z">
+<meta name="description" content="I wanted a notification before my team played. Two hours later tipoffwatch.com was live. Why ESPN's free JSON made it possible, what the stack decisions actually cost, and the bugs that only showed up once real data hit it.">
+</head>
+<body>
+
+<article>
+
+<h1>Two hours from idea to a live URL</h1>
+
+<p><em>2026-08-19, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I wanted to know when my team played next. That is the whole idea. Not a sports app, not scores,
+not a feed of takes. A notification an hour before kickoff and another one minute out, for whatever
+teams I care about, and then nothing else from me for the rest of the week.</p>
+
+<p>Every product that does this wants an account, an app install, and a subscription, and then it
+covers four leagues. So I built it. First commit at 15:28 this afternoon, live on the domain by 17:30.
+<a href="https://tipoffwatch.com">tipoffwatch.com</a>.</p>
+
+<h2>Why it could be free</h2>
+
+<p>The thing that decides whether this project exists is the fixture data. StatPal wanted $129 a
+month. That price means the app has to charge, charging means Stripe and a pricing page and a
+support inbox, and now it is a business instead of a notification.</p>
+
+<p>ESPN publishes the same data as public JSON with no key. Two endpoints, one for scoreboards and
+one for the league catalogue. I counted 354 leagues across 17 sports, and soccer alone is 216. A
+date range comes back in a single request, so sweeping a two week horizon across everything is
+about 354 calls. That runs on a hobby box for nothing.</p>
+
+<p>Cricket returns zero leagues and rugby uses numeric slugs, so it is not perfect. It is free,
+which is a different and better property.</p>
+
+<h2>What two hours actually buys</h2>
+
+<p>Not a finished product. It buys a URL that a stranger can load, which is the only thing that
+tells you whether any of the rest is worth doing.</p>
+
+<p>The decisions took longer than the code. Bun instead of Node, because the web server and the
+background workers then share one runtime and one container. Hono with server rendered JSX instead
+of Next, because every control on the site is a plain form and works with JavaScript off. Postgres
+instead of the SQLite service I use everywhere else, because follows and delivery receipts are
+write heavy and I have already been burned by a shared write primary. BullMQ on Redis for the
+reminder fan out. Magic link and passkeys, so there is no password to leak.</p>
+
+<p>I made those calls in about ten minutes because I have made all of them before, and been wrong
+about most of them before. That is the actual speed. Not typing.</p>
+
+<h2>The bill comes after</h2>
+
+<p>There are 49 commits on the repo tonight and most of them are me finding out what I shipped.</p>
+
+<p>Every page rendered in quirks mode for the first hour, because hono/jsx does not emit a doctype
+and the markup looks completely fine until you read the bytes on the wire. The NFL page listed
+"Cal Poly Mustangs at Houston Texans", because ESPN team ids are only unique inside a league and
+20 of the NFL's 32 collide with college football. Boot crashed on a BullMQ job id containing a
+colon. Then ESPN started 403ing every request from the datacenter until I sent a User-Agent it
+liked, and I spent twenty minutes blaming that block for a live score bug that turned out to be my
+own SQL.</p>
+
+<p>The Redis cache I wrote as the defence against a traffic spike sat there uncalled for a week.
+Written, documented, never wired up. Nobody notices that in review. You notice it when something
+is slow and you go looking.</p>
+
+<h2>The point</h2>
+
+<p>Two hours is not a flex about output. It is a limit I set so I would stop designing and go find
+out. Everything genuinely hard about this app, the team id collisions, the retries that could not
+retry, the sync timer that pushed itself six hours further out on every deploy, was invisible from
+the planning side and obvious within minutes of real data hitting real users.</p>
+
+<p>It is live and it is free. Follow a team and forget about it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

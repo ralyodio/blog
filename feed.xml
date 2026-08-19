@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 19 Aug 2026 11:33:18 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 19 Aug 2026 22:06:00 GMT</lastBuildDate>
+
+		<item>
+			<title>Two hours from idea to a live URL</title>
+			<link>https://dev.profullstack.com/~anthony/blog/024-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/024-post.html</guid>
+			<pubDate>Wed, 19 Aug 2026 22:06:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>I wanted a notification before my team played. Two hours later tipoffwatch.com was live. Why ESPN's free JSON made it possible, what the stack decisions actually cost, and the bugs that only showed up once real data hit it.</description>
+		</item>
 
 		<item>
 			<title>The AI storage pitch is a load balancing problem</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 16 Aug 2026 18:10:43 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>I have 458 git repos and almost no revenue. That was fine when a bet cost a weekend. Now the ante is metered per token, the losing bets cost the same as the winner, and Anthropic reports a spend cap as a 400.</description>
-		</item>
-
-		<item>
-			<title>Backlinks and ads without a card</title>
-			<link>https://dev.profullstack.com/~anthony/blog/014-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/014-post.html</guid>
-			<pubDate>Sun, 16 Aug 2026 14:50:47 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Backlinks were quoted to us between $445 and $4,090 each. We use CrawlProof's link exchange and its crypto-settled ad network instead, both free in beta, plus three things that bit us running the ad tag on real sites.</description>
 		</item>
 	</channel>
 </rss>
