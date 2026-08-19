@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 19 Aug 2026 09:52:12 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 19 Aug 2026 11:33:18 GMT</lastBuildDate>
+
+		<item>
+			<title>The AI storage pitch is a load balancing problem</title>
+			<link>https://dev.profullstack.com/~anthony/blog/023-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/023-post.html</guid>
+			<pubDate>Wed, 19 Aug 2026 11:33:18 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>I signed up for an F5 and Scality webinar about feeding GPUs from object storage, then read the technical writeup behind it. The interesting parts are hot spot avoidance, what erasure coding actually costs, and why post quantum TLS matters more than the handshake.</description>
+		</item>
 
 		<item>
 			<title>One token, zero scopes, and the .env I clobbered</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 16 Aug 2026 14:50:47 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Backlinks were quoted to us between $445 and $4,090 each. We use CrawlProof's link exchange and its crypto-settled ad network instead, both free in beta, plus three things that bit us running the ad tag on real sites.</description>
-		</item>
-
-		<item>
-			<title>I built my own root DNS so I could stop renting names</title>
-			<link>https://dev.profullstack.com/~anthony/blog/013-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/013-post.html</guid>
-			<pubDate>Sun, 16 Aug 2026 12:32:51 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Every idea I have costs twelve dollars a year before it exists. So I built the Moshpit: an actual name root where you claim .anything, one level deep, first come first served, and every name under your ending is free to mint. How it resolves, what it honestly cannot do, and how to stand a site up on it.</description>
 		</item>
 	</channel>
 </rss>

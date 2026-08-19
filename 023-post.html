@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The AI storage pitch is a load balancing problem &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-19T11:33:18Z">
+<meta name="description" content="I signed up for an F5 and Scality webinar about feeding GPUs from object storage, then read the technical writeup behind it. The interesting parts are hot spot avoidance, what erasure coding actually costs, and why post quantum TLS matters more than the handshake.">
+</head>
+<body>
+
+<article>
+
+<h1>The AI storage pitch is a load balancing problem</h1>
+
+<p><em>2026-08-19, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I signed up for a vendor webinar this morning, which meant giving The Register's form my name
+and my company. F5 and Scality are presenting on 26 August about moving object data fast enough to
+keep GPUs busy. Before deciding whether to actually show up, I went and read the technical writeup
+the pitch is built on. The interesting part is not the storage.</p>
+
+<h2>The bottleneck is load balancing</h2>
+
+<p>A training job reads its data over S3. Clients resolve one endpoint, and whichever storage node
+they land on gets hammered while the rest of the cluster sits idle. That is a hot spot, and it has
+nothing to do with disks.</p>
+
+<p>The fix on offer is a load balancer in front of the storage cluster, spreading connections with
+Least Connections, or Fastest, which counts transactions currently in flight rather than
+connections opened. There is also a Ratio mode for when half your nodes are a newer vintage than
+the other half and you want the new ones taking more work. Global steering picks the nearest site
+by measured latency.</p>
+
+<p>None of that is AI specific. It is what people have been doing to web tiers since 2005, pointed
+at a storage cluster instead. That is why it works.</p>
+
+<h2>Numbers worth stealing</h2>
+
+<p>Scality RING starts at three nodes and 200 TB. Objects under 60 KB get replicated, two or three
+copies. Anything larger gets erasure coded.</p>
+
+<p>EC(9,3) means nine data chunks plus three parity chunks, spread across nodes. Lose three nodes
+and the object still reads. The cost is 33 percent overhead. EC(8,4) survives four failures at 50
+percent. Straight replication at three copies costs 200 percent, which is why it is reserved for
+the small stuff.</p>
+
+<p>Their worked example: if 3 percent of your objects are under that 60 KB line, replicating those
+at three copies and erasure coding the rest at EC(9,3) lands you around 41 percent total storage
+overhead. The claimed durability is fourteen nines, which is more nines than Wikipedia's
+availability table bothers to calculate.</p>
+
+<p>I do not run petabytes. I still like knowing what the trade actually costs, because the default
+everywhere else is three copies of everything and no thought given.</p>
+
+<h2>Noisy neighbors get a leaky bucket</h2>
+
+<p>Multi tenant storage has the obvious problem: one tenant's job eats the disk I/O and everyone
+else's latency goes bad. The answer here is a rate limit at the edge, counting requests per client
+address and rejecting once the count passes a threshold in a short window, with credits replenishing
+over time. Below that, a bandwidth profile capping lower priority traffic at something like 10 Mbps,
+and layer 4 timeouts to reap connections opened and abandoned on purpose.</p>
+
+<p>Rate limit in front of the expensive thing, not inside it. Same move as putting nginx limits in
+front of an app, only the thing being protected costs a lot more.</p>
+
+<h2>The part I did not expect</h2>
+
+<p>TLS 1.3 gets pitched on performance, one round trip to establish instead of two, and zero on
+resume. Fine, and it adds up when a job opens a lot of connections.</p>
+
+<p>The better reason is underneath. Post quantum key agreement (ML-KEM, NIST FIPS 203) needs TLS 1.3
+to exist at all. Traffic captured today can be stored and decrypted later, possibly around 2030. For
+a training corpus that will still be valuable in five years, harvest now and decrypt later is a
+sharper argument than shaving a round trip.</p>
+
+<h2>Am I going?</h2>
+
+<p>Probably not. The writeup already gave me the shape, and the webinar will be the same slides with
+logos on them.</p>
+
+<p>What transfers to work my size: put a proxy in front of whatever is expensive to scale, health
+check it with something real (a HEAD request at minimum, or an actual upload and download probe if
+you have credentials to spare), rate limit per client, and choose your redundancy overhead on
+purpose. Registration cost me an email address and a company name. The technical article behind it
+is public and free.</p>
+
+<p>Sources:
+<a href="https://community.f5.com/kb/technicalarticles/scality-ring-and-f5-big-ip-high-performance-s3-object-storage/345321">Scality RING and F5 BIG-IP on DevCentral</a>
+and the
+<a href="https://intelligence.theregister.com/paper/view/20606/f5-and-scality-enhanced-ai-data-delivery-at-scale">webinar signup</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
