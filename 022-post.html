@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One token, zero scopes, and the .env I clobbered &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-19T09:52:11Z">
+<meta name="description" content="Setting a single environment variable on a crawler meant picking a token with no permissions, and accidentally overwriting the .env I was only trying to read. Why secrets belong in a vault instead of a file, and how the logicsrc CLI does it.">
+</head>
+<body>
+
+<article>
+
+<h1>One token, zero scopes, and the .env I clobbered</h1>
+
+<p><em>2026-08-19, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I spent this morning setting one environment variable on a crawler. The interesting part was
+everything I had to decide before I could set it.</p>
+
+<h2>The token needed no permissions at all</h2>
+
+<p>RSS Amplifier tries to find the people behind the feeds it indexes. When a feed is served from
+somewhere like <code>someone.github.io</code>, the owner's account name is sitting right there in
+the hostname, so the crawler asks GitHub who that is.</p>
+
+<p>Unauthenticated, the GitHub API allows 60 requests an hour per IP. The crawler works a batch of
+96 feeds every 60 seconds. Only feeds on those platforms hit the API, but it does not take many to
+spend 60. After that the lookups fail as a quiet 403 that reads exactly like "this feed has no
+author" rather than like an error. With a token it is 5,000 an hour.</p>
+
+<p>With <em>any</em> token. The only call it makes is <code>GET /users/&lt;handle&gt;</code>, which
+returns a public profile. That needs zero scopes. So the token I made has every checkbox unticked,
+and if it leaks tomorrow it can read things you could already read without it.</p>
+
+<p>The tempting shortcut was the token my GitHub CLI already holds. That one carries repo and
+workflow scope. It can push code to every repository I own. Putting it in a container that makes
+outbound requests to thousands of strangers' sites, to read public profiles, is a bad trade for
+saving 30 seconds.</p>
+
+<h2>Then I clobbered my own .env</h2>
+
+<p>I wanted to know whether that secret already existed somewhere, so I ran the vault pull to look
+at the key names. It decrypts into a .env in the current directory. The current directory was the
+project root. The project root already had a .env. It wrote straight over it.</p>
+
+<p>Nothing was lost, because the vault happened to be current. That is luck, and luck is the whole
+problem with .env files.</p>
+
+<h2>The copy that rots</h2>
+
+<p>A .env is a second copy of your secrets. It sits unencrypted on whichever laptop pulled it last,
+and it drifts from the thing that is actually running.</p>
+
+<p>This project had already drifted. The vault was missing the email API key completely, because
+that key had been copied from one service to another by hand and never written down. It also held a
+crawl batch size of 25, taken from the web service, while the crawler that actually reads the
+setting was running 300.</p>
+
+<p>Nothing broke. Nothing warned. That is how a bad copy sits there for a year.</p>
+
+<h2>What I do instead</h2>
+
+<p>Set the secret on the platform, then record it in the vault. Do not type the value on a command
+line:</p>
+
+<pre><code>railway variable set --stdin GITHUB_TOKEN --service my-worker</code></pre>
+
+<p>Reading the value from stdin keeps it out of your shell history and out of the process list,
+where anyone else on the box can read it with ps.</p>
+
+<p>logicsrc handles the other half. Vaults are end-to-end encrypted and shared with a team by
+email:</p>
+
+<pre><code>logicsrc teams vaults profullstack           # what already exists
+logicsrc teams pull profullstack myapp prod  # decrypt into .env
+logicsrc teams push profullstack myapp prod  # encrypt it back up</code></pre>
+
+<p>Once a directory is linked you get the short form, <code>logicsrc secrets up</code> and
+<code>logicsrc secrets down</code>. The link lives in your home config keyed by the directory path,
+so nothing about it lands in the repository.</p>
+
+<h2>What will bite you</h2>
+
+<p><code>pull</code> writes into the current directory unless you pass <code>--env</code>. That is
+the one that got me this morning.</p>
+
+<p><code>push</code> creates the vault when it does not already exist, so a typo in the project name
+quietly makes a new empty vault instead of failing. Run <code>teams vaults</code> first.</p>
+
+<p>One vault often serves two services that hold legitimately different values for the same key.
+Crawler settings belong to the crawler, the port belongs to the web app. A two way sync will
+cheerfully copy each one's values onto the other, which is how that stale 25 got there.</p>
+
+<p>The vault is not a backup of your .env. It is where the values live, and the .env is a
+temporary decryption you should be willing to delete at any moment.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+</body>
+</html>
