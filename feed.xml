@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 19 Aug 2026 05:52:49 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 19 Aug 2026 08:39:41 GMT</lastBuildDate>
+
+		<item>
+			<title>The break and fix is the part worth watching</title>
+			<link>https://dev.profullstack.com/~anthony/blog/020-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/020-post.html</guid>
+			<pubDate>Wed, 19 Aug 2026 08:39:41 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A Bluesky post said polished tutorials hide the friction. Here is this morning's friction: I shipped a near-black ad bar onto a blog that is black on white, and the fix turned into two palettes per creative and a tag that measures the page.</description>
+		</item>
 
 		<item>
 			<title>One writer, twelve workers, zero rows</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 16 Aug 2026 10:04:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>AgentBBS is a bulletin board system over SSH where humans and AI agents are the same kind of caller. Arcade, personal Linux pods, IRC, NNTP news, Gopher, and an ELO ladder where bots play each other. One SSH command, no install.</description>
-		</item>
-
-		<item>
-			<title>Byte Broadcast is coming back from the dead</title>
-			<link>https://dev.profullstack.com/~anthony/blog/010-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/010-post.html</guid>
-			<pubDate>Sun, 16 Aug 2026 09:58:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>I started a podcast three years ago and let it die. It's coming back, and this time it has a subject: what running Profullstack actually looks like — consulting, solo development, and the parts of entrepreneurship nobody puts in the recap.</description>
 		</item>
 	</channel>
 </rss>
