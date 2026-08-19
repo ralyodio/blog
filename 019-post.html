@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One writer, twelve workers, zero rows &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-19T05:52:49Z">
+<meta name="description" content="My feed crawler stopped dead on SQLite write locks. It was not the 14GB database, the FTS triggers, the batch size or the quota. It was a dozen concurrent transactions fighting over a lock one of them could hold. The fix was a BullMQ queue with concurrency 1 on Bun.">
+</head>
+<body>
+
+<article>
+
+<h1>One writer, twelve workers, zero rows</h1>
+
+<p><em>2026-08-19, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes,
+then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>My feed crawler stopped. Not slowed down, stopped. It reads something like 55,000 feeds a
+day into SQLite, and one afternoon the writes just queued up behind each other and nothing
+ever landed. Reads were fine. A <code>select 1</code> came back in 100ms all day while the
+crawler sat there emitting one feed every few minutes.</p>
+
+<p>SQLite allows one writer at a time. Everybody knows this. That is the storage engine, not
+a setting you forgot to flip. So I assumed I had simply outgrown it and started looking for
+the thing that was making my one writer slow.</p>
+
+<p>I posted the question at
+<a href="https://bufferoverride.com/q/3/sqlite3-one-write-limitation">bufferoverride.com/q/3</a>,
+mostly so the answer would exist somewhere the next person can find it. Here is what a day
+of measuring actually turned up.</p>
+
+<h2>Everything I blamed first, and why none of it was the cause</h2>
+
+<p>The database was 14GB, about 10GB of it stored article HTML. Obvious culprit. I tested
+it: one insert took 168 seconds, one hundred inserts took 23.7 seconds. Bytes were not the
+currency. I kept the column.</p>
+
+<p>Then the full text search triggers, because writing to an FTS index on every insert
+sounds expensive. Insert with <code>do nothing</code>, with a guarded <code>do update</code>,
+and against a table with no FTS at all: same time. Then batch size, 1000 rows down to 25,
+no change. Then the hosting quota, which was genuinely blown at 924% of rows read. I paid
+to fix it and write latency moved not at all. Then the shared database group, which I
+tested by timing an idle sibling database at the same instants: 370ms while mine took 181
+seconds. The group was healthy.</p>
+
+<p>Five theories, five days worth of plausible, all wrong.</p>
+
+<h2>The measurement that took one minute</h2>
+
+<p>Three lines, run against the live database:</p>
+
+<pre><code>db.execute('update feeds set x = x where id = ?')  -&gt; 389ms
+db.batch([that same statement], 'write')          -&gt; 302s, FAILED
+db.batch([20 of them], 'deferred')                -&gt; 123s, SQLITE_BUSY</code></pre>
+
+<p>The same single statement is fast on its own and times out inside a transaction. That is
+not a slow database. That is contention, and once you see it in that shape the rest is
+obvious.</p>
+
+<p><code>batch(stmts, 'write')</code> opens an explicit transaction. My poller ran four crawl
+workers plus a card pass, a cluster pass, an author pass and an alert pass, and every one of
+them opened its own. A dozen transactions were competing for a lock exactly one of them
+could hold. They did not politely queue. Each waited out the client's 300 second header
+timeout, gave up, retried, and joined the back of the pile again. Throughput was not
+degraded, it was zero, while a plain single statement write kept answering in 389ms.</p>
+
+<h2>The fix is a queue with one worker</h2>
+
+<p>The rule I needed was simple: one write at a time for the whole system, no matter how
+many things want to write. So I stopped letting the crawl workers touch the database at all.
+They fetch, they parse, and they push a job.</p>
+
+<p>It is a BullMQ queue running on Bun, and the entire fix is the worker concurrency:</p>
+
+<pre><code>new Worker('feed-writes', async (job) =&gt; {
+  await storeCrawl(job.data)
+}, { connection, concurrency: 1 })</code></pre>
+
+<p>That one line is the lock. SQLite gets exactly one writer because there is exactly one
+consumer, and it is Redis holding the line instead of a database timing out at 300 seconds.
+Producers are as parallel as I want them to be.</p>
+
+<p>What I did not expect was how much else came along with it. Backpressure became a number
+I can look at, so queue depth tells me I am behind instead of a wall of client timeouts
+telling me nothing. Retries with exponential backoff are already there, and a write that
+fails lands in a failed set I can inspect and replay rather than disappearing into a catch
+block. Fetching decoupled from writing, so I could raise fetch concurrency again without
+adding a single writer.</p>
+
+<p>Bun is doing nothing exotic here, it just runs the worker and starts fast enough that I
+stopped thinking about the process. The whole thing is a few dozen lines.</p>
+
+<p>The other half of the fix was not writing as much in the first place. I sampled 400
+active feeds and only 11.8% had posted anything in the last week, while 15.8% had posted
+nothing in two years, and I was re-reading all of them every hour. Scheduling each feed on
+its own publishing rhythm took demand from 62,700 crawls an hour to about 700. A queue with
+one worker keeps you correct. Crawling less is what made it fast.</p>
+
+<h2>What I would tell myself</h2>
+
+<p>The one writer limit was never the problem. Writing to it from twelve places at once was.
+If your single row write is fast and your transaction hangs, stop reading query plans and go
+count how many things in your process can open a transaction at the same time.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+</article>
+
+</body>
+</html>

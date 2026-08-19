@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 18 Aug 2026 13:06:39 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 19 Aug 2026 05:52:49 GMT</lastBuildDate>
+
+		<item>
+			<title>One writer, twelve workers, zero rows</title>
+			<link>https://dev.profullstack.com/~anthony/blog/019-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/019-post.html</guid>
+			<pubDate>Wed, 19 Aug 2026 05:52:49 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>My feed crawler stopped dead on SQLite write locks. It was not the 14GB database, the FTS triggers, the batch size or the quota. It was a dozen concurrent transactions fighting over a lock one of them could hold. The fix was a BullMQ queue with concurrency 1 on Bun.</description>
+		</item>
 
 		<item>
 			<title>I was too broke to buy ads, so I built my own ad network</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 16 Aug 2026 09:58:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>I started a podcast three years ago and let it die. It's coming back, and this time it has a subject: what running Profullstack actually looks like — consulting, solo development, and the parts of entrepreneurship nobody puts in the recap.</description>
-		</item>
-
-		<item>
-			<title>Your secrets live in six places and one of them is a DM</title>
-			<link>https://dev.profullstack.com/~anthony/blog/009-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/009-post.html</guid>
-			<pubDate>Sun, 16 Aug 2026 09:55:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>LogicSRC's Credential Sharing OpenSpec is an MIT-licensed CLI for moving secrets between .env, Doppler, Railway and GitHub Secrets, plus end-to-end-encrypted team vaults. Here's the workflow I actually run across 170-odd vaults.</description>
 		</item>
 	</channel>
 </rss>
