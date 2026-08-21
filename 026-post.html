@@ -6,7 +6,7 @@
 <title>What each feature actually costs me in AI &mdash; Chovy's Blog</title>
 <link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
 <meta name="date" content="2026-08-21T09:38:12Z">
-<meta name="description" content="Five agents, five git worktrees, one command that reads the engines' own logs. Over 90 percent of a $228 day turned out to be cache reads, and a bug hunt cost 65x what this post did.">
+<meta name="description" content="Five agents, five git worktrees, one command that reads the engines' own logs. Over 90 percent of a $228 day turned out to be cache reads, and a bug hunt cost 65 times what a short blog session did.">
 </head>
 <body>
 
@@ -82,10 +82,16 @@ would just be lying with more steps.</p>
 
 <h2>The part I did not enjoy</h2>
 
-<p>Drafting this post cost $1.60. Chasing down a write-failure log noise problem cost
-$103.52 and did not ship a feature. I would have guessed those were within an order of
-magnitude of each other. They are off by 65x, and I only know that because the number is
-now sitting in a column next to the directory name.</p>
+<p>Two runs from the same morning. A short session in <code>~/blog</code> cost $1.60.
+Chasing log noise in a worktree called <code>write-failure-noise</code> cost $103.52, which
+is 65 times as much. Both of those used to disappear into one monthly invoice with no way
+to tell them apart.</p>
+
+<p>The expensive one was a bug hunt, and bug hunts are the work least able to justify
+themselves afterwards. There is no feature to point at when you are done, just a thing that
+stopped happening. Putting a price next to the directory name does not make that decision
+for me, but it does mean I am making it with the number in front of me instead of finding
+out at the end of the month.</p>
 
 <nav>
 	<a href="../blog">back to my blog postings</a>
