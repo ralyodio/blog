@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What each feature actually costs me in AI &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-21T09:38:12Z">
+<meta name="description" content="Five agents, five git worktrees, one command that reads the engines' own logs. Over 90 percent of a $228 day turned out to be cache reads, and a bug hunt cost 65x what this post did.">
+</head>
+<body>
+
+<article>
+
+<h1>What each feature actually costs me in AI</h1>
+
+<p><em>2026-08-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I have five agents running most days, each one in its own git worktree, and until
+recently I had no idea which piece of work was expensive. The invoice arrives monthly as
+one number. That number tells you nothing about whether the mobile nav fix was worth it.</p>
+
+<p>So <a href="https://moshcode.sh">moshcode</a> grew a <code>cost</code> command. This is
+mine from this morning:</p>
+
+<pre><code>mosh &#9656; /cost --all
+  run       engine  model          cwd                                            in    out   cache   cost
+  798a6b89  claude  claude-opus-5  ~/…/rssamplifier.com/…/write-failure-noise      1.0k  325k  172.8M  $103.52~
+  579e3383  claude  claude-opus-5  ~/…/tipoffwatch.com/…/plays-drives-commentary   952   256k  135.4M  $81.92~
+  4a73f706  claude  claude-opus-5  ~/…/tipoffwatch.com/…/mobile-nav-safe-area      332   75k   21.8M   $15.16~
+  b2d180b5  claude  claude-opus-5  ~/blog                                          36    11k   1.4M    $1.60~
+  cfce82de  claude  claude-opus-5  ~/…/tipoffwatch.com/…/broadcast-fallback        410   129k  38.6M   $26.29~
+
+  total  $228.49~  2.8k in &middot; 797k out &middot; 370.0M cached
+  ~ estimated from published rates; unmarked figures are the engine's own.</code></pre>
+
+<h2>The cwd column is the whole trick</h2>
+
+<p>There is no instrumentation here. Every agent CLI already writes down what it used:
+Claude Code keeps a <code>usage</code> block per message in
+<code>~/.claude/projects/**/*.jsonl</code>, Codex emits cumulative token counts into its
+rollout files, opencode stores a cost it computed itself in SQLite. The command just reads
+those files and normalises them.</p>
+
+<p>What makes it a per-feature ledger instead of a per-day total is that I run one worktree
+per feature. The directory name <em>is</em> the feature name, so grouping runs by working
+directory groups them by what I was building. <code>write-failure-noise</code> cost $103.52.
+<code>mobile-nav-safe-area</code> cost $15.16. I did not have to tag anything.</p>
+
+<h2>Where the money actually goes</h2>
+
+<p>Look at the columns rather than the total. 797k output tokens at Opus 5's published $25
+per million is about $20. The 2.8k of input is around a cent. That leaves roughly $208 of
+the $228 sitting in one column: cache.</p>
+
+<p>Over 90 percent of the bill is the model re-reading context it has already seen. Not
+thinking, not writing code, just carrying the conversation forward. Which reframes the
+optimisation entirely. Shorter prompts save nothing. Fewer, tighter sessions save a lot,
+because a session that runs for four hours pays to re-read its own history on every single
+turn.</p>
+
+<h2>Why the tilde matters</h2>
+
+<p>Every figure above carries a <code>~</code>. I am on a subscription, so none of this
+appeared on a card. The tilde means the number was worked out from published rates, and it
+answers a different question: what would these tokens have cost on the API. Runs from
+engines that price themselves print without the tilde, because that is a measurement rather
+than an arithmetic exercise. Keeping the two visually apart was the part I cared most about
+getting right. A confident wrong number is worse than an honest estimate that says so.</p>
+
+<p>Models with no rate on file are not guessed at. Tokens are counted, the cost comes back
+blank, and the command tells you to price it yourself in
+<code>~/.moshcode/pricing.json</code>. Codex records model names like
+<code>gpt-5.6-sol</code> that appear on no public price list, so inventing a rate for it
+would just be lying with more steps.</p>
+
+<h2>The part I did not enjoy</h2>
+
+<p>Drafting this post cost $1.60. Chasing down a write-failure log noise problem cost
+$103.52 and did not ship a feature. I would have guessed those were within an order of
+magnitude of each other. They are off by 65x, and I only know that because the number is
+now sitting in a column next to the directory name.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

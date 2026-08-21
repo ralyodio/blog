@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 21 Aug 2026 08:43:19 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 21 Aug 2026 09:38:12 GMT</lastBuildDate>
+
+		<item>
+			<title>What each feature actually costs me in AI</title>
+			<link>https://dev.profullstack.com/~anthony/blog/026-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/026-post.html</guid>
+			<pubDate>Fri, 21 Aug 2026 09:38:12 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Five agents, five git worktrees, one command that reads the engines' own logs. Over 90 percent of a $228 day turned out to be cache reads, and a bug hunt cost 65x what this post did.</description>
+		</item>
 
 		<item>
 			<title>Our customers block ads, so we sell them in the terminal</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 18 Aug 2026 12:16:14 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Axios says America is having a meetup explosion: puzzle competitions up 151%, mahjong up 94%, birding and silent book clubs. I run a fully remote shop, so here is what we are asking our team and our clients to do about it.</description>
-		</item>
-
-		<item>
-			<title>A retired tire engineer and 48,933 other feeds</title>
-			<link>https://dev.profullstack.com/~anthony/blog/016-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/016-post.html</guid>
-			<pubDate>Mon, 17 Aug 2026 07:33:51 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>RSS Amplifier indexes 51,960 feeds and 1.4 million items of human-written content. What is actually in there, the best self-written blog descriptions, 4,834 webcomic strips, 521 Internet Archive netlabels, and the parts that are broken.</description>
 		</item>
 	</channel>
 </rss>
