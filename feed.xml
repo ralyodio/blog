@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 21 Aug 2026 09:44:18 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 21 Aug 2026 11:38:47 GMT</lastBuildDate>
+
+		<item>
+			<title>A dead A record and six modules that never loaded</title>
+			<link>https://dev.profullstack.com/~anthony/blog/027-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/027-post.html</guid>
+			<pubDate>Fri, 21 Aug 2026 11:38:47 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A subdomain pointed at a VPS that no longer exists, and nothing was watching it. Fixing it surfaced six modules failing silently behind a green health check, plus a runtime that loaded one more module than the other.</description>
+		</item>
 
 		<item>
 			<title>What each feature actually costs me in AI</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 18 Aug 2026 13:06:39 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>I could never afford to buy advertising, so I built crawlproof.com/ads instead. Six weeks in it serves 59,012 impressions a month across 22 sites. Here are the real numbers, including the third of them that is my own server talking to itself.</description>
-		</item>
-
-		<item>
-			<title>Puzzle nights are up 151% and my team works alone</title>
-			<link>https://dev.profullstack.com/~anthony/blog/017-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/017-post.html</guid>
-			<pubDate>Tue, 18 Aug 2026 12:16:14 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Axios says America is having a meetup explosion: puzzle competitions up 151%, mahjong up 94%, birding and silent book clubs. I run a fully remote shop, so here is what we are asking our team and our clients to do about it.</description>
 		</item>
 	</channel>
 </rss>

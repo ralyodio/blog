@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A dead A record and six modules that never loaded &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-21T11:38:47Z">
+<meta name="description" content="A subdomain pointed at a VPS that no longer exists, and nothing was watching it. Fixing it surfaced six modules failing silently behind a green health check, plus a runtime that loaded one more module than the other.">
+</head>
+<body>
+
+<article>
+
+<h1>A dead A record and six modules that never loaded</h1>
+
+<p><em>2026-08-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Someone asked why <code>mcp.profullstack.com</code> was down. The answer took about four
+minutes to find and was duller than I wanted: the A record pointed at a server that no
+longer exists.</p>
+
+<pre><code>$ dig +short mcp.profullstack.com
+104.36.23.197
+
+$ ping -c3 104.36.23.197
+3 packets transmitted, 0 received, 100% packet loss</code></pre>
+
+<p>That IP is an old VPS in Phoenix. It is still sitting in my SSH config as
+<code>Host profullstack</code> on port 2048, and it is still hardcoded as the deploy target
+in three other repos of mine. When everything else moved to Railway, this one subdomain
+did not come along. Nothing was serving it, so the request just hung until curl gave up.</p>
+
+<p>No monitoring caught it because nothing was watching that hostname. The box did not
+return errors. It stopped answering entirely, which reads as a network problem rather than
+an outage, and I had no reason to look.</p>
+
+<h2>The pnpm trap that hides itself</h2>
+
+<p>Moving it to a new host should have been twenty minutes. It was not, because of one
+detail in how this repo is laid out. Every module under <code>mcp_modules/</code> is its
+own pnpm project with its own lockfile. A root <code>pnpm install</code> does not reach
+any of them.</p>
+
+<p>Here is the part worth remembering. When a module's dependencies are missing, nothing
+crashes. The server boots. <code>/health</code> returns 200. The module simply logs a line
+at warn level and never registers:</p>
+
+<pre><code>Could not load metadata from index.js for module qr-generator:
+Cannot find package 'qrcode'</code></pre>
+
+<p>Six modules were dead that way and every health check I had was green. A liveness probe
+that only asks whether the process is up will tell you the truth and still mislead you. Now
+the deploy script loops over the module directories and installs each one, then prints the
+count it actually loaded.</p>
+
+<h2>Bun loaded 27, Node loaded 26</h2>
+
+<p>I tried both runtimes before wiring up systemd. Node registered 26 modules. Bun
+registered 27. The gap is one line in the csvjson module:</p>
+
+<pre><code>import { version } from './package.json';</code></pre>
+
+<p>Bun supports JSON imports natively. Node rejects that without an import attribute, so
+the module throws on load and disappears. The right fix is to correct the import. The fix I
+shipped today was to run Bun, which I was leaning toward anyway.</p>
+
+<h2>Two things about mise and systemd</h2>
+
+<p>Both cost me a few minutes, so they are written down now. The mise shims directory is on
+the login PATH, but the <code>mise</code> binary itself lives in <code>~/.local/bin</code>,
+which is not. So <code>node</code> resolves over SSH while <code>npm i -g</code> dies with
+<code>mise: command not found</code>.</p>
+
+<p>And systemd does not run a login shell, so <code>ExecStart</code> needs the absolute path
+from <code>mise which bun</code>. If you also set <code>ProtectHome=true</code> on a service
+whose runtime lives under <code>/home</code>, the unit fails with <code>203/EXEC</code> and
+tells you the binary does not exist. It does exist. You just hid it from the service.</p>
+
+<h2>What I actually built</h2>
+
+<p>The deploy is one idempotent script that runs over SSH: ensure the toolchain, pull the
+branch, install root and per-module dependencies, write the systemd unit and the nginx
+vhost, restart, health check. Certificate issuance is gated on the public A record already
+resolving to the host, so a run cannot burn a Let's Encrypt rate limit while DNS still
+points somewhere dead. I ran it three times to prove it was boring.</p>
+
+<p>The site is back, dual stack, with a real certificate. Clients prefer IPv6, so it is
+answering over v6 by default now. That is the next thing that will confuse me at 2am.</p>
+
+<p>The other three repos still point at the dead box. I have not fixed those yet.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
