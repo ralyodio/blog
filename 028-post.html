@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Four genres, and the filter that was eating the other 89% &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-21T16:35:35Z">
+<meta name="description" content="The music section of my release-tracker listed four genres. I blamed the data source. The data source was fine: my own ingest was dropping nine out of every ten releases, and the fix was already sitting in the schema.">
+</head>
+<body>
+
+<article>
+
+<h1>Four genres, and the filter that was eating the other 89%</h1>
+
+<p><em>2026-08-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>
+  The music section of one of my sites listed four genres. Alternative Rock, Emo, Rock,
+  Singer-Songwriter. One release coming in each. It had looked like that for a while and I
+  had a story about why: MusicBrainz is a volunteer database, upcoming releases are thinly
+  covered, nothing to be done.
+</p>
+
+<p>
+  That story was wrong, and the evidence had been sitting in my own code the whole time.
+</p>
+
+<h2>The number that matters</h2>
+
+<p>
+  MusicBrainz knows about 2,228 official releases in a four month forward window. My ingest
+  kept 245 of them.
+</p>
+
+<p>
+  The filter was one line:
+</p>
+
+<pre><code>if (!r.date || r.date.length !== 10) continue;</code></pre>
+
+<p>
+  Ten characters means <code>2026-09-18</code>. Anything shorter got dropped. And it turns
+  out only 11% of upcoming releases carry a full date, because a label announces a quarter
+  long before it announces a day. The other 89% arrive as <code>2026-09</code>.
+</p>
+
+<p>
+  So I was throwing away nine out of every ten releases, and with them most of the genres,
+  because a genre only appears on the site once something in it is coming. Four genres was
+  not a thin source. It was a thin filter, applied to a source that was doing fine.
+</p>
+
+<h2>Precision is data</h2>
+
+<p>
+  The original decision had a good instinct behind it. A comment above the filter said a
+  reminder site that invents a release date is worse than one that admits it does not know.
+  I still agree with that. But it conflated two different things.
+</p>
+
+<p>
+  Storing <code>2026-09</code> as September 18th would be inventing a date. Storing it as
+  September, and saying September, is reporting exactly what you were told. The first is a
+  lie. The second is just a coarser truth, and coarser truth is what most of the music
+  industry publishes ten months a year.
+</p>
+
+<p>
+  The fix was to keep month precision and render it as "September 2026" instead of a day
+  nobody claimed. A bare year still gets dropped, because "sometime in 2026" is not
+  something a reader can act on and it would swamp a four month window with a whole year.
+</p>
+
+<h2>The infrastructure was already there</h2>
+
+<p>
+  Here is the part that stung. I went looking for how much work this would be, and found:
+</p>
+
+<ul>
+  <li>a <code>precision</code> column on the events table, present since the very first migration</li>
+  <li>another adapter, the spaceflight one, already emitting <code>month</code> and doing so from the day it was written</li>
+  <li>a rendering helper that already formatted <code>month</code> and <code>year</code> values correctly</li>
+</ul>
+
+<p>
+  Every piece of it existed and was in use. The music adapter was the only one not
+  participating. The change was one function and about fifteen lines.
+</p>
+
+<h2>The free half</h2>
+
+<p>
+  While I was in there I found a second thing. Genres come from an artist lookup that costs
+  one request, and MusicBrainz rate limits to one request per second, so those requests are
+  the expensive part of the whole job. The response comes back with every genre tag the
+  community has voted on. The code kept the top four and discarded the rest.
+</p>
+
+<p>
+  Those requests were already paid for. An artist reads "rock, alternative rock, indie rock,
+  shoegaze, dream pop" and I was keeping the first four, which are the generic ones, and
+  binning the fifth, which is the one somebody would actually want to browse by. Changing a
+  <code>4</code> to an <code>8</code> cost nothing and added the interesting half back.
+</p>
+
+<h2>Where it landed</h2>
+
+<p>
+  Four genres became forty three. Jazz, shoegaze, post-punk, synthwave, symphonic metal,
+  minimal wave, trap, punk blues, spoken word, noise, power metal, and thirty more. Same
+  source, same API key, same rate limit.
+</p>
+
+<p>
+  Two things slowed it down after the code was right, and both are worth knowing if you run
+  anything similar. The music sync only runs every twelve hours, so the fix sat there doing
+  nothing until I forced a pass. And the artist lookup budget was tuned for the old volume,
+  so I raised it, and then the job hit its wall clock deadline before it could spend the new
+  budget. Coverage is still filling in on its own schedule.
+</p>
+
+<h2>The general version</h2>
+
+<p>
+  Before you conclude a data source is thin, go and measure what your own ingest discards.
+  The source is easy to blame because you cannot see inside it, and your filter is easy to
+  trust because you wrote it and it looked reasonable at the time.
+</p>
+
+<p>
+  Mine looked reasonable. It was also silently rejecting 89% of everything it was handed,
+  and had been since the day I wrote it.
+</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

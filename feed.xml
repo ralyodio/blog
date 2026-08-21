@@ -9,7 +9,25 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 21 Aug 2026 11:38:47 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 21 Aug 2026 16:37:52 GMT</lastBuildDate>
+
+		<item>
+			<title>I listed a GitHub App before building the backend</title>
+			<link>https://dev.profullstack.com/~anthony/blog/029-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/029-post.html</guid>
+			<pubDate>Fri, 21 Aug 2026 16:37:52 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>ThreatCrush has a GitHub App listing now. The app asks for two read permissions and nothing else, on purpose, because widening a published listing is harder than starting narrow. Plus the setup URL that 404d on every installer, and how to tell a draft Marketplace listing from a typo.</description>
+		</item>
+
+		<item>
+			<title>Four genres, and the filter that was eating the other 89%</title>
+			<link>https://dev.profullstack.com/~anthony/blog/028-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/028-post.html</guid>
+			<pubDate>Fri, 21 Aug 2026 16:35:35 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The music section of my release-tracker listed four genres. I blamed the data source. The data source was fine: my own ingest was dropping nine out of every ten releases, and the fix was already sitting in the schema.</description>
+		</item>
 
 		<item>
 			<title>A dead A record and six modules that never loaded</title>
@@ -81,24 +99,6 @@
 			<pubDate>Wed, 19 Aug 2026 08:39:41 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A Bluesky post said polished tutorials hide the friction. Here is this morning's friction: I shipped a near-black ad bar onto a blog that is black on white, and the fix turned into two palettes per creative and a tag that measures the page.</description>
-		</item>
-
-		<item>
-			<title>One writer, twelve workers, zero rows</title>
-			<link>https://dev.profullstack.com/~anthony/blog/019-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/019-post.html</guid>
-			<pubDate>Wed, 19 Aug 2026 05:52:49 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>My feed crawler stopped dead on SQLite write locks. It was not the 14GB database, the FTS triggers, the batch size or the quota. It was a dozen concurrent transactions fighting over a lock one of them could hold. The fix was a BullMQ queue with concurrency 1 on Bun.</description>
-		</item>
-
-		<item>
-			<title>I was too broke to buy ads, so I built my own ad network</title>
-			<link>https://dev.profullstack.com/~anthony/blog/018-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/018-post.html</guid>
-			<pubDate>Tue, 18 Aug 2026 13:06:39 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>I could never afford to buy advertising, so I built crawlproof.com/ads instead. Six weeks in it serves 59,012 impressions a month across 22 sites. Here are the real numbers, including the third of them that is my own server talking to itself.</description>
 		</item>
 	</channel>
 </rss>

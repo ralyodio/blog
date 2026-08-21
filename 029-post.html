@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I listed a GitHub App before building the backend &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-21T16:37:52Z">
+<meta name="description" content="ThreatCrush has a GitHub App listing now. The app asks for two read permissions and nothing else, on purpose, because widening a published listing is harder than starting narrow. Plus the setup URL that 404d on every installer, and how to tell a draft Marketplace listing from a typo.">
+</head>
+<body>
+
+<article>
+
+<h1>I listed a GitHub App before building the backend</h1>
+
+<p><em>2026-08-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>ThreatCrush has a GitHub App listing now. I am going to be straight about what is
+behind it, because the honest version is more useful than the launch version: the listing
+is real, the permission set is deliberate, and the backend does not exist yet.</p>
+
+<p>Here is the whole app, from the public API:</p>
+
+<pre><code>$ gh api /apps/threatcrush --jq '{description, permissions, events}'
+{
+  "description": "ThreatCrush.com free security scan (upgrade for AI analysis)",
+  "permissions": {
+    "metadata": "read",
+    "pull_requests": "read"
+  },
+  "events": []
+}</code></pre>
+
+<p>Two read permissions and no webhook subscriptions. That is the entire grant.</p>
+
+<h2>Deciding the permissions first</h2>
+
+<p><code>metadata: read</code> is mandatory. Every GitHub App gets it and you cannot
+decline it. It covers the repository name, default branch, visibility and topics, and
+nothing inside the repo.</p>
+
+<p><code>pull_requests: read</code> is the one I chose. It reaches the list of files in a
+pull request and the patch for each one. It does not reach your default branch, your
+history, your other branches, or any file that is not in the diff.</p>
+
+<p>There is no <code>contents</code> permission on that list, which is the point. A
+scanner with <code>contents: read</code> on a private repo is holding your entire
+codebase, on every machine that ever sees the installation token. Most security apps ask
+for it, most people click through, and now the vendor has a copy of your source and you
+have a supply chain exposure you did not have last week.</p>
+
+<p>Almost none of that is needed to review a diff. If the job is to say whether the change
+you are about to merge adds a hardcoded credential, the change is the only input. I picked
+the permissions before writing the integration so that the narrow path is the only one
+available to me later. It is much harder to widen a published listing than to start
+wide and promise restraint.</p>
+
+<h2>What it does today, which is nothing</h2>
+
+<p>No client credentials, so the install code cannot be exchanged. No stored installation
+id, no installation webhook, no scanning. Install it and you get a confirmation page that
+tells you to use the CLI, which runs locally and sends your code nowhere:</p>
+
+<pre><code>npm install -g --ignore-scripts @profullstack/threatcrush
+threatcrush scan . --format json</code></pre>
+
+<p>That gap is the work, and it is work from zero.</p>
+
+<h2>The setup URL 404</h2>
+
+<p>When someone installs an app, GitHub bounces them to your setup URL with
+<code>?code=...&amp;installation_id=...&amp;setup_action=install</code>. Mine points at
+<code>https://threatcrush.com/api</code>. In a Next app, <code>app/api/</code> full of
+child routes gives you no route at <code>/api</code> itself, so every single installer
+landed on a 404 and nothing in the codebase hinted at it. Fixed today:</p>
+
+<pre><code>$ curl -so /dev/null -w '%{http_code} %{redirect_url}\n' \
+    'https://threatcrush.com/api?code=x&installation_id=1&setup_action=install'
+302 https://threatcrush.com/github/installed?setup_action=install&installation_id=1</code></pre>
+
+<p>The <code>code</code> is dropped on purpose rather than carried into the page URL,
+where it would leak through the Referer header and browser history.</p>
+
+<h2>Telling a draft listing from a broken link</h2>
+
+<p>A published Marketplace listing answers 200 to a logged out request. A draft one
+answers 404, including to you when you are not signed in as the owner, which looks exactly
+like a typo. Compare against a listing you know is live:</p>
+
+<pre><code>$ curl -so /dev/null -w '%{http_code}\n' https://github.com/marketplace/snyk
+200
+$ curl -so /dev/null -w '%{http_code}\n' https://github.com/marketplace/threatcrush
+404</code></pre>
+
+<p>So mine is still in review. The app installs either way, at
+<a href="https://github.com/apps/threatcrush">github.com/apps/threatcrush</a>, and until
+the backend lands it will politely do nothing.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
