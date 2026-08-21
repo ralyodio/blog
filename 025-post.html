@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Our customers block ads, so we sell them in the terminal &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-21T08:43:19Z">
+<meta name="description" content="Every product we ship is aimed at developers, and developers are the hardest audience on earth to buy. So we built the one ad format nobody else sells: a plain text unit you curl into an MOTD.">
+</head>
+<body>
+
+<article>
+
+<h1>Our customers block ads, so we sell them in the terminal</h1>
+
+<p><em>2026-08-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Almost everything we build is for developers. An AEO auditor that tells you what an LLM
+crawler can actually see. A dependency scanner. A CLI toolbox. An RSS directory. A
+pair-programming tool. The buyer is always someone with a terminal open.</p>
+
+<p>That is a problem, because developers are the single hardest audience to buy. They run
+uBlock. They killed their Facebook years ago. A display campaign aimed at them is money
+handed to a filter list. So when we built our own network at
+<a href="https://crawlproof.com/ads">crawlproof.com/ads</a> we added a format nobody else
+sells: a plain text ad you can put in a terminal.</p>
+
+<h2>What it looks like</h2>
+
+<p>Here is a real one, fetched a minute ago:</p>
+
+<pre><code>$ curl -s https://crawlproof.com/api/ads/motd
++-- SPONSORED -------------------------------------------------------------+
+|                                                                          |
+| AI Summaries &amp; Audio Briefings                                           |
+| Read AI summaries and listen to concise audio briefings for the latest   |
+| stories.                                                                 |
+|                                                                          |
+| Read &amp; Listen -&gt; https://crawlproof.com/a/7x1RTxewqUBU                   |
+|                                                                          |
++------------------------------------------------- ads by crawlproof.com --+</code></pre>
+
+<p>76 columns of ASCII, <code>text/plain</code>, no JavaScript involved. Drop that curl in
+an <code>/etc/update-motd.d</code> script and it is your server's login banner. Put it in a
+CLI tool's output, a BBS login screen, an SSH welcome. It is fetched over HTTP instead of
+embedded in a page, which means it works everywhere a browser does not.</p>
+
+<h2>The part that made it possible</h2>
+
+<p>Ad networks count impressions in the browser, which is why a terminal format normally
+cannot exist. Ours counts server side, at the moment the ad is filled, on every serving
+path. So an impression is recorded without a single line of client script running.</p>
+
+<p>The other half is the user agent rule. Every ad system on earth classifies
+<code>curl</code> and <code>wget</code> as bots and drops them. On this endpoint they are
+classified as terminals, because on this endpoint curl is not a scraper pretending to be a
+person. Curl is the person.</p>
+
+<h2>Prices</h2>
+
+<p>Advertisers pay $0.20 a click and nothing for impressions. Publishers earn $0.05 a click
+at the default bid, more if a higher bidder wins the slot, and withdraw in crypto (USDC,
+USDT, BTC, ETH, SOL) with a $5 minimum and a transaction hash on every payout. No traffic
+minimum, so a hobby box with twelve SSH logins a week earns less than a busy one but is not
+turned away at signup.</p>
+
+<h2>The catch, since there always is one</h2>
+
+<p>Terminals have no storage. No cookie, no localStorage, no visitor id unless the
+publisher passes one in the URL. That makes the audience genuinely anonymous and it also
+makes the impression count easy to inflate by accident. Our own dev box curls the endpoint
+on a timer to refresh a sponsor file, and for a while that machine talking to itself
+was a real chunk of the reported numbers. Tightening the duplicate window from 60 seconds
+to 5 took terminal impressions from 11,970 in one week to 220 in the next. Nothing changed
+except the counting getting honest.</p>
+
+<p>Clicks are still the thing that pays, and clicks cannot be faked by a cron job.</p>
+
+<p>If you ship a CLI, run a shell server, or maintain anything with a login banner, you have
+inventory that no ad network has ever offered to buy from you. That is the whole pitch.
+It is <a href="https://crawlproof.com/ads">right here</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
