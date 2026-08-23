@@ -6,7 +6,7 @@
 <title>Cards and crypto in one checkout &mdash; Chovy's Blog</title>
 <link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
 <meta name="date" content="2026-08-23T10:48:41Z">
-<meta name="description" content="One API call returns a Polygon address and a live Stripe Checkout session. What it took to put both rails behind one page, and the bug that meant the card tab never rendered.">
+<meta name="description" content="One API call returns a Polygon address and a live Stripe Checkout session. Putting both rails behind one page, the bug that meant the card tab never rendered, and what ten days of realtime fraud screening actually logged.">
 </head>
 <body>
 
@@ -100,6 +100,45 @@ time with nothing able to reach it.</p>
 sits also publishes the fee breakdown, the wallet source, redirect targets and,
 on some rows, a user id, to anybody holding a payment id. So it selects the
 column and projects exactly one field back out of it.</p>
+
+<h2>Watching the card rail in real time</h2>
+
+<p>Cards are where the fraud actually lands, so every card checkout gets
+screened before the Stripe session exists. The screen returns allow, verify or
+block. Verify forces 3-D Secure, which moves stolen card liability to the
+issuer. Block returns a 403 and no session is ever created. It fails open on
+purpose, because a bug in screening should not stop payments.</p>
+
+<p>Every decision is logged, and declines and disputes are written back from the
+Stripe webhook. Ten days in:</p>
+
+<pre><code>kind             decision   count   score
+checkout_screen  allow        133      10
+checkout_screen  verify         1      35
+card_declined                  27
+dispute                         6</code></pre>
+
+<p>The diagnosis is more interesting than the total. There are 16 rules and
+exactly two have ever fired. The single verify was three charges under $5 inside
+ten minutes with no buyer email attached, 25 points plus 10, landing exactly on
+the verify threshold. That is card testing, and it got stepped up to 3-D
+Secure.</p>
+
+<p>The other rule is the problem. <code>no-email</code> fired on 134 screens out
+of 134. Nothing passes a buyer email through the create call, so every checkout
+carries the same 10 points and the score only starts to mean anything once a
+velocity rule fires off history. A signal present 100% of the time is not a
+signal.</p>
+
+<p>The bad traffic is concentrated. One operator accounts for 27 of the 33
+decline and dispute events. A second runs two businesses under two different
+webhook domains, tied together by a shared merchant id. That is why the linkage
+rules match on shared webhook host and shared wallet rather than on email: the
+pattern is rotation, so burn one account and open another behind the same
+billing panel. Checking any single account in isolation misses it.</p>
+
+<p>What does not exist yet is the diagnosis surface. Everything above is a SQL
+query I ran by hand. The logging is real, the dashboard is not.</p>
 
 <p>The integration really was one sentence. Finding out that the thing I asked
 for did not render took loading it in a browser, which is still the only way
