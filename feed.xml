@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 21 Aug 2026 16:37:52 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 23 Aug 2026 10:48:41 GMT</lastBuildDate>
+
+		<item>
+			<title>Cards and crypto in one checkout</title>
+			<link>https://dev.profullstack.com/~anthony/blog/030-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/030-post.html</guid>
+			<pubDate>Sun, 23 Aug 2026 10:48:41 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>One API call returns a Polygon address and a live Stripe Checkout session. What it took to put both rails behind one page, and the bug that meant the card tab never rendered.</description>
+		</item>
 
 		<item>
 			<title>I listed a GitHub App before building the backend</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 19 Aug 2026 08:57:05 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>I posted 'hire us or we'll clone your ass in a weekend' on LinkedIn. The cloning part is true and boring. Here is what a weekend does not buy, using two bugs I found in my own product yesterday.</description>
-		</item>
-
-		<item>
-			<title>The break and fix is the part worth watching</title>
-			<link>https://dev.profullstack.com/~anthony/blog/020-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/020-post.html</guid>
-			<pubDate>Wed, 19 Aug 2026 08:39:41 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A Bluesky post said polished tutorials hide the friction. Here is this morning's friction: I shipped a near-black ad bar onto a blog that is black on white, and the fix turned into two palettes per creative and a tag that measures the page.</description>
 		</item>
 	</channel>
 </rss>

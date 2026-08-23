@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cards and crypto in one checkout &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-23T10:48:41Z">
+<meta name="description" content="One API call returns a Polygon address and a live Stripe Checkout session. What it took to put both rails behind one page, and the bug that meant the card tab never rendered.">
+</head>
+<body>
+
+<article>
+
+<h1>Cards and crypto in one checkout</h1>
+
+<p><em>2026-08-23, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I wanted to know how much of a payments integration is left over once you can
+just ask for it. So I asked for one: cards and crypto, same checkout. What
+follows is what actually ran, including the part where it did not work.</p>
+
+<h2>One call, two rails</h2>
+
+<p>CoinPay's create endpoint takes a <code>payment_method</code> of
+<code>crypto</code>, <code>card</code>, or <code>both</code>.</p>
+
+<pre><code>$ curl -s -X POST https://coinpayportal.com/api/payments/create \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Content-Type: application/json' \
+    -d '{
+      "business_id": "41ba69c3-...",
+      "amount_usd": 25.00,
+      "currency": "usdc_pol",
+      "payment_method": "both"
+    }'</code></pre>
+
+<p>That comes back with a freshly derived Polygon address and a live Stripe
+Checkout session, from the same request:</p>
+
+<pre><code>{
+  "payment_address": "0x7f57E618d4C0dF60c1d5299BFAc9126A76384f1D",
+  "crypto_amount": "25.01250125",
+  "metadata": {
+    "stripe_checkout_url": "https://checkout.stripe.com/c/pay/cs_live_..."
+  }
+}</code></pre>
+
+<p>$25.00 became 25.01250125 USDC because the one cent network fee rides on the
+customer side rather than coming out of the settlement. The address is good for
+15 minutes.</p>
+
+<h2>The customer sees one page</h2>
+
+<p>Send them to <code>/pay/{payment_id}</code> and they get tabs: pay with
+crypto, or pay with card. The card tab hands off to Stripe.</p>
+
+<p>The useful part is behind that. Both rails fire the same
+<code>payment.confirmed</code> webhook, at the same URL, with the same signature
+header. <code>metadata.payment_rail</code> tells you which one it was. Your
+fulfillment code has one path, not two, and the branch (if you even want one) is
+a field read.</p>
+
+<h2>What still needs a human</h2>
+
+<p>Cards run through Stripe Connect, so each business does Express onboarding
+once:</p>
+
+<pre><code>$ coinpay card connect onboard &lt;business-id&gt; --country US --email me@example.com</code></pre>
+
+<p>That prints a link to a hosted Stripe form asking for bank details and a tax
+ID, and no CLI is going to fill that in for you. The country is locked at
+account creation, so get it right the first time. The crypto side needs none of
+it; funds forward straight to your wallet.</p>
+
+<p>Fees: 0.5% on crypto. On cards the platform fee goes through Stripe's
+<code>application_fee_amount</code>, 0.5% on Pro and 1.0% on Free, on top of
+whatever Stripe takes.</p>
+
+<h2>The part where it did not work</h2>
+
+<p>I wired all that up, loaded the checkout in an actual browser, and got the
+crypto panel with no card tab. Not a fluke of my account either. Every dual rail
+checkout, for every merchant.</p>
+
+<p>The page decides whether to offer a card tab by reading
+<code>payment.metadata.stripe_checkout_url</code> off the public
+<code>GET /api/payments/{id}</code>. That endpoint selects an allowlist of
+columns, and <code>metadata</code> was not on it. So the URL never arrived and
+the tab never rendered. The markup had been shipping in the bundle the whole
+time with nothing able to reach it.</p>
+
+<p>The fix is one column, with a catch. Returning <code>metadata</code> as it
+sits also publishes the fee breakdown, the wallet source, redirect targets and,
+on some rows, a user id, to anybody holding a payment id. So it selects the
+column and projects exactly one field back out of it.</p>
+
+<p>The integration really was one sentence. Finding out that the thing I asked
+for did not render took loading it in a browser, which is still the only way
+anyone finds that out.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
