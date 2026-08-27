@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 23 Aug 2026 10:57:34 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 27 Aug 2026 07:05:38 GMT</lastBuildDate>
+
+		<item>
+			<title>Four days at Lake Almanor</title>
+			<link>https://dev.profullstack.com/~anthony/blog/031-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/031-post.html</guid>
+			<pubDate>Thu, 27 Aug 2026 07:05:38 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Four days off the computer at Lake Almanor with two friends from high school. The backpack with all the warez stayed home, so the dispensary in Westwood and the smoke shop in Chester restocked the trip in one afternoon.</description>
+		</item>
 
 		<item>
 			<title>Cards and crypto in one checkout</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 19 Aug 2026 09:52:11 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Setting a single environment variable on a crawler meant picking a token with no permissions, and accidentally overwriting the .env I was only trying to read. Why secrets belong in a vault instead of a file, and how the logicsrc CLI does it.</description>
-		</item>
-
-		<item>
-			<title>Cloning takes a weekend, finding the 38% took months</title>
-			<link>https://dev.profullstack.com/~anthony/blog/021-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/021-post.html</guid>
-			<pubDate>Wed, 19 Aug 2026 08:57:05 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>I posted 'hire us or we'll clone your ass in a weekend' on LinkedIn. The cloning part is true and boring. Here is what a weekend does not buy, using two bugs I found in my own product yesterday.</description>
 		</item>
 	</channel>
 </rss>
