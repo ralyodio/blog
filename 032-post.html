@@ -6,7 +6,7 @@
 <title>I cloned myself at chovy.com &mdash; Chovy's Blog</title>
 <link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
 <meta name="date" content="2026-08-28T22:46:08Z">
-<meta name="description" content="chovy.com went from a 240-character microblog to an AI clone of me: a four-line advisor persona, an isolated coding worker on its own Railway service, and a roster where human teammates and AI workers are counted separately.">
+<meta name="description" content="chovy.com went from a 240-character microblog to an AI clone of me: a four-line advisor persona, an isolated coding worker on its own service, and a roster where human teammates and AI workers are counted separately.">
 </head>
 <body>
 
@@ -45,7 +45,7 @@ happens server side. The browser never sees the provider key.</p>
 
 <h2>The clone does not write the code</h2>
 
-<p>The talking part and the building part are two different Railway services out
+<p>The talking part and the building part are two different services out
 of the same repo. The coding worker is its own container with its own volume and
 its own bearer token, and it keeps one local Git workspace per organization and
 worker pair. It streams five kinds of event back over SSE: status, terminal,
@@ -75,7 +75,7 @@ at once, not a replacement for four people.</p>
 
 <h2>Two things I got wrong first</h2>
 
-<p>The data store lived on the service filesystem. Railway replaces an instance
+<p>The data store lived on the service filesystem. Replace an instance
 and the workspace is gone. It is on a mounted volume now, at a path the app reads
 from an environment variable instead of assuming.</p>
 

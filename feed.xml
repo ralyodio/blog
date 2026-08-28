@@ -9,7 +9,7 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 28 Aug 2026 22:46:08 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 28 Aug 2026 22:50:46 GMT</lastBuildDate>
 
 		<item>
 			<title>I cloned myself at chovy.com</title>
@@ -17,7 +17,7 @@
 			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/032-post.html</guid>
 			<pubDate>Fri, 28 Aug 2026 22:46:08 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>chovy.com went from a 240-character microblog to an AI clone of me: a four-line advisor persona, an isolated coding worker on its own Railway service, and a roster where human teammates and AI workers are counted separately.</description>
+			<description>chovy.com went from a 240-character microblog to an AI clone of me: a four-line advisor persona, an isolated coding worker on its own service, and a roster where human teammates and AI workers are counted separately.</description>
 		</item>
 
 		<item>
