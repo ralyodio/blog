@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 27 Aug 2026 07:05:38 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 28 Aug 2026 22:46:08 GMT</lastBuildDate>
+
+		<item>
+			<title>I cloned myself at chovy.com</title>
+			<link>https://dev.profullstack.com/~anthony/blog/032-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/032-post.html</guid>
+			<pubDate>Fri, 28 Aug 2026 22:46:08 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>chovy.com went from a 240-character microblog to an AI clone of me: a four-line advisor persona, an isolated coding worker on its own Railway service, and a roster where human teammates and AI workers are counted separately.</description>
+		</item>
 
 		<item>
 			<title>Four days at Lake Almanor</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 19 Aug 2026 11:33:18 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>I signed up for an F5 and Scality webinar about feeding GPUs from object storage, then read the technical writeup behind it. The interesting parts are hot spot avoidance, what erasure coding actually costs, and why post quantum TLS matters more than the handshake.</description>
-		</item>
-
-		<item>
-			<title>One token, zero scopes, and the .env I clobbered</title>
-			<link>https://dev.profullstack.com/~anthony/blog/022-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/022-post.html</guid>
-			<pubDate>Wed, 19 Aug 2026 09:52:11 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Setting a single environment variable on a crawler meant picking a token with no permissions, and accidentally overwriting the .env I was only trying to read. Why secrets belong in a vault instead of a file, and how the logicsrc CLI does it.</description>
 		</item>
 	</channel>
 </rss>

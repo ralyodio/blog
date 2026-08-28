@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I cloned myself at chovy.com &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-28T22:46:08Z">
+<meta name="description" content="chovy.com went from a 240-character microblog to an AI clone of me: a four-line advisor persona, an isolated coding worker on its own Railway service, and a roster where human teammates and AI workers are counted separately.">
+</head>
+<body>
+
+<article>
+
+<h1>I cloned myself at chovy.com</h1>
+
+<p><em>2026-08-28, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>chovy.com used to be a microblog. Static index.html, a posts.json, nothing over
+240 characters, a CNAME file pointing at GitHub Pages. Publishing was a commit.</p>
+
+<p>It is now a clone of me.</p>
+
+<h2>The clone is four lines long</h2>
+
+<p>The advisor that answers at chovy.com runs on a system prompt of four
+sentences. The first one is "You are Chovy, Anthony Ettinger's practical AI
+advisor." Two more tell it to help founders make decisions and to be honest
+about what it does not know.</p>
+
+<p>The fourth is the only one I would fight for: never claim to have run tools,
+changed code, or accessed private systems unless the application explicitly
+supplied evidence. A clone of me that invents a deploy it did not do is worse
+than no clone, because people would believe it. Everything the thing says it
+did, it has a record for.</p>
+
+<p>Inference goes through Abliteration over an OpenAI compatible endpoint, and it
+happens server side. The browser never sees the provider key.</p>
+
+<h2>The clone does not write the code</h2>
+
+<p>The talking part and the building part are two different Railway services out
+of the same repo. The coding worker is its own container with its own volume and
+its own bearer token, and it keeps one local Git workspace per organization and
+worker pair. It streams five kinds of event back over SSE: status, terminal,
+file, completed, failed.</p>
+
+<p>The web service validates the sign in cookie before it forwards anything, and
+the worker will not talk to anyone without the internal token. So the advisor can
+say a run started, and there is a real process on the other end of that claim.</p>
+
+<h2>Then we cloned the rest of the team</h2>
+
+<p>The workspace roster holds two kinds of worker and never blurs them. AI workers
+start inside a role and a project boundary and cannot see past it. Human workers
+claim a seat by signing up with the exact work email you invited, so I add
+preshy@profullstack.com and Preshy owns that seat the moment he signs up. There
+is no verification loop, on purpose. The seat is the invite.</p>
+
+<p>The header counts them separately, so you always read something like "3 human,
+5 AI" rather than a single team number that hides which is which. When a task
+goes to a human it says so, and it waits for a person. When it goes to an AI
+worker it runs in the sandbox and files evidence.</p>
+
+<p>The humans it is modeled on are at
+<a href="https://profullstack.com/teams">profullstack.com/teams</a>. That page is
+still the honest version of the team. The clones are a way to be in more places
+at once, not a replacement for four people.</p>
+
+<h2>Two things I got wrong first</h2>
+
+<p>The data store lived on the service filesystem. Railway replaces an instance
+and the workspace is gone. It is on a mounted volume now, at a path the app reads
+from an environment variable instead of assuming.</p>
+
+<p>Retention needed a line drawn through it. Private advisor chats, worker
+sessions, runtime events and notifications age out on a schedule. Work products
+and workspace knowledge never do. The conversation is disposable. What the
+conversation produced is not.</p>
+
+<p>Eighty three commits since the eighteenth, forty nine of them on the first
+day. The microblog is still in Git if I want it back.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
