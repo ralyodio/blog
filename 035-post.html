@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Moshpit resolves &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-30T10:49:23Z">
+<meta name="description" content="alt.2600 is not a domain and never will be, but it answers a stock curl over HTTPS. The Moshpit namespace is in beta: claim an ending for $5, mint names under it for nothing, no renewals.">
+</head>
+<body>
+
+<article>
+
+<h1>The Moshpit resolves</h1>
+
+<p><em>2026-08-30, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>This works right now, from a normal shell, with a stock curl and no
+flags:</p>
+
+<pre><code>$ curl -s https://alt.2600 | pandoc -f html -t gfm
+alt.2600
+
+# alt.2600
+
+served over Moshpit.</code></pre>
+
+<p><code>alt.2600</code> is not a domain. Ask a public resolver for it and you get
+nothing back, because <code>.2600</code> is not in the ICANN root and never will
+be. It still answered, over HTTPS, with a certificate my machine accepted.</p>
+
+<p>That is the Moshpit, and it is far enough along to hand out. You can register
+a name at <a href="https://app.moshcode.sh/pit">app.moshcode.sh/pit</a> today.</p>
+
+<h2>What you are actually buying</h2>
+
+<p>The namespace is one level deep and first come first served. You claim an
+<em>ending</em>, and every name under it is yours to mint for nothing. Hold
+<code>.eggs</code> and <code>blue.eggs</code>, <code>scrambled.eggs</code> and
+anything else you think of are yours, forever, at no extra cost.</p>
+
+<p>Five dollars an ending, two dollars a name, paid once. Nothing renews and
+nothing lapses. No name you hold can drop because an invoice went to an address
+you stopped reading, which is the single worst property of the system this one
+sits next to.</p>
+
+<p>As of this morning there are 17,968 endings claimed and 17,760 of them are for
+sale. You can also point an ending at another one you own, so
+<code>.agentic</code> aliased to <code>.agent</code> makes
+<code>foo.agentic</code> resolve to <code>foo.agent</code>, with any name you
+exempt staying where it is.</p>
+
+<h2>Turning it on</h2>
+
+<p>One command, on any machine that should see these names:</p>
+
+<pre><code>sudo moshcode dns enable</code></pre>
+
+<p>That routes Moshpit endings to a local bridge, installs the local CA so HTTPS
+verifies, and points names at the pinned proxy. There are <code>--no-trust</code>
+and <code>--no-proxy</code> if you want less of it. <code>moshcode dns status</code>
+reports the bridge and the routing separately, which is the triage command when
+something looks wrong.</p>
+
+<p>It is deliberately not automatic. The installer does not do it, upgrading does
+not do it, and no other command does it as a side effect. Rewriting somebody's
+resolver without being asked is how you break their machine, and we did break one
+that way once.</p>
+
+<p>The other half of that policy is that <strong>clearnet wins by default</strong>.
+The resolver only answers where the legacy root has nothing, so a name that
+already works keeps working and the pit never gets to shadow it. A resolver that
+silently redirected a domain you could already reach would be indistinguishable
+from a hijack. If you want the pit to outrank DNS you have to ask for it by hand.</p>
+
+<h2>Hosting something at a name</h2>
+
+<p>Put your server's IPv6 address in the "points at" box, or a hostname. IPv4
+literals are refused on purpose: an A record on a small host is usually leased or
+NATed and goes stale without telling anybody. Then serve the name on port 80:</p>
+
+<pre><code>server {
+  listen [::]:80;
+  server_name seo.rank;
+  root /var/www/seo.rank;
+}</code></pre>
+
+<p>Caddy wants <code>http://seo.rank { ... }</code> and the scheme is required
+rather than a typo. No public CA will issue a certificate for an ending that is
+not in the DNS root, so Caddy's automatic HTTPS has to stay off. That is also why
+the trust step above exists, and why it is honest to describe this as a local CA
+rather than as HTTPS in the sense you are used to.</p>
+
+<p>The browser connects straight to your box and sends
+<code>Host: name.ending</code>. Nothing proxies and nothing redirects. A port
+other than 80 only works in the pit's own <code>/n/</code> view, because DNS
+carries an address and has nowhere to put a port.</p>
+
+<p>If you do not run a server, paste an RSS or Atom URL into the feed box on a
+name you hold and the pit draws the site for you. Blog feeds render as posts,
+podcast feeds render as episodes with a player, and it is cached for a few
+minutes so a name that gets linked somewhere busy does not become traffic on your
+feed host. A name with both a target and a feed serves the target, so the feed
+doubles as a soft landing for a site that has gone down.</p>
+
+<p>There is a publish API too. One POST, bearer token, upserts on the slug, so a
+webhook that fires twice updates one post instead of making two.</p>
+
+<h2>What beta means here</h2>
+
+<p>Pointed names work. <code>alt.2600</code>, <code>chovy.hacker</code> and
+<code>seo.rank</code> all return 200 with a clean TLS verification on a machine
+that has run <code>dns enable</code>.</p>
+
+<p>Parked names do not have HTTPS. <code>curl https://blue.eggs</code> fails the
+certificate check, because nothing has issued one for a name that does not point
+anywhere yet. Over plain HTTP it does the right thing and 302s to its page on the
+pit, which is a fix from last week, and before that it landed on a Railway 404
+instead.</p>
+
+<p>So: names resolve, names serve, names have certificates once they point
+somewhere, and the parking path stopped lying. That is enough to be worth
+claiming an ending over.</p>
+
+<p><a href="https://app.moshcode.sh/pit">app.moshcode.sh/pit</a>. Bring
+<code>moshcode</code> 0.63.0 or newer, and read what
+<code>dns enable</code> prints before you agree to it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
