@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Why I built DiskPush &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-30T00:28:43Z">
+<meta name="description" content="FileZilla re-uploads a folder because one file changed; rsync does not, but it means remembering the flags. I wanted the two pane browser on top of the rsync engine, could not find it, so we built it.">
+</head>
+<body>
+
+<article>
+
+<h1>Why I built DiskPush</h1>
+
+<p><em>2026-08-30, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>FileZilla is a good file browser. It is also perfectly willing to re-upload
+three hundred megabytes because I changed one file in the folder. rsync has not
+done that since the nineties, but reaching for rsync means remembering which of
+its couple hundred flags I wanted, and getting the trailing slash right, and
+quoting a remote path that has a space in it.</p>
+
+<p>So I went looking for the obvious product: a two pane file browser that
+transfers with rsync. The rsync GUIs I found are shaped like backup job editors.
+They are built around saving a profile and scheduling a nightly run, not around
+opening a server, looking at it, and pushing a directory right now. The file
+managers I actually liked were the other way round: good panes, SFTP
+underneath, file by file, no idea what changed.</p>
+
+<p>Nobody had built the middle. So we built our own, with blackjack.</p>
+
+<h2>The product is the defaults</h2>
+
+<p>The point of DiskPush is that you should not have to know rsync to get rsync
+behaviour. This:</p>
+
+<pre><code>diskpush ./dist/ prod:/srv/app/</code></pre>
+
+<p>runs exactly this:</p>
+
+<pre><code>rsync --archive --partial-dir=.rsync-partial --human-readable \
+      --itemize-changes --info=progress2 ./dist/ prod:/srv/app/</code></pre>
+
+<p>Metadata preserved, interrupted transfers resume from their partial data,
+unchanged files skipped. Re-running a finished job moves almost nothing, which
+is the entire reason to want rsync in the first place. And
+<code>diskpush --print-args</code> prints the command for any job before it runs,
+so you never have to take my word for what it is doing.</p>
+
+<h2>Server to server, with nothing in the middle</h2>
+
+<p>A single rsync process cannot have two remote endpoints. That is why most
+tools quietly pull the files down to your laptop and push them back up. DiskPush
+connects to the source host and starts rsync there, with the destination as its
+remote:</p>
+
+<pre><code>diskpush server-a:/data/ server-b:/backup/</code></pre>
+
+<p>The payload goes A to B over rsync's own SSH connection. My desktop holds the
+control session and reads progress off it. Directory listings and progress
+counters cross my machine because the panes have to render. File contents do
+not, and there is no DiskPush relay for them to cross instead.</p>
+
+<h2>Built to be handed a delete flag</h2>
+
+<p>The other reason I wanted to own this: a mirror mode is a foot gun and I
+wanted to hold the trigger.</p>
+
+<p>rsync is spawned with <code>shell: false</code> and an argument array, so a
+path containing backticks or a semicolon is a path. Remote arguments get
+<code>--protect-args</code> against anything older than rsync 3.2.4, because
+without it the remote login shell expands the remote path and your directory
+named <code>$HOME backup</code> becomes two arguments. A delete-enabled job
+cannot be constructed until its dry run has been reviewed. And
+<code>-- --delete</code> in the pass-through is refused outright, because it
+would turn a sync into a mirror behind the preview that exists to stop exactly
+that.</p>
+
+<h2>Two things I got wrong</h2>
+
+<p>The packaged desktop app shipped with an empty <code>node_modules</code> for
+a while. electron-builder was doing its own install inside the staging directory
+and pnpm's symlinked layout did not survive the copy, so the bundle looked right
+and started to nothing. And the launcher crashed on boxes where the Chromium
+sandbox cannot start, which is most sandboxed build environments and was every
+machine I tested the installer on.</p>
+
+<p>Both are fixed in 0.1.2, which is where it is now.</p>
+
+<pre><code>curl -fsSL https://diskpush.com/install.sh | sh</code></pre>
+
+<p>Installs the CLI, and the desktop app if the machine has a desktop. Everything
+lands under your home directory, no root and no package manager. Add
+<code>-s -- --cli-only</code> on a server. It needs rsync and an SSH client
+locally, and rsync on whatever it talks to.</p>
+
+<p>MIT, source at
+<a href="https://github.com/profullstack/diskpush">github.com/profullstack/diskpush</a>,
+docs at <a href="https://diskpush.com">diskpush.com</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

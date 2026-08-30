@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 28 Aug 2026 22:50:46 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 30 Aug 2026 00:28:43 GMT</lastBuildDate>
+
+		<item>
+			<title>Why I built DiskPush</title>
+			<link>https://dev.profullstack.com/~anthony/blog/033-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/033-post.html</guid>
+			<pubDate>Sun, 30 Aug 2026 00:28:43 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>FileZilla re-uploads a folder because one file changed; rsync does not, but it means remembering the flags. I wanted the two pane browser on top of the rsync engine, could not find it, so we built it.</description>
+		</item>
 
 		<item>
 			<title>I cloned myself at chovy.com</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 19 Aug 2026 22:06:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>I wanted a notification before my team played. Two hours later tipoffwatch.com was live. Why ESPN's free JSON made it possible, what the stack decisions actually cost, and the bugs that only showed up once real data hit it.</description>
-		</item>
-
-		<item>
-			<title>The AI storage pitch is a load balancing problem</title>
-			<link>https://dev.profullstack.com/~anthony/blog/023-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/023-post.html</guid>
-			<pubDate>Wed, 19 Aug 2026 11:33:18 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>I signed up for an F5 and Scality webinar about feeding GPUs from object storage, then read the technical writeup behind it. The interesting parts are hot spot avoidance, what erasure coding actually costs, and why post quantum TLS matters more than the handshake.</description>
 		</item>
 	</channel>
 </rss>
