@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Why I wrote hqtui &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-08-30T10:16:16Z">
+<meta name="description" content="Every TypeScript terminal UI library is either abandoned since 2015, a React flexbox layout engine, or a native binary behind FFI. I wanted btop quality with zero dependencies, so I wrote hqtui.">
+</head>
+<body>
+
+<article>
+
+<h1>Why I wrote hqtui</h1>
+
+<p><em>2026-08-30, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I wanted a btop looking dashboard written in TypeScript. Nothing exotic.
+Bordered panels, a CPU graph that does not look like it was drawn in 1994, a
+process table, a meter per core, running under Bun and over SSH. Like any
+reasonable person I went looking for the library first.</p>
+
+<h2>What is actually on the shelf</h2>
+
+<p><strong>blessed</strong> is still the answer everyone gives you. Almost 12,000
+stars. Its most recent release on npm is 0.1.81, published on 3 September 2015,
+and it has 206 open issues. The repository has had commits since then. The
+package has not.</p>
+
+<p><strong>neo-blessed</strong> was the fork that was going to fix that. Last
+publish, May 2022. <strong>blessed-contrib</strong>, which is where all the
+charts live and which has 15,700 stars, last published in June 2022 and still
+resolves chalk 1.x. <strong>react-blessed</strong> is pinned to react-reconciler
+0.26, which is the React 17 era, and its last commit was in 2021. That is the
+entire blessed family, and it is the family every "TUI in node" search result
+points at.</p>
+
+<p><strong>ink</strong> is the one that is genuinely, actively maintained, and it
+is excellent at what it does. What it does is lay out text with flexbox for
+command line tools. It is React: 25 direct dependencies, plus React 19,
+@types/react and react-devtools-core as peers. There is no framebuffer, no
+Braille canvas, no truecolor area graph. Spinners and boxes, done beautifully.
+You do not build btop in it.</p>
+
+<p><strong>terminal-kit</strong> is alive, shipped 3.1.4 in July, and carries
+eight dependencies. The API is the 2014 imperative one, where you drive a
+terminal object rather than describe a screen, and it shows.</p>
+
+<p><strong>OpenTUI</strong> is the new arrival and it is good. It also ships a
+native core as eight per-platform binary packages behind FFI. That is a
+defensible bet. It just is not the one I wanted to make, because I wanted a
+library I can read top to bottom, step through in a debugger, and install
+anywhere Node runs with nothing to compile.</p>
+
+<p>So I wrote my own, with w33d and booze.</p>
+
+<h2>What hqtui is</h2>
+
+<p>5,600 lines of TypeScript and zero runtime dependencies. Not "a few small
+ones". The dependencies key is not in the package.json. It talks ANSI to the
+terminal itself.</p>
+
+<pre><code>import { createApp } from "@profullstack/hqtui";
+
+const app = await createApp();
+
+app.render(({ ui }) =&gt; {
+  ui.panel({ title: "Hello" }, (panel) =&gt; {
+    panel.text("Hello, terminal.");
+  });
+});
+
+await app.start();</code></pre>
+
+<p>That is the whole ceremony. One import, and <code>createApp()</code> has
+already given you a dark theme, truecolor with automatic 256 and 16 colour
+fallback, the alternate screen, SGR mouse tracking, resize handling, adaptive
+30fps rendering that drops to 15 over SSH, and a terminal that gets restored
+however the process dies, including on an uncaught exception.</p>
+
+<p>What comes in the box:</p>
+
+<ul>
+<li><strong>Layout</strong>: rows, columns, grid with spans, <code>"40%"</code>,
+<code>"2fr"</code>, <code>auto</code>, min and max, padding, gaps, clipping,
+responsive breakpoints.</li>
+<li><strong>Widgets</strong>: panel, table, tree, list, log viewer, key/values,
+meter, gauge, donut, progress, sparkline, line, area and multi-series graph,
+histogram, heat bar, tabs, status bar, button, checkbox, toggle, radio, select,
+text input, modal, command palette, tooltip, badge, divider.</li>
+<li><strong>Graphics</strong>: a Braille canvas at 2x4 pixels per cell, plus
+block, half-block, quadrant and ASCII modes, gradients and software alpha
+blending.</li>
+<li><strong>Themes</strong>: dark by default, then dracula, nord, tokyo night,
+gruvbox, matrix, monochrome, high contrast and light, plus
+<code>defineTheme()</code>. <code>NO_COLOR</code> is respected.</li>
+<li><strong>Input</strong>: normalized keys with modifiers, mouse click, drag,
+scroll and move, bracketed paste, focus events, Tab traversal.</li>
+</ul>
+
+<h2>The two parts I care about</h2>
+
+<p>The screen is one grid of cells held in four typed arrays, so nothing is
+allocated per cell. Every frame is diffed against the last one and only the
+changed runs get written, against a model of where the terminal's pen already
+is, so no redundant escape sequence goes out. Changing <code>CPU 72%</code> to
+<code>CPU 73%</code> writes one character rather than a screen. On this box, at
+160x50, which is 8,000 cells:</p>
+
+<pre><code>renderer.frame.unchanged     0.077ms      no output written
+renderer.frame.1pct          0.195ms      627 bytes/frame
+renderer.frame.10pct         0.286ms      2,639 bytes/frame
+renderer.frame.100pct        1.523ms      8,341 bytes/frame
+widgets.dashboard            0.465ms      6 panels, layout + widgets + diff</code></pre>
+
+<p>The second part is that TUIs are usually untestable, which is why so few of
+them are tested. There is a headless renderer, so there is no TTY in the loop:</p>
+
+<pre><code>const screen = renderToScreen(({ ui }) =&gt;
+  ui.panel({ title: "CPU" }, (p) =&gt; p.text("72%")), { width: 40, height: 6 });
+
+expect(screen.contains("72%")).toBe(true);
+expect(screen.cell(2, 0).fg).toBe(theme.title);</code></pre>
+
+<p>It also renders to text, to ANSI and to HTML, which is how the screenshots on
+the site get made.</p>
+
+<p>Bun is the default runtime. Node 22.6 and up runs the same files with no build
+step, because it strips the types itself. I just ran the 91 tests on Node 24
+straight off the TypeScript sources and they pass in half a second.</p>
+
+<p>To see it doing something real:</p>
+
+<pre><code>bunx @profullstack/hqtui-demo          # your actual machine
+bunx @profullstack/hqtui-demo --sim    # deterministic simulation</code></pre>
+
+<p>Ten screens of live host telemetry on Linux, macOS and Windows with no native
+dependency: sockets grouped by protocol, TCP and UDP counters with retransmit
+rate, HTTP traffic parsed out of nginx and apache access logs, sshd auth events,
+systemd units with the failures first, docker containers, kernel counters,
+filesystems with inode usage, logins from wtmp and the failures from btmp. None
+of that needs root. Running it under sudo unlocks a few more sources, and the
+demo tells you which ones it could not read rather than showing you a blank
+panel.</p>
+
+<p>MIT, source at
+<a href="https://github.com/profullstack/hqtui">github.com/profullstack/hqtui</a>,
+docs at <a href="https://hqtui.com">hqtui.com</a>. It is at 0.1.9 and the API is
+still moving.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
