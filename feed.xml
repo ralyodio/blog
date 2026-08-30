@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 30 Aug 2026 10:49:23 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 30 Aug 2026 11:01:59 GMT</lastBuildDate>
+
+		<item>
+			<title>Work is not disappearing. The job is.</title>
+			<link>https://dev.profullstack.com/~anthony/blog/036-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/036-post.html</guid>
+			<pubDate>Sun, 30 Aug 2026 11:01:59 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The salaried, 9-to-5, one-employer-for-decades package is an industrial-age artifact, and it is coming apart. What the return-to-office data, the independent workforce numbers and Harvard's research on degree requirements actually show.</description>
+		</item>
 
 		<item>
 			<title>The Moshpit resolves</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 21 Aug 2026 11:38:47 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A subdomain pointed at a VPS that no longer exists, and nothing was watching it. Fixing it surfaced six modules failing silently behind a green health check, plus a runtime that loaded one more module than the other.</description>
-		</item>
-
-		<item>
-			<title>What each feature actually costs me in AI</title>
-			<link>https://dev.profullstack.com/~anthony/blog/026-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/026-post.html</guid>
-			<pubDate>Fri, 21 Aug 2026 09:38:12 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Five agents, five git worktrees, one command that reads the engines' own logs. Over 90 percent of a $228 day turned out to be cache reads, and a bug hunt cost 65 times what a short blog session did.</description>
 		</item>
 	</channel>
 </rss>
