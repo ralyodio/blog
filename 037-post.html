@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One terminal window, 26 social networks &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-02T23:29:35Z">
+<meta name="description" content="myna is a social media manager that runs in your terminal. It counts characters the way each network counts them, is honest about which of the 26 need a password and which need a browser, and keeps your credentials encrypted on your own machine.">
+</head>
+<body>
+
+<article>
+
+<h1>One terminal window, 26 social networks</h1>
+
+<p><em>2026-09-02, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I write in a terminal and I read in a terminal, and then I would open five
+browser tabs to post the same sentence five times. So I built myna. It is a
+social media manager that runs where I already am.</p>
+
+<pre><code>curl -fsSL https://mynaposter.com/install.sh | sh</code></pre>
+
+<p>That is a single binary with the runtime compiled in, so there is no Bun,
+Node or npm to install first. Linux, macOS and Windows. If you would rather use
+a package manager, <code>bun add -g @profullstack/myna</code> does the same job.</p>
+
+<h2>One post, counted per network</h2>
+
+<p>The usual approach is to write once and truncate to the smallest limit, which
+wastes every network that is not Twitter. myna counts the way each network
+counts. The same 140 character post with a link in it reads 139 on Mastodon and
+140 on X, because X bills every URL at 23 characters regardless of how long the
+URL actually is. Past the limit it becomes a thread where threads exist, and gets
+split sensibly where they do not.</p>
+
+<pre><code>myna                                  # the TUI
+myna login bluesky
+myna post all "the release notes are up"
+echo "shipping today" | myna post bluesky,mastodon
+myna schedule "tomorrow 9am" "good morning" --to mastodon
+myna accounts --json | jq '.[].id'</code></pre>
+
+<p>Every slash command in the TUI is also a subcommand, so anything I can do by
+hand can go in a script or a cron job.</p>
+
+<h2>The part everyone is vague about</h2>
+
+<p>Logging in. Most tools in this space say "connect your accounts" and let you
+discover the truth one network at a time. The 26 networks split four ways, and
+the site says so on the front page:</p>
+
+<ul>
+<li><strong>Six take a real username and password.</strong> Bluesky, Reddit,
+Lemmy, Matrix, Mattermost, WordPress. Use an app password where one is offered.</li>
+<li><strong>Nine want a token you paste.</strong> Telegram, Discord, Slack,
+Misskey, Nostr, dev.to, Hashnode, Ghost, Micro.blog.</li>
+<li><strong>One prints a code you approve in a browser.</strong> tsbb, via a
+device flow, so no password crosses the terminal and no local port has to be
+free.</li>
+<li><strong>The rest need a browser sign in</strong>, for two opposite reasons.
+Mastodon and its relatives let any client register itself, so you type the
+instance and click Authorize with no developer account anywhere. X, Meta,
+LinkedIn, Pinterest and TikTok removed their password APIs years ago and make
+you register an app first.</li>
+</ul>
+
+<p>Two things that will bite you no matter what tool you use. Facebook and
+Instagram cannot post to a personal profile at all, so you need a Page you
+administer and a Business or Creator account linked to it. And Mastodon no
+longer accepts a password: <code>grant_type=password</code> is gone, and a
+current server answers <code>unsupported_grant_type</code>. myna used to offer
+the field and produce a confusing failure, so as of last week it does not.</p>
+
+<h2>Infographics with the right words on them</h2>
+
+<p>There is an optional writer, off unless you configure Anthropic, OpenAI or a
+local Ollama model. It drafts from a link and never posts on its own. The bit I
+am happiest with is the infographic path: the model picks the copy, myna renders
+the graphic from it. Text on the image is exactly the text in the post.</p>
+
+<p>That is not a stylistic preference. Ask an image model to draw a chart with
+labels and it rewrites the labels, inventing figures and misspelling names.
+Separating the two removes the failure instead of hoping against it. There is
+still an <code>image</code> backend if you want illustration, and it is the only
+one where the words can come out wrong.</p>
+
+<h2>Where the credentials live</h2>
+
+<p>In <code>~/.config/myna/vault.json</code>, encrypted with AES-256-GCM, on your
+machine. There is no myna account and no server in the path. The only thing that
+leaves your computer is the post you asked to send.</p>
+
+<p>It is 0.2.0, about 12,000 lines of TypeScript across 13 network adapters,
+built on <a href="034-post.html">hqtui</a>. MIT, source at
+<a href="https://github.com/profullstack/mynaposter">github.com/profullstack/mynaposter</a>,
+site at <a href="https://mynaposter.com">mynaposter.com</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
