@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A one-field funnel for launch.anapp.now &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-03T16:12:07Z">
+<meta name="description" content="How the launch.anapp.now campaign site is built: one textarea instead of a signup form, a server-side handoff into Chovy that keeps the idea out of URLs, four hero headlines under test, and first-party tracking with no pixels.">
+</head>
+<body>
+
+<article>
+
+<h1>A one-field funnel for launch.anapp.now</h1>
+
+<p><em>2026-09-03, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>launch.anapp.now went live today. It is the campaign site for
+<a href="https://chovy.com">Chovy</a>, and it has one job: get a visitor to
+type an app idea and carry that sentence into Chovy without making them type it
+twice. Here is how the funnel is built, and what I left out on purpose.</p>
+
+<h2>One field, no signup form</h2>
+
+<p>There is no email capture. The call to action is a textarea with the
+placeholder "I want an app that..." and a button that says Launch this idea. Six
+chips (Marketplace, SaaS, Booking app, Customer portal, Mobile app, Internal
+tool) drop in a starting sentence for anyone who freezes at a blank box. The
+same form repeats at the bottom of the page, because whoever scrolled that far
+has read the pitch and should not have to scroll back up.</p>
+
+<p>An email address is a promise to talk later. An idea is the first step of
+using the product. Asking for the idea filters for intent better than any form
+field does, and it gives Chovy something to do the second the person lands.</p>
+
+<h2>The handoff</h2>
+
+<p>Submitting posts the idea to the microsite's own API, which checks the
+length, a honeypot field, and a limit of six submissions per ten minutes per
+address. The API then calls Chovy server to server with a shared secret and gets
+back a one time handoff URL. The visitor sees a short "Opening your starting
+point in Chovy" screen and lands in the signup dialog with the idea already
+filled in.</p>
+
+<p>The idea text never appears in a URL, a cookie, a log line or an analytics
+event. That was a rule from the first commit. People type things they have not
+told anyone yet, and a query string ends up in referrer logs and browser
+history.</p>
+
+<p>The price lives on Chovy, not on the campaign page: $2,499 once per app,
+card or crypto, paid before the first build. The microsite sells starting. The
+pricing page sells the build.</p>
+
+<h2>Four headlines</h2>
+
+<p>The hero is an A/B test with four variants at 25 percent each: the control
+"Launch an app. Now.", a shorter cut of the same, "Ship the app idea. It's been
+in your head long enough." and "Have the idea. Skip the coding career."
+Assignment happens at the edge and sits in a 90 day cookie, so a returning
+visitor sees the headline they saw before. The weights are read from an
+environment variable on every request, so moving traffic toward a winner is a
+variable change, not a deploy. Adding <code>?hero=</code> and a variant name
+forces one, which is how I check layouts.</p>
+
+<h2>Tracking without pixels</h2>
+
+<p>No Google tag, no Meta pixel, no PostHog. Eleven events (landing view,
+variant assigned, input focused, typing started, submitted, handoff started,
+completed or failed, and a few more) are batched and sent with
+<code>sendBeacon</code> to the site's own endpoint, which forwards them to
+Chovy. Chovy adds what only it can see: handoff opened, signup completed, plan
+generated, project started.</p>
+
+<p>UTM parameters, the referrer and the landing path are stored as first touch
+in a cookie and attached again as last touch on every event. The report is on
+Chovy and breaks the funnel down by headline, source and device. The number I
+watch is project rate: of the people who typed an idea, how many started a
+project.</p>
+
+<h2>Copy angles</h2>
+
+<p>The page talks to the product person, not the coder. "You already do the
+product part." Ownership comes up again and again: your code, your domain,
+your decisions, your team. A simulated morning, 9:12 to 12:02, shows what a
+first session looks like rather than describing it. The FAQ deflates its own
+headline. Does "now" mean my app is instantly live? No.</p>
+
+<p>No countdown, no discount, no fake scarcity. The only urgency on the page is
+the true kind: the idea has been sitting in your head for a while.</p>
+
+<h2>What is not done</h2>
+
+<p>An honest list. There is no email follow up, so someone who types an idea
+and abandons the signup is gone. No paid channels are running; the tracking is
+built for them, but nothing is buying traffic yet. The hero images are
+placeholders from a script, because the image API I meant to use is out of
+credit. And there are no numbers to share, because the site has been up for a
+day. I will write again when there are.</p>
+
+<p>The site is open source at
+<a href="https://github.com/profullstack/launch.anapp.now">github.com/profullstack/launch.anapp.now</a>,
+if you want to see the handoff and the event batching for yourself.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

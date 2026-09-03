@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 02 Sep 2026 23:29:35 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 03 Sep 2026 16:12:07 GMT</lastBuildDate>
+
+		<item>
+			<title>A one-field funnel for launch.anapp.now</title>
+			<link>https://dev.profullstack.com/~anthony/blog/038-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/038-post.html</guid>
+			<pubDate>Thu, 03 Sep 2026 16:12:07 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>How the launch.anapp.now campaign site is built: one textarea instead of a signup form, a server-side handoff into Chovy that keeps the idea out of URLs, four hero headlines under test, and first-party tracking with no pixels.</description>
+		</item>
 
 		<item>
 			<title>One terminal window, 26 social networks</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 21 Aug 2026 16:37:52 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>ThreatCrush has a GitHub App listing now. The app asks for two read permissions and nothing else, on purpose, because widening a published listing is harder than starting narrow. Plus the setup URL that 404d on every installer, and how to tell a draft Marketplace listing from a typo.</description>
-		</item>
-
-		<item>
-			<title>Four genres, and the filter that was eating the other 89%</title>
-			<link>https://dev.profullstack.com/~anthony/blog/028-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/028-post.html</guid>
-			<pubDate>Fri, 21 Aug 2026 16:35:35 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The music section of my release-tracker listed four genres. I blamed the data source. The data source was fine: my own ingest was dropping nine out of every ten releases, and the fix was already sitting in the schema.</description>
 		</item>
 	</channel>
 </rss>
