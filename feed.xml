@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 03 Sep 2026 16:12:07 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 04 Sep 2026 07:37:18 GMT</lastBuildDate>
+
+		<item>
+			<title>The $875 proxy bill was a 1.5 MB manifest</title>
+			<link>https://dev.profullstack.com/~anthony/blog/039-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/039-post.html</guid>
+			<pubDate>Fri, 04 Sep 2026 07:37:18 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>One day, written up: a proxy bill that looked like a credential leak and was really a playlist file polled every few seconds, SiriusXM landing on tipoffwatch, Spotify Connect on bittorrented.com, and a librespot bug where songs skipped after a few seconds.</description>
+		</item>
 
 		<item>
 			<title>A one-field funnel for launch.anapp.now</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 23 Aug 2026 10:48:41 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>One API call returns a Polygon address and a live Stripe Checkout session. Putting both rails behind one page, the bug that meant the card tab never rendered, and what ten days of realtime fraud screening actually logged.</description>
-		</item>
-
-		<item>
-			<title>I listed a GitHub App before building the backend</title>
-			<link>https://dev.profullstack.com/~anthony/blog/029-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/029-post.html</guid>
-			<pubDate>Fri, 21 Aug 2026 16:37:52 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>ThreatCrush has a GitHub App listing now. The app asks for two read permissions and nothing else, on purpose, because widening a published listing is harder than starting narrow. Plus the setup URL that 404d on every installer, and how to tell a draft Marketplace listing from a typo.</description>
 		</item>
 	</channel>
 </rss>

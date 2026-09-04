@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The $875 proxy bill was a 1.5 MB manifest &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-04T07:37:18Z">
+<meta name="description" content="One day, written up: a proxy bill that looked like a credential leak and was really a playlist file polled every few seconds, SiriusXM landing on tipoffwatch, Spotify Connect on bittorrented.com, and a librespot bug where songs skipped after a few seconds.">
+</head>
+<body>
+
+<article>
+
+<h1>The $875 proxy bill was a 1.5 MB manifest</h1>
+
+<p><em>2026-09-04, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from the day's commits, session logs and my notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Yesterday ran about 21 hours across a dozen repos. Most of it was
+shipping audio rails. The part worth writing down is the bill.</p>
+
+<h2>The bill</h2>
+
+<p>Late in the evening a proxy invoice came in at $875. We share one
+rotating residential proxy across projects and barely use it, so the obvious
+theory was a leaked credential being drained by someone else. I asked the
+assistant to sweep every repo for it.</p>
+
+<p>The sweep found something bad, just not the thing I was looking for. One
+credential, hard-coded in several repos, sitting in two public ones on
+GitHub, with secret scanning switched off on both and never rotated since it
+was issued. That got fixed: rotated by hand in the vendor dashboard, moved to
+an environment variable everywhere, gated behind a flag that defaults to off,
+and every one of our 193 vaults swept for stale copies.</p>
+
+<p>But nobody was stealing it. The consumer was our own SiriusXM player on
+bittorrented.com. Every audio segment was going through the residential proxy,
+even though a docstring in the same file said segments must skip it to save
+budget. Residential bandwidth is billed per gigabyte. Worse than the segments
+was the manifest. SiriusXM's media playlist is 1.5 MB, listing 1,845 segments,
+and the player re-polls it every few seconds. The playlist file was costing
+roughly ten times the audio.</p>
+
+<table>
+<tr><th>What</th><th>Per listener hour</th></tr>
+<tr><td>64 kbps audio</td><td>about 29 MB</td></tr>
+<tr><td>1.5 MB manifest, six polls a minute</td><td>about 540 MB</td></tr>
+</table>
+
+<p>The fix is a budget file: per-user and global caps on bytes, requests and
+concurrency, answered with 429 and a Retry-After. The proxied fetch helper now
+refuses any call made outside the SiriusXM session context, so the next
+"temporary" use has to be deliberate. The residential line was already
+returning 402 Payment Required, so the app moved to the datacenter plan. Our
+own env example claimed SiriusXM blocks datacenter IPs. It does not, or at
+least it did not yesterday. Token refresh, browse, tune, key and segments all
+came back 200.</p>
+
+<h2>SiriusXM on tipoffwatch</h2>
+
+<p>Earlier in the day the same rail landed on <a href="https://tipoffwatch.com">tipoffwatch.com</a>,
+so a game page can play the radio call from your own SiriusXM account.
+Three versions went out. The login bug that ate the middle of the night had
+three causes and none of them was SiriusXM. A Promise.all destructure was one
+slot off, so everyone rendered as connected. The team-to-station table held
+ESPN's bare league ids where it wanted sport-prefixed slugs. And every call was
+402ing because of the proxy above. There is now a test that refuses a session
+lookup inside any Promise.all.</p>
+
+<p>Also: the radio bundle was 900 KB because the bundler inlined the player's
+optional engines. Marking mpegts.js external and swapping hls.js for its light
+build brought it to 400 KB, 127 KB gzipped.</p>
+
+<h2>Spotify on bittorrented.com</h2>
+
+<p>It started with "does Spotify have a listen API?" It does not, for
+playback. It ended as media-streamer 0.4.0: you pair your own Premium account,
+the server runs one librespot process for you, it shows up as a Spotify
+Connect device on your phone, and the audio is restreamed as HLS through our
+player.</p>
+
+<p>Things that cost real time. The device-auth flag is not in librespot's
+0.8.0 tag, so the image builds a pinned dev commit and checks its hash.
+Password login has been gone since 2024. The pairing prompt prints on stdout,
+so audio has to leave through the subprocess backend instead.</p>
+
+<p>The last bug of the day: paired, playing, and every song skipped after a few
+seconds. librespot's subprocess backend has no clock. It writes PCM as fast as
+the pipe accepts, ffmpeg swallowed a whole track in about zero seconds,
+librespot reported end of track, and Spotify advanced. Measured in a container,
+ten seconds of PCM took 0 seconds without ffmpeg's -re flag and 9 with it.</p>
+
+<h2>The rest</h2>
+
+<p>tsbb, the BBS behind bbs.hqtui.com, went from 0.2 to 0.5 and now updates
+itself from GitHub releases every five minutes. cli-tools got three releases,
+including a web-pentest toolbelt that installs the Kali tools on plain Ubuntu.
+moshcode 0.91 keeps one SSH connection open per workspace. And three of the
+fifteen answer engines in an AEO audit flagged yesterday's date as an invalid
+future date, because their clocks are their training cutoffs. I did not
+backdate anything.</p>
+
+<p>Read the manifest size before you proxy it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
