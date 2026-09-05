@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 05 Sep 2026 19:00:55 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 05 Sep 2026 21:18:49 GMT</lastBuildDate>
+
+		<item>
+			<title>NicheDB: sources in, feeds out</title>
+			<link>https://dev.profullstack.com/~anthony/blog/042-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/042-post.html</guid>
+			<pubDate>Sat, 05 Sep 2026 21:30:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Live sports, TV releases and RSS all share one property: a big seed that grows every day from data that is already public. NicheDB is the platform version of that idea. Thirteen niches, 29 adapters, enrichment, and every row reachable by web, RSS, API, CLI and MCP.</description>
+		</item>
 
 		<item>
 			<title>Red Bull took my eye</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 30 Aug 2026 00:28:43 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>FileZilla re-uploads a folder because one file changed; rsync does not, but it means remembering the flags. I wanted the two pane browser on top of the rsync engine, could not find it, so we built it.</description>
-		</item>
-
-		<item>
-			<title>I cloned myself at chovy.com</title>
-			<link>https://dev.profullstack.com/~anthony/blog/032-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/032-post.html</guid>
-			<pubDate>Fri, 28 Aug 2026 22:46:08 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>chovy.com went from a 240-character microblog to an AI clone of me: a four-line advisor persona, an isolated coding worker on its own service, and a roster where human teammates and AI workers are counted separately.</description>
 		</item>
 	</channel>
 </rss>

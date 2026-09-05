@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NicheDB: sources in, feeds out &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-05T21:30:00Z">
+<meta name="description" content="Live sports, TV releases and RSS all share one property: a big seed that grows every day from data that is already public. NicheDB is the platform version of that idea. Thirteen niches, 29 adapters, enrichment, and every row reachable by web, RSS, API, CLI and MCP.">
+</head>
+<body>
+
+<article>
+
+<h1>NicheDB: sources in, feeds out</h1>
+
+<p><em>2026-09-05, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>tipoffwatch, genrewatch and rssamplifier all work the same way. Somebody
+else publishes the data, it is free to read, the initial pile is large, and it
+gets bigger every single day without me doing anything. Games get released.
+Shows air. People publish feeds. The site just has to keep up.</p>
+
+<p>This morning I asked which other niches have that shape. The list was long:
+package registries, SEC filings, rocket launches, court dockets, earthquakes,
+recalls, papers, status pages, extension stores. So instead of building site
+number four by hand, I built the platform and pointed it at all of them.
+<a href="https://nichedb.dev">nichedb.dev</a> went live tonight.</p>
+
+<h2>The model</h2>
+
+<p>A collection is a niche. A source is one adapter pointed at one upstream
+with a config and a cadence. Every row it produces is an item. A feed is a
+saved query over a collection, and a feed is the thing people follow. It has
+a page, an RSS and JSON Feed rendering, an API endpoint, and it delivers by
+push, email or a signed webhook.</p>
+
+<p>There are 13 collections and 29 adapters as of tonight, all keyless. Steam
+lists, npm's changes feed, PyPI, crates.io, Go's module index, Hugging Face,
+GitHub releases, EDGAR's latest-filings feed, the Federal Register,
+MusicBrainz, Open Library, Scryfall, The Space Devs, Lichess broadcasts, USGS
+quakes, NWS warnings, GDACS, any Statuspage host, Firefox add-ons, the VS Code
+marketplace, the MCP registry, openFDA recalls, ClinicalTrials.gov, arXiv and
+Crossref. An adapter is one file. Writing one takes about the time it takes to
+read the upstream's docs.</p>
+
+<h2>Enrichment</h2>
+
+<p>The raw rows are thin. A Steam entry is a name, a price and a date. So
+after ingest each item runs through the enrichers that apply to it: the top
+YouTube videos (the trailer, in practice), the Wikipedia paragraph, the
+repo's stars and licence, last week's npm downloads, the company behind a
+filing with its ticker and industry, a paper's TL;DR from Semantic Scholar.
+The results sit on the item under the enricher's name, and a feed picks which
+ones it shows. Defaults are on. A game feed carries trailers unless you tell
+it not to.</p>
+
+<p>Two things I got wrong on the first pass and fixed before dinner. Newest
+first meant one arXiv sweep of 200 papers starved every other collection, so
+the worker now takes a fair share per collection each tick. And the top
+YouTube hit for an obscure game was a musical, so a video now has to mention
+the title to count.</p>
+
+<h2>For people and for agents</h2>
+
+<p>Every collection, source, feed and item is JSON under /api/v1. There is a
+stateless MCP server at nichedb.dev/mcp with 15 tools, and the CLI
+(npm i -g @profullstack/nichedb) doubles as a stdio bridge for Claude Code and
+friends. llms.txt describes the whole deployment in one document. Search
+engines and retrieval crawlers are welcome; training crawlers buy a day pass
+over x402, same as my other sites now.</p>
+
+<p>It is open source, MIT, at
+<a href="https://github.com/profullstack/niche-db">github.com/profullstack/niche-db</a>.
+One Postgres, one Redis, Bun and Hono. Run your own on the niche you care
+about and send me the adapter.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
