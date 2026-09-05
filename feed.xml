@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 05 Sep 2026 21:18:49 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 05 Sep 2026 22:44:46 GMT</lastBuildDate>
+
+		<item>
+			<title>If all your traffic is bots, sell to the bots</title>
+			<link>https://dev.profullstack.com/~anthony/blog/043-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/043-post.html</guid>
+			<pubDate>Sat, 05 Sep 2026 22:44:46 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A training crawler is a customer with a budget. Put the offer where a program will find it: robots.txt, a 402 with an x402 offer, a sales page at /crawl. @profullstack/x402-gateway does that in one middleware, it is on 38 sites, and tonight the first dollar cleared.</description>
+		</item>
 
 		<item>
 			<title>NicheDB: sources in, feeds out</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 30 Aug 2026 10:16:16 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Every TypeScript terminal UI library is either abandoned since 2015, a React flexbox layout engine, or a native binary behind FFI. I wanted btop quality with zero dependencies, so I wrote hqtui.</description>
-		</item>
-
-		<item>
-			<title>Why I built DiskPush</title>
-			<link>https://dev.profullstack.com/~anthony/blog/033-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/033-post.html</guid>
-			<pubDate>Sun, 30 Aug 2026 00:28:43 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>FileZilla re-uploads a folder because one file changed; rsync does not, but it means remembering the flags. I wanted the two pane browser on top of the rsync engine, could not find it, so we built it.</description>
 		</item>
 	</channel>
 </rss>

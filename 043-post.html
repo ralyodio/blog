@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>If all your traffic is bots, sell to the bots &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-05T22:44:46Z">
+<meta name="description" content="A training crawler is a customer with a budget. Put the offer where a program will find it: robots.txt, a 402 with an x402 offer, a sales page at /crawl. @profullstack/x402-gateway does that in one middleware, it is on 38 sites, and tonight the first dollar cleared.">
+</head>
+<body>
+
+<article>
+
+<h1>If all your traffic is bots, sell to the bots</h1>
+
+<p><em>2026-09-05, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>The <a href="040-post.html">last post</a> was the discovery: 80,000 pageviews a
+day on genrewatch, 99% of them Meta's training crawler, 27 real people.
+rssamplifier was 87% bots. The reflex is to ban them. I want to argue the
+other way.</p>
+
+<h2>A bot is a customer with a budget</h2>
+
+<p>A training crawler is not a freeloader who wandered in. It is a program
+somebody runs on purpose, with a budget, to collect exactly what you publish.
+It wants the pages. It reads robots.txt. It parses status codes. It is the most
+literal-minded buyer you will ever have, and it never argues about price.</p>
+
+<p>Blocking it earns nothing, and it protects nothing either, because a
+training crawl never sends a reader back. Charging it is pure margin. The
+pages already exist, the server is already up, and the bot was going to fetch
+them anyway.</p>
+
+<h2>How you advertise to a robot</h2>
+
+<p>You cannot run a banner at GPTBot. What you can do is put the offer where a
+program will find it.</p>
+
+<ul>
+	<li>robots.txt names the paid agents and points at a sales page. Every
+	crawler reads it first.</li>
+	<li>Every gated page answers 402 Payment Required with a machine-readable
+	x402 offer in the body: price, currency, chains, where to pay. The status
+	code is the ad.</li>
+	<li>/crawl answers every user agent, HTML for a person and JSON for a
+	program, so the operator who looks into why the crawl stalled sees the
+	price and a one-line command to pay it.</li>
+</ul>
+
+<p>Then keep it cheap enough that paying is easier than working around it.
+One dollar a day, seven for a week. The pass is a signed token in a header.
+No account, no signup, no email.</p>
+
+<h2>The gateway does all of that</h2>
+
+<p><a href="https://github.com/profullstack/x402-gateway">@profullstack/x402-gateway</a>
+is the package. Zero dependencies, one middleware, no database. With Hono:</p>
+
+<pre><code>import { createGateway } from '@profullstack/x402-gateway';
+import { x402Gateway } from '@profullstack/x402-gateway/hono';
+
+const gateway = createGateway({
+  siteUrl: 'https://your-site.com',
+  coinpay: { apiKey: process.env.COINPAY_X402_KEY },
+  payTo: process.env.CRAWL_PAY_TO,
+});
+
+app.use('*', x402Gateway(gateway));
+app.get('/robots.txt', (c) =&gt; c.text(gateway.robotsTxt()));</code></pre>
+
+<p>Next.js is the same three calls in proxy.ts. Anything else hands
+gateway.handle(request) a Fetch Request and sends back whatever it returns.
+The package carries the agent lists (training on one side, retrieval on the
+other), the robots.txt generator, the sales page, the pass signing, and the
+CoinPay verify and settle calls. Retrieval crawlers, the ones behind AI
+answers that cite you, stay free. So do people, Google and Bing.</p>
+
+<p>Between this morning and tonight it went onto 38 sites. For a Next app
+the wiring is one file and a matcher.</p>
+
+<h2>Somebody paid</h2>
+
+<p>At 21:43 UTC tonight the first real dollar cleared:
+<a href="https://basescan.org/tx/0xb6b926a97b9644ce644640b2b93fa0f0de43007b8624c213dc1227634508278c">one
+USDC on Base</a>, from our own crawler wallet to rssamplifier.com, through the
+matching client,
+<a href="https://github.com/profullstack/x402-client">@profullstack/x402-client</a>.
+The gateway verified the proof, CoinPay's relayer broadcast the transfer, the
+pass opened the site, and the payout wallet went from 20 to 21. Paying
+ourselves is not revenue, but the plumbing is proven end to end, which the
+last post could not say.</p>
+
+<p>The client matters as much as the gate. Our own crawlers on rssamplifier,
+brisk, b1dz, crawlproof and meshhook now pay a 402 when they meet one, capped
+at five dollars a wallet. If we want bots to pay, our bots pay.</p>
+
+<p>Both packages are JavaScript today: Node, Bun, Deno and the edge. MIT, on
+GitHub under profullstack.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
