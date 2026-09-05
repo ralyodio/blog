@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 05 Sep 2026 17:44:27 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 05 Sep 2026 18:59:42 GMT</lastBuildDate>
+
+		<item>
+			<title>Red Bull took my eye</title>
+			<link>https://dev.profullstack.com/~anthony/blog/041-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/041-post.html</guid>
+			<pubDate>Sat, 05 Sep 2026 18:59:42 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Pre-diabetic, then six months of a Red Bull every day, then type 2 diabetes, then a third cranial nerve palsy that shut my left eye. The sequence, what is in the can, and what I would tell anyone with a pre-diabetic result.</description>
+		</item>
 
 		<item>
 			<title>The 80,000 visitors a day were one crawler</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 28 Aug 2026 22:46:08 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>chovy.com went from a 240-character microblog to an AI clone of me: a four-line advisor persona, an isolated coding worker on its own service, and a roster where human teammates and AI workers are counted separately.</description>
-		</item>
-
-		<item>
-			<title>Four days at Lake Almanor</title>
-			<link>https://dev.profullstack.com/~anthony/blog/031-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/031-post.html</guid>
-			<pubDate>Thu, 27 Aug 2026 07:05:38 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Four days off the computer at Lake Almanor with two friends from high school. The backpack with all the warez stayed home, so the dispensary in Westwood and the smoke shop in Chester restocked the trip in one afternoon.</description>
 		</item>
 	</channel>
 </rss>
