@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The 80,000 visitors a day were one crawler &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-05T17:44:27Z">
+<meta name="description" content="One day, written up: the traffic on genrewatch was Meta's training crawler, so six sites now sell training bots a one dollar day pass over x402, a residential proxy fleet that no IP block can touch, a Next 16 proxy file that never ran, and why a headless browser does not fix the feed reader.">
+</head>
+<body>
+
+<article>
+
+<h1>The 80,000 visitors a day were one crawler</h1>
+
+<p><em>2026-09-05, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>The analytics on genrewatch.com said 80,000 pageviews a day. I have six
+registered users there. Today started with that gap and ended with a
+paywall for robots on six sites.</p>
+
+<h2>Where the traffic came from</h2>
+
+<p>I asked the assistant to pull seven days of hits from our own tracker,
+bucketed by user agent. genrewatch: 257,523 hits, 99% bots, 209,000 of them
+meta-externalagent and 42,000 Applebot. rssamplifier: 168,509 hits, 87% bots.
+Real humans on genrewatch are about 27 a day. tipoffwatch, about 63.</p>
+
+<p>Meta's crawler is easy to miss. Its user agent starts with a normal
+Chrome string and only says meta-externalagent near the end, past where most
+dashboards truncate. Every one of those visits was one country and one
+visitor per pageview, which no human does.</p>
+
+<p>crawlproof, our tracker, now leads with human visits and shows crawls
+separately. Its own dashboards had been telling me the bot number for a
+month.</p>
+
+<h2>Selling to the bots</h2>
+
+<p>The two options were to block training crawlers or to charge them.
+Blocking does nothing for me. Search and Reddit are the only channels that
+bring people, and a training crawl never cites back. So the rule is:
+retrieval agents stay welcome (OAI-SearchBot, ChatGPT-User, Claude-User,
+PerplexityBot, Google-Extended, Bingbot) and training agents (GPTBot,
+ClaudeBot, CCBot, meta-externalagent, Bytespider, Applebot-Extended) get a
+402 with an x402 offer. One dollar buys a day.</p>
+
+<p>That became <a href="https://www.npmjs.com/package/@profullstack/x402-gateway">@profullstack/x402-gateway</a>,
+a zero-dependency library with Hono and Next adapters, a robots.txt
+generator, and an HTML sales page at /crawl that answers every user agent so
+curl can test it. Payment settles through <a href="https://coinpayportal.com">CoinPay</a>
+in USDC on Base, Polygon or Ethereum, and a paid crawler gets an HMAC-signed
+pass it presents on later requests. By 17:00 UTC it was live on tipoffwatch,
+genrewatch, rssamplifier, ugig, bittorrented and p0dcasters. GPTBot gets a
+402, Chrome gets a 200, robots.txt says which is which.</p>
+
+<p>Honest caveat: I have verified the unpaid paths only. Nobody has paid a
+dollar yet.</p>
+
+<h2>Three things that bit</h2>
+
+<p>CoinPay's checkout accepts our old business API key, but the x402 verify
+endpoint refuses it. It wants a scoped key from a different table. Same
+product, two credential types, one of them silently wrong. We minted scoped
+keys for every site and two new businesses.</p>
+
+<p>Next 16 renamed middleware.js to proxy.js, and if your app lives under
+src/ it only reads src/proxy.ts. A root-level one is ignored without a
+warning. ugig.net's proxy had never run, which means no trace block, no
+throttle, no session refresh, for however long it sat there. media-streamer
+had a dead root middleware.ts too. The proof is the build output line that
+says Proxy (Middleware), not a unit test that imports the file.</p>
+
+<p>Then the log on rssamplifier. The OVH fleet I meant to block by address
+was gone. In its place: 500 requests in two seconds from 499 distinct
+residential IPs in India, Argentina, Nigeria and Colombia, cycling exactly
+three Chrome user agents, walking every topic and author page. Two hits per
+IP, maximum. An IP block cannot touch that.</p>
+
+<p>The gateway got a spoofed-browser check: a Chrome user agent that does not
+send Sec-Fetch-Mode, a header every Chromium since 76 sends and no script
+can strip, gets charged like GPTBot. Deployed, measured. The fleet already
+sends it. It is real headless browsers, or a client replaying real headers.
+What the check does catch now answers in 4 ms instead of 2.8 s. The next
+rung is a proof-of-work challenge on the expensive routes. Also: Googlebot's
+evergreen user agent claims Chrome and sends no Sec-Fetch-Mode, so 0.2.2
+skips any crawler that declares itself. Nearly charged Google.</p>
+
+<h2>Does a JavaScript browser help the reader?</h2>
+
+<p>Related question from earlier in the day: rssamplifier's article reader
+comes up empty on a lot of feeds. Would a real browser fix it? We ran 55
+production URLs through plain fetch, Lightpanda and headless Chrome and
+scored each DOM with the reader's own extractor.</p>
+
+<p>A browser rescued 4 of 55. The empty pages are mostly correct: Substack
+paywall previews under the 500-character floor, and audio posts with no
+prose. The blocked pages are Cloudflare challenges no DOM-only browser
+passes. And Readability scores the Cloudflare "Just a moment" page as a
+185-character article, so a text-length gate reads 7 of 15 as wins when the
+real number is 1. Gate on HTTP status first. No headless fallback is going
+in.</p>
+
+<h2>The rest</h2>
+
+<p>nichedb.dev went from nothing to a public repo and a deploy: sources in,
+feeds out. Eleven adapters (Steam, npm, PyPI, crates, Hugging Face, GitHub
+releases, EDGAR, Federal Register, CourtListener and two more), saved queries
+that publish as a page, RSS, JSON Feed, API or MCP. It got its own Railway
+project because the shared one hit the 20-volume cap. myna 0.4.0 added
+YouTube, where a post is a comment on a video. And saasrow falls back to
+Gemini for listing copy, because our OpenAI key has no credits and Anthropic
+is capped until October.</p>
+
+<p>Count your humans before you count your traffic.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

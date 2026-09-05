@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 04 Sep 2026 07:37:18 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 05 Sep 2026 17:44:27 GMT</lastBuildDate>
+
+		<item>
+			<title>The 80,000 visitors a day were one crawler</title>
+			<link>https://dev.profullstack.com/~anthony/blog/040-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/040-post.html</guid>
+			<pubDate>Sat, 05 Sep 2026 17:44:27 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>One day, written up: the traffic on genrewatch was Meta's training crawler, so six sites now sell training bots a one dollar day pass over x402, a residential proxy fleet that no IP block can touch, a Next 16 proxy file that never ran, and why a headless browser does not fix the feed reader.</description>
+		</item>
 
 		<item>
 			<title>The $875 proxy bill was a 1.5 MB manifest</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 27 Aug 2026 07:05:38 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Four days off the computer at Lake Almanor with two friends from high school. The backpack with all the warez stayed home, so the dispensary in Westwood and the smoke shop in Chester restocked the trip in one afternoon.</description>
-		</item>
-
-		<item>
-			<title>Cards and crypto in one checkout</title>
-			<link>https://dev.profullstack.com/~anthony/blog/030-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/030-post.html</guid>
-			<pubDate>Sun, 23 Aug 2026 10:48:41 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>One API call returns a Polygon address and a live Stripe Checkout session. Putting both rails behind one page, the bug that meant the card tab never rendered, and what ten days of realtime fraud screening actually logged.</description>
 		</item>
 	</channel>
 </rss>
