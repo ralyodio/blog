@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 05 Sep 2026 22:44:46 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 05 Sep 2026 22:57:24 GMT</lastBuildDate>
+
+		<item>
+			<title>Post once, everywhere: myna now writes to your blogs and runs an ad for each post</title>
+			<link>https://dev.profullstack.com/~anthony/blog/044-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/044-post.html</guid>
+			<pubDate>Sat, 05 Sep 2026 22:57:23 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>myna 0.6.0 posts to Git and HTML blogs and opens a CrawlProof ad campaign for every post it publishes, so a launch is one command.</description>
+		</item>
 
 		<item>
 			<title>If all your traffic is bots, sell to the bots</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 30 Aug 2026 10:49:23 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>alt.2600 is not a domain and never will be, but it answers a stock curl over HTTPS. The Moshpit namespace is in beta: claim an ending for $5, mint names under it for nothing, no renewals.</description>
-		</item>
-
-		<item>
-			<title>Why I wrote hqtui</title>
-			<link>https://dev.profullstack.com/~anthony/blog/034-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/034-post.html</guid>
-			<pubDate>Sun, 30 Aug 2026 10:16:16 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Every TypeScript terminal UI library is either abandoned since 2015, a React flexbox layout engine, or a native binary behind FFI. I wanted btop quality with zero dependencies, so I wrote hqtui.</description>
 		</item>
 	</channel>
 </rss>

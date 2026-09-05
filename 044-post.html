@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Post once, everywhere: myna now writes to your blogs and runs an ad for each post &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-05T22:57:23Z">
+<meta name="description" content="myna 0.6.0 posts to Git and HTML blogs and opens a CrawlProof ad campaign for every post it publishes, so a launch is one command.">
+</head>
+<body>
+
+<article>
+
+<h1>Post once, everywhere: myna now writes to your blogs and runs an ad for each post</h1>
+
+<p><em>2026-09-05, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>myna is the terminal social media manager we build at Profullstack. Until today it posted to 27 networks and stopped there. A launch still meant writing the announcement, pasting it into the blog by hand, and then remembering to buy an ad for it, which nobody remembered to do. Version 0.6.0 closes that loop.</p>
+
+<h3>Two new networks: your own blogs</h3>
+
+<p>Most of our blogs are not a CMS. hqtui.com keeps one Markdown file per post in a repository and deploys on merge. This blog is a directory of plain HTML pages where writing the file is publishing. myna now treats both as networks.</p>
+
+<ul>
+	<li><strong>Git blog</strong> commits a Markdown file with frontmatter through the GitHub API. No checkout, no clone, and the site's own deploy publishes it. The token is optional: it uses <code>gh auth token</code> when you have one.</li>
+	<li><strong>HTML blog</strong> writes the next numbered page, lists it in the index, rebuilds the feed and pushes a mirror repository if you keep one. When the <code>blog-post</code> tool from cli-tools is installed the page is written by it, byline and all.</li>
+</ul>
+
+<p>Neither is ever part of <code>myna post all</code>. A social post fanned out by accident is an embarrassment. A blog page fanned out by accident is a publication and a commit, so a blog only posts when you name it:</p>
+
+<pre><code>myna post --to htmlblog --description &quot;One line for the feed&quot; &lt; post.md</code></pre>
+
+<h3>An ad for every post</h3>
+
+<p>The bundled CrawlProof plugin listens for posts. When a post lands on a blog, the page's URL goes to crawlproof.com, which reads the page, writes the creatives from it and starts a campaign on the ad network that runs across our sites. Nothing to configure beyond <code>myna crawlproof login</code> and an API token. Social posts do not get a campaign of their own, since the post is the promotion, but <code>--ad true</code> runs one for the first URL in any post.</p>
+
+<p>CrawlProof got the matching half today: campaigns and publisher slots can now be created with an API token, from its own CLI or from any program, and its stats know when a visit came from an ad, so a post's page shows how many readers the campaign sent.</p>
+
+<h3>Why</h3>
+
+<p>We noticed that most of what we shipped this year never got announced anywhere, and that when it did, the announcement and the ad were two separate chores done by two separate people. Now they are one command, and the command is part of the release.</p>
+
+<p>myna is MIT-licensed at github.com/profullstack/mynaposter. The release notes for 0.6.0 list every flag.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
