@@ -9,7 +9,7 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 05 Sep 2026 23:10:51 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 05 Sep 2026 23:11:44 GMT</lastBuildDate>
 
 		<item>
 			<title>AI has finally enabled us CLI commandos</title>
@@ -17,7 +17,7 @@
 			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/045-post.html</guid>
 			<pubDate>Sat, 05 Sep 2026 23:10:51 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Forty years after playing hangman on an IBM mainframe, the terminal is the interface again. AI agents run commands, and the people who never left the shell are the ones ready for it.</description>
+			<description>Forty years after hangman and hacking on an IBM mainframe, the terminal is the interface again. AI agents run commands, bots outnumber browsers, and the people who never left the shell are the ones ready for it.</description>
 		</item>
 
 		<item>
