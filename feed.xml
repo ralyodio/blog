@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 05 Sep 2026 22:57:24 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 05 Sep 2026 23:10:51 GMT</lastBuildDate>
+
+		<item>
+			<title>AI has finally enabled us CLI commandos</title>
+			<link>https://dev.profullstack.com/~anthony/blog/045-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/045-post.html</guid>
+			<pubDate>Sat, 05 Sep 2026 23:10:51 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Forty years after playing hangman on an IBM mainframe, the terminal is the interface again. AI agents run commands, and the people who never left the shell are the ones ready for it.</description>
+		</item>
 
 		<item>
 			<title>Post once, everywhere: myna now writes to your blogs and runs an ad for each post</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 30 Aug 2026 11:01:59 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>The salaried, 9-to-5, one-employer-for-decades package is an industrial-age artifact, and it is coming apart. What the return-to-office data, the independent workforce numbers and Harvard's research on degree requirements actually show.</description>
-		</item>
-
-		<item>
-			<title>The Moshpit resolves</title>
-			<link>https://dev.profullstack.com/~anthony/blog/035-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/035-post.html</guid>
-			<pubDate>Sun, 30 Aug 2026 10:49:23 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>alt.2600 is not a domain and never will be, but it answers a stock curl over HTTPS. The Moshpit namespace is in beta: claim an ending for $5, mint names under it for nothing, no renewals.</description>
 		</item>
 	</channel>
 </rss>

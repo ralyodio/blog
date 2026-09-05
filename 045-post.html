@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI has finally enabled us CLI commandos &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-05T23:10:51Z">
+<meta name="description" content="Forty years after playing hangman on an IBM mainframe, the terminal is the interface again. AI agents run commands, and the people who never left the shell are the ones ready for it.">
+</head>
+<body>
+
+<article>
+
+<h1>AI has finally enabled us CLI commandos</h1>
+
+<p><em>2026-09-05, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>In the 1980s my dad worked at IBM. Some days he brought me to the office, sat me at a terminal hooked to the mainframe, and let me play hangman on it. Green text on a black screen, a blinking cursor, a word made of underscores, and a machine the size of a room on the other end. I did not understand any of it. I understood that you typed a letter and something answered.</p>
+
+<p>That is still my whole computing life. Forty years later I spend most of the day in a terminal, and for most of those years that made me the odd one. The industry went to windows, then to the browser, then to the phone. The people who stayed in the shell were the sysadmins and the greybeards, and we were told, kindly, that the command line was a niche.</p>
+
+<h3>Then the agents showed up</h3>
+
+<p>The AI tools that actually changed my work did not arrive as a chat window. They arrived as a process in the terminal. Claude Code runs in a shell. It reads files with cat and grep, edits with sed and heredocs, runs the tests, commits, and opens the PR. When it publishes this post it calls the same <code>blog-post</code> command I would. When it announces a release it runs <code>myna</code>, the same command I run.</p>
+
+<p>Which means the skill set that was supposed to be obsolete is now the interface. If a task can be done with a command, an agent can do it. If it needs a mouse, it mostly cannot. Every tool I ever wrote as a CLI because I could not be bothered with a UI is an agent tool for free. The ones with a UI are the ones we now have to wrap.</p>
+
+<h3>What it looks like this week</h3>
+
+<p>A release at Profullstack used to be: bump the version, merge, cut a GitHub release, write the announcement, paste it into the blog, post to the socials, buy an ad. Now an agent runs it in a git worktree, and myna does the announcement, the blog page and the ad in one command. I read the diff and say yes.</p>
+
+<p>I run several of these jobs at once, each in its own worktree, each reporting back with a one-line result. That is not so different from a batch queue on that mainframe. Submit the job, go do something else, come back for the output. The mainframe people had this figured out in 1975. The desktop era made us forget it.</p>
+
+<h3>Commandos</h3>
+
+<p>People who never left the shell have a compounding advantage right now. Our muscle memory is the agent's vocabulary. We keep everything in text files and git, which is what the agent can read. We have dotfiles, scripts and a bin directory, which is what the agent can run. We wrote the man pages and the <code>--help</code> output, which is what the agent reads instead of clicking around.</p>
+
+<p>I do not think it is a coincidence that the best AI coding tools are all terminal programs. The terminal is the oldest and most composable interface we have, and composable is what an agent needs. The kid playing hangman on IBM's mainframe was learning the right interface. It just took forty years for the machine on the other end to get interesting.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
