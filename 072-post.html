@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Four releases in six hours: the lifecycle we actually use &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/072-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T15:04:58Z">
+<meta name="description" content="Eight agents in eight worktrees, four DiskPush releases in one day, and the ratchet rule that makes testing in production defensible. We wrote it up as ASDLC.">
+</head>
+<body>
+
+<article>
+
+<h1>Four releases in six hours: the lifecycle we actually use</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Four releases of DiskPush reached users today, between 08:53 and 14:56 UTC. Versions 0.2.17, 0.3.0, 0.4.0 and 0.5.0. Each carried one change, each was built by a different agent in its own git worktree, and none of them waited for a human to read the diff.</p>
+
+<p>The speed is not the interesting part. What you have to change to make that safe is.</p>
+
+<h3>Scale sideways, not faster</h3>
+
+<p>At one point today there were eight agent worktrees open on the DiskPush checkout: SSH auth discovery, symlink handling, fleet runs across servers, the desktop content security policy, file operations, connection defaults, file list sorting. One agent each. Nothing waited on anything else.</p>
+
+<p>That works because of isolation, not because the agents are clever. Eight agents in one working tree corrupt each other within minutes. Eight agents in eight worktrees do not. You buy isolation before you buy parallelism.</p>
+
+<h3>The gate is a program</h3>
+
+<p>The old lifecycle spends its process budget deciding whether a change is worth building, because engineering time is expensive. When agents write the code that stops being true, and two other things get scarce instead: your attention, and a trunk that still works.</p>
+
+<p>So the reviewer is a program. Typecheck, tests, the project's own smoke checks, then CI. Our release script refuses a dirty tree, refuses a branch that is not trunk, refuses a version that does not sort above the newest tag, and refuses to run if a workspace package is missing from its manifest list. That last guard exists because a package got added once and then sat at an old version, release after release, with nothing failing.</p>
+
+<p>Warnings do not survive this speed. Only refusals do.</p>
+
+<h3>Test in prod, then ratchet</h3>
+
+<p>Staging lies. Here is our own proof.</p>
+
+<p>DiskPush 0.2.0 shipped a window with no styling at all. The bundle loaded over file:// and every root absolute asset resolved against the filesystem root and 404ed. 0.2.1 fixed the assets and shipped a blank window instead, because a Next export carries its payload in inline scripts and the window sent script-src 'self', which refused all seven of them. That had been invisible before only because nothing ran at all. 0.2.2 hashed the scripts into the policy.</p>
+
+<p>No local harness would have caught the first one. A static server resolves absolute paths correctly by construction, so the bug only exists under file://. You could see it in the shipped thing or nowhere.</p>
+
+<p>That is why testing in production is not recklessness here. It comes with one rule attached: every escape becomes a permanent automated check before the incident is closed. One command now guards all three of those layers, and each guard was confirmed to fail when its bug is put back. A fix without that is how the same class of bug ships three times.</p>
+
+<p>We call it the ratchet. It is the load bearing part, and it is the part people skip.</p>
+
+<h3>ASDLC</h3>
+
+<p>Nine phases: frame, fan out, gate locally, merge, release, verify live, correct, ratchet, promote. Correct goes back to fan out, so the loop is the lifecycle rather than a line with a release at the end.</p>
+
+<p>We wrote it up as ASDLC, the Agentic Software Development Lifecycle: the phases, the invariants that keep it from being an excuse to move fast, and four conformance levels. Level 3 is the only one that asks for evidence instead of intent, and it is the one worth claiming.</p>
+
+<p>Spec: <a href="https://logicsrc.com/asdlc">https://logicsrc.com/asdlc</a></p>
+
+<p>How this was written: drafted with an AI assistant from my own notes, then edited by me.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
