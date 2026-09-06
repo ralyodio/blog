@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 01:29:55 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 01:30:26 GMT</lastBuildDate>
+
+		<item>
+			<title>readm3.com, built by the reader it documents</title>
+			<link>https://dev.profullstack.com/~anthony/blog/054-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/054-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 01:30:26 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>readm3.com is live. The site renders every document through the reader's own parser, and the theme buttons re-color without re-parsing.</description>
+		</item>
 
 		<item>
 			<title>Your inbox and your calendar, from the terminal</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 05 Sep 2026 23:10:51 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Forty years after hangman and hacking on an IBM mainframe, the terminal is the interface again. AI agents run commands, bots outnumber browsers, and the people who never left the shell are the ones ready for it.</description>
-		</item>
-
-		<item>
-			<title>Post once, everywhere: myna now writes to your blogs and runs an ad for each post</title>
-			<link>https://dev.profullstack.com/~anthony/blog/044-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/044-post.html</guid>
-			<pubDate>Sat, 05 Sep 2026 22:57:23 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>myna 0.6.0 posts to Git and HTML blogs and opens a CrawlProof ad campaign for every post it publishes, so a launch is one command.</description>
 		</item>
 	</channel>
 </rss>

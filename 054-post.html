@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>readm3.com, built by the reader it documents &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T01:30:26Z">
+<meta name="description" content="readm3.com is live. The site renders every document through the reader's own parser, and the theme buttons re-color without re-parsing.">
+</head>
+<body>
+
+<article>
+
+<h1>readm3.com, built by the reader it documents</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>readm3 is our terminal markdown reader. File browser on the left, rendered document on the right, nothing else in the way. It has been on npm since the end of August. It now has a website, and the interesting part is how the website is built.</p>
+
+<p>Every rendered document on readm3.com went through <code>renderMarkdown</code>, the same function the reader calls when you open a file. Nothing was reimplemented for the web, and there is no screenshot anywhere on the page. The docs page is the project README, parsed at build time by the version of the parser that shipped with the release. If the parser breaks, the page breaks, and CI runs the site build on every pull request so that failure lands in the PR instead of the deploy.</p>
+
+<p>That was possible because of a decision made early in the codebase. <code>renderMarkdown</code> returns lines of spans that carry a semantic role (h1, code, link, quote) rather than a color. A theme turns roles into colors at the very end. In the terminal that is what lets <code>--theme nord</code> re-color a document without re-parsing it.</p>
+
+<p>On the web the same property falls out for free. The build emits each span with its role as a class, then generates one CSS variable block per HQTUI theme by reading the real theme objects. The nine buttons on the page set <code>data-theme</code>, the variables swap, and the document re-colors. No JavaScript touches the text. It is the terminal behavior, running in a browser, for about thirty lines of CSS.</p>
+
+<p>Some numbers from the build. The whole site is 96K of static output. It has no dependencies beyond HQTUI, which the package already depended on. The build script is one file. The server is another, sixty lines of Bun serving files.</p>
+
+<p>The site runs on Railway behind a Dockerfile, apex and www at Porkbun. Both certificates issued within a minute of the DNS going in, which happens when you remember that Railway wants a <code>_railway-verify</code> TXT record per domain and that www gets its own token. Forgetting that is how a domain sits in validation for an hour with perfectly correct CNAMEs.</p>
+
+<p>Install it:</p>
+
+<p>bun add -g @profullstack/readm3
+npm install -g @profullstack/readm3</p>
+
+<p>Then run <code>readm3</code> in any directory with markdown in it, or <code>readm3 --print FILE</code> to use it as a cat for markdown in a pipe.</p>
+
+<p>Site: <a href="https://readm3.com">https://readm3.com</a>
+Source: <a href="https://github.com/profullstack/readm3">https://github.com/profullstack/readm3</a></p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
