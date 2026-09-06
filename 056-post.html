@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your money in the terminal: coinpay finances &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T03:09:48Z">
+<meta name="description" content="coinpay finances puts earnings, commission, refunds, bank and card feeds, the ledger, invoices, escrow and debt against income on one terminal screen.">
+</head>
+<body>
+
+<article>
+
+<h1>Your money in the terminal: coinpay finances</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every number about the money was in a different place. Card volume in one dashboard, crypto payments in another, the bank balance in a bank app, and the answer to &quot;what did we actually keep&quot; nowhere at all. So <code>coinpay finances</code> puts all of it on one screen, in the terminal, updating while you watch.</p>
+
+<p>It ships today in @profullstack/coinpay 0.9.0.</p>
+
+<h3>Seven screens</h3>
+
+<p><strong>Overview</strong> is the one you leave open. Gross volume split into crypto and cards, commission paid, processor fees, refunds, and net earnings, next to the bank position and cashflow. Invoices outstanding and overdue, escrow held, payouts pending. A graph of volume against commission by day, and a live feed.</p>
+
+<p><strong>Bank &amp; Cards</strong> lists every account linked through SimpleFIN or Plaid with its balance, what each institution is owed, and when the feed last synced.</p>
+
+<p><strong>Ledger</strong> is the transactions with categories and a spend breakdown.</p>
+
+<p><strong>Crypto</strong> and <strong>Cards</strong> each show their payments with fee, net and status.</p>
+
+<p><strong>Invoices &amp; Escrow</strong> shows what is outstanding, what is overdue, and what settled.</p>
+
+<p><strong>Debt &amp; Income</strong> is the one that stings. Debt against income over a rolling six months: debt to income, debt service ratio, months of cover, payoff months and the date you clear, per account debt shares, detected recurring charges, and a business versus personal split.</p>
+
+<h3>Two decisions worth explaining</h3>
+
+<p>The debt view uses a fixed six month lookback instead of whatever window the dashboard is set to. Recurring detection has to see a charge three times before it can name a cadence, so a 30 day window finds nothing and reports &quot;no recurring obligations&quot;. That reads as a fact about your finances when it is only a fact about the window. Six months settles monthly and quarterly charges.</p>
+
+<p>Transfers and card payments are netted out of both income and spending. A feed holding a checking account and the card that account pays would otherwise count every card payment twice, once as money out of checking and once as money into the card. The gross totals are kept alongside so the netting is auditable rather than magic.</p>
+
+<h3>Live, not polled into uselessness</h3>
+
+<p>The dashboard refreshes on a timer and subscribes to the payments event stream, so a crypto payment appears the moment it is detected rather than on the next tick.</p>
+
+<p>Bank sync is deliberately a keypress. The bank bridge allows roughly 24 pulls a day, so a screen that synced on every render would exhaust the budget before lunch. Press <code>s</code> when you want fresh balances.</p>
+
+<h3>Try it</h3>
+
+<pre><code>npm install -g @profullstack/coinpay
+coinpay login
+coinpay finances</code></pre>
+
+<p><code>r</code> refreshes, <code>s</code> syncs the bank, <code>w</code> cycles the window across 7, 30, 90 and 365 days, <code>p</code> pauses, <code>?</code> shows help.</p>
+
+<p>For scripts and for Node older than 22.6 there are plain text equivalents: <code>coinpay finances summary</code>, <code>accounts</code>, <code>ledger</code>, <code>connections</code> and <code>sync</code>, each with <code>--json</code>.</p>
+
+<p>Bank data needs the merchant session from <code>coinpay login</code>. Business API keys are refused there on purpose: a key issued to a business for taking payments should not carry an implicit grant over the owner's bank accounts.</p>
+
+<p>Built on <a href="https://hqtui.com">hqtui</a>, which is zero dependency and does the drawing.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

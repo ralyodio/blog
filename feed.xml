@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 02:09:28 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 03:09:49 GMT</lastBuildDate>
+
+		<item>
+			<title>Your money in the terminal: coinpay finances</title>
+			<link>https://dev.profullstack.com/~anthony/blog/056-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/056-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 03:09:48 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>coinpay finances puts earnings, commission, refunds, bank and card feeds, the ledger, invoices, escrow and debt against income on one terminal screen.</description>
+		</item>
 
 		<item>
 			<title>Why it is called readm3</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 00:23:04 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Chovy's $2,499 fee now includes 25 agent-hours, more time is $99 an hour, and a team tier prices supervised agents at $149 an hour or $9,900 a seat, set against what contractor hours cost.</description>
-		</item>
-
-		<item>
-			<title>Pay per crawl, both halves, and the first dollar</title>
-			<link>https://dev.profullstack.com/~anthony/blog/046-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/046-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 00:03:19 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The buying half of pay-per-crawl for AI bots is open source, the gateway sells multi-day passes, a 17-day settlement bug is fixed, and the first dollar settled on Base.</description>
 		</item>
 	</channel>
 </rss>
