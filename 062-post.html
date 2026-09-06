@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What running 36 agents in a day actually looks like &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T08:17:07Z">
+<meta name="description" content="36 agent sessions, 24 working directories, $2390 of API-equivalent spend in 24 hours. What moshcode's herd and cost commands show you, and the two ways the cost table lies if you read it wrong.">
+</head>
+<body>
+
+<article>
+
+<h1>What running 36 agents in a day actually looks like</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I pulled my own numbers this morning. In the last 24 hours, 36 agent sessions across 24 working directories, for $2,390.13.</p>
+
+<p>I only know that because moshcode told me. Every one of those engines keeps its own log in its own format in its own directory, and not one of them will add up the day for you.</p>
+
+<h3>It is not another coding agent</h3>
+
+<p>That is the part people get wrong when I describe it. moshcode does not write code. It installs and drives the things that do. Right now that is opencode, privacycode, Claude Code, Codex, Kimi, Qwen, DeepSeek and OpenAgents on this box, with Gemini CLI and Aider available and not installed.</p>
+
+<p>The practical effect of a wrapper is that you stop being loyal to an engine. When you can start any of ten with the same verb, picking one stops feeling like a commitment and starts feeling like a dispatch decision. <code>moshcode herd eval</code> will even run a dataset through several of them and score the results, which is a much better way to settle an argument about which model is better at your codebase than reading someone's benchmark about theirs.</p>
+
+<h3>The herd is the actual product</h3>
+
+<p>Sessions that outlive the terminal. That is the whole idea and it is worth more than it sounds.</p>
+
+<pre><code>moshcode herd shell --name work
+moshcode agents claude -d --name api
+moshcode herd ps
+moshcode herd read api
+moshcode herd prompt api &quot;now wire the callback&quot;
+moshcode herd wait api</code></pre>
+
+<p><code>read</code> is the one I use most. It shows you a session's screen without attaching to it, so you can check on six agents without stealing focus from any of them. <code>wait</code> is the one that matters if you script anything, because it blocks until a session reaches a state, which is the difference between a pipeline and a person watching a spinner.</p>
+
+<p>And <code>herd run</code> takes any command at all, including an agent moshcode does not ship. If you have your own thing, it goes on the roster next to the rest.</p>
+
+<h3>The number that changed how I work</h3>
+
+<p><code>moshcode herd stats</code> reports time in state, and it breaks out how long each session sat blocked waiting on you.</p>
+
+<p>Look at that figure once and the whole picture inverts. The models are not the bottleneck. You are. Ten agents can be running and eight of them are parked on a question you have not read yet, burning nothing, producing nothing, holding a worktree.</p>
+
+<p>The fix that ships with it is <code>herd notify</code> plus <code>herd watch</code>, which pages you when a session blocks instead of making you poll a screen. Being interrupt driven rather than poll driven is the single biggest throughput change available to anyone running more than three agents.</p>
+
+<h3>Read the cost numbers correctly</h3>
+
+<p>Two traps in that $2,390 and both matter.</p>
+
+<p>The tilde is doing work. A figure marked <code>~</code> is what those tokens would cost on the API at published rates. It is not what anybody billed me. If you are on a subscription, that column is an opportunity cost, not an invoice, and reading it as an invoice will give you a heart attack for no reason.</p>
+
+<p>The second one is worse because it is silent. Gemini, Kimi, DeepSeek and OpenAgents log nothing readable, so they report no cost rather than zero. An engine missing from that table is not an engine that ran for free. It is an engine you have no numbers for. Absence of a number is never a zero, and that is true of every dashboard you will ever build.</p>
+
+<p>Models with no published rate show tokens and no cost until you add the rate to <code>~/.moshcode/pricing.json</code>.</p>
+
+<h3>Three things that will bite you</h3>
+
+<p>Never put sudo in front of it. The commands that need root detect it themselves and re-run just that one command escalated. Do it yourself and you get real damage from an unexpected direction: <code>moshcode update</code> re-runs the installer and takes every path from <code>$HOME</code>, so <code>sudo moshcode update</code> installs your whole toolchain into <code>/root</code>.</p>
+
+<p>Autonomous mode bypasses approval prompts. That is the point of it, and it means a container or a worktree you are willing to lose, not your main checkout.</p>
+
+<p>If your box falls over while the herd runs, that is not a mystery, that is memory. 0.93.0 added <code>/nice</code> to throttle engine spawns with nice, ionice and a MemoryMax. Worth knowing that nice(1) on its own cannot stop an OOM kill, since scheduling priority and memory limits are unrelated. You need the MemoryMax part.</p>
+
+<h3>The skill is scheduling</h3>
+
+<p>Prompting is table stakes now. The leverage is in how many of these you can have in flight before you become the thing they are all waiting on, and you cannot manage that without numbers. Run <code>moshcode cost --all --since 7d</code> and <code>moshcode herd stats</code> on a Friday. Whatever you assumed about where your week went is probably wrong in an interesting direction.</p>
+
+<p><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
