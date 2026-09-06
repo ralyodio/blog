@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A spinner is not a status &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T07:59:33Z">
+<meta name="description" content="DiskPush 0.2.16: a mirror preview that sat on a spinner for minutes, 71MB of IPC nobody read, and two layout bugs only a screenshot could find.">
+</head>
+<body>
+
+<article>
+
+<h1>A spinner is not a status</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Someone reported that DiskPush hung when they mirrored a folder from a server down to their laptop. The dialog opened, showed a spinner and the words &quot;Scanning both sides&quot;, and stayed like that.</p>
+
+<p>It was not one bug. It was three, and only the first one has anything to do with the spinner.</p>
+
+<h3>The scan reported nothing</h3>
+
+<p>A mirror preview is an rsync dry run. The code awaited it to completion and returned the result.</p>
+
+<pre><code class="language-js">const plan = await buildPlan(request, { dryRun: true })
+const result = await runToCompletion(plan)</code></pre>
+
+<p>That is correct, and it is useless. A dry run walks both trees. From a laptop to a server over a WAN that is minutes, and for all of those minutes there is no count, no filename, no clock. A scan that is working and a scan that has wedged look identical.</p>
+
+<p>rsync will happily tell you what it is doing. <code>--info=progress2</code> prints <code>to-chk=400/1000</code> as it goes, and the parser was already reading it. Nothing was passing it to the window.</p>
+
+<h3>The result was 71MB nobody read</h3>
+
+<p>Every itemized change was collected into an array and handed back to the renderer. I ran the real dry run against one ordinary source tree to see how big that gets:</p>
+
+<pre><code>332,303 changes, 71.1 MB of JSON</code></pre>
+
+<p>That crosses the Electron IPC boundary by structured clone on every single preview. The renderer used <code>summary</code>, <code>deletes</code>, <code>command</code>. It never touched <code>changes</code>. Not once, anywhere.</p>
+
+<p>The delete list had the same shape of problem in the DOM. One node per entry, no cap, so a first mirror into an empty destination asks Chromium for a few hundred thousand rows.</p>
+
+<h3>Cancel did not cancel</h3>
+
+<p>Cancel called <code>setPreviewOpen(false)</code>. The dialog went away. The rsync process did not. It ran to the end and resolved into a window nobody was looking at, and there was no way to stop it, because nothing had kept a handle on it.</p>
+
+<h3>The two I could not read</h3>
+
+<p>Two more only turned up after building the renderer and driving it in headless Chromium with the app's real Content Security Policy.</p>
+
+<p>The delete list did not clip. It had <code>max-h-[210px]</code> on the ScrollArea root, and the Base UI viewport inside it is <code>size-full</code>. With no definite height that grows to fit its content, so the rows printed straight over the disclosure below them. Every other ScrollArea in the app is <code>min-h-0 flex-1</code> inside a flex column, which is where the height actually comes from.</p>
+
+<p>The other one: the dialog footer rendered throughout the scan, so a full strength blue Mirror button sat under the spinner, offering to run a mirror whose delete list did not exist yet. It was disabled. It did not look disabled, and a control that ignores you is worse than one that is not there.</p>
+
+<p>Neither is visible in the source. Both are obvious in a screenshot.</p>
+
+<h3>Now</h3>
+
+<p>Progress streams while the scan runs: how much has been compared, the file it is on, elapsed time. The result carries exact totals, with the enumerated deletes capped at 5,000 and a line saying how many more there are, so a truncated list never understates what a mirror is about to remove. Stop scanning kills the process.</p>
+
+<p>One rule came out of this that I would keep. If a value crosses a process boundary and nobody on the other side reads it, that is not overhead. That is the bug, and it is sitting right next to the thing you are trying to fix.</p>
+
+<p>DiskPush 0.2.16 is out: <a href="https://diskpush.com/download">https://diskpush.com/download</a></p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

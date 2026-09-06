@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 06:41:09 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 07:59:33 GMT</lastBuildDate>
+
+		<item>
+			<title>A spinner is not a status</title>
+			<link>https://dev.profullstack.com/~anthony/blog/060-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/060-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 07:59:33 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>DiskPush 0.2.16: a mirror preview that sat on a spinner for minutes, 71MB of IPC nobody read, and two layout bugs only a screenshot could find.</description>
+		</item>
 
 		<item>
 			<title>The other side of the marketplace</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 01:06:54 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Every Doppler project and config, 1,393 keys across 32 products, copied into free logicsrc vaults in one evening so the subscription can go. The two things that bit.</description>
-		</item>
-
-		<item>
-			<title>Encrypted by default, a README in every torrent, and where the money is</title>
-			<link>https://dev.profullstack.com/~anthony/blog/050-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/050-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 00:53:47 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>pay2seed encrypts by default and the hub never sees plaintext; teams and invitations are the product, every torrent carries a README the site renders, and both sides earn.</description>
 		</item>
 	</channel>
 </rss>
