@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Waiting for an application to close, without asking it to &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/070-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T10:48:54Z">
+<meta name="description" content="DiskPush 0.4.0 opens a whole selection, together or one at a time. Detecting when an app is finished with a file turns out to be about pipes, not processes.">
+</head>
+<body>
+
+<article>
+
+<h1>Waiting for an application to close, without asking it to</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>DiskPush 0.4.0 lets you select a stack of files, right click, and open all of them with one application you pick once. That part is unremarkable. The interesting half is the other mode: open them one at a time, where the next file opens when you are finished with the previous one.</p>
+
+<p>A folder of photos you want in front of you all at once. Twelve episodes you want in order. Same gesture, two completely different intentions, and a file manager that only does the first one is annoying in a way that is hard to name until you hit it.</p>
+
+<h3>The problem</h3>
+
+<p>To open the next episode when the last one is done, you have to know when it is done. Nothing tells you.</p>
+
+<p>The obvious approach is to launch the player yourself and wait for the process. To do that you need the command, which lives in the <code>Exec</code> line of a <code>.desktop</code> file, which is not a command:</p>
+
+<pre><code>Exec=mpv --profile=fast %U
+Exec=totem %U
+Exec=env BAMF_DESKTOP_FILE_HINT=... /usr/bin/code %F</code></pre>
+
+<p>Those <code>%</code> codes are field codes. <code>%f</code> is one file path, <code>%F</code> is a list, <code>%u</code> is one URL, <code>%U</code> is a list of URLs, and there are a dozen more that have been deprecated over the years but still appear in files shipping today. Writing that parser means deciding what to do when an entry wants URLs and you have a path, when it wants a list and you have one file, when it has no code at all. It is a small amount of code and a large number of ways to hand an application the wrong thing.</p>
+
+<p>The desktop already has a program that does this correctly, <code>gio launch</code>, so the sensible move is to use it. Except:</p>
+
+<pre><code>$ time gio launch player.desktop episode.mkv
+0.017 total</code></pre>
+
+<p>It returns in seventeen milliseconds. It hands the file to the launcher and exits. Waiting for it tells you nothing at all.</p>
+
+<h3>The thing I noticed by accident</h3>
+
+<p>I was timing that command through a pipe:</p>
+
+<pre><code>$ time gio launch sleeper.desktop | tail -3
+gio launch sleeper.desktop  0.017 total
+tail -3  3.020 total</code></pre>
+
+<p><code>gio</code> finished in 17ms. <code>tail</code> sat there for three seconds.</p>
+
+<p>Because the application <code>gio</code> launched inherited the pipe. <code>tail</code> cannot finish until every writer has let go of the other end, and the last writer was the application itself, not <code>gio</code>.</p>
+
+<p>That is the signal. You do not wait for the process you spawned. You wait for the pipes it left behind:</p>
+
+<pre><code class="language-js">const child = spawn('gio', ['launch', desktop, file], { stdio: ['ignore', 'pipe', 'pipe'] })
+let open = 2
+const closed = () =&gt; { if (--open === 0) resolve() }
+child.stdout.on('end', closed).resume()
+child.stderr.on('end', closed).resume()</code></pre>
+
+<p>Measured against a three second application: <code>gio</code> exits at 17ms, the pipes close at 3018ms. No Exec parsing, no field codes, no guessing.</p>
+
+<h3>Where it does not work, which matters more</h3>
+
+<p>Plenty of applications keep one window for everything. Open a second file and it goes to the copy already running, and the process you started exits immediately having done its job. The pipes close in twenty milliseconds. As far as the pipe trick is concerned, you finished watching in twenty milliseconds.</p>
+
+<p>If the code believed that, it would open episode two, then three, then all twelve, straight into the running player, which is precisely the thing this mode exists to prevent. The failure would be worse than not having the feature.</p>
+
+<p>So a close under one second is not treated as &quot;finished&quot;, it is treated as &quot;cannot tell&quot;. The run stops there and offers a button:</p>
+
+<blockquote>
+<p>That application keeps one window for everything, so DiskPush cannot tell when you are done. Press Open next when you want the following file.</p>
+</blockquote>
+
+<p>One second is a deliberate gap rather than a round number. A real hand-off is tens of milliseconds. Somebody actually watching or reading something takes seconds at the very least. There is nothing in between worth worrying about.</p>
+
+<h3>Two fixtures that tested the opposite of what they looked like</h3>
+
+<p>Writing tests for this, I reached for the obvious fake player:</p>
+
+<pre><code>Exec=sleep 1</code></pre>
+
+<p><code>gio</code> appends the file to the Exec line, so that ran <code>sleep 1 /tmp/a.mkv</code>, which dies immediately with &quot;invalid time interval&quot;. The pipes closed in milliseconds, the code correctly read a hand-off, the series parked waiting to be advanced, and the test hung until it timed out. The fixture was exercising the branch it was written to prove was not taken.</p>
+
+<p>Fixed that with a script that ignores its argument. The test still failed. Because <code>sleep 1</code> is one second and the hand-off threshold was one and a half, so a correctly working slow application was still classified as a hand-off.</p>
+
+<p>Both failures were the code doing exactly the right thing to a badly built fixture. Both were only visible because the assertion was about elapsed time and event order rather than &quot;did it throw&quot;. A test that had only checked for an absence of errors would have passed and proved nothing.</p>
+
+<p>DiskPush 0.4.0: <a href="https://diskpush.com/download">https://diskpush.com/download</a></p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

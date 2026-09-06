@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 10:36:01 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 10:48:54 GMT</lastBuildDate>
+
+		<item>
+			<title>Waiting for an application to close, without asking it to</title>
+			<link>https://dev.profullstack.com/~anthony/blog/070-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/070-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 10:48:54 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>DiskPush 0.4.0 opens a whole selection, together or one at a time. Detecting when an app is finished with a file turns out to be about pipes, not processes.</description>
+		</item>
 
 		<item>
 			<title>Hoisting is not the job</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 08:11:16 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>The Jobs and Musk personas survived the arguments about the men because they became units of measurement. The one worth copying is the boring half, it scales down to one developer, and Profullstack is hiring a homeless usability tester.</description>
-		</item>
-
-		<item>
-			<title>A spinner is not a status</title>
-			<link>https://dev.profullstack.com/~anthony/blog/060-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/060-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 07:59:33 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>DiskPush 0.2.16: a mirror preview that sat on a spinner for minutes, 71MB of IPC nobody read, and two layout bugs only a screenshot could find.</description>
 		</item>
 	</channel>
 </rss>
