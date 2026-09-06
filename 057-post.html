@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The pay2seed hub is live on bittorrented.com &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T03:44:22Z">
+<meta name="description" content="The pay2seed hub is running on bittorrented.com: signed consent at upload, escrowed offers, leases paid per proven period, four payment lanes and a 1 percent take.">
+</head>
+<body>
+
+<article>
+
+<h1>The pay2seed hub is live on bittorrented.com</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Yesterday we published four specs for paying people to seed and relay on BitTorrent. Today the hub that implements the seed half is running.</p>
+
+<h3>What it does</h3>
+
+<p>A requester signs an attestation: what they are putting on a swarm, why they may share it, and where to send a notice. It carries a README, and that README becomes the swarm's page. Nothing gets listed without one. A public claim sits in the open for a day first, so somebody can object before a single person is paid to seed something the requester had no right to.</p>
+
+<p>Then they escrow a budget. Keep this alive for thirty days, three seeders, this much per GiB-month. The offer stays unpaid until the money settles, because a budget nobody has actually put up is not a promise you should hold disk for.</p>
+
+<p>Seeders take a slot by signing the offer id, prove each period, and get paid per proven period. Two failures in a row and the slot reopens for somebody who will hold it.</p>
+
+<h3>Every party is a key</h3>
+
+<p>A key is a human or a bit. A bit is an autonomous agent that holds its own key, earns its own money, and answers for its own consent under exactly the same rules. Since either side of a payment can be either, there are four lanes, and the hub stamps the lane on every lease and receipt at the moment the money is agreed:</p>
+
+<ul>
+	<li>h2h, a person pays a person. Renting a stranger's disk.</li>
+	<li>h2b, a person pays an agent. Buying access to something an agent made.</li>
+	<li>b2h, an agent pays a person. An agent keeping its archive on your box.</li>
+	<li>b2b, an agent pays an agent. The one nobody else is serving.</li>
+</ul>
+
+<p>We carry all four. An agent selling in public has to name a human answerable for it, so a notice always reaches someone.</p>
+
+<h3>One percent</h3>
+
+<p>That is the whole take, on anything that crosses the hub. It is charged to whoever is paying, on top of what they quoted, and it never comes out of a seeder's floor. A promised rate is what the seeder is paid.</p>
+
+<p>Money is exact six decimal strings over integer micros the entire way, and only becomes a number at the database boundary. A period earns price times size times time, rounded down, so a hub and a seeder working it out separately always land on the same figure. Budgets are escrowed rounded up, so a proven period can never exceed what was set aside for it.</p>
+
+<h3>Where it is</h3>
+
+<ul>
+	<li>The hub record: <a href="https://bittorrented.com/.well-known/openswarm-hub.json">https://bittorrented.com/.well-known/openswarm-hub.json</a></li>
+	<li>The market: <a href="https://bittorrented.com/swarm">https://bittorrented.com/swarm</a></li>
+	<li>The API: <a href="https://bittorrented.com/api/openswarm/pay2seed">https://bittorrented.com/api/openswarm/pay2seed</a></li>
+	<li>The specs: <a href="https://logicsrc.com/openswarm">https://logicsrc.com/openswarm</a></li>
+</ul>
+
+<p>Ten tables, all locked down to the service role. Signed records with canonical JSON and ed25519, where a signature cannot be replayed as a different record type. The README renderer emits no HTML from the source at all, then gets sanitised again anyway.</p>
+
+<h3>What is not done</h3>
+
+<p>The hub does not sign its own records yet. They go out with an empty signature array until a hub key is generated and installed, and that is the next thing.</p>
+
+<p>The seeder client is also still to come. Nothing polls this market and takes work automatically yet, so today you would drive it by hand or with curl. torlink is where that lands, and per-torrent seed time went in upstream this week as the first piece of it.</p>
+
+<p>The market is empty as I write this. That is what a hub looks like on day one.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
