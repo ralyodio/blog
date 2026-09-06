@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Encrypted by default, a README in every torrent, and where the money is &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T00:53:47Z">
+<meta name="description" content="pay2seed encrypts by default and the hub never sees plaintext; teams and invitations are the product, every torrent carries a README the site renders, and both sides earn.">
+</head>
+<body>
+
+<article>
+
+<h1>Encrypted by default, a README in every torrent, and where the money is</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Yesterday we published four specs for paying people to seed and relay on BitTorrent. Today the seed half got the part that pays for all of it.</p>
+
+<h3>The client encrypts, we do not</h3>
+
+<p>Every swarm added through pay2seed is encrypted by default: AES-256 over every piece, under a key only the person who added it holds. Seeders, trackers, the DHT and our own hub see ciphertext and nothing else. Not the file name, not a single block.</p>
+
+<p>The hub never encrypts and never sees plaintext. What it manages is access to keys. That distinction is the whole design. If we held your data in the clear we would be a cloud provider with extra steps. We hold nothing.</p>
+
+<p>Turning encryption off is a choice you make on purpose, and the client tells you what it means: anyone. A public swarm is not a second class. It is attested, listed, kept by paid seeders and rendered on the site like any private one. The only difference is who can read it.</p>
+
+<h3>Access is the product</h3>
+
+<p>Seeding is priced at the cost of disk. That is not a business, and it is not meant to be one. The business is this: you added encrypted data, and now you want your team to open it. Or your family. Or a customer who paid.</p>
+
+<p>A team is a named list of member keys with a scope over your swarms. You invite people by email or handle, they get a key if they do not have one, and from then on the hub issues them a grant to decrypt whenever they ask, at three in the morning, while your laptop is closed. Remove someone and the next version is re-encrypted so it is closed to them. Every grant is in an audit log.</p>
+
+<p>A few seats are free, so a family or a three-person shop never pays. Above that, seats and organisations are billed monthly through the same CoinPay and x402 plugins the rest of the stack already uses. No card form of our own.</p>
+
+<p>Both sides earn. A seeder rents out disk. A requester sells access, to strangers through passes and to colleagues through teams. The hub takes a cut on passes and a seat fee on teams, and nothing from a seeder's floor.</p>
+
+<h3>Every torrent has a README</h3>
+
+<p>No exceptions. A swarm without a README.md at its root is refused at the door.</p>
+
+<p>The attestation carries the README's Markdown and the hash of the copy inside the swarm, so bittorrented.com can render it as the swarm's page without holding a key. What this is, who made it, what a buyer gets, how to use it. Relative links in it resolve to files in the swarm and are gated the same way the files are: a public swarm's link downloads, a private swarm's link asks for a pass or a grant.</p>
+
+<p>Twenty years of torrent indexes have been lists of anonymous hashes. A consented swarm with a signed README next to them will look different, and that is the point.</p>
+
+<h3>Where it is</h3>
+
+<ul>
+	<li>The spec: <a href="https://github.com/profullstack/logicsrc/pull/143">https://github.com/profullstack/logicsrc/pull/143</a>, section 5 of pay2seed.</li>
+	<li>Yesterday's post on the four protocols: <a href="https://dev.profullstack.com/~anthony/blog/048-post.html">https://dev.profullstack.com/~anthony/blog/048-post.html</a></li>
+</ul>
+
+<p>Next is the hub on bittorrented.com with the README pages, then the team invitations, then the torlink client that earns.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

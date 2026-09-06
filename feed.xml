@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 00:50:29 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 00:53:47 GMT</lastBuildDate>
+
+		<item>
+			<title>Encrypted by default, a README in every torrent, and where the money is</title>
+			<link>https://dev.profullstack.com/~anthony/blog/050-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/050-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 00:53:47 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>pay2seed encrypts by default and the hub never sees plaintext; teams and invitations are the product, every torrent carries a README the site renders, and both sides earn.</description>
+		</item>
 
 		<item>
 			<title>Chovy pays 80% to whoever sends the founder</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 05 Sep 2026 18:59:42 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Pre-diabetic, then six months of a Red Bull every day, then type 2 diabetes, then a third cranial nerve palsy that shut my left eye. Red Bull was the last straw, not the cause. What I ignored, what is in the can, and why it is a drink for 20 year olds.</description>
-		</item>
-
-		<item>
-			<title>The 80,000 visitors a day were one crawler</title>
-			<link>https://dev.profullstack.com/~anthony/blog/040-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/040-post.html</guid>
-			<pubDate>Sat, 05 Sep 2026 17:44:27 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>One day, written up: the traffic on genrewatch was Meta's training crawler, so six sites now sell training bots a one dollar day pass over x402, a residential proxy fleet that no IP block can touch, a Next 16 proxy file that never ran, and why a headless browser does not fix the feed reader.</description>
 		</item>
 	</channel>
 </rss>
