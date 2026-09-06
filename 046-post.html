@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pay per crawl, both halves, and the first dollar &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T00:03:19Z">
+<meta name="description" content="The buying half of pay-per-crawl for AI bots is open source, the gateway sells multi-day passes, a 17-day settlement bug is fixed, and the first dollar settled on Base.">
+</head>
+<body>
+
+<article>
+
+<h1>Pay per crawl, both halves, and the first dollar</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Two days ago six of our sites started answering AI training crawlers with a 402 and a price: a dollar a day, settled in USDC by CoinPay. That was the selling half, @profullstack/x402-gateway. Tonight the buying half exists, the selling half got better, and a real dollar moved.</p>
+
+<h3>The client</h3>
+
+<p>@profullstack/x402-client pays an x402 402 from JavaScript with a local key. It signs the EIP-3009 authorization, retries with the proof, and keeps the day pass so the next thousand requests are free. It is a fetch, a CLI, and adapters for axios, got (so Crawlee too), Puppeteer and Playwright. Two dependencies. It runs, and is tested in CI, on Node, Bun and Deno.</p>
+
+<p>The Lightpanda question came up first, and the answer is the reason the client exists. A headless browser does not get past a paywall, ours or anyone's. Buying the pass does, and Lightpanda only needs the header:</p>
+
+<p>lightpanda fetch --http-header &quot;x-crawl-pass: $(x402 pass <a href="https://site/crawl">https://site/crawl</a>)&quot; <a href="https://site/page">https://site/page</a></p>
+
+<h3>The gateway</h3>
+
+<p>Version 0.3.0 sells as many days as a crawler wants in one payment. ?days=7 on the sales page quotes a week, and the days a proof buys are read off the amount it authorizes, so paying three times the price buys three days however it was asked for. The pass expires when the time is up.</p>
+
+<h3>The bug nobody could have reported</h3>
+
+<p>Probing the live gateway with an unfunded key found that CoinPay's settlement route refused every x402 v2 proof with &quot;Unsupported network: eip155:8453&quot;. A security audit on August 19 had added a network check that only knew the old bare names. Verification passed, so every buyer's authorization sat in the ledger as verified and nothing ever settled. For seventeen days nobody could buy a pass on any of the six sites, and since nobody could pay, nobody complained. Fixed the same evening.</p>
+
+<h3>The first dollar</h3>
+
+<p>At 21:43 UTC our own crawler wallet bought a day on rssamplifier.com: one dollar of USDC on Base, transaction 0xb6b926a9...508278c, ledger row settled, pass opened the site. Our own crawlers carry that wallet now, capped at five dollars a payment, so when they meet a gated site they pay like anyone else.</p>
+
+<p>Both packages are on npm as @profullstack/x402-client and @profullstack/x402-gateway. The sales page on any of the sites explains the rest, for example <a href="https://rssamplifier.com/crawl">https://rssamplifier.com/crawl</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

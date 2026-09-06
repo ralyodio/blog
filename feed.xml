@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 05 Sep 2026 23:11:57 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 00:03:20 GMT</lastBuildDate>
+
+		<item>
+			<title>Pay per crawl, both halves, and the first dollar</title>
+			<link>https://dev.profullstack.com/~anthony/blog/046-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/046-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 00:03:19 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The buying half of pay-per-crawl for AI bots is open source, the gateway sells multi-day passes, a 17-day settlement bug is fixed, and the first dollar settled on Base.</description>
+		</item>
 
 		<item>
 			<title>AI has finally enabled us CLI commandos</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 02 Sep 2026 23:29:35 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>myna is a social media manager that runs in your terminal. It counts characters the way each network counts them, is honest about which of the 26 need a password and which need a browser, and keeps your credentials encrypted on your own machine.</description>
-		</item>
-
-		<item>
-			<title>Work is not disappearing. The job is.</title>
-			<link>https://dev.profullstack.com/~anthony/blog/036-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/036-post.html</guid>
-			<pubDate>Sun, 30 Aug 2026 11:01:59 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The salaried, 9-to-5, one-employer-for-decades package is an industrial-age artifact, and it is coming apart. What the return-to-office data, the independent workforce numbers and Harvard's research on degree requirements actually show.</description>
 		</item>
 	</channel>
 </rss>
