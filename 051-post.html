@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Doppler out, logicsrc in: 128 vaults and $39 a month back &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T01:06:54Z">
+<meta name="description" content="Every Doppler project and config, 1,393 keys across 32 products, copied into free logicsrc vaults in one evening so the subscription can go. The two things that bit.">
+</head>
+<body>
+
+<article>
+
+<h1>Doppler out, logicsrc in: 128 vaults and $39 a month back</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I have been paying Doppler $39 a month for a secrets manager I stopped using. Tonight I copied everything out of it into logicsrc, which is ours and costs nothing, so the subscription can go.</p>
+
+<h3>What was in there</h3>
+
+<p>More than I expected. Doppler had 32 projects, one per product, and 128 configs across them once you count the dev, staging and prod branches. Between them, 1,393 keys. Most of the products had moved to logicsrc vaults months ago, but the Doppler copies were never deleted, and nobody wants to be the person who cancels the account with the only copy of a database password in it.</p>
+
+<h3>How it went</h3>
+
+<p>One script. For every project, list its configs. For every config, download the secrets as a .env, push that file into a logicsrc team vault named for where it came from, and delete the file. Doppler itself was left alone; this is a copy, not a move.</p>
+
+<pre><code>doppler projects --json
+doppler configs -p &lt;project&gt; --json
+doppler secrets download -p &lt;project&gt; -c &lt;config&gt; --no-file --format env
+logicsrc teams push profullstack doppler-&lt;project&gt; &lt;config&gt; --env &lt;file&gt;</code></pre>
+
+<p>The whole run took about 15 minutes and pushed 128 vaults. Every one of them pulls back with the same key count Doppler reports.</p>
+
+<p>Two things bit. Doppler names its branch configs with underscores, dev_personal and the like, and logicsrc vault names only allow lowercase letters, digits and dashes, so the first pass failed on 33 of them until the underscores became dashes. And I edited the script while it was still running. Bash reads a script as it goes, so the patched file threw a syntax error in the last project. Do not do that. Rerun it.</p>
+
+<h3>Why logicsrc</h3>
+
+<p>The vaults are end to end encrypted, shared per teammate, and there is no plan to pay for. The push is an upsert, so a backup goes into its own namespace rather than on top of the live vaults, and a typo in a vault name silently creates a new vault instead of failing, which is worth knowing before you run 128 of them.</p>
+
+<p>That is $468 a year back for an evening's work, and one fewer place a secret can live.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
