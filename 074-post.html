@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The honeypot was working. The spam still got through. &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/074-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T18:45:21Z">
+<meta name="description" content="A contact form submission passed SPF, DKIM, DMARC and ARC, and walked past a correctly implemented honeypot. Why a honeypot cannot catch a bot that never renders your page, and what to require instead.">
+</head>
+<body>
+
+<article>
+
+<h1>The honeypot was working. The spam still got through.</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>A contact form submission came in claiming to be Isabella Thompson. The reply-to was madamtaisia@mail.ru. The body said &quot;I would like more information. Please contact me by email.&quot;</p>
+
+<p>Every authentication check passed. SPF, DKIM, DMARC, ARC, all green. That stops being surprising once you see why: the contact form mails us through our own Resend account, so the cryptography validates our infrastructure. It says nothing about who filled in the form.</p>
+
+<p>The interesting part is that the form already had a honeypot, and the honeypot was working correctly.</p>
+
+<h3>A honeypot only catches a bot that loads your page</h3>
+
+<p>A honeypot is a hidden field. Humans never see it, bots fill it in, you reject anything that arrives with it set.</p>
+
+<p>That logic has a hole. Most contact form spam never renders your page. It POSTs straight at the handler with a body it composed itself. So the hidden field is not filled in, it is absent. And &quot;is this field empty?&quot; answers yes.</p>
+
+<p>The check runs, passes, and lets the message through. Nothing is broken. The defence just never met the attacker.</p>
+
+<h3>Proof of render</h3>
+
+<p>The fix is to require something the page hands out.</p>
+
+<p>We mint a signed, timestamped token when the form renders, and require it back on submit. A request that never loaded the form has no token and goes nowhere. The token carries the moment it was issued, so the fill time comes along for free. A submission that returns in under three seconds did not come from someone typing.</p>
+
+<p>That is the whole idea. It is packaged as @profullstack/form-guard, zero dependencies, and it runs on Node, Bun, Deno, Cloudflare Workers and the Next.js edge runtime.</p>
+
+<p>There are five layers and only four of them can block:</p>
+
+<ul>
+	<li>proof of render token, catches direct POSTs</li>
+	<li>fill time floor, catches instant submits</li>
+	<li>honeypot, catches the bots that do render</li>
+	<li>per IP rate limit, catches floods</li>
+	<li>content scoring, which only tags</li>
+</ul>
+
+<p>That last one matters. Every content signal has an innocent explanation. Real people write short messages, real people have mail.ru addresses, real people paste links. So scoring adds a tag to the subject and a block naming the sender IP, user agent, fill time and which signals fired. It never drops a message. Blocking is left to the checks that key on things no human visitor does.</p>
+
+<h3>Two things to get wrong</h3>
+
+<p>The page that renders the form has to be dynamic. A cached or prerendered page hands every visitor the same token, and that token dies when it expires. On one site the form is a section of the homepage, so protecting it moved the homepage from static to server rendered. That is a real cost, worth deciding on rather than absorbing.</p>
+
+<p>The page and the route also have to share one guard. If the binding or the field names drift apart, every genuine submission is rejected, silently. That is the worst failure mode available here, so the config lives in one module that both sides import.</p>
+
+<h3>What the rollout turned up</h3>
+
+<p>Eighteen properties have a live contact form. Eight of them route through one shared library, which made that the place to fix it once.</p>
+
+<p>Going through the rest found problems that had nothing to do with spam. Three sites render an hCaptcha widget whose response the server never verifies, so visitors have been solving a puzzle that gates nothing. Three more interpolate the submitter's name and message straight into the notification email's HTML. One contact form logs the submission and returns success without sending anything, so every message anyone ever sent through it was discarded while the sender was told it arrived.</p>
+
+<p>Reading eighteen implementations of the same feature is a good way to find out what you actually shipped.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
