@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hoisting is not the job &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/069-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T10:36:00Z">
+<meta name="description" content="An AI screener marked me down for not defining hoisting the way the textbook does. That question stopped measuring anything years ago.">
+</head>
+<body>
+
+<article>
+
+<h1>Hoisting is not the job</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I did an AI screening interview. A micro1 bot, voice on both ends, twenty minutes. It asked me to explain hoisting.</p>
+
+<p>So I explained hoisting. Not the sentence from the book, the thing I actually carry around after fifteen years of writing JavaScript for money. The declaration is there before the line you wrote it on. <code>var</code> hands you undefined, <code>let</code> and <code>const</code> throw at you instead. And in practice you never lean on any of it, because leaning on it is how you write code that nobody can read six months later.</p>
+
+<p>Wrong, apparently. Not wrong in fact. Wrong in shape. It wanted the definition off the page, the one about declarations being moved to the top of their scope at compile time. I never said the word moved, so the answer did not score.</p>
+
+<p>Then it started in on closures and I hung up.</p>
+
+<p>Two things are true at the same time here.</p>
+
+<p>Hoisting is genuinely hard to say out loud. So are closures. Everyone who has ever explained a closure in an interview has listened to their own sentence get worse as it went. That is not a comprehension problem. The accurate explanation is longer than the socially acceptable answer length, so you compress it, and compression sounds exactly like confusion.</p>
+
+<p>The other thing is that these are fifteen year old questions. They made sense in 2010, when the way you found out whether somebody knew JavaScript was to ask about the parts of JavaScript that surprise people. It worked then. I asked them myself.</p>
+
+<p>It measures nothing now. I do not hand write the code that hoisting is a hazard in. Neither does anyone I would want to hire. The model writes it and I read it, and what I bring to that is knowing this thing falls over at ten thousand rows, or this schema turns into a migration nightmare in the spring, or we do not need this service at all. That is the work. None of it is recall.</p>
+
+<p>Which leaves the screen measuring the one skill that has been completely automated, using a machine that automated it.</p>
+
+<p>So here is what I want instead, and I am done being coy about it. One phone call. Voice, no camera. CEO, or CTO, or both, I will happily do both. Ask me about architecture. Put your actual system in front of me and ask what I would do to it. Make me defend a decision I already shipped. Half an hour of that tells you more than any screen ever has, because there is nothing to memorize and no way to fake it.</p>
+
+<p>No video call. No coding challenge. No take home. No whiteboard in a room. Everything I have shipped this year is public and every piece of it has a URL on it. Go read the code.</p>
+
+<p>I know how that reads. It reads like someone with enough leverage to be difficult. Fine, maybe. But the other option is spending an hour proving I memorized the spec's preferred wording for a behavior I have never once had to think about on purpose, and I would rather just not.</p>
+
+<p>The first company to figure this out is going to hire the people everyone else is filtering out.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
