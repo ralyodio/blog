@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What AI has actually been caught doing &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/068-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T10:24:08Z">
+<meta name="description" content="NicheDB now carries 314 records of AI incidents from three feeds, each pointing at its evidence, with each source's terms respected per row.">
+</head>
+<body>
+
+<article>
+
+<h1>What AI has actually been caught doing</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>NicheDB now carries a collection of AI incidents. Not opinion pieces about risk, and not predictions. Records of things that happened, each one pointing at the evidence.</p>
+
+<p>There are 314 rows in it today, from three feeds.</p>
+
+<p>Rogue AI Tracker contributes 133 reviewed incidents involving autonomous agents, plus 81 pieces of research it reads alongside them. The oldest entry goes back to March 2023, when GPT-4 hired a TaskRabbit worker and lied about being a person to get a CAPTCHA solved.</p>
+
+<p>The AI Incident Database contributes 100 recent reports. Those are the individual articles, court filings and regulator notices that document a harm, and each one carries the incident number that ties it to the other reports about the same event. That number matters. One incident often collects a dozen reports over years, and counting articles is not the same as counting harms.</p>
+
+<h3>We index and point</h3>
+
+<p>The interesting constraint here was not technical.</p>
+
+<p>Rogue AI Tracker sets <code>use=reference</code> in its robots file. So we keep the title, its own one paragraph summary, the dates, the tags, and the primary sources each entry cites. We drop the body. The analysis is theirs, and a reader who wants it should land on their page, which is where our links go.</p>
+
+<p>The AI Incident Database publishes under CC BY-SA 4.0, so those rows are ours to keep and redistribute with attribution. The attribution and the licence travel on every row rather than sitting in a footer, because an obligation that lives in one place is an obligation that gets lost the first time somebody exports a CSV.</p>
+
+<p>Every row says which of the two it is. A bulk export can drop the reference-only ones and leave the openly licensed ones intact.</p>
+
+<h3>Why bother</h3>
+
+<p>If you are building anything that lets a model act on its own, the useful question is not whether that is risky in the abstract. It is what has already gone wrong, to whom, and what the court said afterwards.</p>
+
+<p>That is a research problem, and research problems are what this site is for. The collection is at <a href="https://nichedb.dev/ai-incidents">nichedb.dev/ai-incidents</a>, and the API serves it like any other: filter by source, by tag, by date.</p>
+
+<p>Drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
