@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The last thing a doctor owns &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T01:21:47Z">
+<meta name="description" content="Our traffic is 99% training crawlers. So we are building the marketplace that lets experts sell what they know to them, at 20% to 80% commission, with a public leaderboard we shipped as an npm package.">
+</head>
+<body>
+
+<article>
+
+<h1>The last thing a doctor owns</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Look at who actually reads our sites.</p>
+
+<p>Seven days on genrewatch.com: 257,523 requests, 99% of them crawlers. Meta's training agent took 209,000 of those. Applebot took 42,000. Real humans, the kind with a browser and a Tuesday evening, came to about 27 a day. rssamplifier.com is 87% bots. We spent a year building for an audience that turned out to be four laptops and a fleet of machines that never click anything.</p>
+
+<p>You can read that as a loss. We read it as a customer list.</p>
+
+<h3>The part nobody says out loud</h3>
+
+<p>The machines reading our pages are being trained to do jobs. Not clerical jobs. The good ones.</p>
+
+<p>Radiology is the one everyone points at, and pointing at it is now a bit late. Diagnostics, triage, differential workups, the first ninety minutes of any specialist's day: that work is being learned from text, and the text is being taken for free. A surgeon still has a decade of hands. But the reasoning, the pattern library, the twenty years of &quot;I have seen this go wrong twice and here is how it started,&quot; that is not protected by a license. It sits in write-ups, case notes and half-finished blog drafts, and it is worth more to a training run than to anyone else alive.</p>
+
+<p>Here is the uncomfortable arithmetic. A model trained on your judgment competes with you. It was trained for free. You were not paid, cited, or asked.</p>
+
+<p>We think the second part is fixable even if the first part is not.</p>
+
+<h3>Sell the knowledge, keep the paywall</h3>
+
+<p>We already built the mechanism for our own sites. <code>@profullstack/x402-gateway</code> sits in front of a site and tells training crawlers the price: one dollar a day, paid in USDC over x402, settled through CoinPay. Search and retrieval crawlers stay welcome and free, because they send readers back. Training crawlers do not send anything back, so training crawlers pay. Six of our sites run it. NicheDB sells the same access as a subscription at $120 a month.</p>
+
+<p>The marketplace is that turned outward. You publish what you know on a property. The property carries a paywall for training crawlers. When a crawler buys access, you get paid.</p>
+
+<h3>Twenty to eighty</h3>
+
+<p>Commission starts at 20% and climbs to 80%.</p>
+
+<p>Every property you own adds five points, up to six properties. Every niche you can credibly publish into adds five more, up to six niches. A cardiologist with one site and one specialty earns 25%. The same cardiologist with four sites across sports medicine, sleep, nutrition and post-op recovery earns 65%. Six and six is the cap.</p>
+
+<p>The ladder is not a loyalty scheme. It is priced off what makes a crawl valuable. One deep site on one subject is worth something. The same expert across six adjacent subjects is worth far more per crawl, because a training run wants coverage and cross-referencing, and because that seller is the one keeping the corpus current.</p>
+
+<h3>Then we made it a game, because that works</h3>
+
+<p>Selling into a market with no visible activity feels like shouting into a drive. So there is a public leaderboard: top earners, most sales, longest streaks, by week and month and all time. Badges you keep once you earn them, including one for the 80% club. A share card for every seller carrying their rank, streak and rate.</p>
+
+<p>We built this once before for aiornot.vote and liked it enough to want it everywhere. So this time we built it as a package instead of a feature.</p>
+
+<p><code>@profullstack/leaderboard</code> is on npm now. Zero dependencies, a Fetch API core that runs at the edge, adapters for Hono and Next, stores for sqlite, Turso and Postgres. Describe your boards, call <code>record()</code> when something happens, and you get ranked pages, JSON, RSS, share cards and an embeddable widget.</p>
+
+<p>The widget is the piece I actually care about. One script tag on any page:</p>
+
+<p>&lt;div data-leaderboard&gt;&lt;/div&gt;
+&lt;script src=&quot;https://yoursite.com/leaderboard/embed.js&quot;
+data-board=&quot;earnings&quot; data-period=&quot;week&quot; data-me=&quot;u_42&quot;
+data-sticky=&quot;bottom-right&quot;&gt;&lt;/script&gt;</p>
+
+<p>With <code>data-sticky</code> it becomes a corner pill that reads &quot;You are #4 this week&quot; and follows the reader around the site. Click it and the board opens over the page. It is sticky content in both senses: it stays on screen, and it is the reason people come back tomorrow to check.</p>
+
+<p>Commission ladder included, since we needed one: <code>commissionLadder()</code> gives you the 20-to-80 shape, and every number is an option if your program has a different one.</p>
+
+<h3>Where it is</h3>
+
+<ul>
+	<li>The package: <a href="https://www.npmjs.com/package/@profullstack/leaderboard">https://www.npmjs.com/package/@profullstack/leaderboard</a></li>
+	<li>The source: <a href="https://github.com/profullstack/leaderboard">https://github.com/profullstack/leaderboard</a></li>
+	<li>The crawler paywall it pairs with: <a href="https://github.com/profullstack/x402-gateway">https://github.com/profullstack/x402-gateway</a></li>
+</ul>
+
+<p>Next is the seller onboarding, then the first cohort of properties. If you hold a decade of expertise in a subject and you have noticed the machines getting better at it, that expertise has a buyer. Right now the buyer is taking it for free.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

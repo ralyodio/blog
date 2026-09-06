@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 01:06:54 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 01:21:47 GMT</lastBuildDate>
+
+		<item>
+			<title>The last thing a doctor owns</title>
+			<link>https://dev.profullstack.com/~anthony/blog/052-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/052-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 01:21:47 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Our traffic is 99% training crawlers. So we are building the marketplace that lets experts sell what they know to them, at 20% to 80% commission, with a public leaderboard we shipped as an npm package.</description>
+		</item>
 
 		<item>
 			<title>Doppler out, logicsrc in: 128 vaults and $39 a month back</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 05 Sep 2026 22:44:46 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A training crawler is a customer with a budget. Put the offer where a program will find it: robots.txt, a 402 with an x402 offer, a sales page at /crawl. @profullstack/x402-gateway does that in one middleware, it is on 38 sites, and tonight the first dollar cleared.</description>
-		</item>
-
-		<item>
-			<title>NicheDB: sources in, feeds out</title>
-			<link>https://dev.profullstack.com/~anthony/blog/042-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/042-post.html</guid>
-			<pubDate>Sat, 05 Sep 2026 21:30:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Live sports, TV releases and RSS all share one property: a big seed that grows every day from data that is already public. NicheDB is the platform version of that idea. Thirteen niches, 29 adapters, enrichment, and every row reachable by web, RSS, API, CLI and MCP.</description>
 		</item>
 	</channel>
 </rss>
