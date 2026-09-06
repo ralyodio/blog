@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 00:03:20 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 00:23:04 GMT</lastBuildDate>
+
+		<item>
+			<title>Chovy now prices agent time by the hour, the way you already buy contractor time</title>
+			<link>https://dev.profullstack.com/~anthony/blog/047-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/047-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 00:23:04 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Chovy's $2,499 fee now includes 25 agent-hours, more time is $99 an hour, and a team tier prices supervised agents at $149 an hour or $9,900 a seat, set against what contractor hours cost.</description>
+		</item>
 
 		<item>
 			<title>Pay per crawl, both halves, and the first dollar</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 03 Sep 2026 16:12:07 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>How the launch.anapp.now campaign site is built: one textarea instead of a signup form, a server-side handoff into Chovy that keeps the idea out of URLs, four hero headlines under test, and first-party tracking with no pixels.</description>
-		</item>
-
-		<item>
-			<title>One terminal window, 26 social networks</title>
-			<link>https://dev.profullstack.com/~anthony/blog/037-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/037-post.html</guid>
-			<pubDate>Wed, 02 Sep 2026 23:29:35 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>myna is a social media manager that runs in your terminal. It counts characters the way each network counts them, is honest about which of the 26 need a password and which need a browser, and keeps your credentials encrypted on your own machine.</description>
 		</item>
 	</channel>
 </rss>
