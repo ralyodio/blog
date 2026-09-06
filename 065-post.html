@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Every car sold in the US, and what is wrong with it &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T09:33:36Z">
+<meta name="description" content="NicheDB gets two new collections: every make, model and year sold in the US with NHTSA recalls, owner complaints and crash tests behind a VIN lookup, and a record of what autonomous AI agents have been caught doing.">
+</head>
+<body>
+
+<article>
+
+<h1>Every car sold in the US, and what is wrong with it</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>NicheDB has two new collections today. One is automotive. The other is a record of what AI agents have actually been caught doing.</p>
+
+<h3>Start with the VIN</h3>
+
+<p>Nobody wakes up wanting a feed of recalls. They wake up holding a VIN, or standing in a driveway looking at a used Accord, and the question is always the same. What is this, what is wrong with it, what does it need, who fixes it, and where do I get the part.</p>
+
+<p>So that is what the endpoint answers. One VIN in:</p>
+
+<pre><code>GET https://nichedb.dev/api/v1/automotive/vin/1HGCM82633A004352?miles=184000</code></pre>
+
+<p>Out comes the decode (2003 Honda Accord, V6, 3.0 litre, 240 horsepower, built in Marysville), the 24 open safety recalls against it, all 2,013 owner complaints ranked by which part of the car people complain about (926 powertrain, 324 air bags, 175 brakes), the crash test scores, 25 mpg combined, what it is due for at 184,000 miles, six places to buy the part, and the repair shops nearest you.</p>
+
+<p>There is a page for it at <a href="https://nichedb.dev/vin">nichedb.dev/vin</a> if you would rather paste than curl.</p>
+
+<h3>Where it comes from</h3>
+
+<p>Four upstreams, and all four are US federal government work, which means public domain. No key, no quota, no licence to argue about:</p>
+
+<ul>
+	<li>NHTSA vPIC decodes the VIN</li>
+	<li>NHTSA publishes the recalls, the owner complaints and the NCAP crash tests</li>
+	<li>The EPA and DOE fuel economy database is the catalogue of every make, model and year sold here since 1984, with the trims under each one and what each trim actually is</li>
+	<li>OpenStreetMap knows where the mechanics are, under ODbL, and it is attributed in every response</li>
+</ul>
+
+<p>Most of what NicheDB indexes belongs to somebody else. This does not. These rows are ours to hand back out.</p>
+
+<h3>The two parts that are not the government's</h3>
+
+<p>Two sections of that answer are ours, and the payload says so rather than letting you assume otherwise.</p>
+
+<p>The service schedule is a general interval model over the powertrain we decoded, not the manufacturer's schedule. Manufacturer schedules are licensed and nobody can republish them, so pretending otherwise would be a lie with a warranty attached. What the model does know is the powertrain. An electric car is never told to change its oil or its spark plugs. A diesel gets a fuel filter that a petrol car does not. Every line carries <code>basis: &quot;general-interval&quot;</code> and points you at the owner's manual.</p>
+
+<p>Parts are searches rather than a catalogue, for the same reason. Fitment data, which part number fits which car, is ACES and PIES, and it is licensed per seat. So we do not claim a catalogue we do not have. We build the searches you would have typed, with the vehicle already in them, at the places that actually stock parts, including the salvage yards, which are the only realistic source for body panels on a twenty year old car.</p>
+
+<h3>What the agents have been up to</h3>
+
+<p>The second collection is AI incidents.</p>
+
+<p><a href="https://rogueaitracker.com/">Rogue AI Tracker</a> reviews public incidents involving autonomous agents and scores what those agents demonstrated. It publishes two read only JSON APIs and documents them in its own llms.txt, so that is the door we came in through rather than scraping the app.</p>
+
+<p>Its robots.txt sets a content signal: search yes, ai-train no, use reference. We honoured that in what we keep, not just in what we say. We index the title, their own one paragraph summary, the dates, the capability tags, and every primary source each entry cites. We do not keep the review body. That is theirs, and a link is what a reference is. There is a test in the repo that fails if the body ever reaches a row.</p>
+
+<p>Indexing one site is a single point of failure, so the <a href="https://incidentdatabase.ai/">AI Incident Database</a> sits alongside it. That one is CC BY-SA, which means those rows we do keep.</p>
+
+<h3>What it costs</h3>
+
+<p>The feeds are free and unmetered, the same as every other collection here. Recalls, do not drive alerts, owner complaints, crash tests, the catalogue, the agent incidents. Each has a page, RSS, JSON Feed, an API and a webhook.</p>
+
+<p>The assembled vehicle lookups are five an hour free, then a dollar a day on an x402 crawl pass, or thirty a month.</p>
+
+<p>That price is not a guess. Somebody offered to pay for the automotive feeds in coffee, one Philz a day, which is about six to eight dollars, and the deal ended up at one a week because nobody wants to drink Philz every day. The interesting part is the shape of it. The willingness to pay was per day. A pass priced per day is a thing an agent can buy at three in the morning without talking to anyone, which is what x402 is for, and no one has to drink anything.</p>
+
+<h3>Try it</h3>
+
+<ul>
+	<li><a href="https://nichedb.dev/vin">nichedb.dev/vin</a></li>
+	<li><a href="https://nichedb.dev/c/automotive">nichedb.dev/c/automotive</a></li>
+	<li><a href="https://nichedb.dev/c/ai-incidents">nichedb.dev/c/ai-incidents</a></li>
+	<li><a href="https://nichedb.dev/f/do-not-drive">The do not drive feed</a>, which is the one worth subscribing to</li>
+</ul>
+
+<p>The whole thing is MIT and the source is at <a href="https://github.com/profullstack/niche-db">profullstack/niche-db</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 09:33:34 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 09:33:36 GMT</lastBuildDate>
+
+		<item>
+			<title>Every car sold in the US, and what is wrong with it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/065-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/065-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 09:33:36 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>NicheDB gets two new collections: every make, model and year sold in the US with NHTSA recalls, owner complaints and crash tests behind a VIN lookup, and a record of what autonomous AI agents have been caught doing.</description>
+		</item>
 
 		<item>
 			<title>readm3 can edit now, and it speaks Reddit</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 03:09:48 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>coinpay finances puts earnings, commission, refunds, bank and card feeds, the ledger, invoices, escrow and debt against income on one terminal screen.</description>
-		</item>
-
-		<item>
-			<title>Why it is called readm3</title>
-			<link>https://dev.profullstack.com/~anthony/blog/055-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/055-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 02:09:28 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>readm3 is README with the last letter swapped for a digit, lifted from the 3MTA3 gag on the Beastie Boys' Licensed to Ill cover.</description>
 		</item>
 	</channel>
 </rss>
