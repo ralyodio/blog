@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>readm3 can edit now, and it speaks Reddit &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T09:33:34Z">
+<meta name="description" content="readm3 0.3.0 adds an edit mode and swaps its hand-rolled parser for marked, with CommonMark, GitHub and Reddit flavors behind a --flavor switch.">
+</head>
+<body>
+
+<article>
+
+<h1>readm3 can edit now, and it speaks Reddit</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>readm3 started as a markdown reader for the terminal. File browser on the left,
+rendered document on the right. Version 0.3.0 adds the obvious missing half: you
+can change the file you are looking at.</p>
+
+<p>Press <code>e</code>, type, press <code>esc</code>. The preview has already re-rendered by the time you
+get back to it, because both modes read the same buffer. There is no second
+preview to keep in sync, which is the part that usually goes wrong in editors
+with a live preview pane.</p>
+
+<p><code>ctrl+s</code> saves. Quitting with unsaved work asks first. <code>enter</code> continues the list
+you are in, so the same bullet, the next number, or an unchecked box for a task,
+and pressing it on an empty item ends the list. There is no selection and no cut
+and paste. This is for fixing a typo and adding a paragraph. Your editor is still
+your editor.</p>
+
+<h3>Two dependencies, not forty</h3>
+
+<p>The old parser was a few hundred lines of hand-rolled regex, and it got reference
+links, nested lists and bare URLs wrong. Every fix was another regex.</p>
+
+<p>Parsing moved to marked. The reason it won was not features, it was weight:
+marked is CommonMark plus GFM with <strong>zero dependencies of its own</strong>. readm3 went
+from one dependency to two. markdown-it would have been seven. A remark and
+micromark pipeline is somewhere between twenty and forty packages, for a program
+whose whole point is that it starts instantly in a terminal.</p>
+
+<p>Only the parsing moved. The layout code that wraps text, draws code gutters and
+sizes tables is untouched, so readm3.com still renders through the exact same
+functions the terminal does. There is still no second renderer.</p>
+
+<p>The swap fixed reference links, nested and loose lists, bare URL autolinks and
+hard line breaks for free.</p>
+
+<h3>The dialects actually disagree</h3>
+
+<p>marked does not ship GitHub alerts, footnotes, <code>:emoji:</code>, or anything Reddit
+added. Those are tokenizer extensions in readm3 now, still with no new
+dependency.</p>
+
+<p>They are behind a <code>--flavor</code> switch rather than all on at once, because the
+dialects contradict each other in ways that matter:</p>
+
+<p><code>2^32</code> is a number in a README. On Reddit it is 2 to the 32nd, rendered as a
+superscript. Turn Reddit superscript on globally and every exponent in every
+technical document silently changes meaning.</p>
+
+<p><code>&gt;!spoiler!&lt;</code> is worse. In CommonMark, and GitHub, and everywhere else, a line
+starting with <code>&gt;</code> is a blockquote, so that text parses as a quote containing
+<code>!spoiler!&lt;</code>. Reddit reads it as a spoiler. Getting that right needed a
+block-level extension that claims the line before marked's blockquote tokenizer
+ever sees it.</p>
+
+<p>So: <code>commonmark</code>, <code>github</code> (the default), <code>reddit</code>, or <code>all</code>.</p>
+
+<p>Small things that came out of building it. Superscript uses real Unicode glyphs
+when every character has one, so <code>mc^2</code> becomes mc², and keeps its caret when
+they do not, because Unicode has no superscript q. Spoilers are blocked out with
+solid blocks instead of being colored to match the background, so they stay
+hidden when you pipe the output somewhere or run with <code>--color never</code>.</p>
+
+<h3>The bug a unit test would never have found</h3>
+
+<p>I drove the finished UI in a real pty and pressed <code>?</code> for help while in edit
+mode. It typed a question mark into the file.</p>
+
+<p>Obvious in hindsight. <code>?</code> is a character when there is a caret in the document.
+The status bar was still advertising it as the help key, inherited from the
+reader. Help moved to <code>ctrl+g</code>. No unit test was ever going to catch that,
+because the buffer behaved perfectly: it inserted the character it was given.</p>
+
+<p>144 tests, green on Node 22, Node 24 and Bun, across Linux, macOS and Windows.</p>
+
+<pre><code>bun add -g @profullstack/readm3</code></pre>
+
+<p>&lt;https://readm3.com&gt;</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
