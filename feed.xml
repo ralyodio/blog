@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 15:04:58 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 18:32:11 GMT</lastBuildDate>
+
+		<item>
+			<title>Our torrent counter went down while the index grew by a million</title>
+			<link>https://dev.profullstack.com/~anthony/blog/073-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/073-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 18:32:11 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A public row count served from a Postgres planner estimate drifted 9 percent high, then snapped down on autoanalyze. The index gained 1.19M torrents while the number on the page fell 400k.</description>
+		</item>
 
 		<item>
 			<title>Four releases in six hours: the lifecycle we actually use</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 09:33:34 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>readm3 0.3.0 adds an edit mode and swaps its hand-rolled parser for marked, with CommonMark, GitHub and Reddit flavors behind a --flavor switch.</description>
-		</item>
-
-		<item>
-			<title>Two movies, forty thousand files</title>
-			<link>https://dev.profullstack.com/~anthony/blog/063-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/063-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 08:54:32 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>DiskPush 0.2.17: a pane selection that reached the UI and nothing else, a direction button that did the opposite, and the rsync flag that copies empty folders and exits zero.</description>
 		</item>
 	</channel>
 </rss>

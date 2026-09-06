@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Our torrent counter went down while the index grew by a million &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/073-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T18:32:11Z">
+<meta name="description" content="A public row count served from a Postgres planner estimate drifted 9 percent high, then snapped down on autoanalyze. The index gained 1.19M torrents while the number on the page fell 400k.">
+</head>
+<body>
+
+<article>
+
+<h1>Our torrent counter went down while the index grew by a million</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>The search page on bittorrented.com says how many torrents are in the index. A month ago it said 19 million. Today it said 18.6 million.</p>
+
+<p>Nothing deletes torrents there. Once the DHT crawler sees an infohash it keeps it, seeders or no seeders. So either something was quietly eating rows, or the number was lying.</p>
+
+<p>The number was lying.</p>
+
+<h3>It was never a count</h3>
+
+<p>The endpoint fetched it with PostgREST's <code>count: 'estimated'</code>. That is not a count. It is the query planner's row estimate: <code>reltuples</code> from the last ANALYZE, scaled by how much the table has grown in pages since.</p>
+
+<p>It got picked because the honest version broke. An exact <code>COUNT(*)</code> on that table blew past <code>statement_timeout</code>, the error was swallowed, and the DHT total silently collapsed to zero. Someone swapped in the estimate. The failure got quieter and the number got wrong.</p>
+
+<h3>Why an estimate drifts, and why it drifts up</h3>
+
+<p>Two things stacked.</p>
+
+<p><code>autovacuum_analyze_scale_factor</code> defaults to 0.1. On an 18.6 million row table that means ANALYZE only runs after roughly 1.86 million new rows arrive. The crawler adds about 250k a week, so that is one ANALYZE every seven weeks. In between, nothing corrects the estimate.</p>
+
+<p>And autovacuum had not run on that table since July 2. Dead tuples pile up, page count grows faster than live rows, and since the planner scales <code>reltuples</code> by page growth, the estimate climbs away from reality.</p>
+
+<p>Then autoanalyze finally fires, re-samples, and the number snaps back down. That drop is what you see on the page.</p>
+
+<h3>The actual numbers</h3>
+
+<p>I counted for real. On August 6, when the page was showing about 19,000,000, the table held <strong>17,411,578</strong>. The display was 9 percent high.</p>
+
+<p>Today the table holds <strong>18,604,671</strong>.</p>
+
+<p>So over the month the index gained <strong>1.19 million torrents</strong> while the number on the page fell by 400k. Weekly inserts never even wobbled: 302k, 303k, 309k, 281k, 288k, 276k, 250k, 249k, 253k. No gaps, no stall.</p>
+
+<h3>The fix</h3>
+
+<p>Count for real, just not in a request. A cache table, a <code>refresh_dht_torrent_count()</code> function, and a pg_cron job every six hours. The count takes 11.2 seconds, which is exactly why it cannot live on the request path and exactly why the estimate was reached for in the first place.</p>
+
+<p>The endpoint reads that cache and reports where the number came from, so a wrong total is diagnosable from the response instead of from psql. If the cache is missing, errored, or more than a day old it falls back to the estimate, because a frozen count is worse than an estimate that at least still tracks growth.</p>
+
+<p>Then tighten ANALYZE on the crawled table so the fallback stays honest:</p>
+
+<pre><code class="language-sql">ALTER TABLE public.torrents SET (
+  autovacuum_analyze_scale_factor = 0.002,
+  autovacuum_analyze_threshold    = 20000
+);</code></pre>
+
+<p>Every 57k inserts instead of every 1.86 million. ANALYZE samples about 30k rows no matter how big the table is, so frequent is cheap.</p>
+
+<h3>One thing worth stealing</h3>
+
+<p>A registered cron job is not a working cron job. <code>cron.job</code> having a row only proves you inserted a row.</p>
+
+<p>I scheduled a temporary copy of the job to run every minute, watched <code>cron.job_run_details</code> until two runs came back <code>succeeded</code> at 11.26 and 11.29 seconds with the cache updating on its own, then unscheduled the copy. That took two minutes and turned &quot;it should run at 18:17&quot; into something I had actually seen happen.</p>
+
+<p>If you put a public row count on a big table, do not serve the estimate. Count it on a schedule, serve the cache, and check that the schedule fires.</p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
