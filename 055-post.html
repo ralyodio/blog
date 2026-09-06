@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Why it is called readm3 &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T02:09:28Z">
+<meta name="description" content="readm3 is README with the last letter swapped for a digit, lifted from the 3MTA3 gag on the Beastie Boys' Licensed to Ill cover.">
+</head>
+<body>
+
+<article>
+
+<h1>Why it is called readm3</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Short one. People keep asking about the 3.</p>
+
+<p>readm3 is our terminal markdown reader. The name is README with the last letter swapped for a digit, and the swap is lifted from the cover of the Beastie Boys' first record.</p>
+
+<p>Licensed to Ill came out in 1986 on Def Jam. The cover is a Boeing 727 in Def Jam livery, nose buried in a mountainside, and painted on the tail is 3MTA3. It is not a registration and it does not mean anything on its own. Hold it up to a mirror and it says EATME. That is the whole joke, and it got past whoever signed off on the artwork.</p>
+
+<p>So: README, with the same letter-for-digit substitution, arriving at readm3. A file every repository already has, named after a gag on a rap album from four decades ago.</p>
+
+<p>I would like to claim there was a reason. There was not.</p>
+
+<p>The thing itself is more defensible. It opens a directory of markdown, puts the file browser on the left and the rendered document on the right, and gets out of the way. It runs on Bun and Node. It draws in truecolor and restores your terminal no matter how the process dies. There is a print mode that renders to stdout and exits, so it works as a cat for markdown in a pipe.</p>
+
+<p>The website went up this week at readm3.com, and it is built by the reader itself. Every document on the page went through the same parser the terminal uses, so there is no second implementation to drift. The theme buttons re-color the page without re-parsing it, because the parser returns spans that carry a role instead of a color. That part was on purpose.</p>
+
+<p>bun add -g @profullstack/readm3
+npm install -g @profullstack/readm3</p>
+
+<p>Site: <a href="https://readm3.com">https://readm3.com</a>
+Source: <a href="https://github.com/profullstack/readm3">https://github.com/profullstack/readm3</a></p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
