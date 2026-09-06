@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your inbox and your calendar, from the terminal &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T01:29:55Z">
+<meta name="description" content="Two new commands in cli-tools: mail over IMAP and SMTP, cal over CalDAV. The hard part was never the protocol, it was knowing which password each host wants, and which four cannot be reached with one at all.">
+</head>
+<body>
+
+<article>
+
+<h1>Your inbox and your calendar, from the terminal</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>cli-tools picked up two commands this week. <code>mail</code> reads and sends over IMAP and SMTP. <code>cal</code> reads and writes calendars over CalDAV. Neither needed much protocol work. The part that took the thinking was the password.</p>
+
+<h3>Nobody tells you which password</h3>
+
+<p>Gmail refuses your account password over IMAP. On purpose. So do Yahoo, AOL, iCloud, Fastmail and Yandex. Each one wants a generated app password, each one keeps that page somewhere different, and when you type the wrong password the server says something that reads like a typo. You try again with the same password, slower.</p>
+
+<p>So <code>mail login</code> prints the rule before it asks:</p>
+
+<pre><code>$ mail login gmail you@gmail.com
+Gmail / Google Workspace takes an app password, not the account password.
+  an App Password from https://myaccount.google.com/apppasswords (needs
+  2-step verification on the account); the normal account password is refused
+  https://myaccount.google.com/apppasswords
+password:</code></pre>
+
+<p>Then it tries IMAP and SMTP before it stores anything. A refused login stores nothing, because a stored password that does not work moves the failure somewhere further from the cause. If reading works and sending does not, it stores the account and says so.</p>
+
+<p>Fifteen providers are built in for mail, nine for calendar, plus a custom option that takes hosts or a URL. The address usually names the provider on its own. A custom domain does too: <code>mail login you@yourdomain.com</code> reads the domain's MX records, and a domain parked at Google, Zoho, Fastmail, Proton, iCloud or Forward Email identifies itself.</p>
+
+<h3>Four hosts you cannot reach at all</h3>
+
+<p>This was the other half of the work, and it is the half that saves the hour.</p>
+
+<p>Outlook.com, Hotmail and Microsoft 365 take only OAuth2. Microsoft removed basic authentication for Microsoft 365 IMAP in 2022 and for personal accounts in September 2024, and app passwords stopped counting at the same time. Tuta and HEY never had IMAP. Proton has IMAP only through its paid Bridge, and no CalDAV on any plan.</p>
+
+<p>Google Calendar is the one that gets people. A Google app password opens Gmail over IMAP just fine. The CalDAV endpoint next to it takes only OAuth2, so the same password that reads your mail cannot read your calendar.</p>
+
+<p>None of those attempt a login. They print the reason:</p>
+
+<pre><code>$ cal login google me@gmail.com
+cal: Google Calendar cannot be reached with a password: Google's CalDAV
+endpoint takes only OAuth2 tokens; an app password opens Gmail over IMAP
+but not the calendar. Use a client with Google sign-in.</code></pre>
+
+<h3>cal has no dependencies</h3>
+
+<p>CalDAV is three requests. PROPFIND finds the principal and the calendars. REPORT reads a window. PUT and DELETE write. The XML that comes back is shallow enough to read without a parser, and the server expands recurring events if you ask it to, so a weekly standup lists on every day it happens and there is no RRULE code in the repo.</p>
+
+<pre><code>$ cal ls --week
+Mon 2026-09-07
+  10:00-10:30  Standup  [Work]
+  12:00-13:00  Lunch  @ Cafe
+Tue 2026-09-08
+  all day      Offsite  @ Lake house</code></pre>
+
+<p>Times go in the way people type them. <code>--at &quot;tomorrow 9:30&quot;</code>, <code>--at &quot;friday 2pm&quot;</code>, <code>--at 2026-09-10 --all-day --for 2d</code>. A weekday name means the next one, never today.</p>
+
+<p>Most providers use one password for mail and calendar, so <code>cal login forwardemail --like work</code> borrows it from the mail account and skips the prompt entirely.</p>
+
+<h3>The certificate</h3>
+
+<p>Proton Bridge listens on localhost with a certificate it signed itself, and the shortest way past that is to turn certificate verification off. The first version did exactly that, and the credential scanner flagged it within a minute of the pull request opening, which was the correct call. Verification stays on now. The account pins Bridge's own certificate instead, found at the path Bridge writes it to, and a pinned path that cannot be read is an error at connect time rather than a quiet downgrade.</p>
+
+<p>Both commands are in cli-tools, v0.26.0.</p>
+
+<pre><code>curl -fsSL https://raw.githubusercontent.com/profullstack/cli-tools/master/install.sh | sh</code></pre>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
