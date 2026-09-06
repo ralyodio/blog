@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The bots now pay the humans &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T04:35:07Z">
+<meta name="description" content="CrawlProof's new earn rail: AI crawlers buy day passes, a share funds a pool, and people and agents get paid out of it for real engagement. Solvent by construction, and either side can pay either.">
+</head>
+<body>
+
+<article>
+
+<h1>The bots now pay the humans</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>CrawlProof has a new rail, live today. AI crawlers buy day passes to read our sites. A fixed share of what they pay goes into a pool. People and agents get paid out of that pool for actually engaging with an ad. Bots pay, humans earn.</p>
+
+<h3>Why not just pay people per click</h3>
+
+<p>That was the first design and it does not survive contact with the numbers. An advertiser click on CrawlProof bills 4 credits. After the publisher's share there is roughly a third of a cent left per credit. There is no room in that spread to also pay the reader, and taking it anyway would recreate an insolvency we already fixed once, where value that had no cash behind it became withdrawable cash.</p>
+
+<p>Paying per click is also the wrong incentive. An advertiser buys a click because a click means intent. A reader paid to click has no intent and every reason to click everything, so the click becomes worthless and the bid falls to zero. Twenty percent of nothing is nothing.</p>
+
+<h3>So the money comes from the other side</h3>
+
+<p>Crawler passes have no publisher split. They are close to pure margin, which means a share of them can be given away without taking it from anybody. A share of every pass funds the reward pool, and rewards are drawn from the pool and only from the pool.</p>
+
+<p>That makes the whole thing solvent by construction rather than by argument. Total paid out is at most total rewarded, which is at most total funded, which is at most the cash crawlers actually handed over. It is a database constraint, not a promise.</p>
+
+<p>It also gives the pool a second job. Its balance is the network-wide spending ceiling. A bot farm that defeats every other control still cannot take out more than the crawlers have put in. The worst case is a number you already know.</p>
+
+<h3>What actually pays</h3>
+
+<p>A view pays nothing. Paying per impression is exactly what makes a farm worth building. What pays is engagement somebody chose:</p>
+
+<ul>
+	<li>Reading, meaning the unit was genuinely in front of you for ten seconds.</li>
+	<li>Responding, a reaction or a short answer to the advertiser's question.</li>
+	<li>Following, where you opt in to hear from that advertiser again. This one pays the most, because it is the only one an advertiser can act on later.</li>
+</ul>
+
+<p>Clicking earns nothing extra, on purpose, so the click data stays honest.</p>
+
+<h3>The limits, stated plainly</h3>
+
+<p>Earning needs an account. One reward per campaign per day. A daily cap on both the number of paid actions and their total value. The same value cap applies per network connection and is shared across every account behind it, so twenty accounts on one machine earn what one account would. New accounts accrue from the first day and can withdraw after a week.</p>
+
+<p>Amounts are tracked in millionths of a dollar, because a single read is worth a fraction of a cent and counting in cents would round every one of them to zero.</p>
+
+<h3>Either side can pay either side</h3>
+
+<p>The last piece is that an account is a person or an agent, and the rail does not care which direction money moves. A person can pay an agent to do a job. An agent can pay another agent for a summary. An agent can pay a person for an answer. It is the same movement of value and it uses the same ledger. A session is a person, an API token is an agent.</p>
+
+<p>Payouts go out in USDC on Polygon through the same path our publisher withdrawals already use.</p>
+
+<p>If you run a site, you were already selling to crawlers. Now the crawlers are paying your readers too.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
