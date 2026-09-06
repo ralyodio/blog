@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Open with, and the two lines that lie to you &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/066-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T09:59:34Z">
+<meta name="description" content="DiskPush 0.3.0 adds Open with. Most of the work was two lies in the .desktop format, and a scroll box bug I had already fixed once that morning.">
+</head>
+<body>
+
+<article>
+
+<h1>Open with, and the two lines that lie to you</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>DiskPush 0.3.0 adds &quot;Open with&quot; to the right click menu on a local file. The system default is preselected, the applications registered for that file type are listed under it, and Enter opens the file the way double clicking it would. That is the whole feature. It took about an hour, and most of that hour was two lines in a config format I thought I already understood.</p>
+
+<h3>Where the list comes from</h3>
+
+<p>A Linux desktop keeps this in <code>.desktop</code> files and a mime association database. You do not have to reimplement any of it, because <code>gio</code> is right there and it is what the desktop itself consults:</p>
+
+<pre><code>gio info -a standard::content-type Notes.md   -&gt; text/markdown
+gio mime text/markdown                        -&gt; the default, then the rest
+gio launch /usr/share/applications/code.desktop Notes.md</code></pre>
+
+<p>Launching through <code>gio launch</code> matters. A desktop entry's <code>Exec</code> line has its own syntax, with field codes like <code>%f</code> and <code>%U</code> that mean single file, list of files, list of URLs. Reconstructing that yourself is a small parser and a large number of ways to hand an application the wrong thing. <code>gio launch</code> already knows.</p>
+
+<h3>The first lie</h3>
+
+<p>A <code>.desktop</code> file is INI shaped, so the obvious parser scans for <code>Name=</code> and takes the value. Here is a real one from this machine:</p>
+
+<pre><code>[Desktop Entry]
+Name=btop++
+GenericName=System Monitor
+GenericName[it]=Monitor di sistema
+Name[zh_TW]=系統監視器</code></pre>
+
+<p>Those bracketed keys are translations. <code>Name[zh_TW]</code> comes after <code>Name</code> in the file, so a scan that keeps the last match names the application 系統監視器 for everybody. A scan that keeps the first match works here and breaks on the next file that happens to order them differently. The key is <code>Name</code> exactly, and anything with a bracket in it is a different key.</p>
+
+<h3>The second lie</h3>
+
+<p>The same file can carry more than one group:</p>
+
+<pre><code>[Desktop Entry]
+Name=Files
+
+[Desktop Action new-window]
+Name=Open a New Window</code></pre>
+
+<p>Read the whole file for <code>Name=</code> and the application is called &quot;Open a New Window&quot;. Actions are the entries you get from a right click on a launcher, and they have names because they are menu items too. Only <code>[Desktop Entry]</code> is the application.</p>
+
+<p>Both of these are the same mistake: treating a structured format as a pile of lines because the lines look simple. The fix is four lines of state, and the test that pins it is a real file copied out of <code>/usr/share/applications</code> rather than one I wrote to match my parser.</p>
+
+<h3>The one I have made twice now</h3>
+
+<p>The dialog lists the handlers in a scroll box. I wrote this:</p>
+
+<pre><code class="language-jsx">&lt;ScrollArea className=&quot;max-h-[240px]&quot;&gt;</code></pre>
+
+<p>which does not clip. The scroll viewport inside is <code>height: 100%</code>, and against a parent with no definite height that resolves to auto, so the box grows to fit its contents and the dialog cuts off whatever hangs past the bottom. Not scrolls. Cuts off. The last application in the list was unreachable.</p>
+
+<p>I fixed exactly this bug earlier the same day in a different dialog, in the delete list of the mirror preview, where the rows were printing over the disclosure below them. Knowing it did not stop me writing it again, because <code>max-h</code> on the scrolling thing is what you reach for. The shape that works puts the constraint on a parent and lets the scroll area fill it:</p>
+
+<pre><code class="language-jsx">&lt;div className=&quot;flex max-h-[240px] flex-col overflow-hidden&quot;&gt;
+  &lt;ScrollArea className=&quot;min-h-0 flex-1&quot;&gt;</code></pre>
+
+<p>I only caught it because I screenshot the dialog instead of trusting that it rendered. That is the actual lesson here, and it is not about CSS.</p>
+
+<h3>What is not tested</h3>
+
+<p>Handler enumeration end to end. The machine I build on has <code>gio</code> but no desktop associations at all, so <code>gio mime</code> returns &quot;No default applications&quot; for every type on earth. The parsers are tested against real <code>gio</code> output and real desktop files. The live lookup is not, and I would rather say so than let the passing suite imply otherwise.</p>
+
+<p>DiskPush 0.3.0: <a href="https://diskpush.com/download">https://diskpush.com/download</a></p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
