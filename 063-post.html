@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two movies, forty thousand files &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T08:54:32Z">
+<meta name="description" content="DiskPush 0.2.17: a pane selection that reached the UI and nothing else, a direction button that did the opposite, and the rsync flag that copies empty folders and exits zero.">
+</head>
+<body>
+
+<article>
+
+<h1>Two movies, forty thousand files</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Someone selected two folders on a server in DiskPush, pressed Sync to Local, and watched it start copying forty thousand files. The selection was real. It was on screen, it was highlighted, the pane footer said &quot;2 selected&quot;. It just never reached the transfer.</p>
+
+<p>The request was built from the directory path and nothing else:</p>
+
+<pre><code class="language-js">source: refFor(source, withTrailingSlash(source.path)),</code></pre>
+
+<p><code>state.selected</code> existed, it was populated, and no code path outside the pane component ever read it. Every transfer had always been the whole folder. Nobody noticed because until you select something, the whole folder is the right answer.</p>
+
+<h3>The one underneath it</h3>
+
+<p>While fixing that I found a worse bug in the same click. The direction buttons do this:</p>
+
+<pre><code class="language-js">onDirection('rtl')
+onRun()</code></pre>
+
+<p><code>setDirection</code> does not change the value the current render already closed over. So <code>onRun</code> built its request from the previous direction. Pressing the arrow that was not already armed transferred the opposite way. &quot;Sync to Local&quot; copied local over the server.</p>
+
+<p>With Mirror armed, that deletes on the wrong side. It had been there since the two buttons were added.</p>
+
+<p>The fix is to pass the direction into the run instead of reading it back out of state. State you just set is not state you can read.</p>
+
+<h3>The rsync part, which nearly shipped broken</h3>
+
+<p>The obvious way to send a selection to rsync is <code>--files-from</code>, a list of names relative to the source. I wrote that, then checked it against the actual binary instead of the flag names:</p>
+
+<pre><code>rsync -a    --files-from=list src/ dst/   -&gt;  cd+++++++++ movieA/
+rsync -a -r --files-from=list src/ dst/   -&gt;  cd+++++++++ movieA/
+                                              &gt;f+++++++++ movieA/a.mkv</code></pre>
+
+<p><code>--files-from</code> turns rsync's recursion off, and <code>--archive</code> does not turn it back on. Without an explicit <code>-r</code>, selecting a folder copies an empty folder and exits zero. It would have looked like the bug was fixed, and the two movies would have arrived as two empty directories.</p>
+
+<p>That is a worse failure than the one I was fixing. A tool that copies nothing and says it worked is not a tool anyone can use.</p>
+
+<p>The list is also NUL separated rather than one name per line, because a newline is a legal character in a filename and a line separated list quietly turns one such name into two paths that do not exist.</p>
+
+<p>One good surprise: mirror plus a selection deletes only inside what you selected. I checked rather than assumed, because the other plausible reading of <code>--delete</code> there is &quot;remove everything at the destination that is not in this list&quot;, which would empty the folder.</p>
+
+<h3>Everything asks now</h3>
+
+<p>Both the desktop and the CLI skipped the dry run for a plain sync. The comment in the code said a preview &quot;buys no safety, because nothing is deleted either way&quot;.</p>
+
+<p>Forty thousand files is the counterexample. Deleting is not the only way to regret a transfer, and by the time anything appeared on screen it was already copying.</p>
+
+<p>So every manual transfer previews and waits for a yes now. The dialog says whether it is a Sync or a Mirror, and it carries the scope next to the counts: &quot;2 selected items&quot; or &quot;Whole folder&quot;. A count on its own tells you how many files. It never tells you how many of what you asked for, which is the number that was wrong here.</p>
+
+<p>The CLI gets <code>--only NAME</code>, repeatable. It only prompts when there is somebody there to answer, so scheduled runs and scripts behave as before. The terminal UI had a cursor and no way to select at all, so it gets marking with space.</p>
+
+<p>Two smaller things fell out. <code>--only</code> did not parse at first: it was missing from the list of flags that take a value, so it silently swallowed its own argument and did nothing. I found that by running the built binary rather than reading the code. And the preview dialog had a &quot;Trust this pair from now on&quot; checkbox that set a piece of state nothing read, and could not have worked if it were wired, because the code that saves a profile hard codes that setting to false on purpose.</p>
+
+<p>DiskPush 0.2.17: <a href="https://diskpush.com/download">https://diskpush.com/download</a></p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
