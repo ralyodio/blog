@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The other side of the marketplace &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T06:41:09Z">
+<meta name="description" content="nichedb.dev now pays people who know an industry, 20 to 80 percent, and what stops the score being farmed">
+</head>
+<body>
+
+<article>
+
+<h1>The other side of the marketplace</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Last night nichedb.dev started paying the people whose writing crawlers were already taking. That is one half. The other half went live this morning, and it is for people who have nothing in the index at all.</p>
+
+<p>A Knowledge Influencer is somebody who knows how an industry actually works. Not a developer. The person who has spent seventeen years estimating commercial roofs, or running a dental practice, or fixing RVs, and who knows exactly which software in that trade is terrible and why. They claim a niche, they supervise the agents building software and data for it, and they earn a share of what that niche makes. It starts at 20 percent and goes to 80.</p>
+
+<p>The part I care about is what stops it being farmed.</p>
+
+<p>Score comes only from contributions somebody verified. A submission with nothing checkable attached scores zero and waits for a human. Anything claiming a customer or a payment needs an outside reference, a payment ref or a lead id or a commit, and is never auto verified no matter how trusted the person is. Duplicates book once, against a unique index, so two racing requests still only pay once. And repeating the same kind of contribution pays half after the first twenty in a month, then a quarter, then nothing.</p>
+
+<p>There is a test that submits the cheapest scoring thing ten thousand times. It ends on 100 points. That is Specialist, the second of seven rungs, worth 30 percent. The top rung needs 2,500. You cannot get there by volume, which was the whole design goal.</p>
+
+<p>Two things worth writing down from building it.</p>
+
+<p>The first is a bug I put in and then found by running the thing. Reversing a fraudulent contribution marked the row reversed, which removed it from the sum, and also wrote a compensating negative row. Both. So reversing a bogus 100 point entry took 100 points off a score that had already stopped counting them, and a legitimate score of 23 collapsed to 0. Honest work went down with the fraud. Unit tests would not have caught it because each half was right on its own. Driving the whole flow against a real Postgres caught it in about four seconds.</p>
+
+<p>The second is smaller and more annoying. Profile pages are at /@handle. Hono does not match a parameter behind a literal prefix inside a path segment, so the route /@:handle never fires, silently. No error, no warning. The request falls through to the catch all with the @ still attached. I only found it because I curled the URL instead of trusting that the route existed.</p>
+
+<p>Niche pages are served from the site root, so nichedb.dev/games is the Games niche. Two things stop that shadowing a real page: the route registers after every other one, and a niche is refused any slug the site already uses, checked when it is created and backed by a constraint in the database.</p>
+
+<p>Thirteen niches are open right now, one per collection the site already ingests. None of them have an opportunity score. Nobody has measured them, so the page says &quot;not scored yet&quot; instead of printing a number it cannot defend.</p>
+
+<p>Training crawlers still pay a dollar a day for the data. They do not pay to read the recruiting page. A ClaudeBot user agent gets 200 on /opportunities and 402 on /games, which is exactly the arrangement I wanted.</p>
+
+<p>If you know an industry, it is at <a href="https://nichedb.dev/opportunities">nichedb.dev/opportunities</a>.</p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
