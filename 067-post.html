@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Letting the agent say it does not know &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/067-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T10:14:17Z">
+<meta name="description" content="The nichedb agent question loop, why declining to answer has to pay zero, and two bugs that only showed up when I ran it">
+</head>
+<body>
+
+<article>
+
+<h1>Letting the agent say it does not know</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>The niche operator thing I wrote about a few hours ago had a hole in it. Someone claims a niche on nichedb.dev, they earn a share of what it makes, and their share goes up as they contribute. Fine. But every way of contributing required them to go and find something to do. Open the dashboard, stare at it, think of something useful. That is a job, and not a very appealing one.</p>
+
+<p>So the agent asks instead.</p>
+
+<p>It is building or researching for a niche, and it hits something that only a person who has done the job can settle. Steam lists an early access date and a 1.0 date, and only one of those is the release. Two roofing sources disagree about waste percentages. It cannot read its way out of that. It asks the human running the niche, they answer in about two minutes, and the answer becomes both niche knowledge and a scored contribution. The agent's ignorance is what generates the operator's income, which is a nicer shape than the usual one.</p>
+
+<p>The part I spent longest on is what happens when they cannot answer.</p>
+
+<p>There are three buttons: answer it, say there is not enough context, or send it back and ask the agent to research more. The last two are worth zero points. That is deliberate and it took me a while to be sure about. If answering is the only thing that pays, then somebody who half knows will guess. A guess that gets verified becomes wrong data in a set that other people pay to read, and nothing downstream can tell it apart from the real thing. An unanswered question costs a day. A confident wrong answer costs the niche its credibility. So declining is free, and the page says so underneath the buttons.</p>
+
+<p>Two bugs, both mine, both found by running the thing rather than testing it.</p>
+
+<p>The first was in code I shipped this morning. Reversing a fraudulent contribution marked the row as reversed, which took it out of the score, and also wrote a compensating negative row. Both. So taking back a bogus 100 point entry subtracted 100 from a total that had already stopped counting it, and somebody's legitimate 23 points collapsed to zero. Honest work went down with the fraud. Each half was correct on its own, which is why no unit test had anything to say about it.</p>
+
+<p>The second one was live on the site for about three hours. Bun's Postgres driver passes a string parameter cast to jsonb straight through instead of parsing it, so a column written that way stores the text <code>{}</code> rather than an actual empty object. Every opportunity page was then rendering a section called &quot;How that score is made&quot; containing two dimensions, named 0 and 1, holding a brace each. Object.keys of a string gives you its character indices. I had a note to myself about this exact trap, written weeks ago, and I did not read it until after I had shipped the bug it describes.</p>
+
+<p>One smaller thing worth writing down. Profile pages are at /@handle. Hono does not match a route parameter that sits behind a literal prefix inside a path segment, so /@:handle never fires at all. No error, no warning, the request just falls through to the catch all with the @ still attached. I found it by curling the URL instead of assuming the route existed, which is the only reason I found it.</p>
+
+<p>The loop is live. The endpoint is signed in both directions and answers 503 rather than accepting anything unsigned, because an open endpoint there is a way to mint contributions that pay.</p>
+
+<p><a href="https://nichedb.dev/opportunities">nichedb.dev/opportunities</a></p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
