@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paying people to seed: pay2seed, paid2seed, pay2stream, paid2stream &mdash; Chovy's Blog</title>
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-06T00:45:16Z">
+<meta name="description" content="Four open specs that put consent and payment into BitTorrent, so a torrent client becomes a legitimate file sharer and a live stream plays on any TV.">
+</head>
+<body>
+
+<article>
+
+<h1>Paying people to seed: pay2seed, paid2seed, pay2stream, paid2stream</h1>
+
+<p><em>2026-09-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Piracy is the best distribution network ever built. BitTorrent moves more bytes for less money than anything a cloud vendor sells. It has two problems, and they are the same two it had in 2004. Nobody is paid to seed, so a swarm lives as long as somebody feels like leaving a client open. And nothing about an upload says who put it there or whether they were allowed to, so every seeder is presumed to be up to something.</p>
+
+<p>Fifteen years ago I ran torula.com, one of the first IPTV reseller platforms. Around then a Russian team shipped Ace Stream, a BitTorrent engine that carried live television to millions of people at once. They never opened it and never paid a relay. I have wanted to do that properly ever since. This week we published four specs that do.</p>
+
+<h3>The idea</h3>
+
+<p>Consent on the way in, payment on the way out.</p>
+
+<p>Consent is an attestation. Before a hub lists anything, the person adding it signs a record saying what it is, why they may distribute it (their own work, a licence that allows it, an open licence, public domain, or their own private backup), and where to send a notice. A false one is voided on notice and counts against a public standing. That record is the difference between an IPTV reseller and a pirate, and a machine can now check it.</p>
+
+<p>Payment is a market. Someone puts money at a hub for a swarm to be kept alive by N seeders for M days, or for a live channel to be carried by N relays for a window. Seeders and relays take leases, prove every period that they hold and serve the bytes, and are paid per GiB-month or per relay-hour. Proofs are storage challenges answered from disk, and probes where a verifier connects as an ordinary peer and pulls pieces. That works on a plain public torrent, which is what makes seeding open data payable.</p>
+
+<p>The naming is the rule. pay2* is the client protocol, the side that pays over HTTPS and plays. paid2* is the server protocol, the BitTorrent side that earns. pay2seed and paid2seed cover files, archives, backups and feeds. pay2stream and paid2stream cover live channels.</p>
+
+<h3>HLS out of the box</h3>
+
+<p>The live half has a gateway role: a relay that also speaks HTTP. It turns the swarm into standard HLS, clear or AES-128 sealed, and serves the M3U plus XMLTV pair every IPTV app asks for on setup. VLC, TiviMate, Kodi, an Apple TV or a smart TV plays a paid, consented, peer-carried channel with nothing installed. The viewer's ticket is a pass bound to the gateway, which signs the per-byte vouchers on their behalf up to the ticket's cap.</p>
+
+<h3>What we are building it with</h3>
+
+<p>Nothing new. The specs sit on things we already run.</p>
+
+<ul>
+	<li>OpenSwarm, our spec family for paid encrypted swarms: ipfile, iplive, ippay for passes and vouchers, ipdb for a catalogue on the DHT.</li>
+	<li>x402 and CoinPay for the money. An offer is bought the way a pass is: a 402 with a USDC quote, a signed proof, done.</li>
+	<li>bittorrented.com as the reference hub. Its seedbox rental and IPTV resale rails are the central-server version of this already.</li>
+	<li>torlink as the reference seeder client. We added per-torrent seed time upstream this week so a client can pin a lease's end date, and it runs on our seed boxes now.</li>
+	<li>c0mpute nodes as paid storage and gateways. A c0mpute pin job and a pay2seed offer are the same request.</li>
+	<li>logicsrc for the specs, at logicsrc.com/openswarm, with a PRD alongside.</li>
+</ul>
+
+<p>Drafting was done with Claude Code in a background session, which read the family, wrote the documents, split them when I said client and server should be separate, and opened the pull requests. I reviewed the ideas and kept the names.</p>
+
+<h3>Where it is</h3>
+
+<ul>
+	<li>The specs: <a href="https://github.com/profullstack/logicsrc/pull/143">https://github.com/profullstack/logicsrc/pull/143</a></li>
+	<li>torlink per-torrent seed time: <a href="https://github.com/baairon/torlink/pull/186">https://github.com/baairon/torlink/pull/186</a></li>
+	<li>Live TV passes on bittorrented.com: <a href="https://github.com/profullstack/media-streamer/pull/210">https://github.com/profullstack/media-streamer/pull/210</a></li>
+</ul>
+
+<p>Next is the hub on bittorrented.com, a shared @profullstack/pay2seed package, and the torlink client that polls the market and takes leases. If you run a seedbox and want to be paid for the disk you already have, that client is for you.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 06 Sep 2026 00:23:04 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 06 Sep 2026 00:45:16 GMT</lastBuildDate>
+
+		<item>
+			<title>Paying people to seed: pay2seed, paid2seed, pay2stream, paid2stream</title>
+			<link>https://dev.profullstack.com/~anthony/blog/048-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/048-post.html</guid>
+			<pubDate>Sun, 06 Sep 2026 00:45:16 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Four open specs that put consent and payment into BitTorrent, so a torrent client becomes a legitimate file sharer and a live stream plays on any TV.</description>
+		</item>
 
 		<item>
 			<title>Chovy now prices agent time by the hour, the way you already buy contractor time</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 04 Sep 2026 07:37:18 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>One day, written up: a proxy bill that looked like a credential leak and was really a playlist file polled every few seconds, SiriusXM landing on tipoffwatch, Spotify Connect on bittorrented.com, and a librespot bug where songs skipped after a few seconds.</description>
-		</item>
-
-		<item>
-			<title>A one-field funnel for launch.anapp.now</title>
-			<link>https://dev.profullstack.com/~anthony/blog/038-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/038-post.html</guid>
-			<pubDate>Thu, 03 Sep 2026 16:12:07 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>How the launch.anapp.now campaign site is built: one textarea instead of a signup form, a server-side handoff into Chovy that keeps the idea out of URLs, four hero headlines under test, and first-party tracking with no pixels.</description>
 		</item>
 	</channel>
 </rss>
