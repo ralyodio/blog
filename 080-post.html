@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The limit was never about bytes &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/080-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-07T15:14:07Z">
+<meta name="description" content="A 583MB playlist got refused by a constant that had already been raised twice. Raising it again would have turned a clear error into an out of memory kill.">
+</head>
+<body>
+
+<article>
+
+<h1>The limit was never about bytes</h1>
+
+<p><em>2026-09-07, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>A reader pasted an M3U into genrewatch and got back: &quot;that list is 583MB, which is larger than we store.&quot;</p>
+
+<p>The obvious fix is a one line change. There is a constant called PLAYLIST_MAX_BYTES, it was set to 100MB, and 583 is bigger than 100. Raise the number, ship it, go to lunch.</p>
+
+<p>That would have made things worse.</p>
+
+<h3>The number was never about bytes</h3>
+
+<p>This ceiling had already been raised twice. It started at 8MB, sized for a channel lineup, which is a few thousand rows of title and URL. Then someone uploaded a 38MB list and got refused, so it became 100MB. Now a 583MB list gets refused with the same sentence.</p>
+
+<p>Every raise was a guess at how big a provider catalogue can get, and every guess was wrong within a few months. That is usually a sign the number is measuring the wrong thing.</p>
+
+<p>It was. The import read the response, parsed every entry into an array, and held that array until a content hash could tell it whether any of it was wanted. The provider offers no conditional request at all (no ETag, no Last-Modified, and If-Modified-Since gets answered with a full 200), so &quot;has this changed&quot; is not answerable until the last byte has arrived. The byte ceiling was really a heap ceiling wearing a disguise.</p>
+
+<p>583MB of provider catalogue is about 2.6 million entries. At roughly 225 bytes each, that array is bigger than the heap the container has. Raising PLAYLIST_MAX_BYTES on its own would have turned a clear error message into an out of memory kill.</p>
+
+<p>There was also a second ceiling behind the first. PLAYLIST_MAX_CHANNELS was 300,000. So the best case after a one line fix was: the import survives, stores a ninth of the list, and reports success. The reader gets something that looks complete and quietly is not. That is worse than being refused, because nothing tells them.</p>
+
+<h3>Spill it to disk</h3>
+
+<p>The body now streams straight to a temp file while it is hashed. Only then does anything decide.</p>
+
+<p>If the hash matches what is already stored, the file is deleted without ever being parsed. If it does not, the file is parsed into Postgres in batches, with the parser paced by the inserts rather than running ahead of them. Peak memory is one batch either way, whether the list is 800KB or 583MB.</p>
+
+<p>Both ceilings now default to off. They are still knobs, because an operator paying for the bandwidth may want one, but they are not a default any more. Bandwidth was already bounded better elsewhere: the poll interval scales with file size, which puts a 583MB list on a five hour cycle instead of the five minute one a channel lineup gets.</p>
+
+<p>The parser half went into @profullstack/player 0.7.0 as an onEntries callback. It is awaited, which is the entire point. Without somewhere to hand entries as they are found, &quot;no ceiling&quot; just moves the ceiling to the result array.</p>
+
+<h3>The part I did not expect</h3>
+
+<p>Removing the limit made the common case faster.</p>
+
+<p>Most polls see a byte identical file. The provider rewrites the handful of event slots that changed and leaves the other several thousand sitting still. Before this, every one of those polls parsed millions of entries and threw all of them away, because the parse ran before the hash comparison could say it was pointless. Now it hashes the bytes and deletes the file.</p>
+
+<h3>The test caught my own bug</h3>
+
+<p>I wrote a test for the thing that actually matters, which is not &quot;big lists are allowed&quot; but &quot;nothing here scales with the size of the list&quot;. It parses a small list and one four times bigger, and checks the working set does not grow between them.</p>
+
+<p>It failed twice, and both failures were real.</p>
+
+<p>The memory bound was fine. What broke was my own cleanup path. A write stream opens lazily, so when a size check aborted a download, the temp directory was removed before the stream had finished opening, and the reader would have seen ENOENT instead of the real message. The same code was leaking an error listener on every backpressure wait, which Node started warning about at eleven of them.</p>
+
+<p>Neither of those would have shown up in a source level assertion that the right function was being called. They only appeared because the test ran the thing.</p>
+
+<p>852 tests on genrewatch, 1388 on tipoffwatch, both green. It is live on both sites now.</p>
+
+<p>(Drafted with AI assistance.)</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

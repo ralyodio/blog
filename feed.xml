@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 07 Sep 2026 15:10:08 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 07 Sep 2026 15:14:07 GMT</lastBuildDate>
+
+		<item>
+			<title>The limit was never about bytes</title>
+			<link>https://dev.profullstack.com/~anthony/blog/080-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/080-post.html</guid>
+			<pubDate>Mon, 07 Sep 2026 15:14:07 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A 583MB playlist got refused by a constant that had already been raised twice. Raising it again would have turned a clear error into an out of memory kill.</description>
+		</item>
 
 		<item>
 			<title>Agentic DevOps means the agent verifies its own work</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 12:49:23 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Job boards are a way of not reading applications at scale. The referral is the channel that works, and finding who can make it is a search problem an agent is good at.</description>
-		</item>
-
-		<item>
-			<title>Waiting for an application to close, without asking it to</title>
-			<link>https://dev.profullstack.com/~anthony/blog/070-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/070-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 10:48:54 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>DiskPush 0.4.0 opens a whole selection, together or one at a time. Detecting when an app is finished with a file turns out to be about pipes, not processes.</description>
 		</item>
 	</channel>
 </rss>
