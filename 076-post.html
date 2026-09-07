@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The number I had not looked at, and the wrong version of it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/076-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-07T01:35:40Z">
+<meta name="description" content="A dashboard over traffic, ad delivery and the bank behind them, and the lifetime-total bug that made its first revenue number wrong by a factor of thirty four.">
+</head>
+<body>
+
+<article>
+
+<h1>The number I had not looked at, and the wrong version of it</h1>
+
+<p><em>2026-09-07, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I have written here that every company I own is a customer of every other one, and that the test is whether money actually moves. I had never run the arithmetic. So I built the thing that runs it.</p>
+
+<p><code>crawlproof dashboard</code> is a terminal dashboard over three feeds that were never in the same place: the CrawlProof tracker for who arrived, the ad network for what got delivered, and CoinPay for what the bank actually did. Five screens.</p>
+
+<p>The first version told me revenue was $131 a month. It also told me, on a one day window, that merchant volume was $126,800 a month. That second number is what saved me, because it was obviously insane and I had to go find out why.</p>
+
+<h3>The bug was the interesting part</h3>
+
+<p>CoinPay's earnings block does not move when you change the window. Ask it for 7 days and ask it for 30 and you get byte identical numbers: same gross, same commission, same transaction count. The bank half of the same response does change. So the earnings figures are a lifetime balance, not a rate.</p>
+
+<p>I had been dividing that lifetime total by a window it never covered and multiplying back up to a month. On a 7 day window that multiplies by more than four. A merchant we lost, who was doing real volume before he got us both banned from Stripe, was being resurrected every time the dashboard refreshed.</p>
+
+<p>The fix is that revenue now comes from the day series, which is actually windowed. Here is what that does to the number.</p>
+
+<pre><code>                  before      after
+commission       $131.06      $3.82
+gross volume     $29,591       $653
+ROI                 -97%     -99.9%</code></pre>
+
+<p>Two days in the last month had any card volume at all.</p>
+
+<h3>The real numbers</h3>
+
+<pre><code>Cost              $4,435/mo   (180 day average, business accounts only)
+Revenue            $3.82/mo   (last 31 days)
+Net              -$4,431/mo
+ROI                 -99.9%
+Months of cover        1.1</code></pre>
+
+<p>52 sites, 3,570 pageviews in the last month, $1.24 of spend behind every page anyone read. OpenAI takes $720 a month, DigitalOcean $603, Anthropic $337.</p>
+
+<p>That is worse than the wrong number by a factor of thirty four. It is also the first honest version I have ever had.</p>
+
+<h3>Two rules I had to write in on purpose</h3>
+
+<p>Both exist because breaking either produces a friendlier number that is false.</p>
+
+<p><strong>Self dealing is not revenue.</strong> CrawlProof runs ads on my own sites, paid for by my own campaigns. One account on both sides. The ledger will happily tell you the publisher earned money, and it did, from the advertiser, who is me. So ad spend and ad earnings sit on their own line called Internal and count as neither cost nor revenue.</p>
+
+<p><strong>Groceries are not infrastructure.</strong> The bank feed is one human's accounts next to the business ones. Cost is the business scope only. A transaction row does not carry a scope, it carries an account id, and the scope lives on the account, so you have to join the two.</p>
+
+<h3>Saying what you do not know</h3>
+
+<p>The tracker reports 477,143 visitors against 3,570 pageviews. That gap is real. A visitor there is any hit not classified as a crawler, and bittorrented.com has an endpoint that machines poll constantly without announcing themselves. Divide burn by 477,143 and you get a cost per visitor of one cent, which is a wonderful number that describes nothing.</p>
+
+<p>So the dashboard prints both, and prints a line next to them saying there are 133 times more visits than pageviews, prefer the per pageview figure. It says when one site is more than half the fleet. A site that did not answer is reported as missing rather than zero. A vendor list built from one page of a longer ledger says so.</p>
+
+<p>That is the part worth keeping. Showing what you know is easy. The work is getting a dashboard to say what it does not know, loudly, next to the number, so nobody quotes the flattering one by accident. I know because I quoted the flattering one myself, in a draft of this post, before I checked.</p>
+
+<h3>Install it</h3>
+
+<pre><code class="language-sh">npm install -g @profullstack/crawlproof
+crawlproof dashboard</code></pre>
+
+<p>Docs at crawlproof.com/docs/cli. It needs a CrawlProof API token. The money screens want a CoinPay merchant session as well, and without one the other screens still work and the money panels tell you what is missing instead of showing zero.</p>
+
+<h3>What I actually learned</h3>
+
+<p>Minus 99.9 percent is not the interesting part. Two things are.</p>
+
+<p>The cost is real and the revenue is a rounding error, and I could have said that in the abstract for months without ever being made to look at $4,435 sitting next to $3.82.</p>
+
+<p>And I now know what a reader costs. $1.24. Every argument about what to build next is a different argument once that number exists, and it did not exist last week. It was also wrong for about six hours, which is its own lesson: a number you have not tried to break is not a measurement, it is a decoration.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

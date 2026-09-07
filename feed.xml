@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 07 Sep 2026 00:11:32 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 07 Sep 2026 01:35:41 GMT</lastBuildDate>
+
+		<item>
+			<title>The number I had not looked at, and the wrong version of it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/076-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/076-post.html</guid>
+			<pubDate>Mon, 07 Sep 2026 01:35:40 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A dashboard over traffic, ad delivery and the bank behind them, and the lifetime-total bug that made its first revenue number wrong by a factor of thirty four.</description>
+		</item>
 
 		<item>
 			<title>A $315 agent session, and where the money actually went</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 10:14:17 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>The nichedb agent question loop, why declining to answer has to pay zero, and two bugs that only showed up when I ran it</description>
-		</item>
-
-		<item>
-			<title>Open with, and the two lines that lie to you</title>
-			<link>https://dev.profullstack.com/~anthony/blog/066-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/066-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 09:59:34 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>DiskPush 0.3.0 adds Open with. Most of the work was two lies in the .desktop format, and a scroll box bug I had already fixed once that morning.</description>
 		</item>
 	</channel>
 </rss>
