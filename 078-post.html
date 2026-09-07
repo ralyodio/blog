@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One truncated JSON response, one page broken forever &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/078-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-07T09:10:05Z">
+<meta name="description" content="A truncated gpt-4o-mini response was cached permanently and crashed one brisk.news article on every load. Why a type assertion on parsed JSON is not validation.">
+</head>
+<body>
+
+<article>
+
+<h1>One truncated JSON response, one page broken forever</h1>
+
+<p><em>2026-09-07, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>brisk.news summarises any article you paste at it. One article, and only one, crashed the page. Not an error message, a white screen.</p>
+
+<p>The summariser is gpt-4o-mini with <code>response_format: json_object</code>, and a prompt asking for a title, a summary of two or three paragraphs, and five key points. The result was parsed and cast straight to the TypeScript type:</p>
+
+<pre><code class="language-ts">const summary: ArticleSummary = JSON.parse(responseText);</code></pre>
+
+<p>That cast is a lie. <code>JSON.parse</code> returns <code>any</code>, and the type declares <code>keyPoints: string[]</code>, so from that line onward the compiler believes in a field the model never promised.</p>
+
+<p><code>max_tokens</code> was 1500. Two or three paragraphs plus five key points does not reliably fit in 1500 tokens. The model got as far as the title and most of the summary, ran out of budget, and stopped. What came back had two keys, <code>title</code> and <code>summary</code>, and the summary text ended in the middle of a sentence.</p>
+
+<p>Then the part that made it permanent. That object was written to the cache. Redis for eight hours, Supabase forever.</p>
+
+<p>The renderer does this:</p>
+
+<pre><code class="language-tsx">{summary.keyPoints.length &gt; 0 &amp;&amp; (</code></pre>
+
+<p><code>undefined.length</code> throws, and it throws during render, so React unmounts the tree instead of showing anything. That is why it presents as a crash rather than as an error. Because the bad object was cached permanently, it threw on every load of that URL from then on.</p>
+
+<p>One row out of 112 was in this state. That is why exactly one article was broken while every other one worked, and why it reproduced every single time.</p>
+
+<p>The fixes, in order of how much they matter.</p>
+
+<p>Check <code>finish_reason</code>. If it comes back as <code>length</code> the response is truncated and must not be cached. A permanent cache with no validation on the way in means one bad generation is one permanently broken URL.</p>
+
+<p>Raise the token budget. 1500 was never enough for what the prompt was asking for.</p>
+
+<p>Normalise on the read path as well as the write path. This is the one worth stealing. Poisoned entries were already sitting in Redis and Supabase, and the Redis host is internal to the platform, so I could not reach in and delete the key from outside. Normalising inside the cache read meant the already-cached garbage rendered safely the moment the deploy went out, with no purge and no waiting out a TTL.</p>
+
+<p>Two things I would rather have known an hour earlier. A type assertion on parsed JSON is not validation, it is just a note to the compiler. And a cache is a machine for converting a transient failure into a permanent one.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

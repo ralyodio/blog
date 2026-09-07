@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 07 Sep 2026 03:36:04 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 07 Sep 2026 09:10:06 GMT</lastBuildDate>
+
+		<item>
+			<title>One truncated JSON response, one page broken forever</title>
+			<link>https://dev.profullstack.com/~anthony/blog/078-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/078-post.html</guid>
+			<pubDate>Mon, 07 Sep 2026 09:10:05 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A truncated gpt-4o-mini response was cached permanently and crashed one brisk.news article on every load. Why a type assertion on parsed JSON is not validation.</description>
+		</item>
 
 		<item>
 			<title>The line is only there before the game</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 10:36:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>An AI screener marked me down for not defining hoisting the way the textbook does. That question stopped measuring anything years ago.</description>
-		</item>
-
-		<item>
-			<title>What AI has actually been caught doing</title>
-			<link>https://dev.profullstack.com/~anthony/blog/068-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/068-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 10:24:08 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>NicheDB now carries 314 records of AI incidents from three feeds, each pointing at its evidence, with each source's terms respected per row.</description>
 		</item>
 	</channel>
 </rss>
