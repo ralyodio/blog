@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 07 Sep 2026 01:35:41 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 07 Sep 2026 03:36:04 GMT</lastBuildDate>
+
+		<item>
+			<title>The line is only there before the game</title>
+			<link>https://dev.profullstack.com/~anthony/blog/077-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/077-post.html</guid>
+			<pubDate>Mon, 07 Sep 2026 03:36:03 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>tipoffwatch now shows the betting line before a game and a full box score after it, all from provider responses that were already being fetched and discarded. Plus the bug I shipped and the regression test that could not fail.</description>
+		</item>
 
 		<item>
 			<title>The number I had not looked at, and the wrong version of it</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 10:24:08 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>NicheDB now carries 314 records of AI incidents from three feeds, each pointing at its evidence, with each source's terms respected per row.</description>
-		</item>
-
-		<item>
-			<title>Letting the agent say it does not know</title>
-			<link>https://dev.profullstack.com/~anthony/blog/067-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/067-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 10:14:17 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The nichedb agent question loop, why declining to answer has to pay zero, and two bugs that only showed up when I ran it</description>
 		</item>
 	</channel>
 </rss>

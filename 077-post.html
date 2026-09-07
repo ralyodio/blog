@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The line is only there before the game &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/077-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-07T03:36:03Z">
+<meta name="description" content="tipoffwatch now shows the betting line before a game and a full box score after it, all from provider responses that were already being fetched and discarded. Plus the bug I shipped and the regression test that could not fail.">
+</head>
+<body>
+
+<article>
+
+<h1>The line is only there before the game</h1>
+
+<p><em>2026-09-07, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>tipoffwatch.com now shows the betting line on a game before it starts, and a proper recap after it finishes. Box score, score by quarter or inning or set, the leaders, and the wire recap where an agency covers the league. There is a Final scores page, and every league and team page has a recent results section.</p>
+
+<p>None of it costs a single extra request to the provider. Every fact was already inside responses the sync was fetching and throwing away. There is a comment in our code, written months ago, describing the summary endpoint as carrying &quot;a boxscore, rosters, odds and news we do not use.&quot; That comment is now wrong, which is the nicest way for a comment to become wrong.</p>
+
+<p>The interesting part is the odds.</p>
+
+<p>ESPN publishes a line on the scoreboard, on the same response we already pull for every league, so reading it is free. It is only there while the game has not started. I measured it this morning against the live API: 16 of 16 NFL games had a line, 5 of 5 WNBA, 4 of 4 college football, all of them before kickoff. Every finished game in the four leagues I sampled had none. Twenty one finished college football games, fifteen finished baseball games, zero odds between them.</p>
+
+<p>A book stops pricing a game when it starts, and the provider drops the field with it.</p>
+
+<p>So there is no reading the line later for the page that most wants it, which is the recap. It has to be written down before kickoff and kept. Both places that write a fixture now coalesce rather than assign, because the first sync after kickoff carries a null where the line used to be, and an assignment would erase it at exactly the moment it became worth having. The minute by minute score tick is the important one there. It sees a fixture every sixty seconds right up to the whistle.</p>
+
+<p>Soccer has a nice trap in this. A finished match does not return an empty list of odds, it returns a list with one entry, and the entry is null. It looks like data. Any check written against the length of the array passes.</p>
+
+<p>Two more things I would have got wrong without measuring them.</p>
+
+<p>Team statistics come in two different containers. Football, soccer and Australian football ship a flat list of label and value. Baseball and rugby league ship it grouped, with the actual numbers one level further down. If you read only the flat one, which is the obvious one, baseball gets an empty comparison table and nothing tells you. We had already been bitten by exactly this shape with play by play, where the plays live under three different keys depending on the sport, and I still nearly did it again.</p>
+
+<p>The other one is worse, because the wrong answer looks principled. We have a flag on each league saying whether it supports play by play, set after measuring which sports return a log. Ten sports do not. It is tempting to reuse that flag to decide who gets a box score, since it is already there and already means &quot;this sport is thin.&quot; It is exactly backwards. Six of those ten return a box score and nothing else. Volleyball, water polo, field hockey, rugby, rugby league, lacrosse. Gating recaps on the play by play flag would have denied a box score to precisely the sports where the box score is the only thing there is. They needed their own flag, and now a volleyball match gets a recap page it could never have had a play log for.</p>
+
+<p>Then I shipped a bug and found it by looking at the live page.</p>
+
+<p>The results list is ordered newest first, bounded to the last week. I put a lower bound on the kickoff time and no upper bound, because a game that has finished is obviously in the past. The provider does not agree. It marks some future dated fixtures as finished, usually a postponement it has closed out. With only a lower bound those sort to the very top of a newest first list and stay there forever, because nothing else ever outranks them. Five of them were sitting above every real result, dated up to eleven days out, on a page I had just announced as working.</p>
+
+<p>The fix is one line. A game cannot have finished before it started.</p>
+
+<p>The regression test for it is the part worth mentioning. I wrote an assertion that the query contains the new bound, ran it, and it passed. Then I deleted the fix and ran it again, and it still passed. Another query in the same file already contained the string &quot;starts_at &lt;= now()&quot; as part of a longer expression, so the file wide check matched whether or not my query had the bound at all. A test that cannot fail is not a test. Scoping it to the one function made it real, and deleting the fix then failed it properly.</p>
+
+<p>I have started deleting the fix as a habit. If the test still passes, the test is decoration.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
