@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 07 Sep 2026 09:10:06 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 07 Sep 2026 15:10:08 GMT</lastBuildDate>
+
+		<item>
+			<title>Agentic DevOps means the agent verifies its own work</title>
+			<link>https://dev.profullstack.com/~anthony/blog/079-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/079-post.html</guid>
+			<pubDate>Mon, 07 Sep 2026 15:10:07 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>I spent a night watching an agent run an ops loop end to end. Six servers, two releases, one incident. The interesting part was not that it could do the work. It was which step made the difference,…</description>
+		</item>
 
 		<item>
 			<title>One truncated JSON response, one page broken forever</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 10:48:54 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>DiskPush 0.4.0 opens a whole selection, together or one at a time. Detecting when an app is finished with a file turns out to be about pipes, not processes.</description>
-		</item>
-
-		<item>
-			<title>Hoisting is not the job</title>
-			<link>https://dev.profullstack.com/~anthony/blog/069-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/069-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 10:36:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>An AI screener marked me down for not defining hoisting the way the textbook does. That question stopped measuring anything years ago.</description>
 		</item>
 	</channel>
 </rss>

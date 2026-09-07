@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agentic DevOps means the agent verifies its own work &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/079-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-07T15:10:07Z">
+<meta name="description" content="I spent a night watching an agent run an ops loop end to end. Six servers, two releases, one incident. The interesting part was not that it could do the work. It was which step made the difference,…">
+</head>
+<body>
+
+<article>
+
+<h1>Agentic DevOps means the agent verifies its own work</h1>
+
+<p><em>2026-09-07, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I spent a night watching an agent run an ops loop end to end. Six servers, two releases, one incident. The interesting part was not that it could do the work. It was which step made the difference, and it was not the one I expected.</p>
+
+<p>!<a href="https://dev.profullstack.com/~anthony/assets/agentic-devops-moshcode.png">The agentic DevOps loop: six stages, and one real run through them</a></p>
+
+<h3>The incident</h3>
+
+<p>A box froze twice overnight. I was sure it had rebooted.</p>
+
+<p>It had not. <code>uptime</code> said seven days, continuously, and there was no reboot in the logs. That is the kind of contradiction that usually ends an investigation, because the machine sounds authoritative and the person sounds vague.</p>
+
+<p>The person was right. What actually happened was two out of memory kills, at 00:14 and 01:55. The second one is the one that matters. Linux runs its OOM killer in the context of whatever process asks for memory next, and at 01:55 that was <code>sshd</code>. So the session went dead for several seconds and came back with things missing. From where you are sitting that is indistinguishable from a reboot.</p>
+
+<p>So the first useful thing an ops agent can do is refuse to let <code>uptime</code> win the argument. Both facts were true. Only one of them explained what the human saw.</p>
+
+<h3>The number nobody looks at</h3>
+
+<p>Linux has kept pressure stall information since 4.20, and almost nobody reads it. <code>/proc/pressure/io</code> on that box had logged roughly ten hours of full stall over seven days. Ten hours where every process was blocked on the disk at once.</p>
+
+<p>Nothing had crashed. No alert had fired. There was no error anywhere to grep for. The box was just periodically unusable, and the only artifact of that was a counter nobody had checked.</p>
+
+<p>That is the shape of a lot of infrastructure problems. Not a failure, a degradation with no error attached. It is also exactly what an agent is good at, because reading forty diagnostic counters is boring and a machine does not get bored.</p>
+
+<h3>Two changes, and they fix different halves</h3>
+
+<p>The box had 16 GB of RAM, 2 GB of swap, and no early OOM protection at all. So:</p>
+
+<p><strong>zram</strong> is a compressed block device in RAM used as swap. Cold pages get compressed at roughly three to one instead of written to disk. Reclaim stops costing seeks and starts costing a little CPU. It does not add memory. It moves the wall further out. On that box it is currently holding 6.1 GB of pages in 1.5 GB of actual RAM.</p>
+
+<p><strong>earlyoom</strong> watches free memory and kills the biggest process while the box is still responsive. The kernel's own OOM killer is not wrong about what to kill. It is late. It only fires when allocation genuinely fails, and by then you have been thrashing for minutes and cannot type. earlyoom fires at ten percent free instead.</p>
+
+<p>Swap went from 2 GB to 10 GB. Six boxes got the same treatment. Two of them had been running with zero swap, and one of those has 961 MB of RAM and was sitting at 575 MB. That box was one traffic spike from an OOM kill with no runway at all.</p>
+
+<h3>The step that actually matters</h3>
+
+<p>Here is what I got wrong about agentic work before this.</p>
+
+<p>I assumed the hard part was the fix. It is not. The fix is the easy part, because it is the part that is written down somewhere. The hard part is verification, and specifically verification that does not trust the thing being verified.</p>
+
+<p>Three things went wrong that night, and every single one of them reported success:</p>
+
+<p>The systemd unit for zram failed with a dependency error naming <code>dev-zram0.device</code>. The real cause was that the DigitalOcean kernel image ships no zram module at all. The error named the symptom and never the cause.</p>
+
+<p>A zram device that already has a size set refuses to be reconfigured. It returns <code>Device or resource busy</code> and quietly keeps its old settings. Your new config appears to apply. It has not.</p>
+
+<p>And systemd expands variables from an <code>EnvironmentFile</code> by splitting on whitespace with no shell quote removal. So writing <code>--avoid '^(sshd|systemd)$'</code> puts the quote characters inside the regex, where they match nothing. The service starts perfectly happily. The only way to know is <code>ps -o args=</code> on the running process.</p>
+
+<p>That last one is the useful lesson. Every layer said fine. The daemon was running. The config file was correct on disk. And the protection was not actually in place. If the loop had stopped at &quot;systemctl is-active says active&quot; it would have shipped a box that was still going to freeze, and the freeze would have been more confusing next time because now there was a fix in place that everyone would assume was working.</p>
+
+<p>An agent that cannot verify its own work is just a faster way to be wrong. That is the whole thing. Speed multiplies whatever your verification step actually catches.</p>
+
+<h3>Generalise or you have deferred an outage</h3>
+
+<p>Six boxes fixed by hand is six boxes that drift. The change went into <code>root-ubuntu.sh</code>, the provisioning script, so the next box is born with it.</p>
+
+<p>Idempotence is what makes that safe to re-run, and it is worth being specific about what idempotent means here. It is not &quot;does not crash on the second run&quot;. It is &quot;changes nothing on the second run&quot;. An already correct zram device is never cycled, because cycling it would drop whatever the box had paged out. Config goes through a write-if-changed helper. The service is only restarted when something actually changed.</p>
+
+<p>I proved it by running the thing twice and diffing what it claimed to change. First run, three changes. Second run, zero. That is a two minute test that turns a belief into a fact.</p>
+
+<h3>Merged is not shipped</h3>
+
+<p>The other thing worth automating is the tail end, because it is where work quietly dies.</p>
+
+<p>A merged pull request reaches nobody. The release has to be cut, the registry has to actually serve the new version, and someone has to say it exists. Two releases went out that night, and for one of them the announcement copy had to be pulled back and rewritten, because a follow up change landed two hours later and made the queued posts describe an interface that no longer existed.</p>
+
+<p>That is a small thing and it is the kind of small thing that only gets caught if the loop includes the announcement rather than stopping at the merge.</p>
+
+<h3>What the loop looks like</h3>
+
+<p>Observe. Diagnose. Fix. Verify on the machine. Generalise into provisioning. Ship, then say so.</p>
+
+<p>Six stages, and the value is concentrated in the fourth and fifth. Anyone can get an agent to make a change. The question is whether it checks the change on the real box with a command that could return bad news, and whether the change outlives the box it was made on.</p>
+
+<h3>One more thing</h3>
+
+<p>The last piece of this shipped as a moshcode command. If the agent you are supervising is itself the thing eating the machine, you want to be able to hold it back:</p>
+
+<pre><code>/nice agents claude
+/nice pnpm -r build
+/nice mem 2G</code></pre>
+
+<p>It covers three resources rather than one, and the reason is the whole point of the night. <code>nice</code> reorders the CPU. It does nothing about memory, and memory is the half that kills processes. So it is <code>nice</code> for CPU, <code>ionice</code> for the disk, and a systemd scope with a hard ceiling for the part that actually takes the box down.</p>
+
+<p><code>npm i -g moshcode</code> for 0.93.0.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
