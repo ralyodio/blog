@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A $315 agent session, and where the money actually went &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/075-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-07T00:11:32Z">
+<meta name="description" content="Eighty percent of a twenty hour agent session was cache reads, not output. Then moshcode 0.95.0 made the cost table link straight to the PR.">
+</head>
+<body>
+
+<article>
+
+<h1>A $315 agent session, and where the money actually went</h1>
+
+<p><em>2026-09-07, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>One row in <code>moshcode cost --all</code> said $315.34. A single agent session, twenty hours, one worktree, 6,285 lines added and 397 removed.</p>
+
+<p>I expected the output tokens to be the expensive part. They were not.</p>
+
+<h3>Where the money went</h3>
+
+<p>Splitting that row by token class:</p>
+
+<ul>
+	<li>cache reads: $252, which is 80 percent of it</li>
+	<li>one hour cache writes: $50</li>
+	<li>output tokens: $13</li>
+	<li>fresh input: under a dollar</li>
+</ul>
+
+<p>437.9 million cache reads on Opus at $0.50 per million, plus 33.3 million on Fable at $1. The session generated 454,042 output tokens, which at $25 per million comes to $9.68.</p>
+
+<p>So the bill is not what the model wrote. It is the context being read back on every single turn.</p>
+
+<p>That changes which lever matters. Trimming a prompt does close to nothing here. The cost is roughly context size multiplied by turn count, and a twenty hour session has a lot of turns. A long session on a large context is expensive even if it produces almost nothing, and cheap-looking sessions are the short ones, not the quiet ones.</p>
+
+<p>Worth knowing: this figure is an estimate. Claude Code records tokens and no price, because on a subscription the marginal request costs nothing extra, so moshcode multiplies by published API rates and marks the number with a <code>~</code>. Claude Code's own internal accounting for the same session said $318.42, about 1 percent apart on the window I was looking at.</p>
+
+<h3>Then I wanted the PR</h3>
+
+<p>Once you notice a session that cost $315, the next thing you want is the thing it produced. That lives on GitHub, not on this machine, and the cost table had no way to get you there.</p>
+
+<p>Claude Code already writes a <code>pr-link</code> record into its transcript when a session opens a pull request. Nothing was reading it.</p>
+
+<p>moshcode 0.95.0 adds a <code>pr</code> column to <code>moshcode cost</code> and <code>moshcode cost --all</code>:</p>
+
+<pre><code>  session  engine  model          in    out  cache   cost    age  pr
+  api      claude  claude-opus-5  1.2k  27k  10.5M   $9.91~  42m  view #128
+  audit    codex   gpt-5.6-sol    400   200  600     -       12m  -</code></pre>
+
+<p><code>view #128</code> is a link. Click it and the pull request opens in your browser.</p>
+
+<h3>Four characters wide, sixty characters of target</h3>
+
+<p>That cell is an OSC 8 hyperlink. The useful property is that the label and the click target are separate things: the terminal paints <code>view #128</code> while the URI it hands your browser is the full GitHub URL. A plain URL column would have been sixty characters of table.</p>
+
+<p>Two things had to change to make it line up. <code>strip</code> in our layout code only matched SGR colour sequences, so a cell with a URL hidden inside an escape would have measured sixty columns wide and pushed every other column off the right edge. And <code>clip</code> now copies an OSC 8 wrapper whole and closes one it cut into, because a terminal handed an opener with no closer keeps linking everything printed afterwards.</p>
+
+<p>Not every terminal speaks OSC 8, and there is no way to ask one whether it does. Piped output prints the raw URL instead, and <code>MOSHCODE_HYPERLINKS=0</code> forces that same plain form in a terminal that would otherwise paint a <code>view</code> nobody can click.</p>
+
+<p><code>moshcode ps</code> deliberately did not get the column. It runs in 0.22s, and the transcript scan the PR link comes from takes 1.75s. That is a nine times regression on the command you run constantly, for a cell that is empty while the work is still in progress.</p>
+
+<pre><code class="language-sh">moshcode upgrade self</code></pre>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
