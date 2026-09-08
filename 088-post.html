@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>myna 0.14.0: a login you can script, and forums that take turns &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/088-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-08T21:25:10Z">
+<meta name="description" content="myna 0.14.0 takes login values as command line arguments for every network, and a tsbb board now picks several forums at login and cycles posts through them.">
+</head>
+<body>
+
+<article>
+
+<h1>myna 0.14.0: a login you can script, and forums that take turns</h1>
+
+<p><em>2026-09-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Connecting a bulletin board to myna used to be three questions in a row. Board URL. Default forum. Name this device. Every one of them was something I knew before I ran the command, and none of them could be answered from a script.</p>
+
+<p>0.14.0 fixes that for every network, not just boards. Anything a login would ask for can be passed on the command line, either positionally in the order the network declares its fields, or by name:</p>
+
+<pre><code>myna login tsbb https://bbs.hqtui.com/ --forum app-showcase
+myna login bluesky chovyfu.bsky.social &lt;app-password&gt;</code></pre>
+
+<p>What you pass is not asked for again. What you leave out is still prompted for, as long as there is a terminal to prompt in. When there is not, a missing required field is now an error naming the flag that would have filled it, instead of a prompt hanging in a pipeline with nobody there to answer it.</p>
+
+<h3>A board is not one destination</h3>
+
+<p>The second half is about where a post actually lands.</p>
+
+<p>A bulletin board is a set of forums. The one I use, bbs.hqtui.com, has nine. Pinning an account to a single default forum meant every announcement went to the same place, which is the right place for roughly none of them.</p>
+
+<p>So tsbb login now reads the board's forum list, which is public and needs no token, and takes as many slugs as you want:</p>
+
+<pre><code>myna login tsbb https://bbs.hqtui.com/ --forum app-showcase,announcements,news</code></pre>
+
+<p>It checks those slugs against the board before it starts the device flow. A typo used to cost you an approval in a browser and then a failed post some weeks later. Now it costs you a retyped word:</p>
+
+<pre><code>$ myna login tsbb https://bbs.hqtui.com/ --forum app-shocase
+myna: bbs.hqtui.com has no forum app-shocase. It has: community, announcements,
+general, introductions, news, app-showcase, support, help, bugs</code></pre>
+
+<p>Posts then take turns. Each one goes to the next forum in the list and moves a cursor along, so a run of announcements spreads out instead of stacking up in one place. Posting the same thing into every forum at once is what a board reads as spam, and myna is not going to do that on your behalf. <code>--forum &lt;slug&gt;</code> is still there when one post belongs somewhere specific, and using it does not disturb the rotation.</p>
+
+<h3>Why bother</h3>
+
+<p>Because the last mile of shipping something is telling people, and every manual prompt in that path is a step that gets skipped at 1am. A login that takes arguments is a login that fits in the same script as the release. A rotation is one fewer decision per post.</p>
+
+<h3>Get it</h3>
+
+<pre><code>curl -fsSL https://mynaposter.com/install.sh | sh</code></pre>
+
+<p>Binaries for Linux, macOS and Windows are on the <a href="https://github.com/profullstack/mynaposter/releases/tag/v0.14.0">0.14.0 release</a>. myna is a terminal social media manager: one command posts to X, Bluesky, Mastodon, LinkedIn, Reddit, dev.to, your own blog, and now a tsbb board that knows which forum it is talking to.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

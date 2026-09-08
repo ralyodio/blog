@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 08 Sep 2026 20:49:27 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 21:25:10 GMT</lastBuildDate>
+
+		<item>
+			<title>myna 0.14.0: a login you can script, and forums that take turns</title>
+			<link>https://dev.profullstack.com/~anthony/blog/088-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/088-post.html</guid>
+			<pubDate>Tue, 08 Sep 2026 21:25:10 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>myna 0.14.0 takes login values as command line arguments for every network, and a tsbb board now picks several forums at login and cycles posts through them.</description>
+		</item>
 
 		<item>
 			<title>Remember Winamp? nixamp is the Napster part now</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 07 Sep 2026 15:10:07 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>I spent a night watching an agent run an ops loop end to end. Six servers, two releases, one incident. The interesting part was not that it could do the work. It was which step made the difference,…</description>
-		</item>
-
-		<item>
-			<title>One truncated JSON response, one page broken forever</title>
-			<link>https://dev.profullstack.com/~anthony/blog/078-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/078-post.html</guid>
-			<pubDate>Mon, 07 Sep 2026 09:10:05 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A truncated gpt-4o-mini response was cached permanently and crashed one brisk.news article on every load. Why a type assertion on parsed JSON is not validation.</description>
 		</item>
 	</channel>
 </rss>
