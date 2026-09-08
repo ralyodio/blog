@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 08 Sep 2026 03:42:44 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 13:12:27 GMT</lastBuildDate>
+
+		<item>
+			<title>Fifty tech CEOs, scored on what they gave away</title>
+			<link>https://dev.profullstack.com/~anthony/blog/083-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/083-post.html</guid>
+			<pubDate>Tue, 08 Sep 2026 13:12:27 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Series Six of opensourcelegends.com cards the people who ran the companies, rated on what those companies gave away. Plus the hardcoded crest that shipped the wrong set name onto all fifty card fronts.</description>
+		</item>
 
 		<item>
 			<title>We shipped 50 portraits of real people and every face was invented</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 18:45:21 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A contact form submission passed SPF, DKIM, DMARC and ARC, and walked past a correctly implemented honeypot. Why a honeypot cannot catch a bot that never renders your page, and what to require instead.</description>
-		</item>
-
-		<item>
-			<title>Our torrent counter went down while the index grew by a million</title>
-			<link>https://dev.profullstack.com/~anthony/blog/073-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/073-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 18:32:11 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A public row count served from a Postgres planner estimate drifted 9 percent high, then snapped down on autoanalyze. The index gained 1.19M torrents while the number on the page fell 400k.</description>
 		</item>
 	</channel>
 </rss>
