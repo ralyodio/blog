@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 08 Sep 2026 20:09:40 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 20:49:27 GMT</lastBuildDate>
+
+		<item>
+			<title>Remember Winamp? nixamp is the Napster part now</title>
+			<link>https://dev.profullstack.com/~anthony/blog/087-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/087-post.html</guid>
+			<pubDate>Tue, 08 Sep 2026 20:49:26 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>nixamp got a public stream directory, listen-only keys, x402 pay-to-listen past five listeners, RTMP in and out, and accounts that own a server.</description>
+		</item>
 
 		<item>
 			<title>watchnews.now: follow the desk, not the algorithm</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 07 Sep 2026 09:10:05 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A truncated gpt-4o-mini response was cached permanently and crashed one brisk.news article on every load. Why a type assertion on parsed JSON is not validation.</description>
-		</item>
-
-		<item>
-			<title>The line is only there before the game</title>
-			<link>https://dev.profullstack.com/~anthony/blog/077-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/077-post.html</guid>
-			<pubDate>Mon, 07 Sep 2026 03:36:03 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>tipoffwatch now shows the betting line before a game and a full box score after it, all from provider responses that were already being fetched and discarded. Plus the bug I shipped and the regression test that could not fail.</description>
 		</item>
 	</channel>
 </rss>

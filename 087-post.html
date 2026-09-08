@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Remember Winamp? nixamp is the Napster part now &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/087-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-08T20:49:26Z">
+<meta name="description" content="nixamp got a public stream directory, listen-only keys, x402 pay-to-listen past five listeners, RTMP in and out, and accounts that own a server.">
+</head>
+<body>
+
+<article>
+
+<h1>Remember Winamp? nixamp is the Napster part now</h1>
+
+<p><em>2026-09-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nixamp shipped this morning as a Winamp shaped player for a terminal. It played your files and drew a spectrum analyser out of block characters. By this evening it does the other half of 1999: your library is a stream other people can find, and once enough of them are listening, they pay to keep listening.</p>
+
+<h3>A directory, not a URL you have to hand out</h3>
+
+<p><code>nixamp serve ~/Music</code> already turned a machine into a server. The missing piece was discovery, so there is a public one at <a href="https://nixamp.com/directory">nixamp.com/directory</a>. The PWA has a Browse button next to the address field, and picking a stream takes no typing.</p>
+
+<p>Listing is asked for, never assumed. The prompt shows the exact link it is about to publish and defaults to yes, and a terminal that cannot ask a question never publishes at all, because nobody being there to answer is not consent. Loopback and link local addresses are refused, since an entry only its publisher can open is not an entry.</p>
+
+<p>The registry is in memory with heartbeats and a TTL. A restart costs one heartbeat instead of a migration, and a stream that dies falls out of the list without anyone noticing it went.</p>
+
+<h3>Publishing the link would have handed strangers the controls</h3>
+
+<p>One key used to guard both listening and <code>/api/command</code>. Publishing that to a directory would have let anyone pause your music or point your machine at a different source.</p>
+
+<p>A server mints two keys now. The share link drives the player. The listen key hears it and gets a 403 from <code>/api/command</code> and <code>/api/source</code>. Only the listen key is ever published.</p>
+
+<h3>Past five listeners, a dollar buys a day</h3>
+
+<pre><code>NIXAMP_PAY_TO=0xYourAddress COINPAY_X402_KEY=cp_live_… nixamp serve ~/Music --x402</code></pre>
+
+<p>Under five concurrent listeners it is free. The sixth gets a 402 with an x402 offer, and one dollar in USDC buys a day. <code>@profullstack/x402-gateway</code> does the protocol and nixamp decides who is charged.</p>
+
+<p>Three choices in there that are not obvious. The count is of live listeners, so a stream quietens back to free on its own. Only the audio is gated, because a 402 on <code>/api/state</code> would break the page that has to render the offer. And nobody is cut off mid track: the gate is asked once, when a request arrives.</p>
+
+<p>The gateway sells crawl access by default and says so, telling the caller that payment is required for training crawlers. Someone trying to hear a song is not a crawler, so that one sentence is replaced on the way out. The offer itself is untouched.</p>
+
+<h3>It takes RTMP in and sends RTMP out</h3>
+
+<p><code>--rtmp-in 1935</code> and OBS or ffmpeg publishes straight to it, with ffmpeg doing the listening via <code>-rtmp_listen</code>, so this costs no dependency and no protocol implementation. Browsers cannot speak RTMP at all, so there are also two HTTP ingest paths, and all three write into the same ffmpeg. One publisher at a time, and a second is refused with 409 rather than mixed in.</p>
+
+<p>Going out, <code>--rtmp youtube=&lt;key&gt; --rtmp x=&lt;key&gt;</code> fans one encode to many destinations through the tee muxer. An ffmpeg per destination is the obvious shape and it encodes the same frames four times. Every output carries <code>onfail=ignore</code>, or one expired key takes the whole broadcast down with it.</p>
+
+<h3>Whose server is it</h3>
+
+<p>You can administer a server two ways: you hold its control link, or you own it. <code>nixamp login</code> then <code>nixamp serve</code> claims the server for that account, and you can then administer it from a phone anywhere.</p>
+
+<p>The server holds no part of nixamp.com's secret and should not try to validate its tokens. It asks nixamp.com whose a token is and compares that to the owner it recorded at startup. Identity is delegated, authorisation stays local, and that is what lets a laptop trust an account it has never seen. When nixamp.com is unreachable, nobody is the owner rather than everybody, and the control link is the way in until it can be asked again.</p>
+
+<p>Signing in is email and password on all four surfaces, with no magic link, because a link in an inbox is no use on a television.</p>
+
+<p>nixamp is 0.2.0, installable in one line, and the source is at <a href="https://github.com/profullstack/nixamp">github.com/profullstack/nixamp</a>.</p>
+
+<p><a href="https://nixamp.com">https://nixamp.com</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
