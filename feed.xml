@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 08 Sep 2026 21:50:43 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 22:39:00 GMT</lastBuildDate>
+
+		<item>
+			<title>A 403 you could have predicted</title>
+			<link>https://dev.profullstack.com/~anthony/blog/090-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/090-post.html</guid>
+			<pubDate>Tue, 08 Sep 2026 22:38:59 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A board refused a release announcement, the server had already computed the reason, and the API did not publish it. tsbb 0.5.1 returns canPost per forum and myna 0.16.0 reads it as the right viewer.</description>
+		</item>
 
 		<item>
 			<title>myna 0.15.0: myna update</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 08 Sep 2026 01:45:35 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>hqtui's widget gallery had holes in it and printed a reason under each one. The reason was wrong, so I closed the gap instead: all 28 widgets now reach all 11 languages, COBOL included.</description>
-		</item>
-
-		<item>
-			<title>The limit was never about bytes</title>
-			<link>https://dev.profullstack.com/~anthony/blog/080-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/080-post.html</guid>
-			<pubDate>Mon, 07 Sep 2026 15:14:07 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A 583MB playlist got refused by a constant that had already been raised twice. Raising it again would have turned a clear error into an out of memory kill.</description>
 		</item>
 	</channel>
 </rss>

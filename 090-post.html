@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A 403 you could have predicted &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/090-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-08T22:38:59Z">
+<meta name="description" content="A board refused a release announcement, the server had already computed the reason, and the API did not publish it. tsbb 0.5.1 returns canPost per forum and myna 0.16.0 reads it as the right viewer.">
+</head>
+<body>
+
+<article>
+
+<h1>A 403 you could have predicted</h1>
+
+<p><em>2026-09-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>A release announcement went out from my terminal last night and one of its five destinations refused it:</p>
+
+<pre><code>FAIL  tsbb:member@bbs.hqtui.com  403 bbs.hqtui.com/api/v1/forums/news/topics — forbidden</code></pre>
+
+<p>The forum in question is fed by a blog crawler. Members reply to those topics, they do not start new ones, which is a perfectly sensible way to run a news section. The problem was not the rule. The problem was that nothing told the client about the rule until it had already tried to post in public.</p>
+
+<p>Here is what the board's forum list looked like at the time:</p>
+
+<pre><code class="language-json">{ &quot;slug&quot;: &quot;announcements&quot;, &quot;kind&quot;: &quot;forum&quot;, &quot;topics&quot;: 1, &quot;posts&quot;: 1 }
+{ &quot;slug&quot;: &quot;news&quot;,          &quot;kind&quot;: &quot;forum&quot;, &quot;topics&quot;: 9, &quot;posts&quot;: 9 }</code></pre>
+
+<p>Identical. One takes topics, one does not, and a program reading that list has no way to know which is which. So my poster picked the wrong one and found out the way you least want to find out.</p>
+
+<h3>The board already knew</h3>
+
+<p>This is the part worth dwelling on. The refusal was not a surprise to the server. Its write route says:</p>
+
+<pre><code class="language-ts">if (!permissions.canPost || forum.isLocked) return c.json({ error: 'forbidden' }, 403);</code></pre>
+
+<p><code>resolvePermissions</code> had computed <code>canPost</code> for this member, correctly, before answering. The board knew the answer and then declined to publish it, so every client had to discover by experiment what one field could have stated. That is a design smell I now look for by name: a service that computes a decision, acts on it, and does not expose it.</p>
+
+<p>So tsbb 0.5.1 returns it. <code>canPost</code>, <code>canReply</code> and <code>locked</code> on every forum in <code>/api/v1/forums</code> and <code>/api/v1/board</code>, resolved by the same function the write route uses, in the same request. Not a new rule, just the existing one said out loud.</p>
+
+<h3>Which caller is asking</h3>
+
+<p>Then the interesting bug, the one I nearly shipped.</p>
+
+<p>Permissions are per viewer, so <code>canPost</code> is an answer to &quot;may <em>you</em> post here&quot;. My poster read the forum list during login, before the sign-in flow finished, which means it read it as an anonymous guest. And a guest may post nowhere. Every field came back false.</p>
+
+<p>Had I trusted that, myna would have refused every forum on every board, including the ones that work perfectly well. The check would have looked reasonable in code review and broken every login.</p>
+
+<p>The same URL, twice, against the live board:</p>
+
+<pre><code>                 without a token   with the member's token
+announcements    canPost=false     canPost=true
+news             canPost=false     canPost=false
+app-showcase     canPost=false     canPost=true</code></pre>
+
+<p>The list is now read twice on purpose. Once before the device flow, as a guest, for the things that are true of everybody: a slug that does not exist, and a category, which holds forums rather than topics. Both cost nothing to check and refuse a mistake before anyone opens a browser to approve a code. Then once more after the token arrives, as the member, for <code>canPost</code>, which is the only point at which that question has a meaningful answer.</p>
+
+<p>A forum the member cannot post in is dropped with a line saying why. Only a selection where nothing is left fails the login outright.</p>
+
+<h3>What a client should do anyway</h3>
+
+<p>The hint makes the common case pleasant. It does not make the runtime check optional, and I would not have shipped only the hint.</p>
+
+<p>Permissions change. A forum gets locked an hour after you logged in, a member's rank changes, an admin flips the posting policy. So myna still treats a 403 at post time as the board's answer: it moves the announcement to the next forum in its rotation and stops keeping the refused one on the account. Only a 403 does that. A 500, a timeout or an expired token still fail loudly, because a board having a bad afternoon should not quietly empty your configuration one post at a time.</p>
+
+<p>Read the hint, believe the refusal. The hint saves the first mistake, the refusal handles the world changing underneath you.</p>
+
+<h3>Get them</h3>
+
+<pre><code>myna update</code></pre>
+
+<p>tsbb boards that follow releases pick 0.5.1 up on their own within about five minutes.</p>
+
+<ul>
+	<li><a href="https://github.com/profullstack/mynaposter/releases/tag/v0.16.0">myna 0.16.0</a></li>
+	<li><a href="https://github.com/profullstack/tsbb/releases/tag/v0.5.1">tsbb 0.5.1</a></li>
+</ul>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
