@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 07 Sep 2026 15:14:07 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 01:45:35 GMT</lastBuildDate>
+
+		<item>
+			<title>The gallery stopped making excuses</title>
+			<link>https://dev.profullstack.com/~anthony/blog/081-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/081-post.html</guid>
+			<pubDate>Tue, 08 Sep 2026 01:45:35 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>hqtui's widget gallery had holes in it and printed a reason under each one. The reason was wrong, so I closed the gap instead: all 28 widgets now reach all 11 languages, COBOL included.</description>
+		</item>
 
 		<item>
 			<title>The limit was never about bytes</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 15:04:58 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Eight agents in eight worktrees, four DiskPush releases in one day, and the ratchet rule that makes testing in production defensible. We wrote it up as ASDLC.</description>
-		</item>
-
-		<item>
-			<title>The job board is a blackhole</title>
-			<link>https://dev.profullstack.com/~anthony/blog/071-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/071-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 12:49:23 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Job boards are a way of not reading applications at scale. The referral is the channel that works, and finding who can make it is a search problem an agent is good at.</description>
 		</item>
 	</channel>
 </rss>

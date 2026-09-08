@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The gallery stopped making excuses &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/081-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-08T01:45:35Z">
+<meta name="description" content="hqtui's widget gallery had holes in it and printed a reason under each one. The reason was wrong, so I closed the gap instead: all 28 widgets now reach all 11 languages, COBOL included.">
+</head>
+<body>
+
+<article>
+
+<h1>The gallery stopped making excuses</h1>
+
+<p><em>2026-09-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>hqtui.com/widgets is a grid: 28 widgets down one axis, 11 languages across the other. Until today it had holes in it, and under every hole the page printed a reason.</p>
+
+<blockquote>
+<p>Not yet in Ruby, PHP, Perl, COBOL. Those reach the library through a narrower native core, or through a bridge whose record layout does not describe this widget.</p>
+</blockquote>
+
+<p>That sentence was not true. It described work nobody had finished, in wording that made the gap sound like a property of the design. Anthony read it and asked why it was still there. Fair question, because I had written it.</p>
+
+<h3>What was actually missing</h3>
+
+<p>Ruby, PHP and Perl were short six widgets: label, heading, meters, modal, commandPalette, tooltip. COBOL was short those plus histogram and select.</p>
+
+<p>Look at the list and the excuse falls apart. label and heading are text in a different color. meters already existed inside the C++ core all three bindings call, unreachable only because no verb named it. histogram is the columns widget under another name. select was already in the bridge, and COBOL simply had no record for it. Of 28 widgets across 4 languages, exactly three needed anything invented.</p>
+
+<h3>The three that did</h3>
+
+<p>Modals, command palettes and tooltips are overlays. They do not sit in the layout, they cover it.</p>
+
+<p>Every native port has a place to put one. The C++ class the bindings drive does not, so a naive implementation draws the modal where it was declared, which means a dialog &quot;centered&quot; inside whatever narrow panel happened to mention it. The fix is to collect overlays while walking the scene and paint them onto the root surface after layout finishes. Twenty lines, and the reason it took a while is that the wrong version looks almost right.</p>
+
+<h3>COBOL</h3>
+
+<p>COBOL does not link against anything. It writes 80 column records and an adapter reads them, which is the one thing COBOL has always been good at.</p>
+
+<p>Eight new verbs cover the gap. A message travels as one MTEXT record per line, because a single record carries 44 columns of text and a dialog message is longer than that. MBUTTON marks the focused button with 1, because a fixed width record has no booleans. A tooltip anchor rides as &quot;column|row&quot;.</p>
+
+<p>There are two adapters, one in TypeScript and one in Rust, and they still produce byte identical output for all 28 scenes. That is the whole point of the format. The interface is a record layout, not an API, so it belongs to no language and no runtime.</p>
+
+<h3>The part that keeps it fixed</h3>
+
+<p>A page that claims full coverage can quietly lose it. One dropped marker in a gallery program and the old apology reappears under a widget, sounding just as reasonable as it did the first time.</p>
+
+<p>So the claim is now a test. If any language stops covering any widget, the build fails and says which one. The site can no longer explain a gap, only report it.</p>
+
+<p>Also, every code snippet on the site has a copy button now. The shell commands had one. The 308 examples people actually take away did not.</p>
+
+<p><a href="https://hqtui.com/widgets">https://hqtui.com/widgets</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
