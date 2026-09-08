@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 08 Sep 2026 14:41:56 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 18:19:51 GMT</lastBuildDate>
+
+		<item>
+			<title>nixamp now runs in your terminal, your browser and your dock</title>
+			<link>https://dev.profullstack.com/~anthony/blog/085-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/085-post.html</guid>
+			<pubDate>Tue, 08 Sep 2026 18:19:51 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>nixamp is three surfaces on one engine now: the terminal player, an installable PWA, and an Electron app that carries the CLI inside it. Plus the two bugs that only showed up once there was a second way to run it.</description>
+		</item>
 
 		<item>
 			<title>A terminal UI you can write a test against</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 07 Sep 2026 01:35:40 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A dashboard over traffic, ad delivery and the bank behind them, and the lifetime-total bug that made its first revenue number wrong by a factor of thirty four.</description>
-		</item>
-
-		<item>
-			<title>A $315 agent session, and where the money actually went</title>
-			<link>https://dev.profullstack.com/~anthony/blog/075-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/075-post.html</guid>
-			<pubDate>Mon, 07 Sep 2026 00:11:32 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Eighty percent of a twenty hour agent session was cache reads, not output. Then moshcode 0.95.0 made the cost table link straight to the PR.</description>
 		</item>
 	</channel>
 </rss>

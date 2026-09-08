@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nixamp now runs in your terminal, your browser and your dock &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/085-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-08T18:19:51Z">
+<meta name="description" content="nixamp is three surfaces on one engine now: the terminal player, an installable PWA, and an Electron app that carries the CLI inside it. Plus the two bugs that only showed up once there was a second way to run it.">
+</head>
+<body>
+
+<article>
+
+<h1>nixamp now runs in your terminal, your browser and your dock</h1>
+
+<p><em>2026-09-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nixamp started as one thing: a Winamp shaped player that lives in a terminal, built on hqtui. It plays your files, draws a spectrum analyser out of block characters, and stays out of the way.</p>
+
+<p>It is three things now, and all three run the same engine.</p>
+
+<h3>Server mode</h3>
+
+<p><code>nixamp serve</code> is the terminal player without the terminal. One ffmpeg process decodes a track, and that single decode feeds both the speakers and the analyser, so nothing is decoded twice and the visualiser never drifts away from what you are hearing.</p>
+
+<p>On top of that sits a small HTTP layer: the current state, a stream of updates, six commands it will accept, and the audio itself with range requests so a browser can seek.</p>
+
+<p>State goes over Server-Sent Events rather than a WebSocket. SSE is plain HTTP, it needs no dependency, and it reconnects on its own when a phone sleeps and wakes up. A WebSocket would have been a library plus a reconnect loop to write and get wrong.</p>
+
+<p>It binds to loopback unless you tell it otherwise, it validates every command instead of trusting the caller, and track paths never leave the machine. What a remote client gets is a list of titles and a stream of bytes.</p>
+
+<h3>The PWA</h3>
+
+<p><code>web/</code> is a browser player. Point it at your own files and it plays them where they are, because nothing is uploaded and the Web Audio analyser drives the same spectrum you get in the terminal.</p>
+
+<p>Point it at a <code>nixamp serve</code> running somewhere else and it becomes a remote control for that machine. Tick &quot;listen on this device&quot; and it stops being a remote control: the server is told to stop, and the browser plays the same library over the network instead. That last part took two tries. The first version left the server playing alongside the browser, which is not what &quot;on this device&quot; says.</p>
+
+<p>It is a real PWA rather than a page with a manifest bolted on. The service worker is generated at build time from the exact list of files the build emitted, so it cannot precache a filename that no longer exists. The icons are drawn from source by a small PNG encoder over <code>node:zlib</code>, which means the 192 and the 512 cannot drift apart the way two hand exported files eventually do.</p>
+
+<p>The whole bundle is 16 kB.</p>
+
+<h3>The desktop app</h3>
+
+<p><code>desktop/</code> is Electron around that same PWA, with a real <code>nixamp serve</code> as a child process. So one window is the browser player, the terminal player's engine, and the remote server your phone points at.</p>
+
+<p>The CLI travels inside the bundle and runs under Electron's own Node, which means installing the app installs a working nixamp with no system Node anywhere near it. AppImage and deb build unsigned. mac is configured with a null identity, so nothing is signed or notarised.</p>
+
+<h3>Two bugs that were already there</h3>
+
+<p>Building the second and third surfaces found two things wrong with the first.</p>
+
+<p>The installed binary did nothing. <code>bin/nixamp.mjs</code> imported <code>dist/main.js</code> for a side effect guarded by <code>import.meta.main</code>, which is false in a module that was imported rather than run. So <code>npx nixamp</code> started, loaded everything, and exited without a word. <code>main()</code> is exported and called now, and a test runs the real binary instead of importing it, because importing it was exactly the thing that hid the bug.</p>
+
+<p>Skipping a track reported an error and stopped playback. A killed ffmpeg still fires <code>close</code>, and its &quot;exited null&quot; arrived after the next track had already started, so the failure landed on the track that had just replaced it. Each start carries a generation now, and a late callback from a previous one is ignored.</p>
+
+<p>Neither would have surfaced from inside the terminal app, where the binary runs under the interpreter and skipping mostly works.</p>
+
+<h3>It is live</h3>
+
+<p>nixamp.com is up, installable, and serving the PWA. The source is at <a href="https://github.com/profullstack/nixamp">github.com/profullstack/nixamp</a>.</p>
+
+<p><a href="https://nixamp.com">https://nixamp.com</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
