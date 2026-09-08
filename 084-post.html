@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A terminal UI you can write a test against &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/084-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-08T14:41:55Z">
+<meta name="description" content="DiskPush's two-pane browser was 940 lines of hand-rolled ANSI. Rewriting it on HQTUI made the frame a value, and three bugs fell out that reading the code had missed.">
+</head>
+<body>
+
+<article>
+
+<h1>A terminal UI you can write a test against</h1>
+
+<p><em>2026-09-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>DiskPush's two-pane browser was about 940 lines of hand-rolled ANSI. Its own escape codes, its own key parser, its own box drawing, and a full-screen repaint on every keystroke. It worked. The problem was that the only way to know what it drew was to run it in a terminal and look at it.</p>
+
+<p>I rewrote it on <a href="https://hqtui.com">HQTUI</a> and split the result three ways:</p>
+
+<ul>
+	<li><code>model.ts</code>, state and the pure functions over it. No terminal, no ssh, no rsync.</li>
+	<li><code>view.ts</code>, the whole screen as one pure function of a snapshot.</li>
+	<li><code>app.ts</code>, state and effects only.</li>
+</ul>
+
+<p>That second file is the point. A frame is now a value:</p>
+
+<pre><code class="language-ts">const text = renderToText(({ ui, theme }) =&gt; draw(ui, theme, 100, 30, state), {
+  width: 100,
+  height: 30,
+})
+expect(text).toContain('Local -&gt; prod')</code></pre>
+
+<p>Three defects fell out of that in the first hour, none of which I caught reading the code I had just written.</p>
+
+<h4>One pane lost its title, the other lost its path</h4>
+
+<p>A panel's title and subtitle share the top border row, and the box gives the subtitle priority when the two collide. Sizing the path against the full pane width put it right on that threshold, so a one-column rounding difference between two side-by-side panes decided which half of the header survived. Two panes pointed at the very same directory rendered differently. Budgeting the path against what the title leaves fixes it.</p>
+
+<h4>Paths were shortened from the wrong end</h4>
+
+<p>HQTUI's <code>truncate</code> keeps the head of a string, which is right for a label. For a path it means every worktree under one repo renders as the identical string. Shortening from the left costs nine lines and is the difference between a header that names a directory and one that does not.</p>
+
+<h4>A finished transfer showed 80 percent</h4>
+
+<p>The progress bar was reading rsync's last printed progress line, which is whatever it happened to emit before exiting. A preview that had completed sat at 80 percent forever.</p>
+
+<p>All three are the kind of thing a screenshot review catches and a code review does not. The difference is that a test catches them on every commit, and I did not have to remember to look.</p>
+
+<p>The rewrite also bought the things you get once something else owns the terminal: a live transfer panel with a progress bar, the rate, and the files as rsync reports them, cancellable with esc. A filter on <code>/</code> that narrows a listing as you type. Sorting on <code>o</code>. Dotfiles on <code>.</code>. Mouse click and wheel. The TUI test count went from 15 to 59.</p>
+
+<p>DiskPush 0.6.0 is out. Run <code>diskpush tui</code> and press <code>?</code>.</p>
+
+<p><em>Drafted with AI assistance, reviewed and edited by a human.</em></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
