@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 08 Sep 2026 21:25:10 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 21:50:43 GMT</lastBuildDate>
+
+		<item>
+			<title>myna 0.15.0: myna update</title>
+			<link>https://dev.profullstack.com/~anthony/blog/089-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/089-post.html</guid>
+			<pubDate>Tue, 08 Sep 2026 21:50:43 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>myna 0.15.0 adds a self update command: it picks the right asset for the machine, verifies the published checksum, and renames the new binary over the running one.</description>
+		</item>
 
 		<item>
 			<title>myna 0.14.0: a login you can script, and forums that take turns</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 07 Sep 2026 15:14:07 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A 583MB playlist got refused by a constant that had already been raised twice. Raising it again would have turned a clear error into an out of memory kill.</description>
-		</item>
-
-		<item>
-			<title>Agentic DevOps means the agent verifies its own work</title>
-			<link>https://dev.profullstack.com/~anthony/blog/079-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/079-post.html</guid>
-			<pubDate>Mon, 07 Sep 2026 15:10:07 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>I spent a night watching an agent run an ops loop end to end. Six servers, two releases, one incident. The interesting part was not that it could do the work. It was which step made the difference,…</description>
 		</item>
 	</channel>
 </rss>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>myna 0.15.0: myna update &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/089-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-08T21:50:43Z">
+<meta name="description" content="myna 0.15.0 adds a self update command: it picks the right asset for the machine, verifies the published checksum, and renames the new binary over the running one.">
+</head>
+<body>
+
+<article>
+
+<h1>myna 0.15.0: myna update</h1>
+
+<p><em>2026-09-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I typed <code>myna update</code> today and got <code>Unknown command &quot;update&quot;. Run: myna help</code>. That is a fair answer and a bad one. The installer already knew how to put a myna binary on a machine correctly, so there was no reason the binary could not do the same thing to itself.</p>
+
+<pre><code>myna update           # replace this binary with the newest release
+myna update --check   # only say whether one is waiting</code></pre>
+
+<p><code>/update</code> works in the TUI too.</p>
+
+<h3>The parts that are easy to get wrong</h3>
+
+<p>An in-place self update is one of those jobs that looks like four lines of curl and is not, so it is worth saying what this one actually does.</p>
+
+<p>It compares versions numerically. A string compare puts 0.9.0 above 0.10.0, which would have parked every install on the 0.9 series the moment 0.10 shipped.</p>
+
+<p>It picks the asset the machine can run. Bun's default x86_64 build uses AVX2, and on a CPU without it the binary dies with an illegal instruction rather than a message you could act on, so an older x86_64 Linux box gets the baseline build. That check happens before the download, not after.</p>
+
+<p>It verifies the download against the published SHA256SUMS and refuses to install when the sum is missing or does not match. This is an executable that a background daemon then runs unattended, which is not the place to shrug about provenance.</p>
+
+<p>It stages the file in the destination directory and renames it over the target. Two reasons. Writing into the running binary truncates the file the kernel is currently executing. And a rename is only atomic within one filesystem, so staging in /tmp and moving across would give up the property that makes this safe at all. A download that fails leaves the working binary exactly as it was, mode included.</p>
+
+<h3>Flags worth knowing</h3>
+
+<p><code>--check</code> reports and exits 1 when an update is waiting, so a cron job can branch on it without parsing anything.</p>
+
+<p><code>--version &lt;x.y.z&gt;</code> installs a specific release in either direction. Going backwards says &quot;Installed&quot; rather than &quot;Updated&quot;, because calling a downgrade an update is a small lie that costs you five minutes of confusion later.</p>
+
+<p>If myna is running under Bun, from a git checkout or a global install, there is no release binary to replace. It says which release is newest and how to update that kind of install, instead of writing a myna over the Bun that is executing it.</p>
+
+<h3>The bootstrap</h3>
+
+<p>0.14.0 and earlier have no <code>update</code> command, so the first hop still needs the installer:</p>
+
+<pre><code>curl -fsSL https://mynaposter.com/install.sh | sh</code></pre>
+
+<p>From 0.15.0 onward, <code>myna update</code> is the upgrade path.</p>
+
+<p>Binaries for Linux, macOS and Windows are on the <a href="https://github.com/profullstack/mynaposter/releases/tag/v0.15.0">0.15.0 release</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
