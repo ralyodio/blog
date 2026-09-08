@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>watchnews.now: follow the desk, not the algorithm &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/086-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-08T20:09:40Z">
+<meta name="description" content="A news reader that shows what a newsroom actually published, built as a brand entry on an existing platform rather than a fork.">
+</head>
+<body>
+
+<article>
+
+<h1>watchnews.now: follow the desk, not the algorithm</h1>
+
+<p><em>2026-09-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>watchnews.now went live today. It is a news reader built on an idea that sounds
+small and turned out not to be: you should be able to follow a desk rather than
+an algorithm, and see what it actually published, in the order it published it.</p>
+
+<h3>What it does</h3>
+
+<p>Pick a beat, or pick a newsroom. The front page shows what landed today. Every
+story links straight out to the publisher. There is no account needed to read,
+no ads, and nothing is ranked by engagement.</p>
+
+<p>The stories come from two places. The first is newsroom RSS, read directly from
+the publishers: the BBC, Al Jazeera, the Guardian, Deutsche Welle, France 24,
+NPR and the Wall Street Journal world wire. A newsroom feed is the one thing in
+news that is reliably free, because publishers want it read. No key, no quota,
+no intermediary deciding what you get.</p>
+
+<p>The second is GDELT, which indexes news in 65 languages across a very long tail
+of outlets and tags each story with the country and language it came from. That
+is the part you cannot get from seven English desks. It is why watchnews.now
+has 67 followable outlets after its first sync rather than seven, and why you
+can watch one story land across a hundred mastheads at once.</p>
+
+<p>Every source is free and keyless. That was a constraint, not an accident.</p>
+
+<h3>The part that was interesting to build</h3>
+
+<p>watchnews.now is not a new codebase. It is the same code that runs
+tipoffwatch.com, our sports calendar, with one environment variable set
+differently.</p>
+
+<p>That platform already had a whitelabel: a single file holding everything that
+differs between sites, with a comment arguing that a new site should be an entry
+in it rather than a fork. We had not taken that advice before. Our film and TV
+site, genrewatch.com, is a separate repository, and it pays for that every time
+a bug is found: the fix has to land twice, by hand, in two places that have
+drifted apart.</p>
+
+<p>So this time it is a brand entry and one data provider. About 250 lines. A fix
+found here lands once and all three sites get it.</p>
+
+<p>The mapping needed no database change at all, which is the same thing that made
+the film site possible. A beat is a league row. An outlet is a team row. A story
+is an event with one participant instead of two, which is a shape the schema
+already had, because a race and a fight card do not have two sides either.</p>
+
+<h3>The thing that did not fit</h3>
+
+<p>There was one genuine mismatch, and it is worth writing down because it is the
+kind of thing a vocabulary layer cannot paper over.</p>
+
+<p>A fixture is something that will happen. A release is something that will drop.
+A story has already been published by the time anyone can read it. The schema
+holds that fine, since a timestamp is a timestamp. The words do not.</p>
+
+<p>Every other site on this platform has a page that counts down to the next thing.
+On a news site that page can never have anything on it. We could have quietly
+left it empty under a sports sentence. Instead the page says what is true:</p>
+
+<blockquote>
+<p>Deliberately empty. Every other site running this code counts down to a
+fixture or a release; a story is only news once it is published, so there is
+nothing here to count down to.</p>
+</blockquote>
+
+<p>That is precisely why the whitelabel holds whole sentences rather than
+substituted nouns. &quot;Never miss a game&quot; reads fine for a game and badly for a
+release, and it fails completely for a story that has already happened.</p>
+
+<h3>Where the data comes from</h3>
+
+<p>The feeds are not parsed by watchnews.now itself. They are parsed by
+nichedb.dev, our open directory of sources, which gained a News collection on
+the same day. nichedb does the fetching, parsing and deduplication, and serves
+the result as keyless JSON that anyone can read. watchnews.now is a projection
+of that, not a seventh set of feed parsers.</p>
+
+<p>That collection also carries something watchnews.now does not use yet: 920 live
+news channels worldwide, each with its public stream. Half the news channels in
+the directory have no public stream at all, and a row you cannot watch is not an
+answer to &quot;where do I watch this&quot;, so only the ones you can watch are stored.
+Making them playable is the obvious next step for a site with &quot;watch&quot; in the
+name.</p>
+
+<h3>Try it</h3>
+
+<p>watchnews.now. Free, no ads, no account to read.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

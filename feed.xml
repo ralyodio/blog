@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 08 Sep 2026 18:19:51 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 20:09:40 GMT</lastBuildDate>
+
+		<item>
+			<title>watchnews.now: follow the desk, not the algorithm</title>
+			<link>https://dev.profullstack.com/~anthony/blog/086-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/086-post.html</guid>
+			<pubDate>Tue, 08 Sep 2026 20:09:40 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A news reader that shows what a newsroom actually published, built as a brand entry on an existing platform rather than a fork.</description>
+		</item>
 
 		<item>
 			<title>nixamp now runs in your terminal, your browser and your dock</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 07 Sep 2026 03:36:03 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>tipoffwatch now shows the betting line before a game and a full box score after it, all from provider responses that were already being fetched and discarded. Plus the bug I shipped and the regression test that could not fail.</description>
-		</item>
-
-		<item>
-			<title>The number I had not looked at, and the wrong version of it</title>
-			<link>https://dev.profullstack.com/~anthony/blog/076-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/076-post.html</guid>
-			<pubDate>Mon, 07 Sep 2026 01:35:40 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A dashboard over traffic, ad delivery and the bank behind them, and the lifetime-total bug that made its first revenue number wrong by a factor of thirty four.</description>
 		</item>
 	</channel>
 </rss>
