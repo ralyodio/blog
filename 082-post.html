@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>We shipped 50 portraits of real people and every face was invented &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/082-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-08T03:42:44Z">
+<meta name="description" content="An AI trading card set shipped with 50 generated portraits. None of them were the actual person. What it took to fix it, and why 23 cards now have no face at all.">
+</head>
+<body>
+
+<article>
+
+<h1>We shipped 50 portraits of real people and every face was invented</h1>
+
+<p><em>2026-09-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>opensourcelegends.com is a trading card series. Four sets now: the open source legends, the hacking legends, the security professionals, and a new one for the architects of machine learning.</p>
+
+<p>Series Three shipped last night with 50 illustrated cards. Every portrait was generated from a text prompt that contained the person's name and title. The model had never seen a photograph of any of them. So it produced a confident, plausible looking stranger for each name and I published all 50.</p>
+
+<p>Jeremiah Grossman's card showed a long haired man in wire glasses. He looks nothing like that. Anthony spotted it in about a minute.</p>
+
+<p>For a set whose whole premise is documented history, with two public sources cited on every card, an invented face is not a cosmetic problem. The scouting reports were all checkable. The picture next to them was fiction.</p>
+
+<h3>The fix is not the interesting part</h3>
+
+<p>I pulled all 100 faces, deleted the 50 source portraits so nobody could re-render them, and switched generation to image to image off a real photograph. That part took an hour.</p>
+
+<p>Proving the photograph is the right person took the rest of the night.</p>
+
+<p>A name lookup returns humans. It does not return the right human. Unchecked, the resolver wanted to put:</p>
+
+<ul>
+	<li>the British Conservative Party leader on Michael Howard's card</li>
+	<li>a Confederate general on Robert M. Lee's, via an 1860s Julian Vannerson daguerreotype</li>
+	<li>a Liverpool city councillor on Mark Dowd's</li>
+	<li>a Canadian rugby player on Jeff Williams'</li>
+	<li>a blue wolf statue outside a brewery on Thomas Wolf's</li>
+	<li>a Bulgarian basketball player on Georgi Gerganov's</li>
+</ul>
+
+<p>Every one of those passed a name match.</p>
+
+<h3>What the code checks now</h3>
+
+<p>The resolver requires the surname to appear in the Wikidata label, rejects any photograph dated before 1950, requires a Wikimedia Commons filename to open with the person's full name rather than merely contain it, and keeps a reject list with a written reason for each entry so a rerun cannot quietly undo a judgement.</p>
+
+<p>That still was not enough. Every single one of those bad matches above was caught by rendering a contact sheet and looking at it. The code narrowed the field. It did not make the decision.</p>
+
+<h3>The failure that changed the rule</h3>
+
+<p>The worst case was not a wrong person. It was François Chollet, where Wikidata's photograph is a body shot with his head cropped out of the top of the frame, and his GitHub avatar is a felt sculpture.</p>
+
+<p>Given either one, the model did not fail. It produced a detailed, well lit portrait of a man who does not exist.</p>
+
+<p>So the rule is now simple. No verified photograph, no face. The card renders a plate that says no freely licensed photograph of this person was found. Series Three has 40 real likenesses out of 50, Series Four has 37, and 23 cards across the two sets carry that plate instead of a face. That is a worse looking deck and a more honest one.</p>
+
+<p>Photographers are credited on the card and on the card page, because most references are CC BY or CC BY-SA and a conditioned portrait is a derivative work.</p>
+
+<p>If you can point me at a properly licensed photo of anyone still missing, that is the single most useful thing you can contribute.</p>
+
+<p><a href="https://opensourcelegends.com/gods-of-ai">https://opensourcelegends.com/gods-of-ai</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

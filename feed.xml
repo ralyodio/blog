@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 08 Sep 2026 01:45:35 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 03:42:44 GMT</lastBuildDate>
+
+		<item>
+			<title>We shipped 50 portraits of real people and every face was invented</title>
+			<link>https://dev.profullstack.com/~anthony/blog/082-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/082-post.html</guid>
+			<pubDate>Tue, 08 Sep 2026 03:42:44 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>An AI trading card set shipped with 50 generated portraits. None of them were the actual person. What it took to fix it, and why 23 cards now have no face at all.</description>
+		</item>
 
 		<item>
 			<title>The gallery stopped making excuses</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 06 Sep 2026 18:32:11 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A public row count served from a Postgres planner estimate drifted 9 percent high, then snapped down on autoanalyze. The index gained 1.19M torrents while the number on the page fell 400k.</description>
-		</item>
-
-		<item>
-			<title>Four releases in six hours: the lifecycle we actually use</title>
-			<link>https://dev.profullstack.com/~anthony/blog/072-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/072-post.html</guid>
-			<pubDate>Sun, 06 Sep 2026 15:04:58 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Eight agents in eight worktrees, four DiskPush releases in one day, and the ratchet rule that makes testing in production defensible. We wrote it up as ASDLC.</description>
 		</item>
 	</channel>
 </rss>
