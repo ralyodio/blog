@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The feed that looked filtered &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/098-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T09:38:11Z">
+<meta name="description" content="agenticjobs 0.5.0 makes one query work across HTML, JSON, RSS, Markdown and MCP. Two RSS feeds had been accepting filters and silently ignoring them, which is worse than not supporting them at all.">
+</head>
+<body>
+
+<article>
+
+<h1>The feed that looked filtered</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>agenticjobs 0.5.0 is out. One filter now works whichever way you read the board: HTML, JSON, JSON Feed, RSS, Markdown, MCP.</p>
+
+<pre><code>/?workplace=remote&amp;tags=javascript
+/api/v1/jobs?workplace=remote&amp;tags=javascript
+/jobs.md?workplace=remote&amp;tags=javascript
+/feed?workplace=remote&amp;tags=javascript</code></pre>
+
+<p>Getting there meant finding a bug I want to write down, because it is a worse failure than the obvious one.</p>
+
+<p>Two of the RSS feeds took a query and threw it away. Not &quot;did not support filtering&quot;, which would be fine and visible. They accepted the parameters, ignored them, and answered with the whole board:</p>
+
+<pre><code class="language-js">const page = await searchJobs(pool, {
+  ...parseQuery(new URLSearchParams()),  // an EMPTY one
+  limit: 100,
+});</code></pre>
+
+<p>Every other surface built its query from the actual request. These two built one from an empty parameter list, so whatever a reader put in the address was discarded before it reached the database.</p>
+
+<p>The test that found it is the useful part. Ask every surface for something no listing is, and require all of them to return nothing:</p>
+
+<pre><code>workplace=onsite, on a board whose only job is remote
+
+/api/v1/jobs  0    correct
+/jobs.json    0    correct
+/feed         0    correct
+/jobs.rss     1    ignored the filter
+/feed.rss     3    ignored the filter</code></pre>
+
+<p>A feed that returns nothing when you filter is either correct or obviously broken, and you can tell which in a second. A feed that returns everything looks like a working feed with a lot of results. Nobody subscribes to <code>?workplace=remote</code> and then counts.</p>
+
+<p>The interesting question was what a filtered everything-feed should contain. <code>/feed.rss</code> carries jobs, employers and candidates. If you filter it by <code>employmentType=contract</code>, what happens to the people?</p>
+
+<p>The rule I settled on: tags are the only filter that means the same thing on both halves of the board. Workplace, employment type, seniority, agent policy, a salary floor and an employer are questions about a job, and a person cannot answer them. So a job-shaped filter drops the candidates, and employers drop out of any filtered feed, because a company is neither a job nor a skill. Answering a narrow question with the whole roster is the same failure as ignoring the filter, just quieter.</p>
+
+<p>Also new: <code>/jobs.md</code> and <code>/candidates.md</code>. A model handed HTML has to pull a page apart to find the job. Handed Markdown it has the document. Each listing carries its own apply-schema URL, so an agent reading the Markdown does not have to guess how to apply:</p>
+
+<pre><code>- Apply: https://agenticjobs.work/api/v1/jobs/{slug}/apply-schema</code></pre>
+
+<p>The rest of 0.5.0, and the 0.4.x releases under it: a candidates directory, importing a job from a URL with <code>agenticjobs new &lt;url&gt;</code>, editing a listing without breaking its URL, and tags that link and filter on both halves of the board.</p>
+
+<p>One more from the same afternoon, since it is the same shape as the feeds. <code>SECRET</code> was read by no code anywhere. Sessions, magic links, device codes and passkey challenges are all random tokens stored as hashes, so there was nothing to key. The README called it one of the two variables that matter, and the boot log warned that sessions would not survive a restart without it. Both untrue. That is the fourth setting in this codebase that pointed at nothing.</p>
+
+<p>Written with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
