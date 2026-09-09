@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A job board where the agent on each side has a person behind it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/091-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T01:03:52Z">
+<meta name="description" content="A job board where the agent on each side has a person behind it. MIT, self-hosted, federated, and it does not scrape.">
+</head>
+<body>
+
+<article>
+
+<h1>A job board where the agent on each side has a person behind it</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Hiring is about to get strange in a specific way. A candidate's agent will find the role and draft the application. An employer's agent will write the posting and read what comes back. Everyone involved already half knows this, and almost nobody is saying it out loud, so the whole thing is happening by stealth: people quietly using an agent to write a cover letter, and employers quietly binning anything that reads like one.</p>
+
+<p>That is a bad equilibrium. It punishes honesty, it gives the employer no signal worth having, and it gives the candidate no way to find out what any particular company actually wants.</p>
+
+<p>So I built the board I think this needs. It is called agenticjobs, it is MIT licensed, and you can run your own copy in about a minute.</p>
+
+<h3>The two rules</h3>
+
+<p><strong>Nothing is scraped.</strong> Every listing was posted to the board by the employer. That sounds like a limitation and it is the entire point: an agent cannot tell a stale aggregator entry from a real opening, so a search result is only worth something if you know a person put it there. An empty search on this board means nobody posted that job. It does not mean a crawler missed it.</p>
+
+<p><strong>Both ends have a human control point, and they are the same shape.</strong> An employer's agent writes a listing and it lands as a draft for a person to publish. A candidate's agent writes an application and it lands as a draft for a person to read and send. Neither side can be automated past its human, and neither side has to trust that the other one was not.</p>
+
+<p>That symmetry is in the database, not in the marketing. A draft application is invisible to the employer until a person sends it. I checked that at the table level rather than believing my own view code.</p>
+
+<h3>Say what you actually want</h3>
+
+<p>Every listing has to declare an agent policy. Three values, no default:</p>
+
+<ul>
+	<li><code>welcome</code>: agent-written applications are fine, nothing is asked</li>
+	<li><code>disclose</code>: fine, but say so</li>
+	<li><code>human-only</code>: the employer is asking for something a person wrote</li>
+</ul>
+
+<p><code>human-only</code> is a request, not a control. No board can tell who wrote a cover letter, and one that claims it can is selling something. Saying it plainly is worth more than pretending to enforce it, because a candidate who reads it and writes their own has at least been told what the company wants.</p>
+
+<p>And disclosure is never used to filter. A board that collects the disclosure and then quietly drops those applications has broken the field for everybody, because the next candidate learns to lie.</p>
+
+<h3>Resumes are Markdown</h3>
+
+<p>A resume is a file. You can read it, diff it, keep it in a repository, and paste it anywhere. An agent can write one without being taught a schema first.</p>
+
+<p>Upload a PDF or a Word document and the board converts it, then hands you the Markdown to edit before it goes anywhere. The Markdown is what gets kept and what employers read. A conversion nobody checks is a conversion nobody should trust.</p>
+
+<p>The convention is written down as OpenResume.md, and the listing format as OpenJob. Both are on logicsrc.com, both are things anyone can implement, and neither needs my software:</p>
+
+<ul>
+	<li><a href="https://logicsrc.com/docs/openresume">https://logicsrc.com/docs/openresume</a></li>
+	<li><a href="https://logicsrc.com/docs/openjob">https://logicsrc.com/docs/openjob</a></li>
+</ul>
+
+<p>OpenJob is not a replacement for schema.org JobPosting. It is JobPosting plus the three things it has no vocabulary for: the agent policy, the application form as data, and a description in Markdown.</p>
+
+<h3>Applying takes two requests</h3>
+
+<pre><code>curl https://agenticjobs.work/api/v1/jobs/SLUG/apply-schema
+curl -X POST https://agenticjobs.work/api/v1/jobs/SLUG/apply -d '{...}'</code></pre>
+
+<p>Read the schema, post the answers. No page to render, no form to guess, no credential needed to read anything. There is an MCP endpoint too, so an assistant can do it as a tool call.</p>
+
+<h3>Run your own, and let them find each other</h3>
+
+<pre><code>git clone https://github.com/profullstack/agenticjobs
+docker compose up -d</code></pre>
+
+<p>That is a board with its own Postgres. Web, REST, MCP, CLI, TUI, desktop and an installable PWA, all on one engine.</p>
+
+<p>Instances are independent. Yours has its own database, its own domain and its own rules. If you want to be findable, point it at a directory and it announces itself:</p>
+
+<pre><code>DIRECTORY_URL=https://agenticjobs.work
+ANNOUNCE=true</code></pre>
+
+<p>Your instance sends one field, its own URL. The directory then reads your descriptor from you directly, so nothing about your board is taken on trust from the announcement. A stream directory can afford to believe an announcement that says &quot;I am playing something&quot;. A job board's announcement carries a company name and a job count, and one that could claim someone else's would be a phishing tool on the first day.</p>
+
+<p>A directory can then ask one question of every listed board at once. A board that is slow or down gets named in the results rather than quietly dropped, so you never see a shorter list with no explanation.</p>
+
+<h3>Where it is</h3>
+
+<p>The board is at <a href="https://agenticjobs.work">https://agenticjobs.work</a> and it is empty, which is the honest state of a board that does not scrape. The code is at <a href="https://github.com/profullstack/agenticjobs">https://github.com/profullstack/agenticjobs</a>.</p>
+
+<p>If you are hiring and you have an opinion about how you want to be applied to, this is somewhere to say it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
