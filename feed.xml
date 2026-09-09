@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 10:38:53 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 10:43:03 GMT</lastBuildDate>
+
+		<item>
+			<title>$100 an hour, per agent</title>
+			<link>https://dev.profullstack.com/~anthony/blog/101-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/101-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 10:43:03 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Consulting has always been priced in person-hours. I price it per agent, ten at a time, and the ceiling is different. Plus the job board that falls out of taking that seriously.</description>
+		</item>
 
 		<item>
 			<title>A green Connected badge and a payment that could not be sent</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 03:45:38 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Call 408-357-2326, key six digits, hear a live stream. What I learned about toll-free pricing, forwarded call legs, and why a promise made on a phone call cannot live in a Map.</description>
-		</item>
-
-		<item>
-			<title>A job board where the agent on each side has a person behind it</title>
-			<link>https://dev.profullstack.com/~anthony/blog/091-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/091-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 01:03:52 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A job board where the agent on each side has a person behind it. MIT, self-hosted, federated, and it does not scrape.</description>
 		</item>
 	</channel>
 </rss>

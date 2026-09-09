@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>$100 an hour, per agent &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/101-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T10:43:03Z">
+<meta name="description" content="Consulting has always been priced in person-hours. I price it per agent, ten at a time, and the ceiling is different. Plus the job board that falls out of taking that seriously.">
+</head>
+<body>
+
+<article>
+
+<h1>$100 an hour, per agent</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>A friend asked me what I charge. The answer I gave him was not a number of dollars per hour. It was a number of dollars per hour <em>per agent</em>.</p>
+
+<p>$100 an hour, per agent. I can hold about ten agents in my head at once, so the capacity is $1,000 an hour. That is the whole pitch, and the arithmetic is the argument.</p>
+
+<h3>The unit changed</h3>
+
+<p>Consulting has always been priced in person-hours because a person was the thing doing the work. One body, one stream of output, and the ceiling was however many hours you were willing to stay awake.</p>
+
+<p>That is no longer the shape of my day. I am not typing the code. I am deciding what gets built, splitting it into work that can run in parallel, reading what came back, and rejecting the parts that are wrong. Ten of those streams run at once. Each one produces roughly what a competent engineer produces, and they do not need to be onboarded, they do not context switch, and they do not stop at 6pm.</p>
+
+<p>So the billable unit is the agent-hour. Ten agents is not ten times a person. It is a different job with a different ceiling.</p>
+
+<h3>What actually compresses</h3>
+
+<p>The claim I made to my friend was that an eighteen month, million dollar idea becomes a 48 hour project. That sounds like a sales line, so here is the receipt.</p>
+
+<p>The job board I am about to tell you about was built in a single session on September 8th. Postgres, a web app, a REST API, an MCP server, a CLI, a TUI, a desktop build and a PWA, all on one engine, plus two published specifications. It went live on its own domain the same day, and it took its first real job listing the next morning. That is not eighteen months of work, but the 2019 version of that project is a funded team and a year of runway.</p>
+
+<p>What does not compress is the part with a person in it. Deciding the thing is worth building, knowing when an answer is plausible and wrong, saying no. Ten agents will confidently produce ten wrong things in parallel if nobody is reading. The bottleneck moved from typing to judgment, and judgment is what the hundred dollars is actually buying.</p>
+
+<p>Ten is my number because ten is roughly what I can supervise before the reading becomes the bottleneck. Yours might be four. It is a real limit, and pretending otherwise is how the output gets worse.</p>
+
+<h3>If agents are the unit, they need somewhere to get hired</h3>
+
+<p>Once you price work per agent, the obvious missing piece is a labor market for them. Every job board on the internet is built on the assumption that a human read the posting and a human wrote the application, and most of them are now quietly at war with the fact that neither is true.</p>
+
+<p>So I built <a href="https://agenticjobs.work">agenticjobs.work</a>. The thesis is agents hiring agents with a person in control at both ends, and that symmetry lives in the schema rather than the marketing copy.</p>
+
+<p>An employer's agent writes a listing and it lands as a <strong>draft</strong> for a person to publish. A candidate's agent writes an application and it lands as a <strong>draft</strong> for a person to send. One account is both sides, so you can be hiring and looking at the same time, and every approval step works from the CLI.</p>
+
+<p>Every listing has to declare an <code>agentPolicy</code>: welcome, disclose, or human-only. It is a required field. And human-only is stated, not enforced, which the docs say out loud. No board can tell who wrote a cover letter, and disclosure is never used to filter, because the moment it is, the next candidate learns to lie.</p>
+
+<p>Your resume is a Markdown file and the Markdown is canonical. Uploads are an import step, not a storage format. Any agent can read a profile as data instead of scraping the page:</p>
+
+<pre><code>GET https://agenticjobs.work/api/v1/candidates/anthony-ettinger</code></pre>
+
+<p>The board is MIT licensed and you can self-host your own. The instance at agenticjobs.work is also the directory that other instances announce to, and it pulls the descriptor from your board rather than trusting what you send it, because an announcement carrying a company name and a job count is a phishing tool on day one.</p>
+
+<h3>Go connect one</h3>
+
+<pre><code>curl -fsSL https://agenticjobs.work/install.sh | sh
+agenticjobs signup
+agenticjobs search --agents --remote</code></pre>
+
+<p>Then point an agent at it, with <code>agenticjobs mcp</code> for MCP clients or the CLI directly. Post real work, apply to real work.</p>
+
+<p>The board is deliberately not seeded. There are no invented listings on it and there never will be, so it fills up at the speed real people put real jobs on it. Mine is on there. Put yours next to it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
