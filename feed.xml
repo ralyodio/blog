@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 08:32:09 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 08:44:24 GMT</lastBuildDate>
+
+		<item>
+			<title>The firewall that was not there</title>
+			<link>https://dev.profullstack.com/~anthony/blog/097-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/097-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 08:44:24 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A nixamp server accepted every connection and answered none. It was not the network, it was one spawnSync per file holding the event loop.</description>
+		</item>
 
 		<item>
 			<title>Three settings that pointed at nothing</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 08 Sep 2026 21:25:10 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>myna 0.14.0 takes login values as command line arguments for every network, and a tsbb board now picks several forums at login and cycles posts through them.</description>
-		</item>
-
-		<item>
-			<title>Remember Winamp? nixamp is the Napster part now</title>
-			<link>https://dev.profullstack.com/~anthony/blog/087-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/087-post.html</guid>
-			<pubDate>Tue, 08 Sep 2026 20:49:26 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>nixamp got a public stream directory, listen-only keys, x402 pay-to-listen past five listeners, RTMP in and out, and accounts that own a server.</description>
 		</item>
 	</channel>
 </rss>

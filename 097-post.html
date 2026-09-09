@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The firewall that was not there &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/097-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T08:44:24Z">
+<meta name="description" content="A nixamp server accepted every connection and answered none. It was not the network, it was one spawnSync per file holding the event loop.">
+</head>
+<body>
+
+<article>
+
+<h1>The firewall that was not there</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>A nixamp server on a box in Montreal would not answer. The symptoms were perfect: the port was open, the page never loaded, and every instinct pointed at ufw, the router, or whatever the hosting provider does to traffic it does not like.</p>
+
+<p>It was none of those. It was the server holding its own event loop, and the way that failure presents is worth writing down, because from the outside it is indistinguishable from a packet filter.</p>
+
+<h3>What it looked like</h3>
+
+<p>Probing the host from somewhere else:</p>
+
+<pre><code>port 22    connects
+port 80    no answer
+port 443   no answer
+port 4321  handshake completes
+GET /api/health on 4321   times out, zero bytes, twice</code></pre>
+
+<p>A firewall that drops never completes a handshake. One that rejects says &quot;connection refused&quot; immediately. This one accepted the connection and then said nothing at all, for as long as you cared to wait. <code>nmap -sV</code> could not identify the service either: it accepted every probe and answered none.</p>
+
+<p>The tempting conclusion is a middlebox. Plenty of providers run inline DDoS scrubbing that answers SYNs itself and only then tries the backend, which would produce exactly this. One probe rules it out. Ask for a port that is definitely closed:</p>
+
+<pre><code>port 45999   no answer
+port 4321    handshake completes</code></pre>
+
+<p>If something upstream were answering handshakes on our behalf, the closed port would answer too. It did not. So TCP genuinely reached the box, the kernel genuinely accepted it, and the process on the other end genuinely never read it.</p>
+
+<h3>What it was</h3>
+
+<p>nixamp reads tags with one <code>ffprobe</code> per file. The library on that box is 5,712 media files across 322 GB. The tagging pass ran inside one async function with no yield in it:</p>
+
+<pre><code class="language-js">const tracks = await loadSource(tools, root, true);
+engine.retag(tracks, root);</code></pre>
+
+<p>That <code>await</code> is a lie about the shape of the work. <code>probe</code> is <code>spawnSync</code>. The whole pass is synchronous from the event loop's point of view, so nothing else runs until the last file is read.</p>
+
+<p>Here is the part that makes it look like a firewall. The listening socket does not care that your process is busy. The kernel completes the TCP handshake from the accept backlog on its own, so a client connects successfully to a server that will not read a byte for the next several minutes. You get an open connection and silence, which is the one failure mode people reliably misattribute to the network.</p>
+
+<p>Reproduced on 800 files:</p>
+
+<pre><code>$ curl -m 20 http://127.0.0.1:4399/api/health
+curl: (28) Operation timed out after 20002 ms with 0 bytes received</code></pre>
+
+<p>The server had already printed its banner and announced itself as listening. By every internal measure it was running perfectly.</p>
+
+<h3>The fix</h3>
+
+<p>One turn of the event loop per file:</p>
+
+<pre><code class="language-js">for (const path of paths) {
+  tracks.push(probe(tools, path));
+  await new Promise((done) =&gt; setImmediate(done));
+}</code></pre>
+
+<p>A request now waits for one ffprobe instead of the whole library. Same 800 files, same request:</p>
+
+<pre><code>1st: HTTP 200 in 0.516737s
+2nd: HTTP 200 in 0.538170s</code></pre>
+
+<p>The regression test races the tagging against a timer and asserts the timer wins. Reverting the loop to the blocking version makes it fail, which is worth checking rather than assuming, because a test that cannot fail is decoration.</p>
+
+<h3>The sequel, which was also us</h3>
+
+<p>With the server answering, the next report was choppy audio. That one is measurable too. Every frame of the event stream carried the entire track list, and the analyser pushes twelve times a second:</p>
+
+<pre><code>bytes in 10s: 9376450     9.4 MB
+frames:       20          about 470 KB each</code></pre>
+
+<p>A megabyte a second of JSON, parsed on the same thread that is decoding the audio. The library is news only when it changes, so it now rides the first frame of a subscription and any frame where the list actually changed. After:</p>
+
+<pre><code>bytes in 8s: 46724
+frames:      94
+frames carrying a track list: 1</code></pre>
+
+<p>About 497 bytes a frame instead of 470 KB.</p>
+
+<h3>What else landed</h3>
+
+<p>The same day, in nixamp 0.5.x:</p>
+
+<p><code>nixamp login</code> grew OAuth 2.0 through the device authorization grant. The terminal shows a short code, you approve it in a browser on whatever device has a keyboard, and the terminal ends up holding the session. It never sees your password or the provider's token, which is why it works over ssh and on a television. There are CLI tokens for machines that cannot sign in at all, stored as hashes and revocable from anywhere, plus <code>NIXAMP_TOKEN</code> for CI.</p>
+
+<p>Daemon mode got the two moves it was missing: <code>d</code> in the player hands the music to a daemon and gives you your terminal back, and <code>nixamp attach</code> puts the same player in front of it from anywhere.</p>
+
+<p>Video plays with a picture now, and what ffprobe finds inside decides how much work that costs. Most Matroska holds H.264, where only the wrapper is wrong, so it is rewrapped for free. H.265 gets a real transcode, measured at 2.29x realtime for 1080p on a four core EPYC.</p>
+
+<p>And nixamp serves https itself given a certificate from anywhere, because a browser refuses every request from an https page to an http one, including audio and video, which it upgrades and then gives up on. No amount of player cleverness gets around that.</p>
+
+<pre><code>curl -fsSL https://nixamp.com/install.sh | sh</code></pre>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
