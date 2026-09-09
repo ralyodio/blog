@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 10:43:03 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 10:44:31 GMT</lastBuildDate>
+
+		<item>
+			<title>NicheDB 0.2.0: the domain layer, counted daily</title>
+			<link>https://dev.profullstack.com/~anthony/blog/102-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/102-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 10:44:31 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A new domains collection built from ntlddata.com's keyless CC-BY API: the new gTLDs counted daily, the launch pipeline, and the registries changing hands, plus everything merged since 0.1.0.</description>
+		</item>
 
 		<item>
 			<title>$100 an hour, per agent</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 05:19:51 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>nixamp streams have a phone number. Keying a live code got you a friendly voice and then silence, because the party line was handing Telnyx a 302 that sets a cookie.</description>
-		</item>
-
-		<item>
-			<title>Your nixamp stream now has a phone number</title>
-			<link>https://dev.profullstack.com/~anthony/blog/092-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/092-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 03:45:38 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Call 408-357-2326, key six digits, hear a live stream. What I learned about toll-free pricing, forwarded call legs, and why a promise made on a phone call cannot live in a Map.</description>
 		</item>
 	</channel>
 </rss>

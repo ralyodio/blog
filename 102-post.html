@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NicheDB 0.2.0: the domain layer, counted daily &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/102-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T10:44:31Z">
+<meta name="description" content="A new domains collection built from ntlddata.com's keyless CC-BY API: the new gTLDs counted daily, the launch pipeline, and the registries changing hands, plus everything merged since 0.1.0.">
+</head>
+<body>
+
+<article>
+
+<h1>NicheDB 0.2.0: the domain layer, counted daily</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Twenty seven commits had merged into NicheDB since the first release and none of them had reached anybody. The CLI publishes from a GitHub release and from nothing else, so a merge to main is a midpoint rather than a finish. 0.2.0 cuts them loose.</p>
+
+<p>The headline is a new collection: domains.</p>
+
+<h3>The layer everything else runs on</h3>
+
+<p>NicheDB tracks packages, filings, launches, weather, markets, crime, public money, housing, jobs and news. It had no view of the layer all of that lives on, which is the domain name system's own market. It does now, built from ntlddata.com's free JSON API. No key, CC-BY, and aggregate only, because ICANN's zone file terms permit analysis but not redistribution.</p>
+
+<p>Eight feeds, each with a page, RSS, JSON Feed, an API endpoint and MCP tools:</p>
+
+<ul>
+	<li>How many domains exist across the new gTLDs and which way that moved, day by day, with the pre-2012 generics counted separately</li>
+	<li>The whole register of 1,114 TLDs with its registry operator, inferred backend, root signing and delegation date</li>
+	<li>The biggest daily gainers and the TLDs losing the most names</li>
+	<li>Sunrise and claims windows with the dates registries filed with ICANN, strings contracted but not yet delegated, and registries being transitioned to an emergency operator</li>
+	<li>TLDs changing operator, registrars moving platform, accreditations granted and terminated</li>
+</ul>
+
+<h3>What the collection refuses to conflate</h3>
+
+<p>Two clocks. Domain counts come from zone files and are a day old. Anything attributed to a registrar comes from ICANN's monthly reports and runs about a quarter in arrears, because zone files carry no registrar information at all. Every figure of the second kind is carried with the month it describes and is never merged with the daily count.</p>
+
+<p>Two populations. New gTLDs and the pre-2012 generics are never added together. A source names one and labels its rows with it.</p>
+
+<h3>Three traps, found by probing rather than by reading</h3>
+
+<p>The overview endpoint never answers without an explicit scope, and never answers for scope=all. Both hang until the client gives up, while scope=new returns in under a second. So the totals source refuses scope=all rather than scheduling a guaranteed timeout on every run.</p>
+
+<p>The page size parameter is floored at ten. Asking for three rows returns ten while the response's own metadata says three, so a &quot;top five movers&quot; source that trusted the parameter would publish ten.</p>
+
+<p>Detected timestamps carry no zone, and a bare Date parse reads them as local time, which files a midnight row under the previous day for every reader west of UTC.</p>
+
+<p>One more came from the live data rather than the docs. The first day of the daily series carries zero adds, zero drops and zero net, because it had no day before it to difference against. Across a thousand registries that cannot be a real day, so it publishes as movement not yet known instead of &quot;+0 on the day&quot;, which would read as a flat day rather than a missing one.</p>
+
+<h3>Everything else in 0.2.0</h3>
+
+<p>Weather as it is issued rather than forecast. Automotive with a VIN history report scored against a measured complaint baseline. Markets with the world's exchanges as a register and the corporate actions that move them. Crime by city, state and force area. Public money across three governments. Housing and jobs as governments measure them. AI incidents. News, where every story files under the desk that published it.</p>
+
+<p>Plus the fixes worth naming: dedup now folds a source against its own second feed, not only against the other sources, so a publisher exposing one article through two of its feeds stops arriving twice. The dedupe keys reach Postgres as a real array rather than a comma joined string, which had been aborting whole ingestion runs.</p>
+
+<h3>Reading it</h3>
+
+<p>The collection is at <a href="https://nichedb.dev/c/domains">https://nichedb.dev/c/domains</a> and every feed on it is public. The CLI is <code>npm i -g @profullstack/nichedb@latest</code>.</p>
+
+<p>Data on the domains collection is from nTLDData (ntlddata.com), CC-BY-4.0.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
