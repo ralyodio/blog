@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Three settings that pointed at nothing &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/096-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T08:32:08Z">
+<meta name="description" content="agenticjobs 0.4.0 adds candidates, a URL importer and per-tag feeds. Getting there meant finding three settings wired to nothing, and a function quietly destroying every document it touched.">
+</head>
+<body>
+
+<article>
+
+<h1>Three settings that pointed at nothing</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>agenticjobs 0.4.0 is out. The headline is candidates: the board had jobs and nobody to fill them. But the thing worth writing down is what I kept finding on the way there.</p>
+
+<p>Three settings in one codebase that pointed at nothing.</p>
+
+<p>The first was <code>SMTP_URL</code>. Declared in the config type, read from the environment, threaded through both login routes. Nothing in the codebase could send mail. So every instance took the &quot;no mail server configured&quot; branch, forever, and <code>delivered</code> in the API response was not a fact about a send. It was <code>smtpUrl !== null</code>, which was always false.</p>
+
+<p>The second was <code>applyVia: url</code>. A listing could send applicants to a careers portal. That one did work, and it was still wrong: an agent cannot complete a form on someone else's site, so those listings quietly excluded the readers this board exists for. Gone now. A URL is somewhere to import a job from, never somewhere to send an applicant to.</p>
+
+<p>The third is the one that made me write this. The resumes table has had three visibility values since it was written, and its own column comment says what they mean:</p>
+
+<pre><code class="language-sql">-- private: only the owner. link: anyone with the URL. public: listed.</code></pre>
+
+<p>Nothing listed them. Nothing served a URL. Choosing &quot;public&quot; did nothing at all. The comment describing the feature was the only part of the feature that existed.</p>
+
+<p>Each of these looks fine in review. The config has the field. The type has the variant. The column has the comment. You have to run the thing and look at the result to find out that none of it goes anywhere.</p>
+
+<p>The other pattern was worse, because it destroyed data instead of just doing nothing.</p>
+
+<p><code>clean()</code> trims text and flattens control characters. A newline is a control character. Job descriptions went through it, resume Markdown went through it, cover letters went through it, and all three are documents rendered as Markdown. Every heading, list and paragraph break was destroyed on the way into the database.</p>
+
+<p>Nobody noticed because the one code path that preserved formatting was the importer, added a day earlier. The path everybody actually used never had.</p>
+
+<p>I found it by editing a listing and watching a tidy Markdown file come back as a single paragraph. Then I found it twice more in the same afternoon.</p>
+
+<p>The fix is one option on one function. The interesting part is that the flattening had been invisible for the entire life of the project, and the only way it surfaced was writing something structured and reading it back.</p>
+
+<p>What is actually in 0.4.0:</p>
+
+<ul>
+	<li><code>/candidates</code>, and <code>/candidates/&lt;name&gt;</code> for one person. A card is built from the parsed resume rather than a profile you type twice.</li>
+	<li><code>agenticjobs new &lt;url&gt;</code> imports a job from a page. schema.org JobPosting if the page publishes it, the readable page if not, and it says which. Always a draft.</li>
+	<li><code>agenticjobs edit &lt;slug&gt; job.md</code>. The board could publish and close a listing and not change a word of it.</li>
+	<li>Tags link and filter on both halves, and narrow rather than widen: <code>?tags=javascript,react,node.js</code> means all three.</li>
+	<li>Feeds per half: <code>/feed?tags=</code> for jobs, <code>/candidates/feed?tags=</code> for people, <code>/feed.rss</code> for everything.</li>
+</ul>
+
+<p>If you are on 0.3.0 or earlier, upgrade. Two of the fixes are about data being quietly destroyed on the way in, and one of them is a login page that handed a working sign-in link to whoever typed an address.</p>
+
+<p>Written with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
