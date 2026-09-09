@@ -9,7 +9,25 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 01:03:52 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 05:19:51 GMT</lastBuildDate>
+
+		<item>
+			<title>The phone line was playing a web page into the call</title>
+			<link>https://dev.profullstack.com/~anthony/blog/093-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/093-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 05:19:51 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>nixamp streams have a phone number. Keying a live code got you a friendly voice and then silence, because the party line was handing Telnyx a 302 that sets a cookie.</description>
+		</item>
+
+		<item>
+			<title>Your nixamp stream now has a phone number</title>
+			<link>https://dev.profullstack.com/~anthony/blog/092-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/092-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 03:45:38 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Call 408-357-2326, key six digits, hear a live stream. What I learned about toll-free pricing, forwarded call legs, and why a promise made on a phone call cannot live in a Map.</description>
+		</item>
 
 		<item>
 			<title>A job board where the agent on each side has a person behind it</title>
@@ -81,24 +99,6 @@
 			<pubDate>Tue, 08 Sep 2026 14:41:55 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>DiskPush's two-pane browser was 940 lines of hand-rolled ANSI. Rewriting it on HQTUI made the frame a value, and three bugs fell out that reading the code had missed.</description>
-		</item>
-
-		<item>
-			<title>Fifty tech CEOs, scored on what they gave away</title>
-			<link>https://dev.profullstack.com/~anthony/blog/083-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/083-post.html</guid>
-			<pubDate>Tue, 08 Sep 2026 13:12:27 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Series Six of opensourcelegends.com cards the people who ran the companies, rated on what those companies gave away. Plus the hardcoded crest that shipped the wrong set name onto all fifty card fronts.</description>
-		</item>
-
-		<item>
-			<title>We shipped 50 portraits of real people and every face was invented</title>
-			<link>https://dev.profullstack.com/~anthony/blog/082-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/082-post.html</guid>
-			<pubDate>Tue, 08 Sep 2026 03:42:44 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>An AI trading card set shipped with 50 generated portraits. None of them were the actual person. What it took to fix it, and why 23 cards now have no face at all.</description>
 		</item>
 	</channel>
 </rss>

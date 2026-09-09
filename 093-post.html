@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The phone line was playing a web page into the call &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/093-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T05:19:51Z">
+<meta name="description" content="nixamp streams have a phone number. Keying a live code got you a friendly voice and then silence, because the party line was handing Telnyx a 302 that sets a cookie.">
+</head>
+<body>
+
+<article>
+
+<h1>The phone line was playing a web page into the call</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nixamp streams have a phone number. Call +1 408-357-2326, key a six digit code, and if that code belongs to a live stream you hear the stream. That was the idea. What actually happened was that you heard a friendly voice say &quot;here it is&quot; and then nothing at all, for as long as you cared to hold, at your own expense.</p>
+
+<p>The bug is a good one, so here it is.</p>
+
+<p>A nixamp that lists itself in the directory announces a listen link. That link looks like <code>https://host/s/&lt;key&gt;</code>. It is not a file. It is a 302 that sets a cookie and redirects a browser to the player page, which is exactly right for a person and exactly wrong for everything else.</p>
+
+<p>The phone line handed that link to Telnyx to play into the call. Telnyx fetches an audio URL once, anonymously, with no cookie jar. So it followed the redirect, arrived with no cookie, and got this:</p>
+
+<pre><code>HTTP/1.1 401
+{&quot;error&quot;:&quot;this nixamp needs the key from its share link&quot;}</code></pre>
+
+<p>That is not audio. Nobody was ever going to hear anything.</p>
+
+<p>The part I liked least is that there was a test for it. It keyed a code, found the <code>playback_start</code> call, and asserted the played URL equalled the listing's URL. It passed. The fixture called itself <code>listen.mp3</code>, so the assertion looked like it was checking that audio got played, when all it checked was that two identical strings were identical. The fixture and the code agreed with each other and neither agreed with a telephone.</p>
+
+<p>The fix is that a listing carries two addresses now, not one. <code>url</code> is for a person with a browser. <code>audio</code> is for anything handed a single address and expected to play it. They have to be the same origin, because that second one gets played into a call somebody pays for by the minute, and an announcement that could name any address on the internet could point the phone line at any of them.</p>
+
+<p><code>audio</code> points at a new endpoint, <code>/api/live</code>, which is whatever is playing as one endless MP3. There was already <code>/api/stream/N</code>, but that is one track and it stops at the end of the song. Fine for a browser, which knows what is playing and can ask for the next one. Useless for a telephone, which cannot ask for anything. <code>/api/live</code> follows the player instead and keeps writing into the same response across track boundaries. It reads at native rate, because otherwise ffmpeg finishes a four minute song in two seconds and the thing deciding what plays next ends up minutes behind what the listener hears.</p>
+
+<p>Two things fell out of chasing it.</p>
+
+<p>Matroska was not on the list of audio extensions, so a directory full of .mkv films scanned as zero tracks and said nothing was wrong. Everything leaving nixamp is decoded by ffmpeg with <code>-vn</code> anyway, so a film is just a long track with a picture nobody asked for. Those containers are on the list now.</p>
+
+<p>And the installer opens the streaming port. A published listing is an address on your machine that the phone line fetches audio from, so a firewall quietly dropping that port turns every listing into one nobody can open, with nothing anywhere saying so. It asks for root without waiting, since <code>curl | sh</code> has no terminal to type a password into, and prints the exact command when it cannot.</p>
+
+<p>0.4.1 is out, and it is the first release that has the phone line at all. 0.3.0 does not contain <code>partyline.ts</code>, which means every copy installed from the site could read the directory and could not put a single thing into the telephone.</p>
+
+<p>0.4.0 was that release and it lasted about twenty minutes, because it did not run. The packer named its dependencies by hand and had been given one of them, back when there was one, so the tarball installed perfectly and then stopped on the first import looking for a package nobody had packed. 0.3.0 shipped the same way and nobody noticed, since the release before it predated all four. The list is read out of package.json now, and the release workflow extracts the tarball and runs it under plain Node before publishing, which is the check that was missing the whole time.</p>
+
+<pre><code>curl -fsSL https://nixamp.com/install.sh | sh</code></pre>
+
+<p>Drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
