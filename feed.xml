@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 19:16:13 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 19:29:04 GMT</lastBuildDate>
+
+		<item>
+			<title>nichedb 0.5.0: the sea, the surf and the aircraft worth watching</title>
+			<link>https://dev.profullstack.com/~anthony/blog/106-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/106-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 19:29:04 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Every NOAA buoy in one file, the National Weather Service surf zone forecast beside it, and the ADS-B emergency squawks held as episodes rather than positions. Plus four things the live data decided, including the missing-value marker that turns a broken sensor into a flat calm.</description>
+		</item>
 
 		<item>
 			<title>nichedb 0.4.0: four feeds that only mean something together</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 08:44:24 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A nixamp server accepted every connection and answered none. It was not the network, it was one spawnSync per file holding the event loop.</description>
-		</item>
-
-		<item>
-			<title>Three settings that pointed at nothing</title>
-			<link>https://dev.profullstack.com/~anthony/blog/096-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/096-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 08:32:08 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>agenticjobs 0.4.0 adds candidates, a URL importer and per-tag feeds. Getting there meant finding three settings wired to nothing, and a function quietly destroying every document it touched.</description>
 		</item>
 	</channel>
 </rss>

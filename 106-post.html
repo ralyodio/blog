@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nichedb 0.5.0: the sea, the surf and the aircraft worth watching &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/106-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T19:29:04Z">
+<meta name="description" content="Every NOAA buoy in one file, the National Weather Service surf zone forecast beside it, and the ADS-B emergency squawks held as episodes rather than positions. Plus four things the live data decided, including the missing-value marker that turns a broken sensor into a flat calm.">
+</head>
+<body>
+
+<article>
+
+<h1>nichedb 0.5.0: the sea, the surf and the aircraft worth watching</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Three more sources, all keyless, all verified against the live upstream before a line of the reader was written.</p>
+
+<h3>The whole ocean in one file</h3>
+
+<p>The National Data Buoy Center publishes the newest observation from every buoy it is listening to in a single hundred-kilobyte file. 853 reports when I read it, 184 of them carrying a wave height, and each one holding wind, gust, pressure, air temperature and water temperature alongside.</p>
+
+<p>A surf report is three of those numbers and everything else is presentation. How big the swell is, how far apart the waves are, and where it is coming from. The middle one is the number people leave out, and it is the one that decides the day: two metres at 18 seconds and two metres at 5 seconds are not the same sea at all. So nichedb publishes a wave row as &quot;8.9 ft at 8 s, mixed swell out of the W&quot; as well as storing the numbers, and it stores the height in feet as well as metres, because every surf forecast in the United States is in feet and converting at read time is how a nine-foot day quietly becomes a three-foot day.</p>
+
+<h3>The forecaster's own words next to the buoy's numbers</h3>
+
+<p>A buoy off Oahu reading 2.4 metres at 16 seconds is a fact. &quot;Advisory level surf along south facing shores through today&quot; is what that fact means to somebody standing on the beach, and no amount of arithmetic over the buoy produces it.</p>
+
+<p>So the surf zone forecast the National Weather Service issues from every coastal office is in there too, in full. The high surf advisory and the rip current risk are lifted out of the forecaster's own wording into tags, so a coast under an advisory can be found without reading all 851 products, and the text itself is kept as the authority.</p>
+
+<h3>Aircraft, but only the ones that mean something</h3>
+
+<p>There is a version of this that stores every aeroplane in the sky every few minutes. It would be tens of thousands of rows a day, each one a position that was true for four seconds, and nobody would ever read a single one of them.</p>
+
+<p>A position is not news. An aircraft squawking 7700 is. So nichedb reads the event surfaces of the ADS-B network instead: the three emergency transponder codes, and the military list. When I wrote this the emergency codes returned zero aircraft between them and the military query returned 422, which is exactly the shape you want. The rare thing is rare, so its appearance means something.</p>
+
+<p>And an emergency is an episode rather than a ping. An aircraft squawking 7700 shows up in poll after poll and then simply stops showing up, and nothing anywhere records that it stopped. So the open episodes are held between polls, the row is keyed on when the aircraft was first seen, and when it leaves the list it is written once more with a duration on it. &quot;N123AB squawked 7700 for 22 minutes&quot; is the row worth keeping. The forty positions in between are not.</p>
+
+<h3>Four things the live data decided</h3>
+
+<p>NDBC writes a missing reading as MM, in every column, in a fixed-width table. Anything that coerces that to a number turns &quot;this buoy has no anemometer&quot; into a flat calm and &quot;no wave sensor&quot; into a dead flat sea, and 669 of the 853 stations report no wave height at all.</p>
+
+<p>The station register really does publish an empty name. Station 15009 in the Atlantic array is one of several, and an empty string left alone beats the fallback and titles the row with nothing at all. That showed up in the very first smoke run as a list of observations called &quot;: marine observation&quot;.</p>
+
+<p>Some stations report a dominant period of 0 or 1 second. That is a sensor saying nothing, and calling it windswell states something about the water that nobody measured.</p>
+
+<p>And the ADS-B network rate limits its military list far harder than its squawk lists, answering 429 while the endpoint next to it answers 200. A rate limit is not a failure, so it returns nothing and asks to be called back later, which also keeps the cursor intact. A reader that threw there would leave every open episode untouched and then report all of them as ended on the run after.</p>
+
+<h3>Reading it</h3>
+
+<p>Twenty-seven collections, seventy-nine adapters.</p>
+
+<p><a href="https://nichedb.dev/c/water">https://nichedb.dev/c/water</a>
+<a href="https://nichedb.dev/c/aviation">https://nichedb.dev/c/aviation</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
