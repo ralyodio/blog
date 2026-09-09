@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nichedb 0.4.0: four feeds that only mean something together &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/105-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T19:16:13Z">
+<meta name="description" content="Three new collections in nichedb: aviation, water and consumer finance, plus the NTSB bulk accident archive. What the live data decided, including the search API that ignores its own offset and the bounding box that silently caps at 400 stations.">
+</head>
+<body>
+
+<article>
+
+<h1>nichedb 0.4.0: four feeds that only mean something together</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nichedb 0.4.0 adds three collections and thirteen sources. Every one is keyless, every one was queried live before it was written, and the reason they shipped together is that none of them is worth much alone.</p>
+
+<h3>Aviation: why the flight is late, and what happened the last 31,000 times it went wrong</h3>
+
+<p>The FAA publishes, every couple of minutes, the traffic management initiatives in force right now. Ground stops, ground delay programs, airspace flow programs, airport closures. It is the document the airlines read and it is about two kilobytes.</p>
+
+<p>It is also a snapshot rather than a log. It tells you a ground stop exists. It never tells you one ended, and nothing anywhere records how long it ran. So nichedb holds the open programs between polls and writes each one a second time when it disappears, with the duration attached. &quot;BOS ground stop, 3h 40m, thunderstorms&quot; is a fact about a day of flying that exists only if something was watching the whole time.</p>
+
+<p>Two feeds sit next to it. Every SIGMET and AIRMET in force over the country, and the decoded observation at each reporting airport: flight category, wind, visibility, cloud layers. When the FAA says ORD is stopped for thunderstorms, the observation at ORD in that minute and the convective SIGMET drawn over the field are right there.</p>
+
+<p>Then the part that makes it a record rather than a status board: all 31,124 accident and incident investigations the NTSB has published. The NTSB has no working query API, so this reads the bulk Access archive it rebuilds monthly. Inside, the events table carries a column holding the raw METAR at the moment of each accident, in the identical format the hourly feed publishes today. The same field, from the same service, thirty years apart.</p>
+
+<p>An NTSB investigation is published long before it is finished. A preliminary report within days, a probable cause that can take two years, all under one event id. So the archive is deliberately re-read and each accident updated in place. In the newest slice, 6 of 300 have been ruled on. Eight thousand rows deeper it is 307 of 400. Those rows arriving later are the reason to re-read at all.</p>
+
+<h3>Water: too much and too little, measured rather than forecast</h3>
+
+<p>Every NOAA river gauge at or above its action stage, observed and forecast kept as separate rows, because &quot;is it flooding&quot; and &quot;will it&quot; are different questions and a forecast that turns out wrong belongs next to the observation that contradicted it.</p>
+
+<p>Coastal water levels are the harder half. A tide gauge returns a number of feet and nothing else, and whether 3.1 feet is a Tuesday or a flooded car park depends entirely on the station. The thresholds live in a different service, one call per gauge, so nichedb reads them once and keeps them. A reading arrives as &quot;minor coastal flooding, 0.13 ft over stage&quot; instead of as a number with no scale.</p>
+
+<p>Underneath both, the US Drought Monitor, redrawn weekly. A gauge says what is happening this hour. The drought map says what the last six months did to the ground that river runs through, which decides whether the next storm runs off or soaks in.</p>
+
+<h3>Consumer finance: what people say their bank did, and who the bank actually is</h3>
+
+<p>The Consumer Financial Protection Bureau publishes every complaint Americans file about a bank, a lender, a credit bureau or a debt collector. 17.6 million of them, around seven thousand a day, live within a day or two of being filed.</p>
+
+<p>Each names a company as a bare uppercase string with no identifier of any kind attached. So the collection carries the FDIC register beside it: every insured institution with its charter, regulator and assets, and every merger, failure, conversion and branch opening or closing on it. A complaint about a bank absorbed eighteen months ago belongs to whoever absorbed it, and the structure feed is the only public record of that.</p>
+
+<p>One thing worth knowing before reading any count from this dataset. Of the 10,000 complaints filed on 7 and 8 September, 9,843 were about credit reporting and one was about a mortgage. It is overwhelmingly a record of disputes with the three credit bureaus, and any comparison across products that does not say so is misleading.</p>
+
+<h3>What the live data actually decided</h3>
+
+<p>Half the work in a release like this is finding out that an upstream is lying to you politely.</p>
+
+<p>The CFPB search accepts an offset, echoes it back, and ignores it. Three requests at three different offsets return byte-identical pages. The first version of the reader paged that way and stored the same 500 complaints ten times over while reporting 5,000 new rows. It walks days instead.</p>
+
+<p>A METAR bounding box silently caps at 400 stations. A box over the continental United States returns exactly 400. Its eastern half returns 247 and its western half 240. Nothing in the response says it was truncated. The reader now splits a box whose answer comes back at the cap: 1,101 stations where the single box had claimed 400.</p>
+
+<p>NOAA's river gauge service accepts state, office and region filters, ignores all three, and answers with all 12,000 gauges, which is the kind of failure that looks exactly like success.</p>
+
+<p>FDIC transaction numbers are not row identifiers. One merger writes a row for every institution and office it touches. Keyed on the transaction number, a third of the register overwrites the rest, and the loss looks like a quiet quarter.</p>
+
+<p>And the NTSB writes its dates as 08/22/26. Handed that, a date parser returns 1926. Every accident in the file would publish a century early and sort ahead of everything else in the database.</p>
+
+<h3>Reading it</h3>
+
+<p>Twenty-seven collections, seventy-six adapters.</p>
+
+<p><a href="https://nichedb.dev/c/aviation">https://nichedb.dev/c/aviation</a>
+<a href="https://nichedb.dev/c/water">https://nichedb.dev/c/water</a>
+<a href="https://nichedb.dev/c/consumer-finance">https://nichedb.dev/c/consumer-finance</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

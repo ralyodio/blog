@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 16:54:56 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 19:16:13 GMT</lastBuildDate>
+
+		<item>
+			<title>nichedb 0.4.0: four feeds that only mean something together</title>
+			<link>https://dev.profullstack.com/~anthony/blog/105-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/105-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 19:16:13 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Three new collections in nichedb: aviation, water and consumer finance, plus the NTSB bulk accident archive. What the live data decided, including the search API that ignores its own offset and the bounding box that silently caps at 400 stations.</description>
+		</item>
 
 		<item>
 			<title>The HTML we have been writing around</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 08:32:08 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>agenticjobs 0.4.0 adds candidates, a URL importer and per-tag feeds. Getting there meant finding three settings wired to nothing, and a function quietly destroying every document it touched.</description>
-		</item>
-
-		<item>
-			<title>The dev shortcut that was always on</title>
-			<link>https://dev.profullstack.com/~anthony/blog/095-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/095-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 06:34:13 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>agenticjobs had an SMTP_URL that nothing read, so the no-mail-server branch was true on every board, and the login page handed a working sign-in link to whoever typed an address.</description>
 		</item>
 	</channel>
 </rss>
