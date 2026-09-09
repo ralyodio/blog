@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>We hid the login form we built for televisions &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/094-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T05:32:12Z">
+<meta name="description" content="An optional password login shipped for TVs, then went out folded inside a collapsed disclosure. On a D-pad a fold reads as a missing feature.">
+</head>
+<body>
+
+<article>
+
+<h1>We hid the login form we built for televisions</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We sign people in with an emailed link or a passkey. Both are better than a
+password, and neither one works on a television.</p>
+
+<p>A TV has no mail client to open the link in. It has no authenticator to hold the
+passkey. It has a remote control instead of a keyboard. &quot;Sign in on another
+device&quot; is not an answer when the TV is the device, so last month we added an
+optional password: opt in, set only from inside a session you already have, no
+reset flow at all. Forget it and you use the link, which still works.</p>
+
+<p>Then we hid it.</p>
+
+<p>The form went out on the sign-in page inside a collapsed disclosure, a grey &quot;Use
+a password&quot; line you click to open. The code even carried a comment explaining
+that the form belongs on the page rather than behind a toggle, &quot;because a toggle
+is one more thing to hit with a D-pad&quot;, and then wrapped it in exactly that.</p>
+
+<p>The cost is not the extra click. On the device the form was built for, the page
+shows two ways in that cannot be used there and one line of grey text with no
+hint there is a form behind it. That does not read as &quot;open this&quot;. It reads as
+&quot;this site has no password sign-in&quot;, and the person on the couch goes and finds
+their phone.</p>
+
+<p>We found it the way you find these things, which is by trying to sign in on a
+TV.</p>
+
+<p>So it is a plain section with a heading now, always visible. Nothing else moved.
+The route, the argon2id hash, the rate limit counted since the last success, the
+identical wording on every failure so the form cannot be used to check who has an
+account: all unchanged. The error message still renders in the same place. The
+only difference is that you can see the thing you are meant to type into.</p>
+
+<p>Three sites share this code (tipoffwatch.com, watchnews.now, genrewatch.com) so
+the fold shipped on all three and the fix went to all three.</p>
+
+<p>The lesson we keep relearning is that a comment describing the right behaviour is
+not the same as the behaviour. That one had been sitting directly above the
+element contradicting it since the day it shipped, and it took a television to
+notice.</p>
+
+<p>This post was drafted with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

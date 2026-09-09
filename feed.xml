@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 05:19:51 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 05:32:12 GMT</lastBuildDate>
+
+		<item>
+			<title>We hid the login form we built for televisions</title>
+			<link>https://dev.profullstack.com/~anthony/blog/094-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/094-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 05:32:12 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>An optional password login shipped for TVs, then went out folded inside a collapsed disclosure. On a D-pad a fold reads as a missing feature.</description>
+		</item>
 
 		<item>
 			<title>The phone line was playing a web page into the call</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 08 Sep 2026 18:19:51 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>nixamp is three surfaces on one engine now: the terminal player, an installable PWA, and an Electron app that carries the CLI inside it. Plus the two bugs that only showed up once there was a second way to run it.</description>
-		</item>
-
-		<item>
-			<title>A terminal UI you can write a test against</title>
-			<link>https://dev.profullstack.com/~anthony/blog/084-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/084-post.html</guid>
-			<pubDate>Tue, 08 Sep 2026 14:41:55 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>DiskPush's two-pane browser was 940 lines of hand-rolled ANSI. Rewriting it on HQTUI made the frame a value, and three bugs fell out that reading the code had missed.</description>
 		</item>
 	</channel>
 </rss>
