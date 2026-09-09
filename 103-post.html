@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Podcasts, split by who serves the feed &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/103-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T14:35:31Z">
+<meta name="description" content="NicheDB's podcasts collection splits the medium the one way no podcast app will: shows on a commercial host versus shows on the maker's own domain. 307 platform domains hold 93.8% of the live catalogue, and the head of a directory listing is inverted against everything behind it.">
+</head>
+<body>
+
+<article>
+
+<h1>Podcasts, split by who serves the feed</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every podcast directory is a search box over one undifferentiated pile. Apple has about 2.5 million shows and one ranking. Spotify has the same shows and a different ranking. Neither will tell you the thing that actually sorts the medium in two, because both are in the business of the half that pays.</p>
+
+<p>That split is: who serves the feed. A show either sits on a service that hosts thousands of other shows, or it sits on the domain of the show itself. One side has a company and a hosting bill behind it. The other side is a person publishing from their own site.</p>
+
+<p>NicheDB now has a podcasts collection, and that split is the whole thing. Two sources, <code>podcasts-commercial</code> and <code>podcasts-self-hosted</code>, disjoint by construction.</p>
+
+<h3>Measuring it instead of guessing</h3>
+
+<p>Nothing in a feed declares which side it is on, so we counted. From the Podcast Index bulk dump of 2026-08-23: 4,718,246 feeds, of which 421,928 were live (HTTP 200 on the last crawl, an episode inside 90 days).</p>
+
+<p>307 registrable domains carry 25 or more of those live feeds. Between them they hold 395,690, which is 93.8% of the live catalogue. anchor.fm alone is 97,805. The remainder, about 13,400 domains, is the self-hosted half.</p>
+
+<p>A hand-written list of &quot;the podcast hosts&quot; would have been a list of the ones we had heard of. The long tail here is German church networks, Japanese radio stations and Czech public broadcasters. Counting finds those. Memory does not.</p>
+
+<h3>The trap that would have quietly emptied it</h3>
+
+<p>The Podcast Index <code>host</code> column sometimes holds a bare public suffix, <code>co.uk</code> or <code>com.br</code> or <code>org.au</code>, rather than the registrable domain. Every one of those clears a 25 feed threshold.</p>
+
+<p>Left in the platform list, a suffix match files every .co.uk podcast in Britain as commercially hosted, and the independent half goes to nearly zero. That is 453 feeds whose real host we do not know. They are dropped, which sends them to the self-hosted side. When the whole point is finding independent shows, the error you want is the one that keeps them.</p>
+
+<h3>The bug we shipped, and what it taught us</h3>
+
+<p>The collection went live reading down from the newest entries of the upstream directory until it met the last run's marker. That is right for keeping up and useless for starting. It sat at 2,000 items: 1,988 self-hosted and 12 commercial.</p>
+
+<p>Nothing errored. No run failed. It just would never have grown.</p>
+
+<p>The reason is worth writing down. We sampled the directory's listing at ten evenly spaced depths. The first page is 2 commercial out of 200. Every other depth runs 178 to 194 out of 200. Overall, 84%.</p>
+
+<p>The head of that list is not a sample of the catalogue. It is inverted against it. Recent arrivals are whatever was submitted lately, and lately that has been almost entirely independent shows, while the bulk behind them came from old bulk imports and looks nothing like it. So the commercial source read 2,000 feeds, found 12, and roughly 230,000 sat three pages further down.</p>
+
+<p>The fix is a walk: page forward through the whole listing once, then switch to keeping up. Drift helps here rather than hurting. The listing grows at the head, so a row at offset N moves to N+k while you walk, which means you re-read rows you have seen instead of stepping over rows you have not. Re-reading costs nothing. Skipping would have been silent.</p>
+
+<p>First run after the fix: the commercial source went from 12 items to 11,490. Second run: 30,224.</p>
+
+<h3>Where it is</h3>
+
+<p>Both halves are at <a href="https://nichedb.dev/c/podcasts">nichedb.dev/c/podcasts</a>, with feeds for each and language cuts of the independent side. Sources poll every 15 minutes, which matches the upstream directory's own floor for a feed that just published.</p>
+
+<p>The commercial half is already addressable in every podcast app there is. The other half is not addressable anywhere, which is the only reason to build this.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
