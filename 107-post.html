@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>myna lists your product now, over MCP &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/107-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T19:39:53Z">
+<meta name="description" content="myna 0.17.0 submits a product to a software directory over that directory's MCP server, including directories it has never heard of.">
+</head>
+<body>
+
+<article>
+
+<h1>myna lists your product now, over MCP</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>myna posts to social networks. As of 0.17.0 it also lists the product itself, in a software directory, over that directory's MCP server.</p>
+
+<pre><code>myna directory saasrow https://example.com --dry-run
+myna directory saasrow https://example.com</code></pre>
+
+<p>It reads the page, works out the name, writes the description, picks the category, and submits.</p>
+
+<h3>A listing is not a post</h3>
+
+<p>I started by trying to make a directory just another network adapter. That was wrong. A post is text with optional media. A listing is a name, a website, a description, a category and some controlled vocabulary, and a human being at the directory reads it before anyone else does. Pushing that through <code>post()</code> would have given all 30 network adapters fields they have no use for.</p>
+
+<p>So directories are a separate subsystem with a separate command and separate credentials.</p>
+
+<p>The credentials part turned out to matter more than I expected. <code>myna post --to all</code> resolves to every account whose network is not marked as an explicit target, and a network it does not recognise reads as &quot;not explicit&quot;. A directory key stored among the accounts would therefore have quietly become a posting target. Somebody's stray thought about lunch, submitted as a product. Directory keys live in their own part of the vault, and there is a test that fails if that ever changes.</p>
+
+<h3>Reading the server instead of guessing</h3>
+
+<p>The interesting half is that myna is now an MCP client, not only a server.</p>
+
+<p>SaaSRow publishes an MCP endpoint. So rather than writing a REST client against its listing API, myna calls its tools. The tool schemas describe the fields, which means SaaSRow can add one without a myna release.</p>
+
+<p>That works so well it seemed silly to stop at directories myna ships:</p>
+
+<pre><code>myna directory add acme https://acme.example/api/mcp
+myna directory tools acme
+myna directory acme https://example.com</code></pre>
+
+<p>There is no adapter behind that. myna reads the tool table, finds whichever tool creates a listing whatever it happens to be called, and sends each field under the name that tool's own schema uses. A directory whose field is <code>product_url</code> rather than <code>website</code> needs no code. A field the server marks required and myna could not work out fails before the call rather than after it.</p>
+
+<p><code>myna directory tools &lt;id&gt;</code> prints what a server actually offers, which is the first useful thing to look at when a submission gets refused.</p>
+
+<p>Signing in is the exception. There is no MCP method for it, and SaaSRow's is an emailed one-time code, which is a conversation with a person rather than a tool call. So that adapter stays written, and a custom directory takes a key you already have.</p>
+
+<h3>Two things I got wrong on the way</h3>
+
+<p>The product name came out as <code>widget.test</code> in testing. <code>fetchPage</code> falls back to the hostname when a page declares no <code>og:site_name</code>, and I was preferring site name over title. A site name equal to the host carries no information. Fixed, with a test.</p>
+
+<p>And an empty result printed nothing at all, which reads as a command that never ran rather than a directory with nothing to say. Empty output is not a pass.</p>
+
+<h3>Where it is</h3>
+
+<p><code>myna directory</code> in the shell, <code>/directory</code> in the TUI, a Directories screen in the desktop app, and four tools over MCP so an agent can do it. cli-tools 0.31.0 adds <code>/myna:directory</code> as a slash command.</p>
+
+<p>myna 0.17.0 is out: <a href="https://github.com/profullstack/mynaposter/releases/tag/v0.17.0">https://github.com/profullstack/mynaposter/releases/tag/v0.17.0</a></p>
+
+<p>This post was drafted with AI assistance and edited by me.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

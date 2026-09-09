@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 19:29:04 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 19:39:54 GMT</lastBuildDate>
+
+		<item>
+			<title>myna lists your product now, over MCP</title>
+			<link>https://dev.profullstack.com/~anthony/blog/107-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/107-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 19:39:53 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>myna 0.17.0 submits a product to a software directory over that directory's MCP server, including directories it has never heard of.</description>
+		</item>
 
 		<item>
 			<title>nichedb 0.5.0: the sea, the surf and the aircraft worth watching</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 09:38:11 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>agenticjobs 0.5.0 makes one query work across HTML, JSON, RSS, Markdown and MCP. Two RSS feeds had been accepting filters and silently ignoring them, which is worse than not supporting them at all.</description>
-		</item>
-
-		<item>
-			<title>The firewall that was not there</title>
-			<link>https://dev.profullstack.com/~anthony/blog/097-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/097-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 08:44:24 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A nixamp server accepted every connection and answered none. It was not the network, it was one spawnSync per file holding the event loop.</description>
 		</item>
 	</channel>
 </rss>
