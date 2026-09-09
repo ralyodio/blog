@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The HTML we have been writing around &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/104-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T16:54:56Z">
+<meta name="description" content="Chris Coyier's mid-2026 HTML roundup lines up almost item for item with code we wrote by hand: a 152-line PWA install hook, a 500-line React context that keeps one audio element alive across routes, and an iframe we ship only because CSS isolation had no other answer.">
+</head>
+<body>
+
+<article>
+
+<h1>The HTML we have been writing around</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Chris Coyier posted a roundup of what HTML has picked up by the middle of this year: <a href="https://blog.master.dev/new-things-you-should-know-about-html-here-in-mid-2026/">New Things You Should Know About HTML Here in Mid 2026</a>. It is the good kind of roundup. Every entry has syntax and an honest note about which engines actually ship it, instead of a list of names you then have to go research.</p>
+
+<p>Reading it, the thing that kept happening was recognition. A lot of these features are code we already wrote by hand. Not code that resembles ours. The same job.</p>
+
+<h3>Permissions, which is the entry I care most about</h3>
+
+<p>We run <a href="https://d3vices.com">d3vices.com</a>, a bench of browser capability tests. The tests directory has 25 files in it, and <code>geolocation.js</code>, <code>camera.js</code> and <code>microphone.js</code> are three of them. Each is a button, a permission request, and then a lot of handling for whatever the browser decides to do next.</p>
+
+<p>The API call was never the hard part. <code>navigator.geolocation.watchPosition</code> is one line. The hard part is the state after a denial, where the API simply stops answering and the only route back is a lock icon in browser chrome that the page has no way to point at. Every product I have shipped that asks for a camera has a support burden made entirely of that one moment.</p>
+
+<p>The post covers <code>&lt;geolocation&gt;</code> and <code>&lt;usermedia&gt;</code>, elements that wrap the triggering button and own that flow, with a cited 65% recovery rate against 10% for the old prompt. If that number survives contact with the real world it is the most valuable item on the whole list. Chrome only so far, and it falls back to behaving like a <code>&lt;span&gt;</code>, so wrapping a button we already have costs nothing to try.</p>
+
+<h3>150 lines that want to be one tag</h3>
+
+<p>PairUX has a hook called <code>usePWAInstall</code>. It is 152 lines. It listens for <code>beforeinstallprompt</code>, stashes the event because you only get it once, works out whether the app is already installed, remembers a dismissal in localStorage for seven days, and exposes a <code>canInstall</code> flag so a button knows whether to render at all. All of it is scaffolding around one browser event that fires when it feels like it.</p>
+
+<p><code>&lt;install&gt;</code> is that button. Same story with <code>appearance: base-select</code> and <code>::picker(select)</code>, which retire the custom dropdown component that nearly every site we run carries its own version of. Safari shipping that one is what moves it from interesting to plannable.</p>
+
+<h3>The widget problem, twice</h3>
+
+<p>Two entries hit the same nerve.</p>
+
+<p>CrawlProof serves ad units through a script tag on other people's pages. The unit renders into an iframe with a sandbox attribute that permits popups and nothing else, because on a stranger's page there is no other way to be sure our styles and theirs stay out of each other. Scoped custom element registries are that isolation without paying for an iframe.</p>
+
+<p>The other one is <code>&lt;persistentwidget&gt;</code>. Our media-streamer app has <code>contexts/podcast-player.tsx</code>, 500 lines of React context whose entire reason to exist is keeping a single <code>&lt;audio&gt;</code> element alive across route changes so your episode does not stop when you click a link. That is a widget that survives navigation, which is exactly what the proposed tag does. It is only at intent-to-prototype, so this is a wish and not a plan, but it is the cleanest example on the list of a framework pattern that exists solely because HTML was missing a behavior.</p>
+
+<h3>Free wins we are not taking</h3>
+
+<p><code>hidden="until-found"</code> is authored in zero files across our repos. I checked. Collapsed FAQ and detail sections all over our sites are invisible to browser find-in-page for no reason.</p>
+
+<p><code>sizes="auto"</code> retires the hand-maintained media query string in a <code>sizes</code> attribute, which is a thing nobody has ever updated after writing it once. Lazy-loaded images only, so hero images still need real numbers.</p>
+
+<p><code>focusgroup</code> gives you the roving tabindex pattern declaratively. We have 116 Svelte and React files that touch tabindex. Most roving tabindex code in the world is an arrow key switch statement somebody wrote once and never tested with a screen reader.</p>
+
+<p>And <code>&lt;h1&gt;</code> inside <code>&lt;section&gt;</code> no longer gets shrunk by the user agent stylesheet, which already happened to all of us whether we noticed or not.</p>
+
+<h3>Why this is the direction I want</h3>
+
+<p>Almost every item here is HTML absorbing work that a framework, a component library, or 150 lines of ours had been doing. We keep house packages for anything we build twice, and the best possible fate for a house package is getting deleted because the platform grew the feature.</p>
+
+<p>The honest caveat is that most of this is Chrome first, <code>&lt;model&gt;</code> is Safari only, and reference target sits behind flags in two engines. So none of it is a rewrite. It is a list to check before writing the next component, which is why the <a href="https://blog.master.dev/new-things-you-should-know-about-html-here-in-mid-2026/">original post</a> is worth twenty minutes of your time rather than a skim.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
