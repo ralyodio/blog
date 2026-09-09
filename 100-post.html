@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A green Connected badge and a payment that could not be sent &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/100-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T10:38:52Z">
+<meta name="description" content="An OAuth scope was silently dropped from every grant for four weeks. Nothing errored, 22 people could not invoice, and the answer was stored in our own database the whole time.">
+</head>
+<body>
+
+<article>
+
+<h1>A green Connected badge and a payment that could not be sent</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>An agent signed up on ugig.net, did the work, and tried to invoice 25 cents. It got back:</p>
+
+<blockquote>
+<p>Connect your CoinPay account before sending an invoice</p>
+</blockquote>
+
+<p>So it connected CoinPay. The settings page showed a green &quot;Connected&quot; badge next to the right account. It tried again. Same error.</p>
+
+<p>Both the badge and the error were telling the truth. That is the interesting part.</p>
+
+<h3>Two surfaces, two different questions</h3>
+
+<p>ugig has one row that represents &quot;this user linked their CoinPay account&quot;. Two places read it, and they were asking different things about it.</p>
+
+<p>The settings page asked: is there a row? There was, so it drew the green badge.</p>
+
+<p>The invoice route asked something stricter. To build an invoice it has to read the worker's wallet addresses from CoinPay, and that needs the <code>wallet:read</code> scope on the stored OAuth token. No scope, no wallet addresses, no invoice. It treated a token without the scope as no connection at all, and said so in the only words it had: connect your CoinPay account.</p>
+
+<p>Neither answer was wrong. They just could not both be shown to the same person without making that person feel insane. Reconnecting did not help, because reconnecting produced another token without the scope.</p>
+
+<h3>Why the scope was missing</h3>
+
+<p>ugig asks for <code>openid profile email wallet:read</code> on every authorization. It had been asking for exactly that for months, and it used to work.</p>
+
+<p>On the CoinPay side, every OAuth client has a registered list of scopes it is allowed to receive. The ugig client was registered for <code>openid</code>, <code>profile</code>, <code>email</code>, and two entries called <code>payments:read</code> and <code>payments:write</code> that CoinPay does not actually define. <code>wallet:read</code> was never on that list.</p>
+
+<p>For months that did not matter, because CoinPay only checked requested scopes against the global list of valid scopes. Any registered client could ask for anything the platform defined and get it. That is a real vulnerability, and in August it got fixed: the authorization endpoint started intersecting what you asked for with what your client was actually registered for.</p>
+
+<p>The fix was correct. The consequence was that ugig started asking for <code>wallet:read</code> and receiving a token without it.</p>
+
+<p>Here is the part worth sitting with. Nothing failed. There is no error for this. The authorization succeeded, the token endpoint returned <code>200 OK</code>, and the response carried a <code>scope</code> field listing what was actually granted. OAuth is explicit that this is allowed. RFC 6749 says the authorization server may issue a token with a narrower scope than requested, and that when it does, it MUST tell you in the <code>scope</code> response parameter.</p>
+
+<p>It did tell us. We stored the value in a metadata column and never compared it to what we asked for.</p>
+
+<h3>The cliff in the data</h3>
+
+<p>The clearest evidence was not in the code, it was in the rows. Grouping every CoinPay link by its stored scope:</p>
+
+<p>| stored scope | links | last one |
+| --- | --- | --- |
+| <code>openid profile email wallet:read</code> | 61 | 2026-08-16 |
+| <code>openid profile email</code> | 22 | today |</p>
+
+<p>Sixty one links have the scope, and not one of them was created after August 16. Every link since then is missing it. That is not a distribution, that is a wall, and a wall in a timestamp column means a deploy, not a user behavior.</p>
+
+<p>Twenty two people connected their payment account, saw a green badge, and could not invoice. None of them filed a bug. One agent did, four weeks later.</p>
+
+<h3>The two fixes</h3>
+
+<p>The blocking one was a single row. The ugig client is now registered for <code>wallet:read</code>, so new authorizations carry it. Existing consent records do not include the scope, which means the consent screen re-prompts on its own rather than silently reusing the old grant. Everyone affected has to reconnect once.</p>
+
+<p>The second fix is the one that stops this class of thing being invisible. Both surfaces now call the same function to decide whether a link is usable:</p>
+
+<pre><code class="language-ts">export function coinpayLinkCanReadWallets(metadata: unknown): boolean {
+  const meta = metadataObject(metadata);
+  const accessToken = typeof meta.access_token === &quot;string&quot; ? meta.access_token.trim() : &quot;&quot;;
+  if (!accessToken) return false;
+  const scope = typeof meta.scope === &quot;string&quot; ? meta.scope : &quot;&quot;;
+  return scope.split(/\s+/).filter(Boolean).includes(REQUIRED_COINPAY_SCOPE);
+}</code></pre>
+
+<p>A link that cannot do the one job it exists for now says &quot;Reconnect required&quot; and explains why, instead of claiming to be connected and letting the invoice form be the place you find out. The invoice gate itself did not change. It was already right.</p>
+
+<h3>What to take from it</h3>
+
+<p>Two things.</p>
+
+<p>If you are the authorization server, tightening scope validation is a breaking change for every client whose registration was sloppier than its requests. It does not look like one, because nothing throws and no client complains. Diff the registrations against what clients actually ask for before you ship the intersection, and log the narrowing when it happens.</p>
+
+<p>If you are the client, an OAuth integration that breaks on a specific date with no deploy on your side is almost never your code. Check what the provider granted you against what you asked for. We had the answer stored in the database the whole time.</p>
+
+<p>And the general version, which is older than OAuth: when two surfaces report on the same underlying state, do not let them each decide what it means. One predicate, called twice.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

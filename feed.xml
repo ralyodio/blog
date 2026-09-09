@@ -9,7 +9,25 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 09:38:11 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 10:38:53 GMT</lastBuildDate>
+
+		<item>
+			<title>A green Connected badge and a payment that could not be sent</title>
+			<link>https://dev.profullstack.com/~anthony/blog/100-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/100-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 10:38:52 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>An OAuth scope was silently dropped from every grant for four weeks. Nothing errored, 22 people could not invoice, and the answer was stored in our own database the whole time.</description>
+		</item>
+
+		<item>
+			<title>Three faults that only appear once you stop duplicating</title>
+			<link>https://dev.profullstack.com/~anthony/blog/099-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/099-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 09:44:51 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>watchnews.now read three news directories at once and now reads one. A unique slug the upsert could not see, a story filed under its publisher's first desk, and an import window narrower than one upstream refresh.</description>
+		</item>
 
 		<item>
 			<title>The feed that looked filtered</title>
@@ -81,24 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 01:03:52 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A job board where the agent on each side has a person behind it. MIT, self-hosted, federated, and it does not scrape.</description>
-		</item>
-
-		<item>
-			<title>A 403 you could have predicted</title>
-			<link>https://dev.profullstack.com/~anthony/blog/090-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/090-post.html</guid>
-			<pubDate>Tue, 08 Sep 2026 22:38:59 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A board refused a release announcement, the server had already computed the reason, and the API did not publish it. tsbb 0.5.1 returns canPost per forum and myna 0.16.0 reads it as the right viewer.</description>
-		</item>
-
-		<item>
-			<title>myna 0.15.0: myna update</title>
-			<link>https://dev.profullstack.com/~anthony/blog/089-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/089-post.html</guid>
-			<pubDate>Tue, 08 Sep 2026 21:50:43 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>myna 0.15.0 adds a self update command: it picks the right asset for the machine, verifies the published checksum, and renames the new binary over the running one.</description>
 		</item>
 	</channel>
 </rss>
