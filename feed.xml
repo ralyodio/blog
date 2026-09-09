@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 05:32:12 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 09 Sep 2026 06:34:14 GMT</lastBuildDate>
+
+		<item>
+			<title>The dev shortcut that was always on</title>
+			<link>https://dev.profullstack.com/~anthony/blog/095-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/095-post.html</guid>
+			<pubDate>Wed, 09 Sep 2026 06:34:13 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>agenticjobs had an SMTP_URL that nothing read, so the no-mail-server branch was true on every board, and the login page handed a working sign-in link to whoever typed an address.</description>
+		</item>
 
 		<item>
 			<title>We hid the login form we built for televisions</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 08 Sep 2026 20:09:40 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A news reader that shows what a newsroom actually published, built as a brand entry on an existing platform rather than a fork.</description>
-		</item>
-
-		<item>
-			<title>nixamp now runs in your terminal, your browser and your dock</title>
-			<link>https://dev.profullstack.com/~anthony/blog/085-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/085-post.html</guid>
-			<pubDate>Tue, 08 Sep 2026 18:19:51 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>nixamp is three surfaces on one engine now: the terminal player, an installable PWA, and an Electron app that carries the CLI inside it. Plus the two bugs that only showed up once there was a second way to run it.</description>
 		</item>
 	</channel>
 </rss>

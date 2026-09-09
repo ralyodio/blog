@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The dev shortcut that was always on &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/095-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T06:34:13Z">
+<meta name="description" content="agenticjobs had an SMTP_URL that nothing read, so the no-mail-server branch was true on every board, and the login page handed a working sign-in link to whoever typed an address.">
+</head>
+<body>
+
+<article>
+
+<h1>The dev shortcut that was always on</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>agenticjobs signs people in with a magic link. No passwords. On a laptop there is no mail provider, so the board prints the link to the server log instead of sending it. That is a normal convenience.</p>
+
+<p>Yesterday I ran signup against the live board and got this:</p>
+
+<pre><code>https://agenticjobs.work has no mail server configured, so it logged the link
+instead of sending it.</code></pre>
+
+<p>The obvious read is that a key was missing. The actual problem was worse.</p>
+
+<p>The config had an <code>SMTP_URL</code> field. It was declared in the <code>Config</code> type, read from the environment, and threaded through both login routes. Nothing in the codebase could send mail. No mail client, no SMTP library, no HTTP call to a provider. The variable existed and the feature did not.</p>
+
+<p>So <code>config.smtpUrl === null</code> was true on every instance that has ever run. Every board took the &quot;no mail server&quot; path. And <code>delivered</code> in the API response was not a fact about a send, it was <code>smtpUrl !== null</code>, which was always false.</p>
+
+<p>That part is just an unfinished feature. Here is the part that matters.</p>
+
+<p>The login page had this:</p>
+
+<pre><code class="language-jsx">&lt;LoginPage sent={email} {...(config.smtpUrl === null ? { devLink: url } : {})} /&gt;</code></pre>
+
+<p>Because the condition was always true, the page rendered a working sign-in link into the HTML for whoever typed the address. Not for the owner of the address. For whoever typed it. And <code>consumeMagicLink</code> calls <code>ensureUser</code>, so the account does not need to exist first. Type an address, get a link, become that person.</p>
+
+<p>A dev-only branch is only dev-only if something makes it false in production. Nothing did.</p>
+
+<p>The fix itself is boring. Mail goes through Resend now, using the emailer package we already had. What is worth keeping is the rule: the link only ever reaches the server log, never the browser, on both the unconfigured path and the send-failed path. There is no condition under which a credential gets rendered into a page.</p>
+
+<p>Two smaller things came out of it.</p>
+
+<p>The email a terminal asks for now carries that terminal's code, and the subject says &quot;Approve your terminal&quot;. A device flow where you cannot match the email against the request in front of you is one where a link phished out of an inbox approves someone else's session just as well as yours.</p>
+
+<p>And <code>delivered</code> now means a send that happened. A provider returning 403 for an unverified domain is not a delivery, and neither is having no provider at all. Both are false, and the page says the board could not send rather than claiming an email is on its way. I found that path by accident: Resend rejects <code>example.com</code> recipients, so my first probe failed and showed me the error copy was right.</p>
+
+<p>Then there was the directory. agenticjobs.work is both a board and the directory other boards announce to, so it names itself in <code>DIRECTORY_URL</code>. Turning announcing on put the board in its own listing.</p>
+
+<p>That guard went in three places, because each one has a different attacker: the heartbeat, the CLI, and the announce endpoint, which refuses its own origin from anyone. Guarding only the sending side would let a third party list the board on its behalf.</p>
+
+<p>Refusing new self-announcements does not remove the row an earlier one left, though, and the live board had one. So the sweep drops it now. A board that turns the guard on later heals itself instead of needing someone to reach into the database.</p>
+
+<p>0.3.0 is out. Minor rather than patch because <code>SMTP_URL</code> is gone and <code>RESEND_API_KEY</code> replaces it.</p>
+
+<p>Written with AI assistance.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
