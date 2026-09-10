@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your nixamp stream now has a phone number &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/092-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T03:45:38Z">
+<meta name="description" content="Call 408-357-2326, key six digits, hear a live stream. What I learned about toll-free pricing, forwarded call legs, and why a promise made on a phone call cannot live in a Map.">
+</head>
+<body>
+
+<article>
+
+<h1>Your nixamp stream now has a phone number</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>
+  nixamp streams now have a phone number. Call
+  <strong>408-357-2326</strong>, key a six digit code, and you are listening to
+  somebody's live stream. No app, no account, no data plan. It works on a flip
+  phone.
+</p>
+
+<p>
+  I built it in an afternoon and most of that afternoon was spent learning that
+  almost everything I assumed about phone numbers was wrong.
+</p>
+
+<h2>The part that turned out to be easy</h2>
+
+<p>
+  I expected the audio to be the hard bit. It is not. A nixamp stream is an MP3
+  over HTTP, and Telnyx will play a URL straight into a call. One API call,
+  <code>playback_start</code>, and the caller is hearing the stream. My server
+  never touches a byte of audio.
+</p>
+
+<p>
+  The IVR is the same shape. Answer the call, ask for six digits, look the code
+  up, start playback. The whole thing is a small state machine over webhooks.
+  If the stream has finished you hear when it ended and get offered a text for
+  next time.
+</p>
+
+<h2>The part that turned out to be expensive</h2>
+
+<p>
+  I started on a toll-free number, because that is what a call-in line is
+  supposed to have. 888-ROOM-818, which I was quite pleased with.
+</p>
+
+<p>Then I priced it.</p>
+
+<p>
+  Toll-free inbound is $0.015 a minute. A local number is $0.0032. That is 4.7x
+  for the same call. On a line where people stay on for hours, that difference
+  is the entire cost of the product.
+</p>
+
+<p>
+  It gets worse. Telnyx sells channel billing: a flat monthly fee for unlimited
+  inbound minutes. It is the obvious answer for a line people camp on. Toll-free
+  numbers are <em>structurally excluded</em> from it. Standard DIDs only. So the
+  number I picked for being the friendly one could never reach the cheap tier,
+  at any volume, ever.
+</p>
+
+<p>
+  My next idea was to keep the toll-free as the front door and forward it to the
+  local number. This does not work either, and the reason is worth knowing.
+  Telnyx bills you for <em>both legs</em> of a forwarded call. You pay the
+  toll-free inbound and the outbound leg, for the whole duration. Forwarding is
+  strictly more expensive than just answering.
+</p>
+
+<p>
+  And you cannot transfer your way out of it. The caller's connection <em>is</em>
+  the toll-free leg. A transfer bridges a new outbound leg to it; hanging up the
+  original hangs up on the caller. There is no handoff that drops your own cost.
+</p>
+
+<p>
+  One more, which I only checked because I was about to write it in a footer:
+  US toll-free numbers are generally <em>not reachable from outside the US</em>.
+  800, 888, 877, 866. The called party pays, and that billing model does not
+  cross borders, so most foreign carriers will not route it. The number I was
+  about to advertise as the international-friendly one is the one international
+  callers cannot dial. A plain local number works fine for them; they just pay
+  their own international rate, like any other call.
+</p>
+
+<p>
+  So the published number is a 408. The 888 still answers, for anyone who has
+  it, as a vanity alias that costs more.
+</p>
+
+<h2>Getting told</h2>
+
+<p>
+  The other half is following. You follow a broadcaster, and when they go live
+  you hear about it: web push, email, or a text, whichever you asked for. Web
+  push covers the browser, the installed PWA and the desktop app, because all
+  three are the same subscription wearing different clothes. One person with a
+  laptop, a phone and a desktop is one account and three subscriptions, and gets
+  three notifications.
+</p>
+
+<p>
+  There is a subtlety in the settings switch that I got wrong first time. The
+  web toggle is not a preference, it is a conjunction: your stored preference,
+  <em>and</em> the browser's permission, <em>and</em> a subscription the server
+  actually holds. A browser will only prompt for permission in response to a
+  click, so the switch can never be turned on from a page load, however much the
+  saved preference insists it should be. If you show only the preference you get
+  a switch that reads on while nothing arrives.
+</p>
+
+<h2>The bug I want to tell you about</h2>
+
+<p>
+  Announcing is not going live. A publisher heartbeats every ninety seconds for
+  as long as it is up. If you notify on every announcement you notify forty times
+  an hour. So the notification fires on the transition, and again if a stream
+  stops and comes back, because a second run really is a second broadcast.
+</p>
+
+<p>
+  That one I got right. Here is the one I did not.
+</p>
+
+<p>
+  Somebody calls, hears "press 1 to get a text when they are live again", and
+  presses 1. I stored that in a <code>Map</code>. Most of nixamp is deliberately
+  ephemeral, and I had been enjoying that: the directory is a four minute TTL and
+  a heartbeat, no database, a restart costs one heartbeat instead of a migration.
+  It is a good design for a list of what is on.
+</p>
+
+<p>
+  It is a terrible design for a promise. Every deploy silently dropped everyone
+  who had pressed 1. The text never came. Nothing logged an error, because
+  nothing had failed. A promise made to a person on a telephone and then quietly
+  forgotten is worse than never having offered it.
+</p>
+
+<p>
+  The fix is a mirror rather than a replacement. The in-memory maps stay exactly
+  as they were, so every caller is still synchronous and every existing test
+  still describes the same object. Writes get echoed to Postgres and read back
+  once at boot. Only the two things that were always meant to outlive the stream:
+  the reminders, and the record of what ended and when.
+</p>
+
+<p>
+  Taking a reminder is <code>DELETE ... RETURNING</code> rather than a select and
+  then a delete, so two streams going live at once cannot both read the same list
+  and text everybody twice. And that take is what clears it, which is exactly why
+  a number left behind by a process that has since been replaced still gets its
+  text from whichever process succeeded it.
+</p>
+
+<p>I tested it by causing the bug on purpose:</p>
+
+<pre><code>remembered 1 stream(s) that had ended.
+1 caller(s) are still owed a text.
+texted 1 of 1 waiting on 754984.</code></pre>
+
+<p>
+  That is a server that restarted between the promise and the delivery. It never
+  heard the phone call. It read the promise out of Postgres at boot and kept it.
+</p>
+
+<h2>What I would tell past me</h2>
+
+<p>
+  Price the phone number before you fall in love with it. Check whether the
+  cheap billing tier even applies to the kind of number you bought, because the
+  answer can be a flat no that no amount of volume will move.
+</p>
+
+<p>
+  And be careful which things you let be ephemeral. Ephemeral is a good default
+  and I would keep it for almost all of this. But the moment you say the words
+  "we will tell you later", you have written a durability requirement, and a
+  Map is not going to honour it.
+</p>
+
+<p>
+  nixamp is at <a href="https://nixamp.com">nixamp.com</a>. The phone number is
+  408-357-2326.
+</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

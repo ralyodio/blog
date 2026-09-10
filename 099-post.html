@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Three faults that only appear once you stop duplicating &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/099-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-09T09:44:51Z">
+<meta name="description" content="watchnews.now read three news directories at once and now reads one. A unique slug the upsert could not see, a story filed under its publisher's first desk, and an import window narrower than one upstream refresh.">
+</head>
+<body>
+
+<article>
+
+<h1>Three faults that only appear once you stop duplicating</h1>
+
+<p><em>2026-09-09, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>watchnews.now read three news directories at once. Now it reads one, and the three
+faults that came out of that change were all invisible beforehand for the same reason:
+duplication was hiding them.</p>
+
+<p>The site is a whitelabel of a sports fixtures schema. A desk is a league row, an outlet
+is a team row, a story is an event with one side. It had three providers writing into that
+schema directly: our own news collection, a small web firehose, and a directory of
+classified newsrooms. Every one of them wrote its own desks and its own outlets, because
+<code>leagues.slug</code> and <code>teams.slug</code> are unique and rows cannot be merged
+across providers.</p>
+
+<p>So a reader opening the world desk got this:</p>
+
+<pre><code>World
+3 sections. Open one to follow its outlets.</code></pre>
+
+<p>Three entries, all called World. Ten publishers had two outlet pages each. The fix was
+not to name the duplicates more carefully. It was to stop reading the same sources twice:
+fold the two directories into the one collection upstream, where deduplication can happen
+once, and have the site read that.</p>
+
+<h2>The first fault: a slug somebody else already holds</h2>
+
+<p><code>teams.slug</code> is unique across the whole table. The upsert conflicts on
+<code>(provider, provider_key)</code>. Those are not the same key, and the gap between them
+is where this lives.</p>
+
+<p>A row whose slug belongs to a different provider key is not an update. It is an insert
+against a unique index, and Postgres fails the entire statement. One clashing name loses the
+whole pass, not the one row.</p>
+
+<p>An adapter cannot prevent this. It sees the batch it is building and nothing else. That
+was fine while each adapter owned a namespace. It stopped being fine when the collection
+started supplying a masthead: a feed keyed <code>bbc-co-uk-2</code> arrives named BBC News,
+slugs to <code>bbc-news</code>, and the row keyed <code>bbci</code> has held that name since
+the first sync.</p>
+
+<p>Every sync failed with <code>duplicate key value violates unique constraint
+"teams_slug_key"</code>. Because collections are written before participants, the desks that
+had no outlets yet were created and then left empty. The site showed sections with nothing
+behind them.</p>
+
+<p>My first attempt fixed it inside the adapter, and the adapter's own existing test refused
+the fix. <code>bbci</code> named BBC News and a domain <code>bbc.news</code> both slug to
+<code>bbc-news</code>. No pure function of a single row can promise global uniqueness. It
+has to be asked of the database. The incumbent keeps the readable slug, because it is in
+somebody's bookmarks and possibly in their follows, and the newcomer takes a discriminated
+form derived from the provider key so a re-run is stable rather than drifting.</p>
+
+<h2>The second fault: filed under the wrong desk</h2>
+
+<p>Ingest resolved an event's league as <code>genreKeys[0]</code>, the first collection its
+subject belongs to. That is right for a television show. An episode belongs to the show, the
+show is filed under several genres, and any of them will do.</p>
+
+<p>It is wrong for a subject that spans categories, and a news outlet spans categories. A
+publisher covering world and US news holds both desks, so every story it filed landed on
+whichever desk the adapter happened to see first.</p>
+
+<p>The US and technology desks listed outlets and not one story. World held 455.</p>
+
+<p>This had been latent the whole time. It only appeared once outlets legitimately spanned
+desks, which is exactly what consolidating produced. The fix matches the event's own category
+within its subject's collections, which leaves the other brands untouched: the television
+adapter writes every genre with the same category, so the lookup returns the first one just
+as it always did.</p>
+
+<h2>The third fault: a window narrower than one refresh</h2>
+
+<p>After both fixes, US still had no stories. The data was there. The window was not.</p>
+
+<p>The upstream cursor pages by id, which means most recently inserted rather than most
+recently published. That is harmless while sources trickle. It is not harmless when one
+source writes in bulk: the directory walks its desks in order at a couple of hundred stories
+each, so a single pass lays down thousands of rows whose ids run in desk order.</p>
+
+<p>A thousand item window landed entirely inside the tail of one pass. Measured live, the
+newest thousand items were 195 food, 172 climate, 138 travel, and 1 US, 1 technology, 2
+business. Across the newest four thousand the same data is healthy: 687 world, 325 politics,
+301 business, 257 US, 228 technology.</p>
+
+<p>Nothing was broken. The window was just narrower than one upstream refresh.</p>
+
+<h2>What deduplication actually needs</h2>
+
+<p>Upstream, the collection is keyed <code>(source_id, external_id)</code>. That answers
+"has this source told us this before" and it cannot answer "do we already have this story".
+Two sources reporting one article were two rows, with two external ids and nothing in the
+schema able to say they were the same thing.</p>
+
+<p>Items now carry a normalised form of their URL. It drops the road and keeps the
+destination: scheme, <code>www.</code>, the fragment, a default port, a trailing slash, and
+the tracking parameters. It deliberately keeps <code>?p=</code> and <code>?id=</code>,
+because a great many sites address an article entirely through a query parameter, and fusing
+those would silently discard real stories. Missing a duplicate is a much cheaper mistake than
+that.</p>
+
+<p>It is opt-in per collection, because two sources naming one URL is not always one thing.
+A package index and a changelog can both point at a release page and mean different rows.</p>
+
+<p>75 duplicates went in the first pass, mostly one publisher reached both from its own feed
+and through a directory that indexes it. Then 5 more survived, and they were a case the
+cross source filter deliberately cannot catch: one publisher exposing the same article
+through two of its own feeds, inside a single pull. The filter ignores the source being run,
+because a source has to be free to restate its own items or its second run would discard
+everything the first one wrote. So a pull now folds against itself as well.</p>
+
+<h2>The one I shipped broken</h2>
+
+<p>The dedupe query passed a JavaScript array into <code>= any($1)</code>. Bun's Postgres
+driver serialises an array by joining it with commas, so Postgres received one string and
+rejected the statement with <code>malformed array literal</code>, quoting a perfectly valid
+japantimes.co.jp URL.</p>
+
+<p>It does not fail politely. The error propagates out of the write and aborts the whole
+source run, and that query runs for every source in an opted-in collection. It did not break
+the two new sources. It broke the collection.</p>
+
+<p>The fix was a helper that already existed four times over in the same file. The test now
+scans every query in that directory and fails if any of them interpolates a bare value into
+<code>any()</code>, because a unit test cannot reach the driver that mis-serialises the
+array, so the thing worth pinning is the shape of the call.</p>
+
+<h2>Where it ended up</h2>
+
+<p>Thirteen desks, one section each, no duplicate slugs, no empty sections. 3,278 stories
+across 645 outlets, from 47 on a single desk when the day started. Outlets carry a real
+masthead where the upstream has one and a bare host where it does not.</p>
+
+<p>Two names still appear twice on the world desk, Al Jazeera and The Guardian, because
+stories are deduplicated by URL and publishers are not. Same masthead, two followable rows.
+Fixing that means publisher identity resolution across sources, which is real work rather
+than a patch, so it is written down instead of improvised.</p>
+
+<p>The pattern in all three faults is the same. Duplication is not only a data problem. It
+is a way of not finding out that your keys are wrong.</p>
+
+<p><a href="https://watchnews.now">watchnews.now</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
