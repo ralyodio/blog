@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nichedb 0.7 closes the gaps, tipoffwatch and genrewatch switch to it, and nixamp 0.12 shows the score &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/112-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-10T19:34:40Z">
+<meta name="description" content="Play-by-play, TV listings, rent and buy, and posters for 430k IMDb titles land in nichedb.dev; tipoffwatch.com and genrewatch.com now mirror it instead of polling ESPN and TMDB; the match endpoint reads a game by its playlist name, and nixamp draws the live score under the player.">
+</head>
+<body>
+
+<article>
+
+<h1>nichedb 0.7 closes the gaps, tipoffwatch and genrewatch switch to it, and nixamp 0.12 shows the score</h1>
+
+<p><em>2026-09-10, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Yesterday nichedb.dev 0.6.0 took over the fetching three of our sites did for themselves. Today 0.7 closes the gaps that kept those sites on their own pollers, the sites switch, and nixamp learns the score.</p>
+
+<h3>What was missing</h3>
+
+<p>A site reading nichedb instead of ESPN loses nothing on schedules and scores, but tipoffwatch.com also showed every play of a game and a box score when it ended, and it filled in the broadcaster for games ESPN lists without one, which is most of the world outside the US. genrewatch.com showed where a film could be rented, not just streamed, and it gave a poster and a synopsis to the 400,000 titles that only exist in the IMDb ratings dump. None of that was in nichedb. Now it is.</p>
+
+<h3>nichedb 0.7</h3>
+
+<p><strong>Play-by-play and recaps.</strong> <code>espn-plays</code> reads the ESPN summary for every fixture in play or ended in the last six hours, eight summaries a run every two minutes, which is exactly the line tipoffwatch already held. One item per fixture: the last 400 plays while the game is on, the whole log with the box score, leaders, officials and closing line once it is final. Feed: <a href="https://nichedb.dev/f/play-by-play">play-by-play</a>.</p>
+
+<p><strong>TV listings.</strong> <code>sportsdb-tv</code> keeps TheSportsDB's day listings, one item per event, channel and market, fourteen days ahead. ESPN's broadcast field is US-only; this is where &quot;7 Queensland&quot; for an AFL game and &quot;Abema TV&quot; for a sumo basho come from. Feed: <a href="https://nichedb.dev/f/tv-listings">tv-listings</a>.</p>
+
+<p><strong>Rent and buy.</strong> A TMDB title now carries <code>providers: { stream, rent, buy }</code> beside the flat-rate <code>watch</code> list, and every release row says which shops carry it, so &quot;included where I subscribe&quot; and &quot;available to rent&quot; stay two questions.</p>
+
+<p><strong>Posters for the IMDb titles.</strong> A new enricher, <code>tmdb-artwork</code>, takes a title that came in from the IMDb dumps with nothing but a name, a year and a rating, and asks TMDB's find endpoint for the poster, the synopsis and the TMDB id. The backlog is 430,000 titles at about 29,000 a day, so it takes a couple of weeks; new titles get theirs within a tick, and a mirror sees the poster land because the row's updated_at moves with it.</p>
+
+<p><strong>A game by the name a playlist gives it.</strong> <code>GET /api/v1/match?q=NFL: Chiefs vs Bills</code> answers with the fixture. The parser reads two sides and a league out of &quot;Lakers @ Celtics&quot;, &quot;Arsenal v Chelsea&quot;, &quot;Rangers at Celtic 19:45&quot; and the messier things IPTV playlists actually say, &quot;US (ESPN+ 017) | MLB: Rays vs. Braves (ESP) (2026-09-10 11:30:10)&quot;, and the match scores each fixture in the window by team-name agreement in either order: abbreviations, short names, &quot;Man Utd&quot;, &quot;Alcorn St&quot;. One side only scores below the floor, so &quot;Chiefs&quot; alone is never a Kaizer Chiefs game.</p>
+
+<p>The contract for anyone mirroring a collection is one document, <code>docs/consolidation.md</code> in the repo, and the CLI is on npm as <code>@profullstack/nichedb</code>.</p>
+
+<h3>The sites switched</h3>
+
+<p>tipoffwatch.com runs with <code>SPORTS_PROVIDERS=nichedb-sports</code>: leagues, teams, fixtures, live scores, plays, recaps and broadcasters all come from nichedb, and the site's own ESPN, Live Tennis and TheSportsDB polling is off. Its first pass took 8,045 fixtures from 41 requests and filled 43 broadcasters from nichedb's listings with 9 more; a steady minute is one request. genrewatch.com runs with <code>CATALOG_PROVIDERS=nichedb,musicbrainz,spacedevs</code>: films, TV and anime come from nichedb at 250 pages a pass; music and launches stay where they were. bittorrented.com has the same switches behind <code>NICHEDB_TITLES</code> and <code>NICHEDB_MIRROR</code>, and its nightly IMDb dump import can be retired the night the mirror runs.</p>
+
+<p>Two things bit on the way and are worth knowing if you mirror nichedb yourself. Bun's postgres driver hands jsonb back as text in production where PGlite parses it in tests, so a cursor spread into an object was one key per character and every tick was a full backfill. And nichedb keeps a fixture once per source that saw it, the schedule pass and the live pass both, so a page can carry the same fixture twice; collapse a page to one row per external id, latest updated_at first, before a batch upsert or Postgres will refuse the statement.</p>
+
+<h3>nixamp: the score under the player</h3>
+
+<p>nixamp 0.12 finishes the enrichment story: films, shows and channels got their posters and logos in 0.11; sports was the piece left. A channel or playlist entry named for two teams is a game, and the player asks nichedb which one and draws the score line under the video: both teams with their logos, the score, the quarter and clock while it is on, the kickoff time before, FINAL after, and the broadcaster. It re-asks once a minute while the game is live, and a miss on a game name is believed only a minute too, since the fixture may be listed by the time the channel is on.</p>
+
+<p>Install or update nixamp with one line:</p>
+
+<pre><code>curl -fsSL https://nixamp.com/install.sh | sh</code></pre>
+
+<p>nichedb: <a href="https://nichedb.dev">https://nichedb.dev</a>. nixamp: <a href="https://github.com/profullstack/nixamp">https://github.com/profullstack/nixamp</a> and r/nixamp.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
