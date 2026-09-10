@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nixamp 0.9.10: the phone line says hello, LOADING while it loads, and Go Live beside Play &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/109-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-10T12:01:30Z">
+<meta name="description" content="The call-in line greets you inside the room, the player says LOADING instead of STOPPED, a meta line under the picture, and an admin Go Live button that lists anything in the directory.">
+</head>
+<body>
+
+<article>
+
+<h1>nixamp 0.9.10: the phone line says hello, LOADING while it loads, and Go Live beside Play</h1>
+
+<p><em>2026-09-10, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nixamp 0.9.10 went out today with three things people asked for after using 0.9 for a morning, plus a phone line that finally says hello.</p>
+
+<h3>The phone line answers properly</h3>
+
+<p>nixamp streams have a call-in number. You dial 408-357-2326, key the six digit code shown beside the stream, and you land in a room with everyone else watching. Yesterday that room was silent. Telnyx's own call log showed why: the welcome was spoken on the leg and then the leg was put into the conference, and the conference cut the speech off in the same millisecond. Callers heard nothing, waited, and hung up.</p>
+
+<p>The welcome is now spoken inside the room, addressed to the person who just arrived: &quot;Welcome to the live room for server1, playing And Justice For All. There are 3 people in here.&quot; The first caller is told they are first. A partial code is answered in four seconds with how many digits were heard, a voice that fails is swapped for a plain one, and three empty prompts end the call with a goodbye instead of a fourth prompt.</p>
+
+<h3>LOADING, not STOPPED</h3>
+
+<p>Playing something from an IPTV catalog can take half a minute. The server probes the source, starts a decoder, and only then has bytes to send. For all of that the top of the page said STOPPED, which reads as &quot;that click did nothing&quot;. It now says LOADING with a ring that turns, the row you clicked spins, and the same state covers a catalog's groups and entries while they are fetched.</p>
+
+<h3>A line about what is playing</h3>
+
+<p>Under the picture there is a row of chips: live or on demand, the picture's size, how many people are watching a channel and how long it has been on, which catalog and group it came from with the provider's logo, and the phone code when the server is listed. It is text only. Every word of it was written by a provider or a stranger, and none of it is rendered as markup.</p>
+
+<h3>Go Live, beside Play</h3>
+
+<p>If you administer the server you see GO LIVE next to Play, and the same icon on every row that plays. Play plays it for you. Go Live puts it on the air for everyone: a catalog film or channel becomes a channel that stays up with nobody watching, is written down so a restart brings it back, and is announced to the directory immediately. A file from your library is played on the server. If the server was not listed it gets listed, and the share link is copied so you can send it.</p>
+
+<p>The channels a listed server carries are now rows in the directory, each with its own Play, so what somebody went live with is the thing a visitor can press.</p>
+
+<h3>Smaller things</h3>
+
+<p>The jingle no longer plays over a stream a link asked for, or over the click that starts one. It only plays into silence.</p>
+
+<p>Install or update with one line:</p>
+
+<pre><code>curl -fsSL https://nixamp.com/install.sh | sh</code></pre>
+
+<p>Source and releases: <a href="https://github.com/profullstack/nixamp">https://github.com/profullstack/nixamp</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

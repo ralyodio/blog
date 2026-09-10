@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 10 Sep 2026 10:20:31 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 10 Sep 2026 12:01:30 GMT</lastBuildDate>
+
+		<item>
+			<title>nixamp 0.9.10: the phone line says hello, LOADING while it loads, and Go Live beside Play</title>
+			<link>https://dev.profullstack.com/~anthony/blog/109-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/109-post.html</guid>
+			<pubDate>Thu, 10 Sep 2026 12:01:30 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The call-in line greets you inside the room, the player says LOADING instead of STOPPED, a meta line under the picture, and an admin Go Live button that lists anything in the directory.</description>
+		</item>
 
 		<item>
 			<title>nixamp 0.9: a server that names itself, and a CNN feed that stopped talking</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 10:38:52 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>An OAuth scope was silently dropped from every grant for four weeks. Nothing errored, 22 people could not invoice, and the answer was stored in our own database the whole time.</description>
-		</item>
-
-		<item>
-			<title>Three faults that only appear once you stop duplicating</title>
-			<link>https://dev.profullstack.com/~anthony/blog/099-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/099-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 09:44:51 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>watchnews.now read three news directories at once and now reads one. A unique slug the upsert could not see, a story filed under its publisher's first desk, and an import window narrower than one upstream refresh.</description>
 		</item>
 	</channel>
 </rss>
