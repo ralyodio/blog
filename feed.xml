@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 09 Sep 2026 19:39:54 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 10 Sep 2026 10:20:31 GMT</lastBuildDate>
+
+		<item>
+			<title>nixamp 0.9: a server that names itself, and a CNN feed that stopped talking</title>
+			<link>https://dev.profullstack.com/~anthony/blog/108-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/108-post.html</guid>
+			<pubDate>Thu, 10 Sep 2026 10:20:31 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A day of nixamp releases: an unread stderr pipe froze a live channel, late joiners get a cushion, m3u catalogs are browsable, servers get a DNS name and a wildcard certificate from nixamp.com, and the home directory is never served again.</description>
+		</item>
 
 		<item>
 			<title>myna lists your product now, over MCP</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 09:44:51 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>watchnews.now read three news directories at once and now reads one. A unique slug the upsert could not see, a story filed under its publisher's first desk, and an import window narrower than one upstream refresh.</description>
-		</item>
-
-		<item>
-			<title>The feed that looked filtered</title>
-			<link>https://dev.profullstack.com/~anthony/blog/098-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/098-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 09:38:11 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>agenticjobs 0.5.0 makes one query work across HTML, JSON, RSS, Markdown and MCP. Two RSS feeds had been accepting filters and silently ignoring them, which is worse than not supporting them at all.</description>
 		</item>
 	</channel>
 </rss>

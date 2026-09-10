@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nixamp 0.9: a server that names itself, and a CNN feed that stopped talking &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/108-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-10T10:20:31Z">
+<meta name="description" content="A day of nixamp releases: an unread stderr pipe froze a live channel, late joiners get a cushion, m3u catalogs are browsable, servers get a DNS name and a wildcard certificate from nixamp.com, and the home directory is never served again.">
+</head>
+<body>
+
+<article>
+
+<h1>nixamp 0.9: a server that names itself, and a CNN feed that stopped talking</h1>
+
+<p><em>2026-09-10, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>A day of nixamp releases, 0.7.36 through 0.9.3. It started with a bug report (&quot;I see CNN but get no audio or video, and the graph is moving&quot;) and ended with servers that get their own DNS name and certificate without anyone touching a registrar.</p>
+
+<h3>The frozen channel</h3>
+
+<p>CNN had been on the air for twelve hours and showed nobody anything. The graph moved because it was the server's own player mirrored over SSE, not the channel. On the box, the ffmpeg was alive, its byte count frozen, and its stderr socket had 131 KB queued that nothing had ever read. Node only reads a piped stream that is flowing. An IPTV transport stream logs a line for every corrupt packet, the 64 KB pipe filled, and ffmpeg blocked on its next write with every thread waiting on the one that was stuck. It never exited, so nothing redialled.</p>
+
+<p>Every ffmpeg a channel spawns now has its stderr drained. Remote pulls get a read timeout and a watchdog, and a redial resets the stream header instead of appending a second one mid-picture.</p>
+
+<p>Then the channel &quot;looped.&quot; A late joiner was handed only future bytes, so it started on the live edge with nothing buffered and stalled on every hiccup. A newcomer now gets the last six seconds first, from a fragment boundary. Measured in Chrome: six stalls in thirty seconds before, zero after.</p>
+
+<h3>Catalogs</h3>
+
+<p>An m3u with three thousand IPTV entries used to become three thousand flat rows in the playlist. A server now keeps named catalogs, reads group-title and logos, and sorts entries into live and on demand. Anyone with the link browses by group and plays. A live entry becomes a channel started on the first click and stopped a minute after the last viewer leaves, capped at four at once.</p>
+
+<h3>Names and certificates</h3>
+
+<p>server2 came up as <a href="http://152.53.47.37:4321">http://152.53.47.37:4321</a>. The only reason server1 had a name was that someone typed an A record into Porkbun and copied a wildcard certificate onto the box by hand.</p>
+
+<p>Now a signed-in server asks nixamp.com for a name and gets label.handle.nixamp.com with A and AAAA records, written with keys only nixamp.com holds. It asks for the handle's certificate and gets one Let's Encrypt wildcard per handle, issued by DNS-01 and renewed on nixamp.com, cached on the box and swapped into the running listener once a day. The API is account-gated and metered with @profullstack/throttle. <code>nixamp dns</code> manages names by hand, and it is 2026, so v6 is not an afterthought.</p>
+
+<h3>The one that mattered most</h3>
+
+<p>A daemon restarted from a home directory served the home directory, under a public listing. That default is gone. The library is a saved setting, asked for at sign-in or first start, and the whole filesystem, the home directory, anything above it, and anything under a hidden folder in home are refused however they are asked for.</p>
+
+<h3>Smaller things</h3>
+
+<p>The installer restarts a running daemon with its saved flags, and pulled channels survive a restart. The directory shows what is on each server and offers Viewer and Admin, with Admin greyed unless the server is yours. Favourites are a heart. The tab says what is playing.</p>
+
+<p>Install: <code>curl -fsSL https://nixamp.com/install.sh | sh</code>, then <code>nixamp login</code>, <code>nixamp library ~/Music</code>, <code>nixamp daemon start</code>.</p>
+
+<p>Drafted with Claude Code from the session that did the work.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
