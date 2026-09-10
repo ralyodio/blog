@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nichedb 0.6.0 keeps sports, screen and channels once; nixamp 0.11 is the first thing built on it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/111-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-10T14:17:17Z">
+<meta name="description" content="tipoffwatch, genrewatch and bittorrented each fetched the same sports, film and channel data; nichedb.dev now keeps it once, free to read, with a match endpoint that tells you what a file name is. nixamp shows posters, ratings and channel logos from it.">
+</head>
+<body>
+
+<article>
+
+<h1>nichedb 0.6.0 keeps sports, screen and channels once; nixamp 0.11 is the first thing built on it</h1>
+
+<p><em>2026-09-10, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Two releases today that belong together: nichedb.dev 0.6.0 gains the data three of our sites used to fetch for themselves, and nixamp 0.11.0 is the first thing built on it.</p>
+
+<h3>nichedb: sports, screen and channels</h3>
+
+<p>tipoffwatch.com polled ESPN for every league and fixture. genrewatch.com polled TMDB, TVmaze, AniList and the IMDb dumps for every film and show. bittorrented.com imported the same IMDb dumps again and kept its own TMDB cache. Three copies of the same fetching, three places for it to break.</p>
+
+<p>nichedb.dev now keeps all of it once, as three collections anybody can read without a key:</p>
+
+<ul>
+	<li><strong>sports</strong>: every league, team and fixture ESPN publishes across 17 sports and 354 leagues, with schedule, live score, line, venue and broadcast, plus tennis by tour from the Live Tennis API. Live scores refresh every minute for leagues with a game on.</li>
+	<li><strong>screen</strong>: films, TV and anime as titles and releases, to cinemas, to rent, to a streaming service, to air, with posters, genres and the IMDb rating behind 400,000 titles.</li>
+	<li><strong>channels</strong>: the whole iptv-org directory, 31,000 television channels with logo, country, category and network, and the public stream where one exists.</li>
+</ul>
+
+<p>And one new question the API answers: what is this name? <code>GET /api/v1/match?q=Top.Gun.Maverick.2022.1080p.WEB-DL.mkv</code> reads the name the way a torrent site learned to, year and episode and quality tags and release group stripped, and answers with the best title and a score. The same parser lives in one module, so a player, a torrent site and a TV guide all match the same way. The items API gains tag filters, date windows and a since parameter for anyone keeping a copy. The CLI gains <code>nichedb match</code>; the MCP server gains <code>match_items</code>.</p>
+
+<p>The sites will switch to reading nichedb next, and drop their own pollers.</p>
+
+<h3>nixamp: the player knows what it is playing</h3>
+
+<p>A file called &quot;Oppenheimer (2023) 1080p HDTS.mkv&quot; is a film. A playlist entry called &quot;US: ESPN2 HD&quot; is a channel. nixamp knew neither, because ffprobe reads tags and a download's tags are its file name.</p>
+
+<p>nixamp 0.11.0 asks nichedb. The server you are connected to asks once per name and remembers the answer, misses too, so a library of five thousand files is not five thousand requests. Under the title the page now shows the poster, the year, the rating, the genres and a line of synopsis for a film, and the logo, country, category and network for a channel. Below half similarity nothing is shown: a wrong poster is worse than none.</p>
+
+<p>Install or update nixamp with one line:</p>
+
+<pre><code>curl -fsSL https://nixamp.com/install.sh | sh</code></pre>
+
+<p>nichedb: <a href="https://nichedb.dev">https://nichedb.dev</a>. nixamp: <a href="https://github.com/profullstack/nixamp">https://github.com/profullstack/nixamp</a> and r/nixamp.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

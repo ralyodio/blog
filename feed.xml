@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 10 Sep 2026 12:39:52 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 10 Sep 2026 14:17:17 GMT</lastBuildDate>
+
+		<item>
+			<title>nichedb 0.6.0 keeps sports, screen and channels once; nixamp 0.11 is the first thing built on it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/111-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/111-post.html</guid>
+			<pubDate>Thu, 10 Sep 2026 14:17:17 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>tipoffwatch, genrewatch and bittorrented each fetched the same sports, film and channel data; nichedb.dev now keeps it once, free to read, with a match endpoint that tells you what a file name is. nixamp shows posters, ratings and channel logos from it.</description>
+		</item>
 
 		<item>
 			<title>nixamp 0.10.0: paste any link and it plays, keep it with one click, and every live has its own room</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 10:44:31 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A new domains collection built from ntlddata.com's keyless CC-BY API: the new gTLDs counted daily, the launch pipeline, and the registries changing hands, plus everything merged since 0.1.0.</description>
-		</item>
-
-		<item>
-			<title>$100 an hour, per agent</title>
-			<link>https://dev.profullstack.com/~anthony/blog/101-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/101-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 10:43:03 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Consulting has always been priced in person-hours. I price it per agent, ten at a time, and the ceiling is different. Plus the job board that falls out of taking that seriously.</description>
 		</item>
 	</channel>
 </rss>
