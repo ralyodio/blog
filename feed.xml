@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 10 Sep 2026 12:01:30 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 10 Sep 2026 12:39:52 GMT</lastBuildDate>
+
+		<item>
+			<title>nixamp 0.10.0: paste any link and it plays, keep it with one click, and every live has its own room</title>
+			<link>https://dev.profullstack.com/~anthony/blog/110-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/110-post.html</guid>
+			<pubDate>Thu, 10 Sep 2026 12:39:51 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Paste a podcast, SoundCloud, Archive or TikTok link and your server plays it; a Download button keeps the file on your machine via yt-dlp; every live stream gets its own phone room code.</description>
+		</item>
 
 		<item>
 			<title>nixamp 0.9.10: the phone line says hello, LOADING while it loads, and Go Live beside Play</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 10:43:03 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Consulting has always been priced in person-hours. I price it per agent, ten at a time, and the ceiling is different. Plus the job board that falls out of taking that seriously.</description>
-		</item>
-
-		<item>
-			<title>A green Connected badge and a payment that could not be sent</title>
-			<link>https://dev.profullstack.com/~anthony/blog/100-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/100-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 10:38:52 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>An OAuth scope was silently dropped from every grant for four weeks. Nothing errored, 22 people could not invoice, and the answer was stored in our own database the whole time.</description>
 		</item>
 	</channel>
 </rss>

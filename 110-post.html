@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nixamp 0.10.0: paste any link and it plays, keep it with one click, and every live has its own room &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/110-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-10T12:39:51Z">
+<meta name="description" content="Paste a podcast, SoundCloud, Archive or TikTok link and your server plays it; a Download button keeps the file on your machine via yt-dlp; every live stream gets its own phone room code.">
+</head>
+<body>
+
+<article>
+
+<h1>nixamp 0.10.0: paste any link and it plays, keep it with one click, and every live has its own room</h1>
+
+<p><em>2026-09-10, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nixamp 0.10.0 is out. Three things: paste any link and it plays, keep it with one click, and every live stream has its own phone room.</p>
+
+<h3>Paste any link</h3>
+
+<p>Under the player there is a box. Paste a page into it, a podcast episode, a SoundCloud track, an Internet Archive film, a TikTok live, and the server you are connected to works out where the media actually is and plays it to you as a channel of its own. It is played the way a catalog entry is played: started for whoever asked, stopped a minute after the last viewer leaves, and shared by two people who paste the same link. A bare link to an MP3 or an HLS playlist needs no working-out at all.</p>
+
+<p>The working-out is yt-dlp's, which knows a thousand sites and is updated weekly. The installer fetches it as a standalone binary beside nixamp when it is not already there, so <code>nixamp update</code> is the whole setup. Some sites refuse a datacenter without a signed-in browser, YouTube and Vimeo among them; the player says so in its note, and a Netscape cookies file at <code>~/.local/state/nixamp/cookies.txt</code> is passed through when you put one there.</p>
+
+<h3>Download now</h3>
+
+<p>Beside the picture there is a Download button for a link that is a whole file somewhere. The server fetches it through yt-dlp and hands the bytes straight on as a download, named for the title, so your own machine ends up with the file and the server keeps nothing. Sound alone for a track, the picture too for a film. A live stream has no whole yet, so it gets no button.</p>
+
+<h3>Every live has its own room</h3>
+
+<p>nixamp streams have a call-in number. Until today one code per server put the people calling about the basketball in with the people talking about the film. The directory now gives each channel a code of its own, keeps it while the channel stays on, and the phone line greets a caller by the channel: &quot;Welcome to the live room for FIBA World Cup. There are 3 people in here.&quot; The code is shown on the Live rows, on the line under the title, and in the directory beside each channel with how many are on the phone for it.</p>
+
+<h3>Also in this run</h3>
+
+<p>Since the morning's 0.9 post: the top of the page says LOADING with a turning ring while a stream starts instead of STOPPED, a meta line under the picture says what is playing and who is watching, GO LIVE sits beside Play for whoever administers the server and puts anything on the air with the link copied, a joiner is told the number and the code on the line under the title, and the code shown is always the one the phone line knows.</p>
+
+<p>Install or update with one line:</p>
+
+<pre><code>curl -fsSL https://nixamp.com/install.sh | sh</code></pre>
+
+<p>Source and releases: <a href="https://github.com/profullstack/nixamp">https://github.com/profullstack/nixamp</a>. Talk about it at <a href="https://www.reddit.com/r/nixamp">https://www.reddit.com/r/nixamp</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
