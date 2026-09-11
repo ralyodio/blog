@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nichedb 0.8: symbols, price history, fundamentals and the crypto universe; advis0r and b1dz read it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/113-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-11T06:49:53Z">
+<meta name="description" content="The US symbol directory, four hundred daily bars for 12,900 symbols, every SEC filer's XBRL fundamentals and every spot pair on four US crypto venues now live in nichedb.dev once; advis0r.com and b1dz.com switched to reading them there, with their trading and analysis left where it was.">
+</head>
+<body>
+
+<article>
+
+<h1>nichedb 0.8: symbols, price history, fundamentals and the crypto universe; advis0r and b1dz read it</h1>
+
+<p><em>2026-09-11, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Two more sites stop fetching for themselves today. advis0r.com built every research report on four hundred days of Alpaca bars, the company's SEC facts and Alpaca's asset list; b1dz.com asked CoinGecko and four exchanges every five minutes which pairs exist and what they did. nichedb.dev 0.8 keeps all of it once, and both sites read it there.</p>
+
+<h3>What moved, and what did not</h3>
+
+<p>Not everything a trading site does is a feed. b1dz's WebSocket tickers, its two-second arbitrage ticks, its private broker and exchange accounts, its DEX quotes and its DealDash session stay where they are; so do advis0r's signal extraction, corroboration, scoring, speech-to-text and the LLM analysis. What moved is the data both sites, and any site like them, need the same copy of.</p>
+
+<h3>nichedb 0.8</h3>
+
+<p><strong>The symbol directory.</strong> <code>alpaca-assets</code> keeps every tradable US equity and crypto asset Alpaca lists, about 14,400 rows, refreshed daily. Feed: <a href="https://nichedb.dev/f/us-symbols">us-symbols</a>.</p>
+
+<p><strong>Price history.</strong> <code>equity-history</code> keeps one item a symbol carrying its last four hundred daily bars, appended after each session settles from the multi-symbol bars endpoint, about ninety requests an evening for 12,900 symbols. An adapter can read its own previous items back now, so a window is kept, not rebuilt. Feed: <a href="https://nichedb.dev/f/price-history">price-history</a>.</p>
+
+<p><strong>Fundamentals.</strong> <code>sec-fundamentals</code> walks every SEC filer's XBRL facts once a week at five requests a second: revenue, income, EPS, assets, liabilities, cash, operating cash flow, shares, from 10-K, 10-Q, 20-F and 40-F, the last twelve points of each. Feed: <a href="https://nichedb.dev/f/fundamentals">fundamentals</a>.</p>
+
+<p><strong>The crypto universe.</strong> A new <code>crypto</code> collection: <code>coingecko-assets</code> (the top 500 by market cap every quarter hour) and <code>crypto-pairs</code> (every spot pair on Kraken, Coinbase, Binance.US and Gemini with its 24-hour ticker, every five minutes, one row a pair a venue, 2,190 of them). The doc says where each venue is odd: Kraken's daily open is midnight UTC, Gemini publishes no volume on any all-pairs endpoint, Coinbase has no bid or ask. Feeds: <a href="https://nichedb.dev/f/usd-pairs">usd-pairs</a>, <a href="https://nichedb.dev/f/top-100">top-100</a>.</p>
+
+<p>Two things found on the way. A source seeded off because its key was missing stayed off after the key arrived, since the seed never touched the flag; the Alpaca corporate-actions source had sat at zero items for that reason, and now has 6,400. And the seed judged a source's needs against a slice of the config that did not hold the contact email the SEC wants in a user agent. Both fixed.</p>
+
+<h3>The sites</h3>
+
+<p>advis0r.com runs with <code>NICHEDB_MARKETS=1</code>: a report build reads the symbol's history item and the company's fundamentals item, two requests, and falls back to the live path when either is missing or stale; the symbol sync walks the directory by cursor; a ticker's news refresh reads nichedb's market news wire before the RSS feeds. Fresh reports record their bars source, and today's say nichedb.</p>
+
+<p>b1dz.com runs with <code>NICHEDB_CRYPTO=1</code> and <code>NICHEDB_MARKETS=1</code>: pair discovery reads the dollar-quoted pairs and the assets from nichedb, eleven requests every five minutes instead of six calls to five hosts, and applies the same rules, two venues or more with fifty thousand dollars a day on each and ten million of market cap; backtests read the history item and fall back to Yahoo when the window is longer than it. Its first discovery pass from nichedb picked 150 pairs from 1,582 rows.</p>
+
+<p>That makes five sites on nichedb: tipoffwatch, genrewatch, bittorrented, advis0r and b1dz, plus nixamp. The contract for each collection is one document in the repo.</p>
+
+<p>nichedb: <a href="https://nichedb.dev">https://nichedb.dev</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

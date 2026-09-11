@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 10 Sep 2026 19:34:41 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 11 Sep 2026 06:49:53 GMT</lastBuildDate>
+
+		<item>
+			<title>nichedb 0.8: symbols, price history, fundamentals and the crypto universe; advis0r and b1dz read it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/113-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/113-post.html</guid>
+			<pubDate>Fri, 11 Sep 2026 06:49:53 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The US symbol directory, four hundred daily bars for 12,900 symbols, every SEC filer's XBRL fundamentals and every spot pair on four US crypto venues now live in nichedb.dev once; advis0r.com and b1dz.com switched to reading them there, with their trading and analysis left where it was.</description>
+		</item>
 
 		<item>
 			<title>nichedb 0.7 closes the gaps, tipoffwatch and genrewatch switch to it, and nixamp 0.12 shows the score</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 16:54:56 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Chris Coyier's mid-2026 HTML roundup lines up almost item for item with code we wrote by hand: a 152-line PWA install hook, a 500-line React context that keeps one audio element alive across routes, and an iframe we ship only because CSS isolation had no other answer.</description>
-		</item>
-
-		<item>
-			<title>Podcasts, split by who serves the feed</title>
-			<link>https://dev.profullstack.com/~anthony/blog/103-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/103-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 14:35:31 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>NicheDB's podcasts collection splits the medium the one way no podcast app will: shows on a commercial host versus shows on the maker's own domain. 307 platform domains hold 93.8% of the live catalogue, and the head of a directory listing is inverted against everything behind it.</description>
 		</item>
 	</channel>
 </rss>
