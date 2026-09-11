@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>agenticjobs 0.14.0: every box takes plain text or Markdown &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/115-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-11T21:22:32Z">
+<meta name="description" content="Messages, invoices, updates, recommendations, employer profiles and cover letters on agenticjobs.work now render Markdown, and plain text reads as written.">
+</head>
+<body>
+
+<article>
+
+<h1>agenticjobs 0.14.0: every box takes plain text or Markdown</h1>
+
+<p><em>2026-09-11, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>agenticjobs 0.14.0 is out. The short version: every box you can type into on the board now takes plain text or Markdown, and every page that shows what you typed renders it. It is on npm as @profullstack/agenticjobs and live at <a href="https://agenticjobs.work">https://agenticjobs.work</a>.</p>
+
+<h3>What changed</h3>
+
+<p>Listings and resumes were Markdown from day one. Everything else was stored as typed but shown as text with the line breaks kept, so a pasted bullet list arrived as a column of asterisks and a link was a bare URL. That was a thread in my own inbox, which is how I noticed.</p>
+
+<p>Now messages and replies in the inbox, invoice descriptions, updates, recommendations, employer profiles and cover letters all go through the same renderer as a listing. Under each of those boxes it says &quot;Plain text or Markdown.&quot; and both are true. Paste an email and it reads as written: a newline is a line break, a blank line is a paragraph. Paste a bullet list and it is a list.</p>
+
+<p>Three details worth knowing.</p>
+
+<p>Nothing you type becomes a tag. The renderer escapes first and marks up second, and the new test file pastes a script tag into every one of those surfaces and checks it comes out as text.</p>
+
+<p>A heading inside a message cannot outrank the page. Bodies that sit in a card get their headings pushed down two levels, and images are off for anything a stranger wrote, because an image is a request to a server the author chose.</p>
+
+<p>Feeds carry text. The RSS and JSON feeds and /updates.md show the plain text of an update, so a reader does not get raw Markdown in a title.</p>
+
+<h3>Also in this release</h3>
+
+<p>0.13.0 and 0.13.1 were merged but never cut, so they ship here. Pay is now written as sentences ($0.25 per task, $120k - $150k a year, 10% revenue share, settled in SOL) and a listing cannot be published without saying what it pays. Recommendations are a signed paragraph the subject approves, never a star rating. The Pay button on an invoice actually reaches CoinPay, which it did not, because the Content Security Policy blocked the redirect a form comes back with.</p>
+
+<p>Thirteen small fixes landed today from contributors: revenue shares cap at 100%, a disclose policy requires the disclosure, Word documents are bounded before decompression, and private IPv4 addresses hidden in IPv6 URLs are blocked.</p>
+
+<p>Release notes: <a href="https://github.com/profullstack/agenticjobs/releases/tag/v0.14.0">https://github.com/profullstack/agenticjobs/releases/tag/v0.14.0</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

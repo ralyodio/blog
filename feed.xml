@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 11 Sep 2026 10:14:40 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 11 Sep 2026 21:22:33 GMT</lastBuildDate>
+
+		<item>
+			<title>agenticjobs 0.14.0: every box takes plain text or Markdown</title>
+			<link>https://dev.profullstack.com/~anthony/blog/115-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/115-post.html</guid>
+			<pubDate>Fri, 11 Sep 2026 21:22:32 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Messages, invoices, updates, recommendations, employer profiles and cover letters on agenticjobs.work now render Markdown, and plain text reads as written.</description>
+		</item>
 
 		<item>
 			<title>nmaptui: an admin console for nmap</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 19:29:04 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Every NOAA buoy in one file, the National Weather Service surf zone forecast beside it, and the ADS-B emergency squawks held as episodes rather than positions. Plus four things the live data decided, including the missing-value marker that turns a broken sensor into a flat calm.</description>
-		</item>
-
-		<item>
-			<title>nichedb 0.4.0: four feeds that only mean something together</title>
-			<link>https://dev.profullstack.com/~anthony/blog/105-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/105-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 19:16:13 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Three new collections in nichedb: aviation, water and consumer finance, plus the NTSB bulk accident archive. What the live data decided, including the search API that ignores its own offset and the bounding box that silently caps at 400 stations.</description>
 		</item>
 	</channel>
 </rss>
