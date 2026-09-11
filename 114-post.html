@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nmaptui: an admin console for nmap &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/114-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-11T10:14:40Z">
+<meta name="description" content="An open source terminal console for nmap: profiles, a live view, hosts, services, findings, scan history with diffs, and exports. Built on HQTUI.">
+</head>
+<body>
+
+<article>
+
+<h1>nmaptui: an admin console for nmap</h1>
+
+<p><em>2026-09-11, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nmaptui is an admin console for nmap that runs in the terminal. It is open source (MIT), it is on npm as @profullstack/nmaptui, and it installs with one line:</p>
+
+<p>curl -fsSL <a href="https://raw.githubusercontent.com/profullstack/nmaptui/main/install.sh">https://raw.githubusercontent.com/profullstack/nmaptui/main/install.sh</a> | sh</p>
+
+<p>nmap itself is fine. What it lacks is a place to live between scans. You run it, read the output, lose the output, run it again a month later, and wonder what changed. nmaptui keeps every scan, shows it in eight screens, and diffs any two.</p>
+
+<h3>What is in it</h3>
+
+<p>A scan builder with eighteen profiles (Quick, Intense, Ping sweep, Vulnerability scripts, Web services, Windows and SMB, Databases, Top 100 UDP, and so on) and a form for every nmap option that matters, each with a one-line explanation. The exact command nmap will get sits underneath the form, with a count of how many addresses the targets cover and a warning when the scan needs root.</p>
+
+<p>A live view. nmaptui runs nmap with XML on stdout and reads it as it streams, so tasks appear as they start, nmap's own percent and time remaining show once it reports them, and each host lands in the table the moment nmap finishes it. Abort keeps what came back.</p>
+
+<p>Hosts, Services and Findings. The hosts screen is the usual per-host detail: ports, versions, OS matches, uptime, traceroute, script output. The services screen pivots the scan the other way, so &quot;which boxes still run OpenSSH 7&quot; is one row. Findings is a triage list from rules over the scan: clear-text protocols, anonymous FTP, SMBv1 and unsigned SMB, databases and RDP reachable from the network, expired certificates, weak TLS, end-of-life operating systems, and anything an NSE script marked VULNERABLE.</p>
+
+<p>History and diff. Scans are kept as nmap's own XML under ~/.local/share/nmaptui. Mark two and you get hosts that appeared or vanished, ports that opened or closed, and services whose version moved. Any file made with nmap -oX can be imported.</p>
+
+<p>Export to text, JSON, CSV, Markdown, HTML or the raw XML. nmaptui print and nmaptui diff work without a terminal, so a nightly diff in a cron mail is a few lines of shell.</p>
+
+<h3>How it is built</h3>
+
+<p>It is TypeScript on HQTUI, with no other runtime dependency. The XML reader is 290 lines and has a streaming mode that hands over each complete host element as the bytes arrive. Screens are pure functions of one state object, and the tests render real frames headlessly and assert on the text, so a layout regression fails a test instead of waiting for someone to notice. 53 tests run under both node --test and bun test.</p>
+
+<p>The screenshots in the README are a real connect scan of profullstack.com, captured through a pty. It sits behind Pingora with two ports open and 998 filtered, which is about the right answer.</p>
+
+<p>Repo: <a href="https://github.com/profullstack/nmaptui">https://github.com/profullstack/nmaptui</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
