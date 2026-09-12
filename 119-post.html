@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nixamp 0.18.0: anyone signed in can go live from a link, IPTV feeds included &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/119-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-12T16:15:03Z">
+<meta name="description" content="nixamp 0.18.0 lets any signed-in member go live from a pasted link, IPTV feeds with no file extension included, pick which server carries it, and rename what they put on.">
+</head>
+<body>
+
+<article>
+
+<h1>nixamp 0.18.0: anyone signed in can go live from a link, IPTV feeds included</h1>
+
+<p><em>2026-09-12, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Until today, pasting a stream URL into nixamp only worked for the person holding a server's control link. Everyone else got a sentence saying the server's administrator would have to ask. That included an IPTV feed like <a href="http://host/tipoffsport/KEY/906">http://host/tipoffsport/KEY/906</a>, which has no file extension, so the page could not play it itself and refused to ask the server. The feed was fine. The gate was the problem.</p>
+
+<p>0.18.0 changes who may ask.</p>
+
+<h3>Go live from any link</h3>
+
+<p>Sign in at nixamp.com, connect to any server in the directory, paste a link and press Play link. If the browser can play it on its own (YouTube, Vimeo, SoundCloud, a bare MP3 or MP4) it plays right there. Anything else, an IPTV channel or a stream with no extension, the server fetches with yt-dlp and ffmpeg and carries as a live channel of its own.</p>
+
+<p>For a member that is always a live: the channel is kept up with nobody watching, remembered across a restart, marked as yours, and listed in the directory with a room code and a Join live button. The same caps as going live with a file apply: two on the air per member, eight per server, three asks a minute.</p>
+
+<p>The owner's Play link stays on demand, stopping a minute after the last viewer leaves, unless they press Go live.</p>
+
+<h3>Pick the server</h3>
+
+<p>A picker beside the link box lists the servers in the directory. Choose one and the page connects to it as a viewer, with your session along for the ride so the server knows you as a member. The link stays in the box; press Play link and it goes on the air there.</p>
+
+<h3>Rename what you put on</h3>
+
+<p>A feed goes on the air as &quot;906&quot;, because that is all the URL said. There is now a Rename icon on the on-air row. The owner can rename anything; a member can rename their own.</p>
+
+<h3>Feeds keep the address you pasted</h3>
+
+<p>IPTV panels answer a channel URL with a redirect to a second host and a token minted for that one request. yt-dlp resolves the redirect and hands back the tokenised address, which is what the server used to dial, so a redial reused a token the panel had minted for an earlier request. The channel now dials the link as you pasted it and follows the redirect itself, and every redial gets a fresh token. Servers without yt-dlp take a bare link as media too and let ffprobe decide.</p>
+
+<p>The page is also told whether the channel is actually live rather than what yt-dlp guessed. A transport stream with no end used to show a Download button and a seek bar.</p>
+
+<h3>Get it</h3>
+
+<p>curl -fsSL <a href="https://nixamp.com/install.sh">https://nixamp.com/install.sh</a> | sh</p>
+
+<p>Already running one: <code>nixamp update</code>. Source and the full change: <a href="https://github.com/profullstack/nixamp/pull/133">https://github.com/profullstack/nixamp/pull/133</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
