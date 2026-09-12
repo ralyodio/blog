@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nixamp 0.17: a room with a door, a ticket and a login &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/116-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-12T12:09:48Z">
+<meta name="description" content="nixamp 0.17.1: nixamp.com as an OAuth 2.1 server, a bittorrented.com watch party as a nixamp room on web, CLI, desktop, TV and MCP, concerts with x402 tickets on c0ncerts.com, and raw 1080p and 4K MPEG-TS files that play.">
+</head>
+<body>
+
+<article>
+
+<h1>nixamp 0.17: a room with a door, a ticket and a login</h1>
+
+<p><em>2026-09-12, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nixamp 0.17.1 is out. Three things landed in it, and two other sites are built on them the same day.</p>
+
+<h3>Sign in with nixamp</h3>
+
+<p>nixamp.com is now an OAuth 2.1 authorization server. The metadata is at <a href="https://nixamp.com/.well-known/oauth-authorization-server">https://nixamp.com/.well-known/oauth-authorization-server</a> and the scopes are profile, email, parties and offline_access.</p>
+
+<p>2.1 means the parts 2.0 left optional are required. PKCE with S256 on every request, from every client, public or confidential. Redirect URIs match exactly, with one exception for a loopback port, because a CLI cannot know its port before it listens. An authorization code is spent once; a second use withdraws everything that code produced. Refresh tokens rotate, and a retired one presented again withdraws the whole family. No implicit grant, no password grant.</p>
+
+<p>The access token a client gets back is an ordinary nixamp <code>nxa_</code> token with the client's name on it. That is why every existing /api/v1 route accepts one with no change, and why you can revoke it from the Account panel under Connected apps.</p>
+
+<h3>A watch party is a room</h3>
+
+<p>bittorrented.com has had watch parties for a while: a code, synced playback, up to 50 people. nixamp has rooms, chat, invitations, a directory and five clients that already open one. As of today they are the same thing.</p>
+
+<p>Connect nixamp under Settings, Connections on bittorrented.com. Open a party and it appears on nixamp as a room under your own nixamp account, not a service account, so it shows in your events and it is yours to end. The film stays on bittorrented. nixamp carries the room, the chat and the playback position, which the host writes every 15 seconds, so someone joining an hour in from a terminal lands an hour in.</p>
+
+<p>Every nixamp surface can join: the web app, the desktop app, the TV build, <code>nixamp party list / join / host / sync / end</code> in the CLI, and a new <code>nixamp mcp</code> stdio server that offers the same five as tools to an agent.</p>
+
+<h3>Live shows</h3>
+
+<p>An event now has a kind: talk, class or concert. A concert gets an artist role beside moderator (artists run doors, start, encore and end, and do not touch the guest list), and an encore is its own state, because a listener arriving during one is arriving at something.</p>
+
+<p>Tickets are a paid pass to one room. It is the same x402 machinery as the crawler paywall, scoped to the event and paid to the event's own payTo address rather than to nixamp. A ticketed room answers 402 with the price instead of 404. The pass is signed with a secret derived from the event id, so a ticket to Friday is not a ticket to Saturday. With no CoinPay key configured, every event is free.</p>
+
+<p>c0ncerts.com is the first client of this. /shows is nixamp's directory asked for kind=concert. /shows/&lt;slug&gt; embeds the room from nixamp's own origin. /artist signs in against nixamp, schedules a show and runs the night. c0ncerts holds no user table, no key and no money.</p>
+
+<h3>4K .ts files</h3>
+
+<p>A raw MPEG-TS file off a capture card or a receiver was the one shape of media nixamp could not take. The library walk skipped it, the router treated it as a song, and what did reach a browser was re-encoded when it did not need to be. 4K through libx264 on my box runs at 0.52x real time, so a 4K HEVC film arrived slower than it played.</p>
+
+<p>Now a .ts is opened and checked for sync bytes, since it is as often a TypeScript file. H.264 is copied through at any size, so 4K costs what 720p costs. HEVC is copied with the hvc1 tag when the browser says it can decode it (?hevc=1, never a user-agent guess) and re-encoded to 1080p otherwise. HEVC channels go out as fMP4 HLS, since HLS in TS is defined for H.264 only. The channel backlog is six seconds of measured bitrate instead of a fixed 4 MB, which was under a second of 4K.</p>
+
+<p>0.17.1 itself is one fix: /api/v1/events answers again on a database that predates concerts.</p>
+
+<p>Release: <a href="https://github.com/profullstack/nixamp/releases/tag/v0.17.1">https://github.com/profullstack/nixamp/releases/tag/v0.17.1</a>. Builds for Linux, macOS and Windows, plus the CLI tarball.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

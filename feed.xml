@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 11 Sep 2026 21:22:33 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 12 Sep 2026 12:09:48 GMT</lastBuildDate>
+
+		<item>
+			<title>nixamp 0.17: a room with a door, a ticket and a login</title>
+			<link>https://dev.profullstack.com/~anthony/blog/116-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/116-post.html</guid>
+			<pubDate>Sat, 12 Sep 2026 12:09:48 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>nixamp 0.17.1: nixamp.com as an OAuth 2.1 server, a bittorrented.com watch party as a nixamp room on web, CLI, desktop, TV and MCP, concerts with x402 tickets on c0ncerts.com, and raw 1080p and 4K MPEG-TS files that play.</description>
+		</item>
 
 		<item>
 			<title>agenticjobs 0.14.0: every box takes plain text or Markdown</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 09 Sep 2026 19:39:53 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>myna 0.17.0 submits a product to a software directory over that directory's MCP server, including directories it has never heard of.</description>
-		</item>
-
-		<item>
-			<title>nichedb 0.5.0: the sea, the surf and the aircraft worth watching</title>
-			<link>https://dev.profullstack.com/~anthony/blog/106-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/106-post.html</guid>
-			<pubDate>Wed, 09 Sep 2026 19:29:04 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Every NOAA buoy in one file, the National Weather Service surf zone forecast beside it, and the ADS-B emergency squawks held as episodes rather than positions. Plus four things the live data decided, including the missing-value marker that turns a broken sensor into a flat calm.</description>
 		</item>
 	</channel>
 </rss>
