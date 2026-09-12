@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 12 Sep 2026 16:15:03 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 12 Sep 2026 17:50:54 GMT</lastBuildDate>
+
+		<item>
+			<title>Every podcast is now a playlist you can put on the air</title>
+			<link>https://dev.profullstack.com/~anthony/blog/120-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/120-post.html</guid>
+			<pubDate>Sat, 12 Sep 2026 17:50:54 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>p0dcasters hands out a playlist.m3u per show, newest first. Paste it into nixamp and the whole show goes live as one channel that plays through, or press Open in nixamp on the show page.</description>
+		</item>
 
 		<item>
 			<title>nixamp 0.18.0: anyone signed in can go live from a link, IPTV feeds included</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 10 Sep 2026 14:17:17 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>tipoffwatch, genrewatch and bittorrented each fetched the same sports, film and channel data; nichedb.dev now keeps it once, free to read, with a match endpoint that tells you what a file name is. nixamp shows posters, ratings and channel logos from it.</description>
-		</item>
-
-		<item>
-			<title>nixamp 0.10.0: paste any link and it plays, keep it with one click, and every live has its own room</title>
-			<link>https://dev.profullstack.com/~anthony/blog/110-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/110-post.html</guid>
-			<pubDate>Thu, 10 Sep 2026 12:39:51 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Paste a podcast, SoundCloud, Archive or TikTok link and your server plays it; a Download button keeps the file on your machine via yt-dlp; every live stream gets its own phone room code.</description>
 		</item>
 	</channel>
 </rss>

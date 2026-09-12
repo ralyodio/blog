@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Every podcast is now a playlist you can put on the air &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/120-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-12T17:50:54Z">
+<meta name="description" content="p0dcasters hands out a playlist.m3u per show, newest first. Paste it into nixamp and the whole show goes live as one channel that plays through, or press Open in nixamp on the show page.">
+</head>
+<body>
+
+<article>
+
+<h1>Every podcast is now a playlist you can put on the air</h1>
+
+<p><em>2026-09-12, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every show on p0dcasters.com now hands out one more link beside its RSS feed: a playlist. <code>https://p0dcasters.com/podcast/off-protocol/playlist.m3u</code> is every episode of Off Protocol, newest first, as a plain M3U. Any player that opens a playlist by address plays the show through. nixamp does something better with it.</p>
+
+<h3>One paste, the whole show on the air</h3>
+
+<p>Paste that address into nixamp's link box and press Go live. The server reads the list once, then plays it entry by entry as one channel. Whoever is listening hears the next episode start when the last one ends, on the same connection. When the list runs out it goes round again, the way a station does. The channel is named by the list itself, so it shows up in the directory as &quot;Off Protocol&quot;, not as a file name.</p>
+
+<p>A dead entry is skipped rather than retried for ever. A list that is dead all the way through is closed. An entry that drops part way is dialled again from where it was, which is what already happened to a single stream.</p>
+
+<h3>Open in nixamp</h3>
+
+<p>The show page has three buttons for this: the playlist itself, a copy of its address for another player's link box, and Open in nixamp. That last one lands on nixamp.com with the playlist already in the box and Go live beside it. Pick a server, press the button, and the show is on the air for anyone with the link or the phone code.</p>
+
+<h3>What the file holds</h3>
+
+<p>The M3U is the extended kind. Each entry carries the episode's title and length, and the show's artwork. The addresses are the publisher's own, exactly as they appear in the feed, not a proxy of ours, so the file is good anywhere. It is cached for half an hour and refreshed from the feed after that.</p>
+
+<p>The list is newest first because that is how the feed and the page are, and it is what a listener opening a show expects.</p>
+
+<h3>A bug found on the way</h3>
+
+<p>Podcast files carry their artwork inside the MP3, and to ffprobe that artwork is a one-frame video stream. nixamp read it as a picture, carried the episode as a film, asked for pictures that never came, and wrote nothing. Cover art is no longer a picture. That fix reaches any pasted MP3, not only lists.</p>
+
+<p>nixamp 0.19.2 has the link box entry point and the naming; 0.19.0 brought the playlist channel and the cover art fix. Both are on the servers now.</p>
+
+<ul>
+	<li>Try it: <a href="https://p0dcasters.com/podcast/off-protocol">https://p0dcasters.com/podcast/off-protocol</a></li>
+	<li>nixamp: <a href="https://nixamp.com">https://nixamp.com</a></li>
+</ul>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
