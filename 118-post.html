@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I don&rsquo;t write the code. I drive the bus. &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/118-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-12T15:16:54Z">
+<meta name="description" content="Fleetcoding: building software by directing fleets of AI agents instead of writing every line. Ten agents on the bus today, ten thousand is the target.">
+</head>
+<body>
+
+<article>
+
+<h1>I don&rsquo;t write the code. I drive the bus.</h1>
+
+<p><em>2026-09-12, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I used to write software. Now I work in mass agent transit. Ten AI agents on the bus today. The plan is a fleet of ten thousand.</p>
+
+<p>That sounds like a joke and it is about half of one. Here is the half that is not.</p>
+
+<p>I am still responsible for getting from A to B. A feature goes from an idea to a URL with a version number on it, and if it does not arrive that is on me. What changed is that I no longer personally carry every passenger there. I pick the destination. I assign the routes. I deal with the breakdowns. And I check that everybody actually got off at the right stop, instead of taking their word for it.</p>
+
+<p>The word I have landed on for the practice is fleetcoding. Building software by directing coordinated fleets of agents rather than writing every line yourself. The job title, if you need one for a form, is agent fleet engineer.</p>
+
+<p>Why fleet and not something softer like team or assistant. Because the scale is the whole point.</p>
+
+<p>At ten agents you are driving a bus. You can see every seat. You notice when one of them has been staring at the same test for twenty minutes. You walk back and sort it out yourself.</p>
+
+<p>At ten thousand you are not driving anything. You are running a transit network. You need dispatch, so work goes to the right kind of agent. You need routes, because a docs job and a database migration should not share a lane. You need capacity limits, because the org spend cap is real and I have hit it inside the first week of a month more than once. You need breakdown recovery, and you need a way to confirm arrival that does not involve asking the agent whether it arrived.</p>
+
+<p>That last one is where most of my actual engineering time goes now. The failures are never the ones you expect. Two sessions running in parallel ship the same feature on two branches because each one checked out a snapshot before the other opened a PR. Git stash turns out to be one stack per repository, shared across every worktree, so parallel jobs pop each other's changes and nobody notices until the diff looks haunted. An agent runs a filtered test command, the filter matches nothing, the command prints nothing, and the agent reports a pass. A green CodeQL check gets read as proof a vulnerability was fixed when it only ever meant no new ones.</p>
+
+<p>None of those are coding problems. They are transit problems. The passengers are fine. The network let them down.</p>
+
+<p>So the ambition is not more agents. More agents is easy, it is a loop. The ambition is more agents making useful progress without each one needing more of my attention. Attention per agent has to go down as the count goes up, or the count is a vanity number.</p>
+
+<p>That is also why engineer stays in the title. I am not pressing go and going to lunch. I am building the thing that lets the fleet operate, which means memory that survives a killed job, rules the scheduler enforces instead of me, and a definition of done that a machine can check.</p>
+
+<p>Software engineers are becoming fleet engineers. We do not write every line anymore. We get entire fleets of agents from idea to production. I am running ten today. The target is ten thousand.</p>
+
+<p>I don't write the fucking code. I drive the bus.</p>
+
+<p>Next stop: production.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

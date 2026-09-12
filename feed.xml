@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 12 Sep 2026 13:56:45 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 12 Sep 2026 15:16:54 GMT</lastBuildDate>
+
+		<item>
+			<title>I don’t write the code. I drive the bus.</title>
+			<link>https://dev.profullstack.com/~anthony/blog/118-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/118-post.html</guid>
+			<pubDate>Sat, 12 Sep 2026 15:16:54 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Fleetcoding: building software by directing fleets of AI agents instead of writing every line. Ten agents on the bus today, ten thousand is the target.</description>
+		</item>
 
 		<item>
 			<title>I shipped a lossless stream standard in a day, and it won't lie about savings</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 10 Sep 2026 12:01:30 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>The call-in line greets you inside the room, the player says LOADING instead of STOPPED, a meta line under the picture, and an admin Go Live button that lists anything in the directory.</description>
-		</item>
-
-		<item>
-			<title>nixamp 0.9: a server that names itself, and a CNN feed that stopped talking</title>
-			<link>https://dev.profullstack.com/~anthony/blog/108-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/108-post.html</guid>
-			<pubDate>Thu, 10 Sep 2026 10:20:31 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A day of nixamp releases: an unread stderr pipe froze a live channel, late joiners get a cushion, m3u catalogs are browsable, servers get a DNS name and a wildcard certificate from nixamp.com, and the home directory is never served again.</description>
 		</item>
 	</channel>
 </rss>
