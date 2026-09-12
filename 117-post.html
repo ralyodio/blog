@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I shipped a lossless stream standard in a day, and it won't lie about savings &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/117-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-12T13:56:38Z">
+<meta name="description" content="From a PRD to a published standard, a working byte-exact relay, a benchmark anyone can run, and release automation in one agent session. The honest part is what the thing is: a framing envelope over Zstandard, not a new codec.">
+</head>
+<body>
+
+<article>
+
+<h1>I shipped a lossless stream standard in a day, and it won't lie about savings</h1>
+
+<p><em>2026-09-12, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> an AI agent did the heavy lifting on both the build and this write-up from my PRD and notes; I directed it and edited the prose. That is the subject of the post, so it would be strange to hide it.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I handed an agent a product requirements document for nixamp and came back to a working feature, a published open standard, a benchmark anyone can run, and a release pipeline that gates on it. One session. The stream played on the first try, relayed from one server to another and coming back byte for byte.</p>
+
+<p>That is the fun headline. Here is the honest one: I did not invent a video compression algorithm. What got built is a framing envelope over Zstandard, and the best thing about it is that it refuses to pretend to be more than that.</p>
+
+<h3>What we actually wanted</h3>
+
+<p>nixamp relays live channels and files between servers. The ask was to move fewer bytes across a link I control on both ends, without touching the picture or the sound, and without breaking a single existing player. Three operations had to stay separate and never quietly blur together: lossless transport compression that restores every byte, repackaging that copies media into a different container, and lower-bitrate re-encoding that actually changes the media. Confuse those and you ship a compression feature that silently degrades video. So the very first requirement was that turning on compression can never turn on re-encoding.</p>
+
+<h3>What got built</h3>
+
+<p>A wire format, not a codec. OpenStream is a stream header and a set of frames. Each frame carries a mode, a length, and a SHA-256 of the bytes it stands for. The bytes inside are compressed with Zstandard or gzip, or stored as-is when compression does not pay. There is a clean end marker, so a transfer that gets cut off is reported as cut off rather than served as a whole file. It is published as a standard with a byte layout and cross-language test vectors, and nixamp is the reference implementation.</p>
+
+<p>A relay that terminates cleanly. One server compresses a channel once and fans it out; the other decodes it and serves ordinary media to ordinary players. A browser or a TV never sees the envelope. If either side cannot speak it, the request falls back to the normal URL before a byte is sent.</p>
+
+<h3>The benchmark that tells the truth</h3>
+
+<p>This is the part I am proud of, and it is where the honesty lives. The benchmark runs the envelope over a defined corpus and records the round trip, the complete wire size including framing overhead, and the time.</p>
+
+<p>The first version had a bug that is worth confessing. My incompressible sample was a cheap pseudo-random generator, which is periodic, so it compressed 96 percent and made the numbers look incredible. That is exactly the lie a compression project tells itself. The fix was a genuinely incompressible sample, and the corrected report shows what is true: random data and an efficient unpadded transport stream fall back to stored and save nothing, while a stream that is half null-packet padding saves its padding and not one byte more.</p>
+
+<p>That is the whole point. Already-encoded H.264 or H.265 is near the entropy floor. Nothing lossless will meaningfully shrink the picture. Where an envelope saves bytes on a transport stream is the container's slack, mostly padding. If I had claimed a new codec, the first person to point it at a real feed would have caught me. Instead the report caps every claim, and a codec that fails to restore a byte exactly makes the release fail.</p>
+
+<h3>Why one session was possible</h3>
+
+<p>Because the requirements were written down first, and the guardrails were part of the spec rather than an afterthought. The document said measure honestly, keep the three operations distinct, prove exactness, and default everything off until real feeds are benchmarked. An agent that follows a good PRD closely produces something you can trust faster than a person arguing with themselves about scope. The speed is a consequence of the discipline, not a substitute for it.</p>
+
+<p>The accurate one-liner is a lossless relay envelope with a published standard, a reference implementation, a reproducible benchmark, and a release that will not ship a build that cannot restore a byte. That is a smaller claim than a new video codec, and it is a true one, which is worth more.</p>
+
+<p>The spec is at <a href="https://logicsrc.com/docs/openstream">https://logicsrc.com/docs/openstream</a>, and every nixamp release publishes a fresh benchmark report beside it at <a href="https://logicsrc.com/docs/openstream/reports">https://logicsrc.com/docs/openstream/reports</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
