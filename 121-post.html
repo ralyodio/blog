@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aaron Swartz and atx: the spec writer open source lost &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/121-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-12T19:13:10Z">
+<meta name="description" content="Aaron Swartz's 2002 atx page is where Markdown's pound-sign headings and reference links come from. He wrote RSS 1.0 at 14 and Creative Commons metadata at 15. What open specs lost in 2013.">
+</head>
+<body>
+
+<article>
+
+<h1>Aaron Swartz and atx: the spec writer open source lost</h1>
+
+<p><em>2026-09-12, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>In 2002 a fifteen year old put a page on his site called &quot;atx, the true structured text format&quot;. It opens with a complaint: &quot;I'm sick of bringing my writing down to the level of the computer. Why should I have to cover everything in annoying pointy brackets just so it knows what I mean?&quot; The page is still up at <a href="http://www.aaronsw.com/2002/atx/intro.html">aaronsw.com/2002/atx/intro.html</a>. The author was Aaron Swartz.</p>
+
+<h4>What atx said</h4>
+
+<p>The whole spec fits on one screen. Headings start with one or more <code>#</code> characters, the title with one, sections with two, subheads with three. Emphasis is <code>_underscores_</code>, strong is <code>*asterisks*</code>, code is <code>|pipes|</code>. Ordered lists start with <code>1.</code>, unordered lists with <code>*</code>. Block quotes are indented. A line that ends in a space continues onto the next line, a rule borrowed from format=flowed email. Links were still an open question. His proposal was to write <code>[John] went to [the market].</code> in the sentence and put <code>[John] http://www.john.org/</code> on its own line underneath. The page ends with &quot;What do you think?&quot;</p>
+
+<h4>What Markdown took</h4>
+
+<p>Two years later John Gruber shipped Markdown, and he has credited Aaron as a collaborator on the syntax. The pound-sign heading survived unchanged. Gruber's syntax page still calls it an atx-style header, and the CommonMark spec has a section titled &quot;ATX headings&quot;. Every <code># Title</code> at the top of every README on GitHub is one. The underscore emphasis survived. The two-line link, a label in the sentence and the address below it, is Markdown's reference-style link. The pipes for code did not make it, and the trailing-space rule got inverted into Markdown's two-space line break, which nobody has ever loved.</p>
+
+<h4>The rest of the list</h4>
+
+<p>atx was not a one-off. At fourteen he was on the RSS-DEV Working Group that wrote RSS 1.0. At fifteen he wrote the RDF metadata that made a Creative Commons license machine-readable, and sat on the W3C RDF Core Working Group. Later came web.py, the architecture of the Open Library, tor2web with Virgil Griffith, and DeadDrop, which became SecureDrop. Each one is a plain format a person can type, with the boring parts already done and a question at the end asking what you think.</p>
+
+<h4>What we lost</h4>
+
+<p>Aaron died on January 11, 2013, at 26, while federal prosecutors were pressing thirteen felony counts over journal articles he had downloaded from JSTOR. He would be 39 now. CommonMark was written the year after he died. ActivityPub, the run of agent specs from the last two years, the llms.txt argument: he would have had a page up about each of them, one screen long, ending in &quot;What do you think?&quot; Specs get written by whoever bothers, and for a decade the person who bothered first was a teenager in Highland Park.</p>
+
+<p>He is card #3 in Series One of our Open Source Legends set: <a href="https://opensourcelegends.com/cards/aaron-swartz">opensourcelegends.com/cards/aaron-swartz</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

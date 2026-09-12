@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 12 Sep 2026 17:50:54 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 12 Sep 2026 19:13:11 GMT</lastBuildDate>
+
+		<item>
+			<title>Aaron Swartz and atx: the spec writer open source lost</title>
+			<link>https://dev.profullstack.com/~anthony/blog/121-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/121-post.html</guid>
+			<pubDate>Sat, 12 Sep 2026 19:13:10 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Aaron Swartz's 2002 atx page is where Markdown's pound-sign headings and reference links come from. He wrote RSS 1.0 at 14 and Creative Commons metadata at 15. What open specs lost in 2013.</description>
+		</item>
 
 		<item>
 			<title>Every podcast is now a playlist you can put on the air</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 10 Sep 2026 19:34:40 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Play-by-play, TV listings, rent and buy, and posters for 430k IMDb titles land in nichedb.dev; tipoffwatch.com and genrewatch.com now mirror it instead of polling ESPN and TMDB; the match endpoint reads a game by its playlist name, and nixamp draws the live score under the player.</description>
-		</item>
-
-		<item>
-			<title>nichedb 0.6.0 keeps sports, screen and channels once; nixamp 0.11 is the first thing built on it</title>
-			<link>https://dev.profullstack.com/~anthony/blog/111-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/111-post.html</guid>
-			<pubDate>Thu, 10 Sep 2026 14:17:17 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>tipoffwatch, genrewatch and bittorrented each fetched the same sports, film and channel data; nichedb.dev now keeps it once, free to read, with a match endpoint that tells you what a file name is. nixamp shows posters, ratings and channel logos from it.</description>
 		</item>
 	</channel>
 </rss>
