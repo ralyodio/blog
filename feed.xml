@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 12 Sep 2026 19:13:11 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 12 Sep 2026 21:16:50 GMT</lastBuildDate>
+
+		<item>
+			<title>DiskPush 0.8.0: each pane is a folding tree, and the mouse drives it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/122-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/122-post.html</guid>
+			<pubDate>Sat, 12 Sep 2026 21:16:50 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>diskpush tui panes are folding trees now: one click unfolds a directory in place, local or over SSH, the row under the pointer lights up, every key in the bar is a button, no double-click anywhere. Built on hqtui 0.5.1.</description>
+		</item>
 
 		<item>
 			<title>Aaron Swartz and atx: the spec writer open source lost</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 11 Sep 2026 06:49:53 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>The US symbol directory, four hundred daily bars for 12,900 symbols, every SEC filer's XBRL fundamentals and every spot pair on four US crypto venues now live in nichedb.dev once; advis0r.com and b1dz.com switched to reading them there, with their trading and analysis left where it was.</description>
-		</item>
-
-		<item>
-			<title>nichedb 0.7 closes the gaps, tipoffwatch and genrewatch switch to it, and nixamp 0.12 shows the score</title>
-			<link>https://dev.profullstack.com/~anthony/blog/112-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/112-post.html</guid>
-			<pubDate>Thu, 10 Sep 2026 19:34:40 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Play-by-play, TV listings, rent and buy, and posters for 430k IMDb titles land in nichedb.dev; tipoffwatch.com and genrewatch.com now mirror it instead of polling ESPN and TMDB; the match endpoint reads a game by its playlist name, and nixamp draws the live score under the player.</description>
 		</item>
 	</channel>
 </rss>

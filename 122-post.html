@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DiskPush 0.8.0: each pane is a folding tree, and the mouse drives it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/122-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-12T21:16:50Z">
+<meta name="description" content="diskpush tui panes are folding trees now: one click unfolds a directory in place, local or over SSH, the row under the pointer lights up, every key in the bar is a button, no double-click anywhere. Built on hqtui 0.5.1.">
+</head>
+<body>
+
+<article>
+
+<h1>DiskPush 0.8.0: each pane is a folding tree, and the mouse drives it</h1>
+
+<p><em>2026-09-12, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p><code>diskpush tui</code> is the two-pane rsync browser that runs in a terminal. Until this week it was a keyboard program. You could click a row and the cursor would move there, and that was all the mouse did.</p>
+
+<p>0.8.0 makes each pane a folding tree that one click drives.</p>
+
+<h3>What changed</h3>
+
+<p>Click a directory and it unfolds in place. Its listing is fetched, locally or over the same SSH session for a server, and drawn indented beneath it. Click a directory inside that and it unfolds too, as deep as you like. The marker on the row tells you the state: <code>▸</code> folded, <code>▾</code> unfolded, <code>…</code> while the listing is on its way. Click it again and it folds. The listing is kept, so unfolding it again is instant.</p>
+
+<p>Click a file and it is selected. Click <code>..</code> at the top and the pane goes up a level. There is no double-click anywhere. The first cut of this had one, and it felt odd the moment I used it, because nothing in a terminal needs two presses.</p>
+
+<p>The row under the pointer lights up, a shade lighter than the background, and goes out when the pointer leaves the rows. Small, but it is the difference between a screen that reacts and one that waits.</p>
+
+<p>The rest of the screen is clickable too. Every key cap in the bar at the bottom is a button: <code>c endpoint</code> opens the server picker, <code>p preview</code> starts the dry run, <code>q quit</code> quits. In the picker, one click on a server points the pane at it. Dialogs have real buttons, and a click on the backdrop closes the ones that are safe to close. The unknown-host-key question is not one of those. It answers only from its two buttons.</p>
+
+<p>The keyboard walks the same tree. <code>→</code> unfolds a directory, or steps onto its first child if it is already open. <code>←</code> folds the directory under the cursor, or climbs to its parent row, or leaves the root. <code>⏎</code> toggles. <code>↑</code> and <code>↓</code> move through whatever is unfolded.</p>
+
+<h3>hqtui 0.5.1 underneath</h3>
+
+<p>DiskPush's TUI is drawn with hqtui, and hqtui only knew how to make rows clickable. This week it gained click hooks on status bar items, modal buttons and backdrops, and panels (0.5.0), then a <code>hovered</code> row on table, list and tree, an <code>onRow</code> callback on the tree so a scrolled tree can turn a click back into a node, and a scrollbar on the tree (0.5.1).</p>
+
+<pre><code class="language-ts">ui.tree({
+  nodes, selected, hovered: state.hover,
+  onSelectRow: (row) =&gt; toggle(row),
+  onHoverRow: (row) =&gt; { state.hover = row; state.hoverSeen = true },
+  onRow: (_node, index, y) =&gt; { first = index - y },
+})</code></pre>
+
+<p>A modal now owns the screen while it is up. Its body and its backdrop both swallow clicks, so a list drawn underneath never selects a row a click was aimed past it at. That was a bug waiting in any hqtui app with a dialog over a list.</p>
+
+<p>The headless test screen gained <code>click</code>, <code>scroll</code> and <code>hover</code>, all running the same hit-test the app runs. Every claim above is a test that clicks on the rendered frame. The interaction tests make a real directory on disk, unfold it, click into its nested directory, fold the parent, and walk it with the arrow keys.</p>
+
+<h3>Get it</h3>
+
+<pre><code>curl -fsSL https://diskpush.com/install.sh | sh
+diskpush tui prod:/srv/app</code></pre>
+
+<p>Or <code>diskpush update</code> if you already have it. hqtui is <code>npm install @profullstack/hqtui</code>, release notes at <a href="https://github.com/profullstack/hqtui/releases">https://github.com/profullstack/hqtui/releases</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
