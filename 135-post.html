@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenThreat: what a security tool found in the open, as one file &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/135-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T03:36:01Z">
+<meta name="description" content="ThreatCrush starts publishing the findings its GitHub App made in public repositories at threatcrush.com/discovery, as an OpenThreat descriptor. Public subjects only, secrets never located, announcing on by default with one switch to opt out. nichedb.dev reads it.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenThreat: what a security tool found in the open, as one file</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every security tool finds things, and every one keeps what it found behind its own login. A scanner that runs on a thousand public repositories knows which rules fire most and where, and says nothing, because saying it would mean a feed, a schema, an API key and a sales call. The threat feeds that do exist are products: a licence per seat, terms that forbid redistribution, and a format each vendor invented.</p>
+
+<p>Today ThreatCrush starts publishing what it finds in the open, and LogicSRC publishes the file format it uses to do it.</p>
+
+<h3>OpenThreat</h3>
+
+<p><a href="https://logicsrc.com/openthreat">OpenThreat</a> is one file a security tool serves about what it found in the open, at <code>/.well-known/openthreat.json</code>. A finding in a public repository, an attack observed against the reporter's own infrastructure, an indicator worth blocking, an advisory. Each threat carries the rule (the same string a SARIF <code>ruleId</code> carries), the severity, the CWE, the subject, the location, a status, and when it was first and last seen.</p>
+
+<pre><code class="language-json">{
+  &quot;reporter&quot;: { &quot;name&quot;: &quot;ThreatCrush&quot;, &quot;web&quot;: &quot;https://threatcrush.com&quot;,
+                &quot;policy&quot;: &quot;https://threatcrush.com/discovery#policy&quot; },
+  &quot;threats&quot;: [
+    { &quot;kind&quot;: &quot;finding&quot;, &quot;title&quot;: &quot;SQL assembled by concatenation&quot;, &quot;severity&quot;: &quot;high&quot;,
+      &quot;rule&quot;: &quot;js-sql-string-building&quot;, &quot;cwe&quot;: &quot;CWE-89&quot;,
+      &quot;subject&quot;: { &quot;name&quot;: &quot;northwind/api&quot;, &quot;url&quot;: &quot;https://github.com/northwind/api&quot; },
+      &quot;location&quot;: { &quot;file&quot;: &quot;src/db/users.ts&quot;, &quot;line&quot;: 42 }, &quot;status&quot;: &quot;open&quot; },
+    { &quot;kind&quot;: &quot;finding&quot;, &quot;title&quot;: &quot;Hardcoded credential&quot;, &quot;severity&quot;: &quot;critical&quot;,
+      &quot;rule&quot;: &quot;secret-generic-credential&quot;, &quot;category&quot;: &quot;secret&quot;,
+      &quot;subject&quot;: { &quot;name&quot;: &quot;northwind/api&quot;, &quot;url&quot;: &quot;https://github.com/northwind/api&quot; },
+      &quot;status&quot;: &quot;open&quot; }
+  ]
+}</code></pre>
+
+<p>Twelve rules degrade the way every LogicSRC spec does: the smallest valid file is a reporter with a name and a threat with a title, and absence is unstated. Two rules do not degrade, and they are the reason the file can exist at all.</p>
+
+<p><strong>A subject is public or it is not in the file.</strong> A finding about a private repository, a customer's server, a paying user's scan, or anyone's infrastructure but the reporter's own is not a threat in the open. It is someone's private security posture, and publishing it is a breach. A reporter that scans private things keeps two tables and serves one.</p>
+
+<p><strong>A secret is never located while it is open.</strong> Look at the second threat above. It is a hardcoded credential in a public repository, and the file says the rule, the severity, the subject and the status, and nothing else. No file, no line, no excerpt. The credential is already exposed by being public; the file must not be the map to it.</p>
+
+<h3>threatcrush.com/discovery</h3>
+
+<p><a href="https://threatcrush.com/discovery">ThreatCrush</a> is the first reporter. Its GitHub App scans the repositories it is installed on, and from today the findings in the public ones are listed on the discovery page and served in the descriptor. Nothing from a private repository is ever there, and nothing about organisations, servers, properties or detections is either. Sensitive findings are redacted as the spec says, and the code refuses to serialise the file at all if a forbidden key ever reaches it.</p>
+
+<p>Announcing is on by default, because a finding in a public repository is public already, and a list nobody is on lists nothing. The person who installed the app turns it off with one switch under their account. A repository that opts out leaves the file on the next build.</p>
+
+<h3>nichedb.dev/c/threats</h3>
+
+<p><a href="https://nichedb.dev/c/threats">nichedb.dev</a> is the first directory. It reads any reporter's descriptor, verified by the origin it came from, and lists the threats as feeds: all of them, critical and high, findings, attacks, the open ones. RSS, JSON, an API and MCP over the same rows, like every other collection there.</p>
+
+<h3>Why a file and not a feed</h3>
+
+<p>STIX describes threat intelligence exhaustively and SARIF describes one scanner run. OpenThreat is the small file a tool can serve in an afternoon: the standing list across runs, with a subject and a status, and the disclosure rules the other two do not have. A directory that speaks STIX can translate. A defender who wants to know what is being found in the open this week, by tools that are not theirs, fetches a URL.</p>
+
+<p>The spec is at <a href="https://logicsrc.com/docs/openthreat">logicsrc.com/docs/openthreat</a>, CC BY 4.0. Serve one, copy it, extend it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
