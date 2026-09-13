@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenAffiliate: affiliate programs with no network in the money &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/134-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T03:03:14Z">
+<meta name="description" content="One file a merchant serves about the commission it pays, and four calls that let a person or an agent earn it. Live on CrawlProof, which runs its own program and joins others from one dashboard.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenAffiliate: affiliate programs with no network in the money</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Affiliate marketing runs through networks, and the networks are the problem. A merchant pays a third of every commission for a tracking pixel and a payout file. An affiliate applies to each program by hand, waits weeks for a decision, and ends up with ten dashboards that disagree with each other. The terms live in a PDF signed once. A conversion gets reversed with no reason. The payout arrives sixty days later, minus a fee. And none of it can be read by a machine, so an agent that could earn a commission by recommending the right product has no way to find out what the commission is.</p>
+
+<p>The merchant already knows what it pays and what each sale was worth. So we wrote that down as a spec, and shipped it on CrawlProof.</p>
+
+<h3>The spec</h3>
+
+<p><a href="https://logicsrc.com/openaffiliate">OpenAffiliate</a> is one file a merchant serves at <code>/.well-known/openaffiliate.json</code>: every program with what it pays (sale, subscription, signup, lead, install), percent or a flat amount, the attribution window, the hold before approval, and how the money leaves. Four calls do the rest.</p>
+
+<ul>
+	<li><strong>Join</strong> by POSTing an <a href="https://logicsrc.com/openprofile">OpenProfile.md</a> URL. Back comes a code, a link, a token and the terms as they stood. A person or an agent, no application form.</li>
+	<li><strong>Link</strong> with the merchant's own URL plus <code>?oa=code</code>. No redirect host, no shortener, no pixel. Deep links work on any page.</li>
+	<li><strong>Ledger</strong>: every conversion with its status, hold and reason, every payout with its transaction hash, readable by the affiliate with the token. A reversal without a reason is not a reversal.</li>
+	<li><strong>Payout</strong> of the whole approved balance to the affiliate's own address on the schedule the file names. Nothing netted, because there is no network to pay one to.</li>
+</ul>
+
+<p>Only a real navigation sets attribution. A parameter on an image, a frame or a script sets nothing, which is the whole defence against cookie stuffing, and it is the merchant's to enforce. A directory that lists programs never touches the money.</p>
+
+<h3>The implementation</h3>
+
+<p>CrawlProof now runs its own program and is the reference implementation. The terms are public at <a href="https://crawlproof.com/.well-known/openaffiliate.json">crawlproof.com/.well-known/openaffiliate.json</a>: 30 percent of a credits purchase within 30 days of a click, a 30 day hold, paid in USDC on Polygon weekly from ten dollars. Sign in and your link exists at <a href="https://crawlproof.com/dashboard/affiliate">crawlproof.com/dashboard/affiliate</a>.</p>
+
+<p>It also works the other way. Every CrawlProof user gets a served OpenProfile, and the same dashboard reads other merchants' descriptors, joins their programs with that profile, holds the token for you and shows every ledger on one page. The directory is at <a href="https://crawlproof.com/affiliate/programs">crawlproof.com/affiliate/programs</a>.</p>
+
+<p>Everything the dashboard does, an agent can do. <code>crawlproof affiliate link|ledger|pay|payout|programs|join|joined</code> on the CLI, nine <code>affiliate_*</code> tools on the MCP server, and the API under <code>/api/affiliate/v1/</code> that takes an affiliate token, a CrawlProof API token or a session.</p>
+
+<h3>Running one yourself</h3>
+
+<p>By hand, from the table that already exists. A merchant with a referral column on its orders has the ledger; the descriptor is the terms written down, the join call is an insert, and the payout is what it already does on a schedule. The spec is CC BY 4.0 at <a href="https://logicsrc.com/docs/openaffiliate">logicsrc.com/docs/openaffiliate</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
