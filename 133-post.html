@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CrawlProof ads now bid for you, with paper money first &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/133-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T02:49:32Z">
+<meta name="description" content="Every campaign bids automatically from its daily budget. The free tier is a paper auction: real numbers, no real money, and a bid history on every campaign page.">
+</head>
+<body>
+
+<article>
+
+<h1>CrawlProof ads now bid for you, with paper money first</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every ad campaign on crawlproof.com bids automatically now. You set a daily budget. A pacing controller sets the bid every hour and a chart on the campaign page shows what it did and why.</p>
+
+<h3>Why nobody was bidding</h3>
+
+<p>The ad network had 314 campaigns and one advertiser: us. Every slot and every campaign belong to the same account, so every fill booked as a self-deal on the free tier, and the free tier weighted every campaign at 1. There was a bid field on the form and it changed nothing. The auction, the pacing and the click charge had never run end to end.</p>
+
+<p>So the free tier is a paper auction now. Same bid-weighted lottery as the paid tier, weighted by each campaign's bid while its paper daily budget lasts. Every free click records what it would have cost at the bid, 20 cents at the default. No credit balance is ever debited. A funded third party still bills through the real charge path, which did not change.</p>
+
+<h3>What the controller does</h3>
+
+<p>Once an hour, per campaign:</p>
+
+<ul>
+	<li>Behind the day's pace, raise the bid a quarter, at least one credit.</li>
+	<li>Ahead of pace by 30 percent or more, lower it a fifth.</li>
+	<li>Never bid more than the daily budget can cover five times over. A 5 dollar budget caps at 20 credits.</li>
+	<li>Won nothing in a day while bidding under the market median: raise.</li>
+	<li>Already twice the median and still behind: hold. The constraint is inventory, not price.</li>
+	<li>Before 8 percent of the UTC day has passed, do nothing. There is no signal yet.</li>
+</ul>
+
+<p>The first sweep after deploy looked at all 314 campaigns. 309 raised for being behind pace, 5 raised for being outbid, and bids now sit between 2 and 7 credits. The network serves about 8,000 impressions and 3,000 free clicks a day, so most 5 dollar campaigns will spend their paper budget by mid morning and drop to a token weight until midnight. That is the point. The numbers are real and the money is not, so the auction can be watched and judged before anyone is charged.</p>
+
+<h3>What you see</h3>
+
+<p>The create form has no bid field. The edit form has an Autobid switch, on by default, showing the current bid and the reason it moved. Turn it off and you can type a bid instead. The campaign page charts the bid against impressions, clicks and the visits the tracker attributed to the campaign on your own site, with the last decisions listed underneath.</p>
+
+<p>The API carries the same under stats.bid, and the CLI has crawlproof ads bid &lt;ref&gt; auto or a number.</p>
+
+<p><a href="https://crawlproof.com/ads">https://crawlproof.com/ads</a></p>
+
+<p>This post was drafted with AI assistance and checked by a person.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

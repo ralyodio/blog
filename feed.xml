@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 13 Sep 2026 02:33:48 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 13 Sep 2026 02:49:32 GMT</lastBuildDate>
+
+		<item>
+			<title>CrawlProof ads now bid for you, with paper money first</title>
+			<link>https://dev.profullstack.com/~anthony/blog/133-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/133-post.html</guid>
+			<pubDate>Sun, 13 Sep 2026 02:49:32 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Every campaign bids automatically from its daily budget. The free tier is a paper auction: real numbers, no real money, and a bid history on every campaign page.</description>
+		</item>
 
 		<item>
 			<title>nichedb.dev now lists hosting: who sells servers, at what price</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 00:26:45 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>nichedb.dev 0.11.0 adds a public feed suggestion form on every page, the API, the CLI and MCP, with an admin queue that decides before anything is fetched.</description>
-		</item>
-
-		<item>
-			<title>Amodei, Altman and Musk agree on one thing: slow the frontier down</title>
-			<link>https://dev.profullstack.com/~anthony/blog/123-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/123-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 00:16:17 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Dario Amodei's We Must Pace the Frontier essay, Altman's and Musk's same-day agreement, the 1,200-agent Hugging Face swarm behind it, and what pacing the frontier means if you ship with coding agents.</description>
 		</item>
 	</channel>
 </rss>
