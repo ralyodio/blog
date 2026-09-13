@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>c0mpute bench: workers now advertise how fast, not just what &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/125-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T00:37:13Z">
+<meta name="description" content="c0mpute 0.2.27 adds a per-node benchmark (fib, matmul, blake3 at 1 to N threads) that folds into one score the network compares, published in every worker's capability ad. The TUI moves to hqtui with the score as its first panel.">
+</head>
+<body>
+
+<article>
+
+<h1>c0mpute bench: workers now advertise how fast, not just what</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Until today a c0mpute worker told the network what it had: a couple of role tags and one hardware tag such as <code>c0mpute:gpu:nvidia</code>. It never said how fast it was. A four year old laptop and a 64 core EPYC both showed up as <code>c0mpute:cpu</code>, and a buyer picking between them was guessing.</p>
+
+<p>c0mpute 0.2.27 adds <code>c0mpute bench</code>. It measures the machine it runs on and reduces the result to one number the whole network can compare.</p>
+
+<h3>What it measures</h3>
+
+<p>Three workloads, all pure Rust, no external binaries, deterministic input:</p>
+
+<ul>
+	<li><strong>fib</strong>: recursive fork-join fibonacci, n=36. Scheduler and call overhead.</li>
+	<li><strong>matmul</strong>: dense f64 matrix multiply, n=512, rows partitioned across threads. FPU and cache.</li>
+	<li><strong>hash</strong>: blake3 over 128 MiB in 1 MiB chunks. Memory bandwidth, and the exact work the verify and storage roles do all day.</li>
+</ul>
+
+<p>Each one runs at 1, 2, 4, up to N threads. Per sample it records the duration, the speedup over the single thread run, and the throughput in real units: node visits, flops and bytes per second.</p>
+
+<pre><code>c0mpute bench  ·  score 6952
+  cpu      DO-Premium-Intel
+  cores    8
+
+  fib (n=36)
+  thr   duration      speedup  eff   throughput
+    1      84302 us    1.00x  100%     573 Mvis/s  ████████████████████████
+    2      44016 us    1.92x   96%    1.10 Gvis/s  ███████████████████████░
+    4      23973 us    3.52x   88%    2.02 Gvis/s  █████████████████████░░░
+    8      13156 us    6.41x   80%    3.67 Gvis/s  ███████████████████░░░░░
+
+  hash (128 MiB)
+  thr   duration      speedup  eff   throughput
+    1      50189 us    1.00x  100%     2.49 GiB/s  ████████████████████████
+    8       6914 us    7.26x   91%    18.08 GiB/s  ██████████████████████░░</code></pre>
+
+<p>The bar is parallel efficiency. A machine that scales perfectly fills it. The 70 or 80 percent you see on cloud boxes is the hypervisor and shared memory bandwidth, and it is worth knowing before you bid.</p>
+
+<h3>The score</h3>
+
+<p>The score is the geometric mean of the best throughput on each workload against a fixed reference, times 1000. A score of 1000 means one reference core on every workload. The reference is one DigitalOcean Premium Intel vCPU as measured in September 2026, and the constants are pinned in the source so scores stay comparable across releases. That 8 vCPU droplet lands near 7000. A 16 core desktop that scales well is around 20000.</p>
+
+<p>The report file borrows its layout from <a href="https://fleetcode.com/runtime-benchmarks/">fleetcode's runtime-benchmarks</a>: a <code>metadata</code> block with the CPU, cores, kernel and compiler, then <code>results</code> keyed by runtime, workload and thread count with <code>duration</code>, <code>scaled</code> and <code>speedup</code>. If you already have tooling that reads those files, it reads ours. Only the shape is shared; the numbers are yours.</p>
+
+<h3>What the network does with it</h3>
+
+<p>The worker reads the last full report when it starts and publishes the score as <code>bench_score</code> in its capability ad on <code>c0mpute/cap/v1</code>. Older peers ignore the new field, so nothing breaks during a rolling upgrade. The status aggregator adds up every advertised score and exposes it as network capacity, and the status page shows it next to workers online. Quick runs (<code>--quick</code>, about a second) are for a sanity check and are never advertised.</p>
+
+<pre><code>c0mpute bench                 # full run, saves and prints the table
+c0mpute bench --quick         # one second smoke run, not advertised
+c0mpute bench --json          # the report as JSON
+c0mpute bench show            # the last saved report
+c0mpute worker status         # includes the score the worker will publish</code></pre>
+
+<h3>The TUI grew up</h3>
+
+<p><code>c0mpute tui</code> was a placeholder. It is now a real dashboard on <a href="https://hqtui.com">hqtui</a>, the terminal UI library we use across our tools, and the bench report is its first panel: score, per workload throughput, a scaling meter and a speedup sparkline, next to the worker state and module list. The view is a pure function of state and is tested by rendering it to text, which is also how the screenshot in the pull request was made.</p>
+
+<h3>Try it</h3>
+
+<pre><code>curl -fsSL https://c0mpute.com/install.sh | sh
+c0mpute bench</code></pre>
+
+<p>Source, tests and the design notes are in <a href="https://github.com/profullstack/c0mpute">profullstack/c0mpute</a>. The reference constants live in <code>node/crates/c0mpute-bench/src/lib.rs</code> if you want to argue with them.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
