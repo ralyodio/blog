@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 13 Sep 2026 07:06:41 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 13 Sep 2026 07:58:24 GMT</lastBuildDate>
+
+		<item>
+			<title>Pulse for the repository you are standing in</title>
+			<link>https://dev.profullstack.com/~anthony/blog/144-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/144-post.html</guid>
+			<pubDate>Sun, 13 Sep 2026 07:58:24 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>g1tz 0.2.0 puts GitHub's Pulse page in the terminal, for the repository you are in: commits, authors and files from git, pull requests and stars through gh, views and clones from gh-pulse.</description>
+		</item>
 
 		<item>
 			<title>moshcode swarm: one task, a herd of agents, one answer</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 03:36:01 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>ThreatCrush starts publishing the findings its GitHub App made in public repositories at threatcrush.com/discovery, as an OpenThreat descriptor. Public subjects only, secrets never located, announcing on by default with one switch to opt out. nichedb.dev reads it.</description>
-		</item>
-
-		<item>
-			<title>OpenAffiliate: affiliate programs with no network in the money</title>
-			<link>https://dev.profullstack.com/~anthony/blog/134-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/134-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 03:03:14 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>One file a merchant serves about the commission it pays, and four calls that let a person or an agent earn it. Live on CrawlProof, which runs its own program and joins others from one dashboard.</description>
 		</item>
 	</channel>
 </rss>

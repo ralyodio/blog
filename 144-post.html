@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pulse for the repository you are standing in &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/144-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T07:58:24Z">
+<meta name="description" content="g1tz 0.2.0 puts GitHub's Pulse page in the terminal, for the repository you are in: commits, authors and files from git, pull requests and stars through gh, views and clones from gh-pulse.">
+</head>
+<body>
+
+<article>
+
+<h1>Pulse for the repository you are standing in</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>GitHub has a tab called Pulse. Insights, then Pulse: how many commits landed this week, by whom, how many pull requests merged, what changed. It is the one page on GitHub I open on someone else's repository before I open the code, and it is the page I never open on my own, because by the time I have a browser tab up I have stopped working.</p>
+
+<p>g1tz 0.2.0 puts that page in the terminal, for the repository you are standing in. Press <code>p</code>.</p>
+
+<pre><code> g1tz  pulse  spans-richtext          last week                                          ~/hqtui  d w m q y a range  p repo  q quit
+ day    week    month    quarter    year    all
+╭─ Overview ──────────────────────────────────────────────╮ ╭─ Files changed (27)  +1843 −412 ─────────────────────────────────────╮
+│ Commits                    9 on spans-richtext, 1 merge │ │ packages/hqtui/src/richtext.ts          +412      −0               █ │
+│ All branches                14 commits, merges excluded │ │ packages/hqtui/src/widgets/text.ts      +188     −96               █ │
+│ Authors                                  3: Ann, Bo, Cy │ │ ports/zig/src/terminal.zig              +141    −120               █ │
+│ Changed                            27 files, +1843 −412 │ │ packages/hqtui/test/richtext.test.ts    +236      −0               █ │
+│ Branches      3 active: spans-richtext, main, ports/zi… │ │ apps/web/app/apps/page.tsx              +174     −31               █ │
+│ Tags                                      1 new: v0.6.0 │ │ packages/hqtui/src/surface.ts            +97     −44               █ │
+│ Period             2026-09-06 12:00 to 2026-09-13 12:00 │ │ packages/hqtui/src/graphics/chart.ts     +58     −39               █ │
+╰─────────────────────────────────────────────────────────╯ │ apps/web/public/apps/g1tz.png            bin                       █ │
+                                                            │ ports/zig/src/main.zig                   +33     −41               │ │
+╭─ Commits per day ───────────────────────────────────────╮ │ docs/VTTUI.md → docs/PRD.md              +62      −8               │ │
+│ 10 commits, peak 3 in one day                           │ ╰──────────────────────────────────────────────────────────────────────╯
+│                               ██████                    │
+│                               ██████▅▅▅▅▅▅▅▅▅▅▅▅        │ ╭─ GitHub  profullstack/hqtui ─────────────────────────────────────────╮
+│             ▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃██████████████████        │ │ Pull requests                  2 merged, 1 opened, 0 closed unmerged │
+│             ████████████████████████████████████        │ │ Issues                                1 opened, 1 closed, 9 open now │
+│ 09-06                                             09-13 │ │ Releases                                                   1: v0.6.0 │
+╰─────────────────────────────────────────────────────────╯ │ Stars                                       +62, 218 total, 14 forks │
+                                                            │ merged #58 Zig 0.16: std.process.Init, no posix.write (cy)           │
+╭─ Authors (3) ───────────────────────────────────────────╮ │ merged #57 Graph: y-axis minimum belongs to the plot (ann)           │
+│ Ann           4 ████······ 44%                          │ │ opened #61 Styled spans in text and table cells (ann)                │
+│ Bo            3 ███······· 33%                          │ │ issue #60 Styled spans within a line (g1tz)                          │
+│ Cy            2 ██········ 22%                          │ ╰──────────────────────────────────────────────────────────────────────╯
+│                                                         │
+│                                                         │ ╭─ Traffic  gh-pulse 2026-09-13 03:05 ─────────────────────────────────╮
+│                                                         │ │ Views 14d                           ▁▁▁▁▂▃▅▄▂▂▅█▇▃ 1154 / 384 unique │
+│                                                         │ │ Clones 14d                           ▁▁▁▁▂▃▅▄▂▂▆█▇▄ 198 / 103 unique │
+│                                                         │ │ Referrers: news.ycombinator.com 412 · hqtui.com 96 · bsky.app 44     │
+│                                                         │ │ Popular: / 611 · /tree/main/ports 88                                 │
+│                                                         │ │ https://github.com/profullstack/hqtui/graphs/traffic                 │
+╰─────────────────────────────────────────────────────────╯ ╰──────────────────────────────────────────────────────────────────────╯
+ d w m q y a last week  ↑↓ Files  r Refresh  p Repo  q Quit</code></pre>
+
+<h3>Three sources, one screen</h3>
+
+<p>The left half is git, and git is always there. Commits and authors on the branch you are on and across every branch, with merges counted apart because GitHub counts them apart and the numbers should agree. The net change to the tree since the period began: not the sum of every commit's stat, which double counts a file touched twice, but one diff from where the branch was to where it is. Commits per hour, day, week or month, whichever fits the range. The branches that received a commit, the tags that were created. All of it works offline, on a repository that has never seen GitHub.</p>
+
+<p>The right half is the wider world, and both of its panels are optional. When <code>origin</code> points at github.com and <code>gh</code> is logged in, the GitHub panel fills with the pull requests opened, merged and closed in the period, the issues, the releases, and the stars that arrived. It goes through the <code>gh</code> command rather than a token of its own, so there is nothing to configure and nothing to leak. It reads off the render loop, and if you change the range while it is still asking, the answer to the old question is dropped rather than drawn over the new one.</p>
+
+<p>The traffic panel is the odd one. GitHub only hands out a repository's views and clones through its traffic API, only for the last fourteen days, and only to someone with push access, so a git TUI cannot reasonably fetch them itself. But if <a href="https://github.com/profullstack/cli-tools">gh-pulse</a> has run on your machine, its daily report is sitting in <code>~/.local/share/gh-pulse</code>, and g1tz reads your repository's row out of it: the fourteen-day sparklines, the referrers, the popular paths. Two tools, one file, no protocol.</p>
+
+<h3>Where the period starts</h3>
+
+<p>The subtle part was the diff. &quot;What changed this week&quot; sounds like a range of commits, but a range of commits is not a diff; it is a list, and the files in it overlap. What you want is the tree at the start of the week against the tree now.</p>
+
+<p>Finding the tree at the start of the week is the first parent of the oldest first-parent commit in range. Walk back along the branch's own line, not into the topic branches merged into it, until you reach the first commit older than the period; the commit before that is where the branch stood. A merge, a rebase and a fast-forward all give the same answer, which is what makes it the right one. All time, and a root commit inside the period, diff from git's empty tree instead, so a brand new repository has a pulse too.</p>
+
+<h3>Found on the way</h3>
+
+<p>Building a second screen on the same repository reader turned up a bug in the first. The log parser read <code>git log --pretty=format:...%x00</code> and split on the NUL, which is correct, except that <code>format:</code> (unlike <code>tformat:</code>) puts a newline between records rather than after each one, so every record but the first began with <code>\n</code>, and so did its hash. <code>git show &quot;\n3f2a...&quot;</code> fails quietly, and the Log pane had been drawing an empty diff for every commit but the newest since the first release. Fixed, with a test that reads a real repository and feeds every hash back to git.</p>
+
+<h3>Try it</h3>
+
+<pre><code>bunx g1tz            # the repository you are standing in, then press p
+bunx g1tz pulse      # straight to Pulse, last week
+bunx g1tz pulse --range month</code></pre>
+
+<p>Ranges are <code>d w m q y a</code>, or click the buttons. <code>r</code> reads it again. g1tz is built on <a href="https://hqtui.com">hqtui</a>, and this screen is why it moved to 0.6.0: buttons, key-value rows, histograms, sparklines and a spinner, all of which the gallery on <a href="https://hqtui.com/apps">hqtui.com/apps</a> now shows.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
