@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenWiki, and webrings you can browse, make and score &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/152-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T13:37:59Z">
+<meta name="description" content="A wiki that is a folder of Markdown files, webrings with a viewer, your own rings and a leaderboard, and both specs saying who made what in the W3C's own AI disclosure words.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenWiki, and webrings you can browse, make and score</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Today three things landed that belong together: a wiki format that is just a folder of Markdown, webrings you can browse like a TV channel, and both of them saying who made what, in the W3C's own words.</p>
+
+<h3>OpenWiki: a wiki that is a folder of Markdown files</h3>
+
+<p>There is no open wiki format. MediaWiki's wikitext is one engine's shape, WikiCreole stalled in 2007, and what everybody actually uses now is Markdown files linked with <code>[[Page]]</code>. Obsidian, Logseq, Foam, Quartz and a dozen others read that, and none of them agrees on what goes above the first line, how a link finds its page when the case differs, where the history lives, or how another program finds out the folder is a wiki at all.</p>
+
+<p><a href="https://logicsrc.com/openwiki">OpenWiki</a> writes it down. One Markdown file per page with a small optional front matter (title, aliases, tags, summary, author, made_by, disclosure, license, redirect). Wikilinks resolve in a fixed order: exact name, loose name, alias, folder path, then &quot;wanted&quot;. One address with three forms: the page rendered, the file as stored with the revision id as its ETag, and any past revision. A history file per page says who made each revision and whether a person or an AI wrote it. The wiki serves one descriptor at <code>/.well-known/openwiki.json</code> with the page index, an Atom feed of changes, the git repo, and who may edit.</p>
+
+<p>Editing is a <code>PUT</code> of the same file with <code>If-Match</code> on the revision you started from. An agent editing a wiki is a program reading a Markdown file and putting it back. That is the whole API, and it is the same one your editor uses.</p>
+
+<p>An Obsidian or Logseq folder is already the page format. Two JSON files make it a host. The full specification is at <a href="https://logicsrc.com/docs/openwiki">logicsrc.com/docs/openwiki</a>, CC BY 4.0. The first host, goviral.wiki, is being built on it.</p>
+
+<h3>Webrings you can browse, make, and score</h3>
+
+<p><a href="https://logicsrc.com/openwebring">OpenWebring</a> went live yesterday with rssamplifier.com as the first host. Today the host grew up:</p>
+
+<ul>
+	<li><strong>Every topic is a ring.</strong> <a href="https://rssamplifier.com/ring/software">rssamplifier.com/ring/software</a> is the software topic's feeds as a ring, computed from the same data the topic page uses, with hops, an OPML and a ring file. Nothing is stored until a site links back.</li>
+	<li><strong>A viewer.</strong> <a href="https://rssamplifier.com/view/business">rssamplifier.com/view/business</a> frames each member site under one slim bar: previous, random, next, the ring before and after, position, who makes the site, like, share, follow. Arrow keys work. Sites that refuse framing get an open button instead of a blank frame.</li>
+	<li><strong>Your own rings.</strong> Signed in, <a href="https://rssamplifier.com/ring/new">rssamplifier.com/ring/new</a> takes a title and a list of sites, and the ring is public the moment you save it: on the index, on the host file every directory reads, with hops, OPML and the viewer. Edit it any time.</li>
+	<li><strong>A leaderboard.</strong> Every action with a ring is a fact with a time: a site viewed, a ring shared, liked, a member followed, a site added, a ring made. <a href="https://rssamplifier.com/ring/leaders">rssamplifier.com/ring/leaders</a> scores people and rings from that log, sharing worth the most, because a share is what brings the next reader.</li>
+	<li><strong>A directory.</strong> <a href="https://nichedb.dev/c/webrings">nichedb.dev/c/webrings</a> reads every ring across hosts: 22 rings and nearly 2,000 members on day one.</li>
+</ul>
+
+<h3>Who made it, in the W3C's words</h3>
+
+<p>Both specs carry the <a href="https://github.com/dweekly/ai-content-disclosure">W3C AI Content Disclosure</a> vocabulary verbatim: <code>disclosure</code> (none, ai-assisted, ai-generated, autonomous), plus <code>ai_model</code>, <code>ai_provider</code> and <code>ai_prompt_url</code>, beside a <code>made_by</code> of human, ai or both. A site says it once in its descriptor; a wiki says it per page and per revision; a host renders it as the group's own meta tag and attributes. Absent is unstated, never assumed.</p>
+
+<p>The specs are open, the hosts are running, and the data is crawlable. Join a ring, make one, or put two files next to your notes and call it a wiki.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
