@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ten full catalogues in a day: what the arr ecosystem&rsquo;s own backends will and will not let a directory carry &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/145-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T08:07:34Z">
+<meta name="description" content="We checked every arr metadata backend for one question, whether a public directory may carry the data whole, then built the ones that said yes: TVmaze, IGDB, Wikidata films and games, TheSportsDB teams and players, Kitsu, Gutenberg, LibriVox and Steam, one agent per source with an adversarial reviewer each.">
+</head>
+<body>
+
+<article>
+
+<h1>Ten full catalogues in a day: what the arr ecosystem&rsquo;s own backends will and will not let a directory carry</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Sonarr, Radarr, Lidarr, Readarr and their cousins each sit on a metadata backend. We wanted the whole of every one of those in nichedb, so this morning we checked each backend live for one question: can a public directory that sells a premium tier carry the data, whole, with attribution? Then we built the ones that said yes.</p>
+
+<h3>What said no</h3>
+
+<p>TMDB and the IMDb datasets are non-commercial without a written contract. MyAnimeList's terms forbid aggregating its content anywhere else, which rules out Jikan too. Trakt, OMDb and Deezer are personal use only. RAWG bans redistribution outright, MobyGames charges for commercial use and treats any AI use as commercial, Fanart.tv wants written consent, Comic Vine revokes keys used commercially, and BoardGameGeek now needs a commercial licence and a bearer token. Sonarr's Skyhook and Radarr's api.radarr.video are proxies of TVDB and TMDB with no licence of their own, so they add nothing the originals do not. Spotify and Google Books forbid storing anything at all.</p>
+
+<h3>What said yes, and is now in</h3>
+
+<p>Every show TVmaze knows, close to 90,000, CC BY-SA, walked at 250 a page and then kept current from its updates feed. Every game IGDB knows, about 350,000; IGDB says in its own words that it prefers the data stored and served. Every film and every video game on Wikidata, CC0, walked in numeric id windows over SPARQL. Every team and every player TheSportsDB knows; the players land as OpenProfile.md people with their Twitter, Instagram, Facebook and YouTube, so an athlete who later serves their own profile merges rather than duplicates. Every anime on Kitsu. Project Gutenberg's whole catalogue and every LibriVox audiobook, both public domain. Every app on Steam through the keyless store query, since the old app list endpoint is dead.</p>
+
+<p>Each source is a capped, resumable walk: a run asks for a fixed number of pages, keeps its place in a cursor, ends its pass when it runs past the end, and starts over on a schedule. Each one states its licence in its own description, including the one that has none stated.</p>
+
+<h3>How it was built</h3>
+
+<p>One agent per source, each on its own branch, each saving real responses as test fixtures and probing the live API from its own code path. Then a second agent per source whose job was to prove the first one wrong: rerun the tests, hit the real API with the adapter's exact URLs, run two consecutive pulls and check the second starts where the first stopped, and read the licence sentence against the actual terms. Seven of eight were corrected by review. Wikidata's truthy date property drops precision, so year-only dates arrive as the first of January; an inner subquery without DISTINCT let a doubly-typed item shorten a page and skip rows; a conditional request compared against the wrong timestamp; three licence sentences claimed more than the terms grant. None of that would have shown up in a green test suite.</p>
+
+<p>The pattern is written down at logicsrc.com/asdlc. The catalogues are at nichedb.dev.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
