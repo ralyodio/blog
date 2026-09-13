@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Four specs for the four numbers on every server pricing page &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/127-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T02:05:15Z">
+<meta name="description" content="OpenCPU, OpenMemory, OpenGPU and OpenBandwidth: one spec per resource that is negotiable when you buy a server, as blocks of an OpenServer offer, with a range for what a buyer can dial at checkout.">
+</head>
+<body>
+
+<article>
+
+<h1>Four specs for the four numbers on every server pricing page</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every server comparison site has the same column. It says &quot;4 vCPU&quot; and &quot;8 GB&quot; and &quot;1 Gbps&quot;, and sorts on the number. The number is almost never the product. Four hyperthreads of a shared socket and four dedicated cores are both 4 vCPU. Eight gigabytes that the host reclaims under pressure and eight gigabytes of ECC DDR5 are both 8 GB. Unmetered 1 Gbps, 1 Gbps with a 20 TB cap, and 1 Gbps billed at the 95th percentile are three products at one number, and the surprise is always on the invoice.</p>
+
+<p>The comparison sites know this and cannot fix it, because they scrape. A scrape gets what the pricing page shows, the page changes, the scrape breaks, and the provider who wanted its offers seen is the one party with no say in how they appear. Then the comparison site's terms forbid anyone else from scraping the scrape.</p>
+
+<p>So today LogicSRC publishes four small specifications, one per resource that is actually negotiable when you buy a server. They are the blocks of an OpenServer offer, the file a provider serves about what it sells, written down on their own so a provider, a directory and a buyer's agent all mean the same thing by the same key.</p>
+
+<h3>The four</h3>
+
+<p><strong><a href="https://logicsrc.com/opencpu">OpenCPU</a></strong> keeps threads and cores apart. <code>vcpu</code> is what the guest sees, <code>cores</code> is what the silicon has, and a reader never derives one from the other unless the provider says how they relate. The processor is named the way the vendor names it. <code>allocation</code> is <code>dedicated</code>, <code>shared</code> or <code>burstable</code>, and it sits beside the count, because four of one and four of the other are different products.</p>
+
+<p><strong><a href="https://logicsrc.com/openmemory">OpenMemory</a></strong> is mebibytes, the DDR generation, and ECC as three states: yes, no, and unstated. A directory that shows unstated as false has lied about half the market. <code>allocation</code> says whether the memory is reserved, balloonable or shared.</p>
+
+<p><strong><a href="https://logicsrc.com/opengpu">OpenGPU</a></strong> names the card the way the vendor does, form factor included, because an H100 SXM and an H100 PCIe are two cards. <code>count</code> and <code>vram_mb</code> per device, <code>interconnect</code> between them, and <code>access</code>: the whole device, a MIG slice, a vGPU share, or time-sliced with neighbours. A MIG slice and a whole card share a model and differ in everything else.</p>
+
+<p><strong><a href="https://logicsrc.com/openbandwidth">OpenBandwidth</a></strong> has a port and a meter. <code>metering</code> is <code>transfer</code>, <code>unmetered</code>, <code>percentile</code> or <code>flat</code>, and the overage is stated with its unit. IPv4 addresses are a resource in their own right now, leased by the /24, so the block carries how many are included, what more cost, and the ceiling.</p>
+
+<p>The fifth, OpenDisk, is being published alongside OpenServer itself.</p>
+
+<h3>The one new idea</h3>
+
+<p>Every block may carry a <code>range</code>. It is the part a configurator hides in a form: which field the buyer can dial at checkout, its bounds, the step, and what a step costs on top of the base price.</p>
+
+<pre><code class="language-json">&quot;range&quot;: {
+  &quot;key&quot;: &quot;ram_mb&quot;, &quot;min&quot;: 32768, &quot;max&quot;: 1048576, &quot;step&quot;: 32768,
+  &quot;price&quot;: { &quot;amount&quot;: 12, &quot;currency&quot;: &quot;USD&quot;, &quot;interval&quot;: &quot;month&quot;, &quot;per&quot;: 32768 }
+}</code></pre>
+
+<p>That is memory sold in 32 GiB steps at 12 dollars a month each. A directory shows the base and the step instead of one row per size, and an agent asked for &quot;64 GB under 60 a month&quot; can answer from the file.</p>
+
+<h3>What is not in them</h3>
+
+<p>No benchmarks. The clock is the vendor's figure, the throughput is the vendor's figure, and a measured number is another document's business. No carrier lists, no SLAs, no reservation calendars. Every rule degrades: the smallest valid compute block is <code>{ &quot;compute&quot;: { &quot;vcpu&quot;: 4 } }</code>, and absence is unstated, never a default.</p>
+
+<h3>Why</h3>
+
+<p>A provider already keeps this data in a table, because its order form reads it. The file is that table, exported, at a fixed URL, in a shape every reader agrees on. Nobody scrapes anybody, and the provider stays the author of its own words. The first directory reading it is the hosting collection on nichedb.dev.</p>
+
+<p>The specs are at <a href="https://logicsrc.com/docs/opencpu">logicsrc.com/docs/opencpu</a>, <a href="https://logicsrc.com/docs/openmemory">openmemory</a>, <a href="https://logicsrc.com/docs/opengpu">opengpu</a> and <a href="https://logicsrc.com/docs/openbandwidth">openbandwidth</a>, CC BY 4.0. Serve one, copy it, extend it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

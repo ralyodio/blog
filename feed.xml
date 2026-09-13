@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 13 Sep 2026 01:58:56 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 13 Sep 2026 02:05:15 GMT</lastBuildDate>
+
+		<item>
+			<title>Four specs for the four numbers on every server pricing page</title>
+			<link>https://dev.profullstack.com/~anthony/blog/127-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/127-post.html</guid>
+			<pubDate>Sun, 13 Sep 2026 02:05:15 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>OpenCPU, OpenMemory, OpenGPU and OpenBandwidth: one spec per resource that is negotiable when you buy a server, as blocks of an OpenServer offer, with a range for what a buyer can dial at checkout.</description>
+		</item>
 
 		<item>
 			<title>OpenServer: one file a hosting provider serves about what it sells</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 12 Sep 2026 15:16:54 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Fleetcoding: building software by directing fleets of AI agents instead of writing every line. Ten agents on the bus today, ten thousand is the target.</description>
-		</item>
-
-		<item>
-			<title>I shipped a lossless stream standard in a day, and it won't lie about savings</title>
-			<link>https://dev.profullstack.com/~anthony/blog/117-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/117-post.html</guid>
-			<pubDate>Sat, 12 Sep 2026 13:56:38 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>From a PRD to a published standard, a working byte-exact relay, a benchmark anyone can run, and release automation in one agent session. The honest part is what the thing is: a framing envelope over Zstandard, not a new codec.</description>
 		</item>
 	</channel>
 </rss>
