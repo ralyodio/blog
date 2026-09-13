@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 13 Sep 2026 05:30:04 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 13 Sep 2026 05:38:35 GMT</lastBuildDate>
+
+		<item>
+			<title>OpenSite: one record about a page, and an index that reads any URL you paste</title>
+			<link>https://dev.profullstack.com/~anthony/blog/141-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/141-post.html</guid>
+			<pubDate>Sun, 13 Sep 2026 05:38:35 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>OpenSite writes down the reading every link scraper does: a record per URL with title, description, picture, kind, canonical, author, feeds and the card tags verbatim, a descriptor a site serves about itself, and the order a reader takes each field. nichedb.dev/c/sites is the index; paste any address at /c/sites/add and see every tag and the card as X, Slack, iMessage, Discord, LinkedIn and WhatsApp would draw it.</description>
+		</item>
 
 		<item>
 			<title>OpenConnection: a setup token you paste, and the first bridge and app that use it</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 02:33:48 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A hosting collection on nichedb.dev: 185 providers from findhost.app plus every Vultr, Linode, Scaleway and OVH plan as an OpenServer offer, refreshed daily, with feeds for cheap VPS, bare metal and deals.</description>
-		</item>
-
-		<item>
-			<title>OpenCoupon and OpenRecipe.md: one spec per niche, starting with two</title>
-			<link>https://dev.profullstack.com/~anthony/blog/131-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/131-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 02:18:43 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The serve-your-own-file pattern behind OpenServer, applied to the niches on nichedb.dev where it fits. OpenCoupon: a merchant's live promotions with expired codes kept so directories learn they died. OpenRecipe.md: a Markdown file that is the recipe, with schema.org derived from it.</description>
 		</item>
 	</channel>
 </rss>

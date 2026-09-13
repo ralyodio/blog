@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenSite: one record about a page, and an index that reads any URL you paste &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/141-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T05:38:35Z">
+<meta name="description" content="OpenSite writes down the reading every link scraper does: a record per URL with title, description, picture, kind, canonical, author, feeds and the card tags verbatim, a descriptor a site serves about itself, and the order a reader takes each field. nichedb.dev/c/sites is the index; paste any address at /c/sites/add and see every tag and the card as X, Slack, iMessage, Discord, LinkedIn and WhatsApp would draw it.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenSite: one record about a page, and an index that reads any URL you paste</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every link you paste into a chat becomes a card. The card is drawn from tags the page carries for that purpose: a title, a line, a picture. A dozen apps read those tags a dozen ways, every one of them caches its first reading for days, and none of them tell you what they got.</p>
+
+<p>This week a nixamp share link taught me that the hard way. The card read &quot;server1&quot; with no picture. I fixed the page. The chat app kept showing the old card, because it had cached the empty one from the minute after a redeploy. There was no way to see what the page said about itself, and no way to tell the app to look again.</p>
+
+<p>So there are two new things.</p>
+
+<h3>The spec</h3>
+
+<p><a href="https://logicsrc.com/opensite">OpenSite</a> is the reading, written down. A record per URL: what a careful reader concluded about the page. Title, description, picture with its size, kind, canonical address, author, feeds, dates, and the og and twitter tags exactly as the page carried them, so you can see what each scraper saw. A descriptor a site serves about itself at <code>/.well-known/opensite.json</code>: its name, its operator, whether it wants to be read at all, and optionally a file of its own records so an index need not read every page.</p>
+
+<p>The part I care about most is the reading order. Every scraper already does this and nobody had written it down: canonical from <code>rel=canonical</code>, else <code>og:url</code>, else where the redirects landed. Title from JSON-LD, else <code>og:title</code>, else <code>twitter:title</code>, else the title tag. Picture from <code>og:image</code> with its width and height, else <code>twitter:image</code>, else JSON-LD, else the biggest icon. Robots and the descriptor are honoured. At most five redirects, two megabytes, fifteen seconds.</p>
+
+<p>The spec also carries a table of what each consumer reads and caches. Two rules fall out of it. Put the card tags in the first few kilobytes of the page. And when an app has cached a wrong card, the only certain fix is a URL it has not seen. A query parameter it ignores is enough.</p>
+
+<h3>The index</h3>
+
+<p><a href="https://nichedb.dev/c/sites">nichedb.dev/c/sites</a> keeps records. Paste any address at <a href="https://nichedb.dev/c/sites/add">nichedb.dev/c/sites/add</a> and it is read now, the way the spec says, and you get three things on one page: every tag the page carries, the card as X, Slack, iMessage, Discord, LinkedIn and WhatsApp would draw it, and the OpenSite record that is kept. The record lives at <code>/c/sites/&lt;host&gt;/&lt;path&gt;</code>, query string and all, because a page's identity can be in its query.</p>
+
+<p>The same read is an API. <code>POST /api/v1/sites</code> with a URL reads it now. <code>GET /api/v1/sites?url=</code> answers what is kept, or reads the page when the reading is older than an hour. Our own sites are walked from their sitemaps on a schedule, so there is a card for every page we publish before anyone asks.</p>
+
+<h3>What is deliberately not in it</h3>
+
+<p>No ranking. A record says what a page is; which page is better is an index's business, under its own name. No rendering rules; the consumer table is a reader's guide, not a law. No page content; the record is the card, not the page. No push; a site serves a file and an index reads it.</p>
+
+<h3>Get it</h3>
+
+<p>Spec: <a href="https://logicsrc.com/opensite">https://logicsrc.com/opensite</a>. Index: <a href="https://nichedb.dev/c/sites">https://nichedb.dev/c/sites</a>. Paste a URL: <a href="https://nichedb.dev/c/sites/add">https://nichedb.dev/c/sites/add</a>.</p>
+
+<p>The reader is in nichedb's core package, <code>@nichedb/core/opensite</code>, pure except for the fetch, so anyone can run the same reading over their own pages.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
