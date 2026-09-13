@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenProfile.md 0.2: answer the forty dating-site questions once &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/128-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T02:05:20Z">
+<meta name="description" content="A Match section for OpenProfile.md: Born, Gender, Orientation, Seeking, Ages, Distance and dealbreakers, in a file you own that any platform that pairs people can read. 18 or over required, nothing inferred.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenProfile.md 0.2: answer the forty dating-site questions once</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every dating site asks the same forty questions, and every one keeps the answers behind its own login. Your birthday, your height, whether you smoke, whether you want children, who you are looking for and how far away. You type them into Hinge, then into Bumble, then into the next one, and none of them will hand the answers back.</p>
+
+<p>OpenProfile.md is the one Markdown file that says who you are and where you are, served from your own domain and linked from every platform that has a page for you. Today it gets a ninth rule: a <code>Match</code> section, so the forty questions are answered once, in a file you own, and any platform that pairs people can read them.</p>
+
+<h3>What goes in it</h3>
+
+<pre><code class="language-markdown">## Match
+
+- **Born**: 1990-05-12
+- **Gender**: woman
+- **Orientation**: bisexual
+- **Status**: single
+- **Height**: 168 cm
+- **Children**: none
+- **Wants children**: open
+- **Smoking**: never
+- **Seeking**: everyone
+- **For**: long-term
+- **Ages**: 30-45
+- **Distance**: 50 km
+- **Not**: smokers, long-distance
+
+## Photos
+
+- https://ada.example/photos/garden.jpg</code></pre>
+
+<p>Two kinds of key. About you: Born, Gender, Orientation, Status, Monogamy, Height, Body, Children, Wants children, Smoking, Drinking, Cannabis, Drugs, Religion, Politics, Ethnicity, Education, Work, Diet, Pets, Exercise, Zodiac. About who you seek: Seeking, For, Ages, Distance, and Not, which is dealbreakers and wins over everything else. Every value is kept as written and matched loosely, the way Topics already are. Every key is optional. A key nobody thought of is kept too.</p>
+
+<p><code>Dating</code>, <code>Matching</code>, <code>Partner</code> and <code>Looking for</code> all normalise to the same section, because the words on your page are yours.</p>
+
+<h3>Two rules that do not bend</h3>
+
+<p>The rest of OpenProfile.md degrades rather than fails. These two do not.</p>
+
+<p><strong>Born is required for matching, and it must give eighteen or more.</strong> A reader that finds no Born, or computes an age under 18 from it, does not list the profile in a matching context at all. It is the one key a dating platform must have, and the only one.</p>
+
+<p><strong>Nothing is inferred.</strong> A platform never fills a Match key from a photo, a name, a handle or another site. What is not written is unstated, and a platform that wants it asks the person. Orientation, religion, politics and ethnicity are the categories of personal data most laws protect, and the file is public by nature. So you put in it what you would put on a public profile page, and a platform that imports it stores no more than you confirmed with it and drops it when your file does.</p>
+
+<h3>Why now</h3>
+
+<p>We are building a dating site, and I did not want to build another forty-question form that eats the answers. The form is a Markdown file. The site reads it, verifies your accounts the way OpenProfile.md already does, and matches. When you leave, the file is still yours, and the next site reads the same one.</p>
+
+<p>The spec is at <a href="https://logicsrc.com/docs/openprofile">logicsrc.com/docs/openprofile</a>, version 0.2, CC BY 4.0. Serve one at <code>/.well-known/openprofile.md</code>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
