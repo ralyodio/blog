@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenFleet ships: logicsrc fleet, moshcode 0.99.0, and a Claude Code hook &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/149-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T11:04:51Z">
+<meta name="description" content="This morning we published OpenFleet, the record an agent session carries about who spawned it and which human answers for it. The spec said what three tools would each have to add. By the afternoon…">
+</head>
+<body>
+
+<article>
+
+<h1>OpenFleet ships: logicsrc fleet, moshcode 0.99.0, and a Claude Code hook</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>This morning we published <a href="https://logicsrc.com/openfleet">OpenFleet</a>, the record an agent session carries about who spawned it and which human answers for it. The spec said what three tools would each have to add. By the afternoon all three do.</p>
+
+<h3>logicsrc fleet</h3>
+
+<p><code>@logicsrc/openfleet</code> 0.1.0 is the record and ledger library, and <code>logicsrc fleet</code> (CLI 0.3.0) is the sysop tool the spec names. Five verbs: <code>open</code> and <code>cap</code> belong to the human and are refused with exit 4 from any process that carries a member id; <code>tree</code> folds the ledger and the records into one tree and joins the engine rosters for liveness; <code>stop</code> ends a member, a swarm or a whole fleet through each member's own engine; <code>log</code> says what happened and who did it. <code>tree</code> also enforces the ceiling's deadline and budget.</p>
+
+<pre><code>$ logicsrc fleet tree
+anthony@dev  (implicit fleet, sysop anthony@dev, depth 1, hosts dev)
+└─ swarm create-two-shell-script-1020  &quot;create two shell scripts&quot;  2/2 members  done
+   ├─ create-two-shell-script-1020-1  create hello.sh bash  moshcode/claude  done  [bypass]  owns hello.sh
+   └─ create-two-shell-script-1020-2  create bye.sh bash    moshcode/claude  done  [bypass]  owns bye.sh</code></pre>
+
+<p>That tree was written by moshcode and read by logicsrc. Nothing on either side knows the other exists; the files are the contract.</p>
+
+<h3>moshcode 0.99.0</h3>
+
+<p><code>moshcode swarm</code> now mints a swarm id before it plans, writes one record per pane, names the pane after its member id, and passes the five <code>OPENFLEET_*</code> variables into the pane beside the herd variables. The planner is asked which files each piece may write, and that answer becomes data on the record instead of a sentence in a prompt. The ledger gets <code>swarm.spawn</code> before the first pane starts, <code>member.start</code> when a prompt goes in, <code>member.end</code> for every pane, and one <code>swarm.end</code> with the synthesis and the verify verdicts. A swarm that would exceed the ceiling it inherited is refused before anything starts, and <code>moshcode fleet</code> offers the same five verbs over the same files.</p>
+
+<h3>Claude Code, through hooks</h3>
+
+<p>Claude Code is not ours to patch, but its hooks run in every session. <code>logicsrc fleet hooks install</code> adds five entries to your settings without touching anyone else's. On SessionStart the hook claims the record named in the environment, or writes a root record when there is none, and tells the model its member id and its piece. On the first prompt it writes <code>member.start</code> with the session's real permission mode, or refuses the prompt when the ceiling says no. On every Edit or Write it denies a path outside the member's owned files. On Stop and SessionEnd it writes <code>member.end</code> with the summary.</p>
+
+<p>We proved it with a real session: a hand-written unclaimed record, a <code>claude -p</code> that inherited it, all five variables visible to its Bash tool, a write to <code>other.txt</code> denied and a write to <code>ok.txt</code> allowed, and a <code>member.end</code> line carrying the model's final message.</p>
+
+<p>Two limits came out of the probing and are now in the spec. A background job dispatched from <code>claude agents</code> receives no launcher environment, so it is a root member unless a launcher writes its record first. And env-file exports reach a session's tools but not its later hooks, so the hooks key on the session id through a small file of their own.</p>
+
+<p>Install: <code>curl -fsSL https://logicsrc.com/install.sh | sh</code> then <code>logicsrc fleet hooks install</code>; <code>moshcode upgrade</code> for the swarm side.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

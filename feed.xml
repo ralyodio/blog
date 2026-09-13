@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 13 Sep 2026 09:38:10 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 13 Sep 2026 11:04:52 GMT</lastBuildDate>
+
+		<item>
+			<title>OpenFleet ships: logicsrc fleet, moshcode 0.99.0, and a Claude Code hook</title>
+			<link>https://dev.profullstack.com/~anthony/blog/149-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/149-post.html</guid>
+			<pubDate>Sun, 13 Sep 2026 11:04:51 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>This morning we published OpenFleet, the record an agent session carries about who spawned it and which human answers for it. The spec said what three tools would each have to add. By the afternoon…</description>
+		</item>
 
 		<item>
 			<title>nixamp remembers what it heard, and can say it in Swedish</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 05:30:03 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>The SimpleFIN door written down for anything a bridge holds. myna is the first bridge, DefPromo 1.5.0 the first app: no OpenAI key, one pasted token, revocable from your myna.</description>
-		</item>
-
-		<item>
-			<title>gh-pulse: know what moved across every repo your agents touch</title>
-			<link>https://dev.profullstack.com/~anthony/blog/139-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/139-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 05:10:50 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>gh-pulse: a daily ranked report of what moved across every GitHub repo you can see, any range from the last hour to all time, with traffic. For agentic hackers and indie developers shipping with AI. Free, in cli-tools.</description>
 		</item>
 	</channel>
 </rss>
