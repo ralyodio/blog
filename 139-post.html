@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>gh-pulse: know what moved across every repo your agents touch &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/139-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T05:10:50Z">
+<meta name="description" content="gh-pulse: a daily ranked report of what moved across every GitHub repo you can see, any range from the last hour to all time, with traffic. For agentic hackers and indie developers shipping with AI. Free, in cli-tools.">
+</head>
+<body>
+
+<article>
+
+<h1>gh-pulse: know what moved across every repo your agents touch</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>If you build with AI agents, you ship differently. A normal week is not one repository and a tidy commit log. It is thirty repositories, a few hundred pull requests opened and merged by sessions running in parallel, releases cut by a workflow at three in the morning, and a directory of side projects that are each one good day away from being someone else's favourite tool.</p>
+
+<p>GitHub shows you a traffic graph for each of those repositories, fourteen days deep, and then forgets it. Nobody with three hundred repositories opens three hundred graphs. So the questions that matter to an indie developer stay unanswered: which project did strangers actually look at yesterday, which one got starred, which one did a stranger clone, where did they come from, and is any of that a trend or a blip.</p>
+
+<p>gh-pulse answers those questions once a day, and on demand for any range from the last hour to all time. It is a command in <a href="https://github.com/profullstack/cli-tools#gh-pulse">cli-tools</a>, free and MIT.</p>
+
+<h3>What it does</h3>
+
+<p>One scan covers every repository the <code>gh</code> token can see, your own account plus every org you belong to, forks left out. For each one it measures what moved: stars, forks, commits, pull requests opened, merged and closed, issues opened and closed, releases, and the traffic GitHub reports, which is views, unique visitors, clones, unique cloners, referrers and popular content.</p>
+
+<p>Repositories with movement are ranked. A star is five points, a fork four, a release five, a merged pull request three, an opened pull request or issue two, a commit one, a unique visitor one, a unique cloner one. One clone or one visitor in a day is treated as the background noise it is across a long tail of repositories; two unique visitors or two unique cloners are enough to put a quiet repository on the list.</p>
+
+<p>The result reaches you four ways, so you read it wherever you already are.</p>
+
+<p>The email arrives every morning with a chart of views and clones across the whole portfolio, the ranking with score bars, and for the top repositories a fourteen day chart, referrers, popular content, who starred, what merged and what shipped. New and lost followers are named.</p>
+
+<p><code>gh-pulse show</code> is the same report in the terminal, built on <a href="https://hqtui.com">hqtui</a>, which means it works over SSH on the box where your agents run. The ranked table is on the left; click a row and the repository's traffic histograms and detail appear on the right. A History tab charts stars, followers, views and clones across every run. In the moshcode pit it is <code>/pulse</code>.</p>
+
+<p><code>gh-pulse open</code> puts the HTML in a browser, and <code>gh-pulse text</code> and <code>gh-pulse json</code> print it for pipes, cron and other agents.</p>
+
+<h3>Any range, and filters you click</h3>
+
+<p><code>gh-pulse --range week</code> answers &quot;what moved this week&quot;. So do <code>hour</code>, <code>day</code>, <code>month</code>, <code>quarter</code>, <code>year</code> and <code>all</code>, or <code>--since 2026-09-01</code> for any start date. In the TUI the ranges are a row of buttons and the filters are toggles: which kinds of movement count (stars, forks, commits, PRs, issues, releases, traffic), which owners, and whether private repositories show. A repository stays in the list while at least one enabled kind moved for it, and it keeps its rank, so turning traffic off does not reshuffle the board, it just narrows it.</p>
+
+<p>Turn everything off except stars and you have a leaderboard of what people liked this month. Turn everything off except traffic and you have the pages strangers actually read. Turn one org off and the noise from your own agents' pull requests disappears and the outside world is what is left.</p>
+
+<h3>Why the window is not a clock</h3>
+
+<p>This is the part that makes the long ranges honest, and it is worth knowing if you build anything on GitHub traffic.</p>
+
+<p>GitHub publishes traffic in UTC day buckets, one to two days late. At three in the morning the newest bucket with anything in it is usually the day before yesterday, and some repositories carry empty buckets padded up to today. Read &quot;the last 24 hours&quot; off the clock and almost everything is zero.</p>
+
+<p>What can be measured exactly is the growth of each bucket since the previous run. So the daily window is exactly &quot;since the last email&quot;, and a skipped day widens it instead of losing data. Every run also writes a compressed snapshot of the raw counts and buckets, and the snapshots laid end to end are a ledger that only grows. That ledger is where the long ranges get their traffic: GitHub keeps fourteen days, so <code>year</code> and <code>all</code> see as far back as the daily run has been going, and every report says exactly which days it covers. Events, on the other hand, are queried live for the whole range, however long, because GitHub keeps those forever.</p>
+
+<p>For agentic teams this is the useful bit: the one place where a year of &quot;who looked at what we shipped&quot; exists is the ledger you started keeping today. Start it now and next year's report is a year deep.</p>
+
+<h3>Install</h3>
+
+<pre><code class="language-sh">curl -fsSL https://raw.githubusercontent.com/profullstack/cli-tools/master/install.sh | sh
+gh-pulse --dry-run          # scan, write the report, send nothing
+gh-pulse show               # read it in the terminal
+gh-pulse --range month      # what moved in the last 30 days</code></pre>
+
+<p>Mail goes through Resend with a sender on a verified domain; the README has the cron line. The whole cli-tools set installs and updates through one command, and moshcode picks it up through <code>moshcode install cli-tools</code>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
