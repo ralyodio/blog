@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>moshcode swarm: one task, a herd of agents, one answer &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/143-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T07:06:41Z">
+<meta name="description" content="moshcode 0.98.0 ships moshcode swarm, ultracode for the herd on any engine: one call plans the pieces, each runs in its own herd session four at a time, one call folds the outputs into an answer, and every piece is in the ledger. Plus four herd fixes for Claude Code 2.1.">
+</head>
+<body>
+
+<article>
+
+<h1>moshcode swarm: one task, a herd of agents, one answer</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Claude Code has a mode called ultracode. You put the word in a prompt and the prompt stops being a conversation and becomes a workflow: the task gets split into pieces, a fleet of agents works the pieces in parallel, skeptics try to refute what came back, and one final pass folds it all into an answer. It is the most useful thing that CLI does at scale. It is also one vendor's.</p>
+
+<p>moshcode's herd has been the same idea with the vendor removed for a while now. Sessions outlive your terminal. <code>herd prompt --wait</code> hands an agent work and blocks until it lands. The task ledger keeps what every session did. And moshscript could already wire a fan-out by hand: start three sessions, prompt three sessions, wait on all three. Nobody did, because it was a script to write every time, and the two parts that make a swarm worth running were the parts the script did not give you: splitting the task so the agents do not collide, and folding what they did back into one answer.</p>
+
+<p>moshcode 0.98.0 ships the verb.</p>
+
+<h3>moshcode swarm</h3>
+
+<pre><code class="language-sh">moshcode swarm &quot;port the auth routes and the dashboard to the new API&quot;</code></pre>
+
+<p>Four phases, and you see each one. One headless call to your engine splits the task into at most <code>--agents</code> pieces that do not touch the same files. Each piece gets its own herd session, four at a time by default, which is the same cap the claude engine's settings defaults put on Claude's own workflows, so a swarm cannot eat the box the rest of the herd is running on. Each session is prompted and waited on exactly the way <code>herd prompt --wait</code> is, so every piece is a task in the ledger and <code>moshcode herd task &lt;id&gt;</code> shows you afterwards what that agent did. Then one more call folds the outputs into the answer you read.</p>
+
+<p><code>--verify</code> adds a skeptic per piece, prompted to refute it and to default to refuted when unsure. Its verdict goes to the synthesis and never drops a piece on its own. <code>--plan-only</code> shows the split and starts nothing. <code>--keep</code> leaves the sessions in <code>moshcode ps</code> for you to attach to. <code>--json</code> gives you the whole run as data. It works from the CLI, from the pit as <code>/swarm</code>, and from moshscript as <code>swarm(...)</code>.</p>
+
+<p>It degrades rather than fails. A plan that does not parse runs the task as one piece. A piece whose session never became ready is reported as failed and the synthesis says so. A synthesis that fails still leaves every piece in the ledger.</p>
+
+<p>Any engine moshcode can start can be the swarm. Whatever <code>ai()</code> can run headlessly can plan and synthesise. Whatever <code>herd start</code> can run can be a member.</p>
+
+<h3>What the herd learned about Claude Code 2.1</h3>
+
+<p>Getting a swarm to run end to end against Claude Code 2.1.270 turned up four things no unit test could see, because they are all about what the real engine paints on a terminal. All four are fixed in this release, and if your roster has ever shown a Claude session as gone or unknown while it was plainly sitting there, one of them is why.</p>
+
+<p>Claude sets its own terminal title the moment it is up. The herd used the pane title as a member's handle, so the member fell out of the index and read as gone. The title is now pinned at start on tmux 3.5 or newer; an older tmux keeps the old behaviour rather than failing to start.</p>
+
+<p>A detached tmux session is 80 columns wide unless told otherwise, and Claude's status line truncates at 80. The idle rule was reading &quot;? for shortc&quot; and finding nothing. Sessions now start at 200 by 50; a client that attaches resizes as before.</p>
+
+<p>Claude 2.1 with permissions bypassed does not print &quot;? for shortcuts&quot; at all any more. Its footer says &quot;bypass permissions on (shift+tab to cycle)&quot; and an empty composer shows a placeholder. Both are idle now. The workspace trust dialog is blocked, and the claude engine carries a boot spec that answers it with Down then Enter, because its default answer is &quot;No, exit&quot; and a reflexive Enter ends the engine.</p>
+
+<p>A long prompt typed into a session by tmux arrives as a paste, and the Enter on its heels lands inside the paste as one more line. The screen shows &quot;[Pasted text #1 +1 lines]&quot; and nothing is ever submitted. <code>herd prompt</code> now settles for a quarter of a second before pressing Enter.</p>
+
+<h3>Getting it</h3>
+
+<pre><code class="language-sh">moshcode upgrade
+moshcode swarm &quot;audit src/ for unhandled promise rejections&quot; --agents 8 --verify</code></pre>
+
+<p>Release notes: <a href="https://github.com/moshcoder/moshcode/releases/tag/v0.98.0">https://github.com/moshcoder/moshcode/releases/tag/v0.98.0</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
