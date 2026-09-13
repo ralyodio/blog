@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nichedb.dev takes feed suggestions now, and an admin decides before anything is fetched &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/124-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T00:26:45Z">
+<meta name="description" content="nichedb.dev 0.11.0 adds a public feed suggestion form on every page, the API, the CLI and MCP, with an admin queue that decides before anything is fetched.">
+</head>
+<body>
+
+<article>
+
+<h1>nichedb.dev takes feed suggestions now, and an admin decides before anything is fetched</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Until today there was no way for a visitor to add a feed to <a href="https://nichedb.dev">nichedb.dev</a>. Adding a source was gated on a Pro or admin account, and for a reason: a source makes the deployment poll somebody's server four times an hour, which is not something a stranger should be able to switch on. But a directory that nobody can tell things to is a directory that only grows as fast as its operator reads the web. So 0.11.0 adds a queue.</p>
+
+<h3>Suggest from anywhere</h3>
+
+<p>There is a form at <a href="https://nichedb.dev/submit">nichedb.dev/submit</a>. It is linked from the nav and the footer of every page, from every collection page (which preselects that collection), and from the sources page. You do not need an account. Paste the feed address, pick a collection if you know it, say why it belongs, and optionally leave an email to hear back.</p>
+
+<p>The same action is available three other ways:</p>
+
+<p>curl -X POST <a href="https://nichedb.dev/api/v1/submissions">https://nichedb.dev/api/v1/submissions</a> \
+-H 'content-type: application/json' \
+-d '{&quot;url&quot;:&quot;https://example.com/feed.xml&quot;,&quot;collection&quot;:&quot;news&quot;}'</p>
+
+<p>nichedb submit <a href="https://example.com/feed.xml">https://example.com/feed.xml</a> --collection news</p>
+
+<p>And over MCP as the <code>submit_feed</code> tool, which needs no key, so an agent that found a good feed while doing something else can hand it in.</p>
+
+<h3>What happens to a suggestion</h3>
+
+<p>Nothing is fetched on a schedule yet. The submission goes into a queue, and at submission time nichedb takes one bounded look at the URL: six seconds, the first 16 KB. It records the HTTP status, the content type, whether those first bytes parse as RSS, RDF or Atom, and the feed's title. That is for the admin's eyes. It is never trusted for anything automatic, and a feed behind a slow host still lands in the queue.</p>
+
+<p>Private and link-local hosts are refused before any fetch. One URL can have one open suggestion at a time; once it has been decided, it can be suggested again. One person can have twenty waiting.</p>
+
+<h3>Deciding</h3>
+
+<p>Admins get an email per suggestion with the probe result and a link to the queue at /admin/submissions. From there, each row is approve or reject.</p>
+
+<p>Approving a podcast feed does not create a source on nichedb. The podcasts collection reads rssamplifier's directory rather than crawling shows itself, so the honest way to carry a podcast is to hand the URL to rssamplifier, which nichedb then picks up on its next run. Approving anything else creates a newsfeed source in the collection the admin picks and queues its first fetch immediately. The row only closes after that succeeded, so a failed hand-off stays in the queue rather than vanishing.</p>
+
+<p>A submitter who left an address is told what happened either way.</p>
+
+<h3>Also in 0.11.0</h3>
+
+<p>Seven house aggregators now feed nichedb through their own public endpoints: p0dcasters (21,534 self-hosted podcasts), saasrow, d0rz, bl0ggers, aiornot, agenticjobs and tsbb. That adds four collections: saas, marketplace, ai-media and forums.</p>
+
+<p>The CLI is <code>npm i -g @profullstack/nichedb</code>. The code is at <a href="https://github.com/profullstack/niche-db">github.com/profullstack/niche-db</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
