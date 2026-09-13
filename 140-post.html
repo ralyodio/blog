@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenConnection: a setup token you paste, and the first bridge and app that use it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/140-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T05:30:03Z">
+<meta name="description" content="The SimpleFIN door written down for anything a bridge holds. myna is the first bridge, DefPromo 1.5.0 the first app: no OpenAI key, one pasted token, revocable from your myna.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenConnection: a setup token you paste, and the first bridge and app that use it</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>An app that wants to act through your accounts has one road today: OAuth. That road assumes the app can register with every provider, keep a client secret, host a redirect URI and survive a browser round trip. A browser extension can do none of those safely. A shell script cannot. A spreadsheet cannot. So those apps ask for your password instead, or for a personal API key pasted into a settings field, and what they get is the whole account, forever, listed nowhere.</p>
+
+<p>SimpleFIN solved this for bank data years ago with something smaller than OAuth. The bank gives you a token. You give it to the app. The app trades it once for a credential scoped to you and that app, and the bank keeps the list. The shape has nothing to do with money.</p>
+
+<p>OpenConnection is that door, written down for anything a bridge holds: social accounts, a writer, a calendar, a wallet. The spec is at <a href="https://logicsrc.com/openconnection">logicsrc.com/openconnection</a>.</p>
+
+<h3>How it works</h3>
+
+<ol>
+	<li>You sign in at the bridge, pick the scopes, and copy a setup token. It is single use and short lived, base64url of a claim URL, so the app needs nothing else, not even a host name.</li>
+	<li>You paste it into the app.</li>
+	<li>The app makes one POST to the claim URL, with no credential, and names itself. It gets back an access URL and a bearer.</li>
+	<li>Every request after that carries the bearer. The bridge enforces the scopes.</li>
+	<li>You revoke the app at the bridge, one control beside each name. Its next call is refused with <code>401 revoked</code>, and it forgets the token.</li>
+</ol>
+
+<p>Two things differ from SimpleFIN. The bearer replaces Basic credentials in the URL, because a browser's <code>fetch</code> refuses a URL with credentials in it. And a second claim of the same token is refused and counted, because a token claimed twice was seen by someone it was not meant for, and you should hear about that.</p>
+
+<p>There is no client registration, no redirect, no refresh token, and no credential ever passes through. A bridge that never holds a social credential says so by leaving <code>posts</code> out of its descriptor. OpenAccess remains the registered door, with the same scope vocabulary; a bridge that is also an OpenAccess app may hand out an OpenAccess token as the bearer, and the app need not know.</p>
+
+<h3>The first bridge is myna</h3>
+
+<p><a href="https://mynaposter.com/connect">mynaposter.com/connect</a> is live. Sign in, tick what an app may do, copy the token. The same page lists every app holding a connection and revokes any of them. From a terminal, <code>myna connect token</code> makes the same token and <code>myna connect apps</code> shows the list.</p>
+
+<p>The social profile myna serves is what a promotion tool needs: the networks you connected, a product page read into a brief, posts or comments drafted in your voice with the network's limits applied, and subreddits, hashtags, keywords and real forums from nichedb.dev. It never posts on your behalf and never holds a social credential on the cloud; that stays on your own machine, where it always was.</p>
+
+<h3>The first app is DefPromo</h3>
+
+<p><a href="https://chromewebstore.google.com/detail/defpromo/efdlekcpbjccbilfonhbdicfoaklanap">DefPromo</a> is a browser extension for promoting your own product across fourteen networks. Until today it asked for your OpenAI key and a scraper key. Version 1.5.0 asks for one setup token instead. Paste it, and myna does the writing through your own account.</p>
+
+<p>Two more things changed. Before anything scrapes a product page, the site's own <code>/.well-known/openprofile.md</code> and <code>/llms.txt</code> are read first, so a site that describes itself needs no scraper at all. And the suggestions now name real forums, from the nichedb.dev forums collection, rather than a model's guess at where people talk.</p>
+
+<p>Your own keys still work. They are the second choice in Settings now, not the only one.</p>
+
+<h3>Run a bridge</h3>
+
+<p>A bridge is a table of setup tokens, a table of access tokens, a page with a copy button and a list with a revoke button, and the endpoints of whatever profile it serves. The first one took an afternoon. The spec text is CC BY 4.0.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
