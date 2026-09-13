@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DiskPush 0.11: view, edit and open files without leaving the terminal browser &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/129-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T02:05:48Z">
+<meta name="description" content="The DiskPush TUI now opens the file under the cursor beneath the panes: markdown rendered by readm3, code with line numbers, images drawn inline in WezTerm, kitty and iTerm2 (through tmux too), plus e to edit in $EDITOR and x to open with the system.">
+</head>
+<body>
+
+<article>
+
+<h1>DiskPush 0.11: view, edit and open files without leaving the terminal browser</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>DiskPush 0.9, 0.10 and 0.11, all out today, teach the terminal browser to open files. Press <code>v</code> on any file in <code>diskpush tui</code> and it opens under the two panes, rendered. Press <code>e</code> and it opens in your editor. Press <code>x</code> and it opens with whatever your system opens it with.</p>
+
+<pre><code>╭─  ▪ Local  ──────────── /home/me/project ─┬─  ▪ prod  ──────────── /srv/app ─╮
+│ ↑ ..                                      │ ↑ ..                             │
+│ ▸ src                                     │   bundle.js              1.5M    │
+│   README.md                        4.1K   │                                  │
+╰─  2 items  ·  4.1K  ·  name▲  ────────────┴─  1 item  ·  1.5M  ·  name▲  ───╯
+╭─  README.md  ───────────────────────────────────── /home/me/project/README.md ─╮
+│ DiskPush                                                                   █ │
+│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ │ │
+│ Push files fast. Sync only what changed.                                   │ │
+╰─  lines 1–16 of 180  ·  markdown  ·  6.6K  ──────────────────────────────────╯
+ tab pane  ↑↓ file  pgdn pgup page  g G top end  e edit  x open…  esc close  q quit</code></pre>
+
+<h3>v: a preview, not a detour</h3>
+
+<p>The panes keep their share of the screen and the document takes the rest. The arrows stay with the panes, so with a file open, <code>↑</code> and <code>↓</code> walk from one file to the next and the viewer follows. <code>pgdn</code> and <code>pgup</code> page the document, <code>g</code> and <code>G</code> jump to its ends, and the mouse wheel scrolls it. <code>⏎</code> on a file opens it too, a click on another file switches to it, and <code>esc</code> closes it.</p>
+
+<p>It works the same on a remote pane. The file is read over the SFTP session the listing came from, so there is nothing to download first.</p>
+
+<p>What it shows:</p>
+
+<ul>
+	<li><strong>Markdown</strong> is rendered by <a href="https://readm3.com">readm3</a>, our terminal markdown reader, used here as a library. Headings, lists, fenced code, quotes, links and GitHub alerts all come out the way readm3 draws them.</li>
+	<li>A file with <strong>no extension</strong>, like <code>README</code> or <code>NOTES</code>, is checked by our text type detector and rendered as markdown when it reads as markdown.</li>
+	<li><strong>Text</strong> shows as numbered lines with tabs widened.</li>
+	<li><strong>Images</strong> are drawn in the terminal. A PNG, JPEG, GIF, WebP or BMP is handed to the terminal over the iTerm2 inline-image protocol or the kitty graphics protocol, so WezTerm, kitty, Ghostty, iTerm2 and Konsole all draw it, an icon at its own size and a photo shrunk to fit. It works inside tmux as well: the browser turns on passthrough for its own pane, so there is no config to edit.</li>
+	<li><strong>Binaries</strong> show as a hex dump of their head, with a line saying what would open them.</li>
+</ul>
+
+<p>Only the first megabyte of a document is ever read, and up to eight of an image. A file browser cursor lands on backups and videos as often as on documents, and the footer says <code>first 1.0M of 40G</code> when that is what you are looking at.</p>
+
+<h3>e: your editor, in a tmux window</h3>
+
+<p><code>e</code> opens the file under the cursor in <code>$VISUAL</code>, then <code>$EDITOR</code>, then whichever of vim, nvim, nano or vi is installed. Under tmux the editor gets a window of its own, named after the file, and the browser keeps running beside it. Without tmux the browser hands the terminal over the way vim's <code>:sh</code> does, and comes back when you quit the editor, with every pane where it was and the open file re-read.</p>
+
+<p>A remote file is edited on the server, over <code>ssh -t</code>, with the editor the server has. Nothing is downloaded and nothing has to be uploaded back. The file the editor saves is the file.</p>
+
+<h3>x: whatever opens this</h3>
+
+<p><code>x</code> hands the file to the desktop opener when there is a desktop, exactly as a double click would. On a server there is no desktop, so a video or a song goes to a player (mpv, ffplay, vlc) and an image to a viewer that draws in the terminal (chafa, timg, viu), each in its own tmux window. When nothing fits, the message names what to install.</p>
+
+<p>The bytes outrank the name. A text file called <code>code.ts</code> is TypeScript, not an MPEG transport stream, and it is never sent to a player.</p>
+
+<h3>Get it</h3>
+
+<pre><code class="language-bash">diskpush update</code></pre>
+
+<p>or, fresh:</p>
+
+<pre><code class="language-bash">curl -fsSL https://diskpush.com/install.sh | sh</code></pre>
+
+<p>Release notes and binaries: <a href="https://github.com/profullstack/diskpush/releases/tag/v0.11.0">https://github.com/profullstack/diskpush/releases/tag/v0.11.0</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
