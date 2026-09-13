@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenCoupon and OpenRecipe.md: one spec per niche, starting with two &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/131-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T02:18:43Z">
+<meta name="description" content="The serve-your-own-file pattern behind OpenServer, applied to the niches on nichedb.dev where it fits. OpenCoupon: a merchant's live promotions with expired codes kept so directories learn they died. OpenRecipe.md: a Markdown file that is the recipe, with schema.org derived from it.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenCoupon and OpenRecipe.md: one spec per niche, starting with two</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Yesterday LogicSRC published OpenServer and four resource specs under it, so a hosting provider can serve one file about what it sells and a directory can read the provider instead of scraping an aggregator. The pattern is not about servers. It is about any niche where the source of truth has the data in a table and every site that lists it gets it second hand.</p>
+
+<p>nichedb.dev has 37 collections. About a dozen of them are niches like that: the publisher could serve a file, and today nobody has told them what shape it should be. So we are going to write one small spec per niche, and here are the first two.</p>
+
+<h3>OpenCoupon</h3>
+
+<p>Every coupon site is a graveyard. A code is posted once, copied everywhere, and lives on for years after the merchant retired it, because no coupon site knows when a code died and the merchant has no way to tell them. Shoppers try five codes, four fail, and the one that works was for new customers only, which the listing did not say.</p>
+
+<p>The merchant already knows exactly which codes work. Its checkout is the source of truth, and the promotion lives in a table with a start date, an end date and a rule. <a href="https://logicsrc.com/opencoupon">OpenCoupon</a> is that table, exported, at <code>/.well-known/opencoupon.json</code>:</p>
+
+<pre><code class="language-json">{
+  &quot;merchant&quot;: { &quot;name&quot;: &quot;Northwind Outfitters&quot;, &quot;web&quot;: &quot;https://northwind.example&quot;, &quot;currency&quot;: &quot;USD&quot; },
+  &quot;coupons&quot;: [
+    { &quot;id&quot;: &quot;fall15&quot;, &quot;code&quot;: &quot;FALL15&quot;, &quot;title&quot;: &quot;15% off everything for fall&quot;,
+      &quot;kind&quot;: &quot;percent&quot;, &quot;value&quot;: 15, &quot;min_order&quot;: 50,
+      &quot;scope&quot;: { &quot;excludes&quot;: [&quot;gift-cards&quot;, &quot;sale&quot;] },
+      &quot;ends&quot;: &quot;2026-09-30T23:59:59Z&quot;, &quot;regions&quot;: [&quot;US&quot;, &quot;CA&quot;], &quot;status&quot;: &quot;active&quot; },
+    { &quot;id&quot;: &quot;summer10&quot;, &quot;code&quot;: &quot;SUMMER10&quot;, &quot;title&quot;: &quot;10% off summer&quot;,
+      &quot;kind&quot;: &quot;percent&quot;, &quot;value&quot;: 10, &quot;status&quot;: &quot;expired&quot; }
+  ]
+}</code></pre>
+
+<p>Six kinds: percent, amount, shipping, bogo, gift, other. Scope, minimum order, dates, per-customer and region limits. The rule that matters is the last row: an expired coupon stays in the file for as long as copies of it circulate, so a directory learns the code died from the one party that knows. A code fetched from the merchant's own origin is a code the merchant says works. That is the whole verification.</p>
+
+<p>What is not in it: affiliate links, redemption, votes, badges. The merchant's URL is the merchant's. A directory that earns a commission does so in its own link, marked as its own, beside it. The first directory reading it is the deals collection on nichedb.dev.</p>
+
+<h3>OpenRecipe.md</h3>
+
+<p>A recipe on the web is four thousand words of memoir with the recipe at the bottom, and a block of JSON-LD in the head that search engines read and people never see. The two drift: the page says three eggs and the schema says two, because the author edited one and a plugin regenerated the other.</p>
+
+<p>The form people actually write recipes in has not changed in a century, and it is Markdown already. <a href="https://logicsrc.com/openrecipe">OpenRecipe.md</a> fixes where the file lives and which lines mean what:</p>
+
+<pre><code class="language-markdown"># Shakshuka
+
+- **Serves**: 4
+- **Prep**: 10 min
+- **Cook**: 25 min
+- **Diet**: vegetarian, gluten-free
+
+Eggs poached in a spiced tomato and pepper sauce. One pan, bread on the side.
+
+## Ingredients
+
+- 2 tbsp olive oil
+- 1 onion, diced
+- 800 g canned crushed tomatoes
+- 6 eggs
+
+## Steps
+
+1. Heat the oil in a wide pan. Cook the onion until soft, about 8 minutes.
+2. Pour in the tomatoes, season, and simmer 10 minutes until thickened.
+3. Make six wells, crack an egg into each, cover, cook 5 to 8 minutes.</code></pre>
+
+<p>Ingredients as written, one per line. Steps in order. Nutrition per serving if you have it. It lives next to the recipe page as <code>shakshuka.md</code>, or the page points at it with <code>rel=&quot;openrecipe&quot;</code>, or a site lists them all at <code>/.well-known/openrecipe.md</code>.</p>
+
+<p>Keep serving schema.org/Recipe for the search engines. Generate it from the Markdown on every publish. The Markdown is the canonical copy, and that one-way rule is the whole reason the spec exists.</p>
+
+<h3>What comes next</h3>
+
+<p>The same treatment for the niches where it fits: software listings, marketplace asks and offers, release calendars for games, music and books, extensions, status pages. Not for weather or crime or filings, where the publisher is an agency with a standard of its own and a spec of ours would only describe our output. Podcasts need nothing, because RSS already is the spec.</p>
+
+<p>Both are at <a href="https://logicsrc.com/docs/opencoupon">logicsrc.com/docs/opencoupon</a> and <a href="https://logicsrc.com/docs/openrecipe">logicsrc.com/docs/openrecipe</a>, CC BY 4.0. Serve one, copy it, extend it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

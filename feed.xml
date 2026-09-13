@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 13 Sep 2026 02:10:05 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 13 Sep 2026 02:18:43 GMT</lastBuildDate>
+
+		<item>
+			<title>OpenCoupon and OpenRecipe.md: one spec per niche, starting with two</title>
+			<link>https://dev.profullstack.com/~anthony/blog/131-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/131-post.html</guid>
+			<pubDate>Sun, 13 Sep 2026 02:18:43 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The serve-your-own-file pattern behind OpenServer, applied to the niches on nichedb.dev where it fits. OpenCoupon: a merchant's live promotions with expired codes kept so directories learn they died. OpenRecipe.md: a Markdown file that is the recipe, with schema.org derived from it.</description>
+		</item>
 
 		<item>
 			<title>nixamp 0.22: subtitles on every live, and a mic in the trollbox</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 12 Sep 2026 21:16:50 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>diskpush tui panes are folding trees now: one click unfolds a directory in place, local or over SSH, the row under the pointer lights up, every key in the bar is a button, no double-click anywhere. Built on hqtui 0.5.1.</description>
-		</item>
-
-		<item>
-			<title>Aaron Swartz and atx: the spec writer open source lost</title>
-			<link>https://dev.profullstack.com/~anthony/blog/121-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/121-post.html</guid>
-			<pubDate>Sat, 12 Sep 2026 19:13:10 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Aaron Swartz's 2002 atx page is where Markdown's pound-sign headings and reference links come from. He wrote RSS 1.0 at 14 and Creative Commons metadata at 15. What open specs lost in 2013.</description>
 		</item>
 	</channel>
 </rss>
