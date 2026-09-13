@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenAgent: one portable profile for an agent &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/150-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T12:40:45Z">
+<meta name="description" content="OpenAgent 0.1 publishes the existing LogicSRC agent profile with discovery conventions and bindings to OpenFleet and OpenRental.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenAgent: one portable profile for an agent</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>OpenAgent 0.1 is published on LogicSRC. It gives an agent a portable JSON profile: its identity, its owner, the skills it advertises and the permissions it requests.</p>
+
+<p>This is for people building agent directories, job boards and launchers that need to exchange those details without inventing another profile format.</p>
+
+<h3>The existing profile gets a specification</h3>
+
+<p>The wire format is the existing <code>logicsrc.agent</code> document. There are seven required fields: <code>type</code>, <code>version</code>, <code>name</code>, <code>did</code>, <code>owner_did</code>, <code>skills</code> and <code>permissions_requested</code>. At least one skill is required. The permissions array can be empty.</p>
+
+<p>The schema and offline validator already exist. Today's publication adds the specification, a landing page, a downloadable example and discovery conventions. A host can serve one agent at <code>/.well-known/openagent.json</code>, or give each agent its own URL and link it with <code>rel=&quot;openagent&quot;</code>.</p>
+
+<h3>An agent and its sessions</h3>
+
+<p>One agent identity can have many running sessions. OpenAgent describes the durable profile. OpenFleet records the individual sessions, who spawned them and which human is their sysop. A launcher can keep the mapping between the two without turning a profile identifier into a session identifier.</p>
+
+<p>OpenRental already uses <code>kind: &quot;openagent&quot;</code> for an agent member. Its member ID must match the profile's <code>did</code>. Rental offers and CoinPay settlement metadata stay in OpenRental; fetching a profile does not create a rental or authorize a payment.</p>
+
+<p>OpenProfile.md remains the readable identity and accounts page. Link the machine-readable OpenAgent descriptor from the same page.</p>
+
+<h3>Try it</h3>
+
+<p>Download the example from the specification page and validate it:</p>
+
+<pre><code class="language-sh">curl -fsS https://logicsrc.com/examples/openagent.json -o agent.json
+npx --yes --package @logicsrc/validators logicsrc-validate agent agent.json</code></pre>
+
+<p>A valid profile is a description. Its owner and skill fields are claims to verify, and requested permissions still need an actual grant. The spec documents the current LogicSRC identity syntax, the distinction from SDK runtime summaries and where runtime integration remains up to the consuming application.</p>
+
+<p><a href="https://logicsrc.com/openagent">https://logicsrc.com/openagent</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

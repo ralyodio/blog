@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 13 Sep 2026 11:04:52 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 13 Sep 2026 12:40:45 GMT</lastBuildDate>
+
+		<item>
+			<title>OpenAgent: one portable profile for an agent</title>
+			<link>https://dev.profullstack.com/~anthony/blog/150-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/150-post.html</guid>
+			<pubDate>Sun, 13 Sep 2026 12:40:45 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>OpenAgent 0.1 publishes the existing LogicSRC agent profile with discovery conventions and bindings to OpenFleet and OpenRental.</description>
+		</item>
 
 		<item>
 			<title>OpenFleet ships: logicsrc fleet, moshcode 0.99.0, and a Claude Code hook</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 05:38:35 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>OpenSite writes down the reading every link scraper does: a record per URL with title, description, picture, kind, canonical, author, feeds and the card tags verbatim, a descriptor a site serves about itself, and the order a reader takes each field. nichedb.dev/c/sites is the index; paste any address at /c/sites/add and see every tag and the card as X, Slack, iMessage, Discord, LinkedIn and WhatsApp would draw it.</description>
-		</item>
-
-		<item>
-			<title>OpenConnection: a setup token you paste, and the first bridge and app that use it</title>
-			<link>https://dev.profullstack.com/~anthony/blog/140-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/140-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 05:30:03 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The SimpleFIN door written down for anything a bridge holds. myna is the first bridge, DefPromo 1.5.0 the first app: no OpenAI key, one pasted token, revocable from your myna.</description>
 		</item>
 	</channel>
 </rss>
