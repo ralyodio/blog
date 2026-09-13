@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenFleet: the record of who spawned an agent, and the human who answers for it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/146-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T08:57:55Z">
+<meta name="description" content="This morning a Claude Code background job on our dev box asked moshcode to split a task across two agents. One worker became another background job. The other became a tmux pane. Each did its piece.…">
+</head>
+<body>
+
+<article>
+
+<h1>OpenFleet: the record of who spawned an agent, and the human who answers for it</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>This morning a Claude Code background job on our dev box asked moshcode to split a task across two agents. One worker became another background job. The other became a tmux pane. Each did its piece. Neither could say who had started it, why, who its sibling was, what its budget was, or which human had approved any of it. Both ran with their approval prompts bypassed, because the agent that spawned them chose to. The human could not see the tree or stop the pair as one thing.</p>
+
+<p>Nothing was hidden on purpose. Claude Code lists background sessions flat. moshcode lists herd panes flat. Neither reads the other's roster, and the only durable trace of the swarm was that one worker's working directory happened to sit under the parent's temp folder. The relationship lived in a process tree and in a prompt, and was recorded nowhere.</p>
+
+<p>OpenFleet is that record, written by the worker that had to reconstruct its own parentage by hand. It is live at <a href="https://logicsrc.com/openfleet">logicsrc.com/openfleet</a>, with the specification at <a href="https://logicsrc.com/docs/openfleet">logicsrc.com/docs/openfleet</a>.</p>
+
+<h3>Two words, kept apart</h3>
+
+<p>A <strong>fleet</strong> is every agent session one human, its sysop, is answerable for. Fleets are always human controlled. Only the sysop's verbs open a fleet or set its ceiling, every ledger line that does so is marked <code>sysop</code>, and no agent is ever a sysop.</p>
+
+<p>A <strong>swarm</strong> is the set of sessions one spawner starts inside a fleet to do one task. Swarms are automated by default. An agent starts one, and the record and the ledger are what let the human see the tree, stop the swarm as one unit, and learn afterwards what the agent did.</p>
+
+<p>Not to be confused with OpenSwarm, our peer-to-peer media family, whose swarm is a BitTorrent swarm of peers serving pieces of a file.</p>
+
+<h3>The record</h3>
+
+<p>One JSON file per session, written before the session starts and never changed after. It says which fleet and which human, who spawned this member and for what task, which paths this member alone may write, how deep it sits, which engine runs it, whether its approval prompts stand or are bypassed, and the ceiling it was started under: approvals, budget, depth, fan-out, hosts, deadline.</p>
+
+<p>A session cannot tell by comparing ids whether a record was written for it or inherited from a parent, because the record often exists before the engine has minted any id. It tells by the ledger. A record with no start line is unclaimed, and the first session under it claims it. A session that inherits an already claimed record derives a child record first, so an environment leak becomes a parent pointer instead of an impostor.</p>
+
+<h3>The ledger</h3>
+
+<p>One append-only file per fleet per host. Eight events: a fleet opened, a ceiling set, a swarm spawned, a member started, spent, ended, a swarm ended, a start refused. Every line says whether the human or an agent did it. A refused start names the ceiling key it broke, which is how a sysop finds out what an agent tried.</p>
+
+<h3>Five verbs</h3>
+
+<p><code>open</code> and <code>cap</code> belong to the sysop alone; a process that carries a member id is an agent and is refused. <code>tree</code> draws the fleet from the ledger and the records. <code>stop</code> ends a member, a swarm, or a whole fleet as one unit, through each member's own engine. <code>log</code> says what happened and who did it.</p>
+
+<p>None of it ships yet. The spec names what Claude Code, moshcode and a <code>logicsrc fleet</code> tool would each add, from what they record today.</p>
+
+<h3>What else moved</h3>
+
+<p>A second spec called OpenFleet had shipped the same morning from a parallel session: a published listing of agents and file swarms for rent through CoinPay. That one is now <a href="https://logicsrc.com/docs/openrental">OpenRental</a>, in the catalogs family, and its schema, validator and SDK exports moved with it in <code>@logicsrc/schemas</code>, <code>@logicsrc/validators</code> and <code>@logicsrc/sdk</code> 0.2.0.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
