@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nixamp 0.23.4: a share link unfurls into a card with the channel&rsquo;s picture &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/138-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T04:51:25Z">
+<meta name="description" content="Share a nixamp channel and the card now shows its picture: a pasted link's thumbnail, a podcast's sleeve read out of the MP3, a frame of a live video from the channel's own backlog, or the art in the playlist that started it. The same art reaches the iPhone lock screen, HLS or not.">
+</head>
+<body>
+
+<article>
+
+<h1>nixamp 0.23.4: a share link unfurls into a card with the channel&rsquo;s picture</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Share a nixamp channel into a chat and, until today, the card said the name of the server and nothing else. No picture. For a podcast that had the link <code>nixamp.com/?url=...&amp;play=channel:url-6f4152c1590e</code>, the card read &quot;server1&quot;, which is true and useless.</p>
+
+<p>0.23.2 fixes the title and gives every channel a picture. 0.23.4, the same evening, covers the one case it missed.</p>
+
+<h3>The title was a name versus id bug</h3>
+
+<p>nixamp.com titles a share link from what it actually knows, never from the address, so a stranger cannot put words in a preview. What it knew about a server's channels was a list of names. The page, meanwhile, writes share links by channel id. Names never matched ids, so every channel card fell back to the server.</p>
+
+<p>The heartbeat a server sends the directory now carries a lineup next to the names: id, name, whether it is sound or picture, a picture address and a line about it. The directory cleans it like everything else a publisher says. A picture address is http or https or it is nothing.</p>
+
+<h3>Where the picture comes from</h3>
+
+<p>Four places, tried in order, whichever a channel has.</p>
+
+<p>The site's own thumbnail. A pasted link is resolved by yt-dlp, and its answer already carried the thumbnail and the description. They are kept now, and the channel is started with them.</p>
+
+<p>The sleeve in the file. A podcast MP3 carries its cover as an attached picture. ffprobe already saw it; that is what stopped a podcast being carried as a dead video channel back in 0.19. The probe now notes the sleeve and the file's title, artist and album tags, and ffmpeg reads that one frame out of the head of the file. A channel that was named <code>ep-0412-final.mp3</code> is now called what the tags call it.</p>
+
+<p>A frame of the picture. For anything with video, the server decodes one JPEG from the channel's own opening boxes and backlog, the same bytes it hands every new listener. Never by opening the source a second time. An IPTV panel that allows one connection per film counts that second connection against the channel and drops it, and I have been bitten by that once already.</p>
+
+<p>And the picture in the playlist. A station started from a p0dcasters <code>playlist.m3u</code> plays anchor.fm episodes that carry no tags and no sleeve at all, so the first three found nothing. The m3u itself writes an <code>#EXTIMG</code> line per episode, and the parser dropped it. It reads them now, and the first picture in the list is the station's. That was 0.23.4, found while checking the very link that started this.</p>
+
+<pre><code>GET /api/channels/&lt;id&gt;/art</code></pre>
+
+<p>serves it: a redirect to the site's picture, or the JPEG. Five crawlers unfurling one link cost one ffmpeg.</p>
+
+<h3>What the card carries</h3>
+
+<p><code>og:image</code> and <code>og:image:alt</code> for everybody, and a Twitter card that fits the picture: <code>summary</code> for a square sleeve beside the words, <code>summary_large_image</code> for a frame of video across the card. The description leads with the line about the channel, then where it is live. No picture means no picture tags; a card with an empty image is a broken card.</p>
+
+<p>The server's own page does the same through its listen link, so a link straight to <code>server1.chovy.nixamp.com</code> unfurls too.</p>
+
+<h3>HLS cannot carry a picture, the page can</h3>
+
+<p>The question that started this was whether the art could ride inside HLS for the iPhone. It cannot, in any way a browser shows. The session-data tag is for master playlists, and Safari shows none of the ID3 inside segments.</p>
+
+<p>What the iPhone lock screen reads is the page's MediaSession metadata. nixamp now sets its artwork to the channel's picture, so the title and the art show on the lock screen whether the channel is playing as fragmented MP4 or as HLS. The same picture sits under the player and in front of each live channel in the directory.</p>
+
+<h3>Get it</h3>
+
+<pre><code>curl -fsSL https://nixamp.com/install.sh | sh
+nixamp update</code></pre>
+
+<p>Source: <a href="https://github.com/profullstack/nixamp">https://github.com/profullstack/nixamp</a>, PR #156.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
