@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nichedb.dev now lists hosting: who sells servers, at what price &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/132-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T02:33:48Z">
+<meta name="description" content="A hosting collection on nichedb.dev: 185 providers from findhost.app plus every Vultr, Linode, Scaleway and OVH plan as an OpenServer offer, refreshed daily, with feeds for cheap VPS, bare metal and deals.">
+</head>
+<body>
+
+<article>
+
+<h1>nichedb.dev now lists hosting: who sells servers, at what price</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nichedb.dev has a hosting collection. Providers, plans and deals, refreshed daily, every plan stored as an OpenServer offer.</p>
+
+<p>The first run put 834 rows in it:</p>
+
+<ul>
+	<li>185 web hosts from findhost.app's register, CC BY 4.0, with country, category, runtimes, deploy methods and who owns whom.</li>
+	<li>174 Vultr plans, cloud and bare metal.</li>
+	<li>75 Linode types.</li>
+	<li>135 Scaleway instance types, folded across nine zones.</li>
+	<li>245 OVH VPS plans, US in dollars and EU in euros.</li>
+	<li>20 LowEndBox posts, seven of them deals.</li>
+</ul>
+
+<p>All of that comes from the providers' own plan APIs and from a register that licenses reuse. None of it is scraped from a comparison site. We looked at the biggest one, 81,000 offers, and its terms forbid automated collection and commercial use. Its data comes from the same providers every 24 hours, so we went there instead.</p>
+
+<h3>What a row looks like</h3>
+
+<p>Every plan carries an OpenServer offer: kind (cloud, vps, dedicated, bare-metal and so on), premises, management, tenancy, model, vCPU, RAM, disk, bandwidth, price with its interval and currency, regions and stock. A Vultr plan and a plan a host publishes in its own /.well-known/openserver.json end up in the same shape, so the feeds do not care where a row came from.</p>
+
+<p>Providers are enriched with the Wikipedia lead, the OpenGraph preview and, for listed companies, the SEC ticker. Prices with no stated billing cycle are stored with no interval. We do not guess monthly.</p>
+
+<h3>Feeds</h3>
+
+<p>Hosting providers, VPS and bare metal plans, plans under 5 a month, bare metal plans, and hosting deals. Each has a page, RSS, JSON Feed and an API endpoint.</p>
+
+<p><a href="https://nichedb.dev/c/hosting">https://nichedb.dev/c/hosting</a></p>
+
+<p>Next: a storefront reader for the small hosts. We surveyed 683 of them. A quarter run WHMCS, half run something custom, and the rest is noise. That reader is in review and lands next.</p>
+
+<p>This post was drafted with AI assistance and checked by a person.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
