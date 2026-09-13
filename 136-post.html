@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenBroadcast and OpenGuest: hosts and guests matched from two files &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/136-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T03:36:07Z">
+<meta name="description" content="Broadcasters and guests is the framework every live audio show runs on. OpenProfile.md now carries both halves as sections, with Pays and Charges stated so pay-to-play is never a surprise, so a booking platform matches a host and a guest from the files they own.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenBroadcast and OpenGuest: hosts and guests matched from two files</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every show has a booking page and every booking page is a form. A host who wants guests fills in Podmatch, MatchMaker, a Calendly and a Google Form, and each holds half of what a guest needs to know. An expert who is happy to be interviewed fills in a guest-matching site, a speaker bureau, a press page and a line in a bio, and each holds a different fragment: the topics on one, the availability on another, the fee nowhere. Both wrote the answers once and gave them to forms that will not hand them back.</p>
+
+<p>Broadcasters and guests is the framework every live audio show runs on, radio, podcasts, live rooms, streams. Today OpenProfile.md gets both halves as sections, so a host and a guest can be matched from two files rather than two forms.</p>
+
+<h3>OpenBroadcast</h3>
+
+<p><a href="https://logicsrc.com/openbroadcast">OpenBroadcast</a> is the <code>Broadcast</code> section of a host's <a href="https://logicsrc.com/openprofile">OpenProfile.md</a>: what they host and who they are looking for.</p>
+
+<pre><code class="language-markdown">## Broadcast
+
+- **Show**: The Analytical Engine
+- **Kind**: podcast
+- **Format**: interview
+- **Cadence**: weekly
+- **Length**: 45 min
+- **Audience**: 12k downloads/episode
+- **Topics**: computing history, mathematics, women in science
+- **Seeking**: historians, engineers with a story, first-time guests welcome
+- **Not**: crypto, product pitches
+- **Slots**: Tue and Thu 18:00-20:00 Europe/London
+- **Pays**: no
+- **Charges**: no</code></pre>
+
+<p><code>Pays</code> and <code>Charges</code> are unstated by default and shown as unstated, because pay-to-play is the thing a guest most wants to know and is most often not told.</p>
+
+<h3>OpenGuest</h3>
+
+<p><a href="https://logicsrc.com/openguest">OpenGuest</a> is the <code>Guest</code> section of a person's file: that they will appear, what they can speak to, when, on what terms, and where they have been heard before.</p>
+
+<pre><code class="language-markdown">## Guest
+
+- **Available**: yes
+- **Expertise**: analytical engines, early computing, mathematics education
+- **Pitch**: Wrote the first program for a machine that was never built, and can explain why that matters now.
+- **Availability**: weekday evenings, some weekends
+- **Remote**: preferred
+- **Rate**: free
+- **Pays**: no
+- **Appeared on**: [The Analytical Engine](https://ada.example/podcast/ep12)
+- **Credentials**: Countess of Lovelace; first published algorithm, 1843
+- **Not**: crypto, pay-to-play, politics</code></pre>
+
+<p>There is no separate expert spec. An expert is a guest with <code>Expertise</code> and <code>Credentials</code>, and the detail lives in the <code>Resume</code> link the profile already carries.</p>
+
+<h3>Matching</h3>
+
+<p>A booking platform reads both sections and scores the pair from what both wrote: the host's <code>Topics</code> and <code>Seeking</code> against the guest's <code>Expertise</code> and <code>Topics</code>, <code>Slots</code> against <code>Availability</code>, <code>Pays</code> and <code>Charges</code> against <code>Rate</code> and <code>Pays</code>. Both <code>Not</code> keys are absolute. Everything else is a score, and the platform says how it scored. The platform never fills a key the person did not write, from a feed, a photo, a past episode or another site. What is not written is unstated.</p>
+
+<p>The files live where OpenProfile.md already lives: <code>/.well-known/openprofile.md</code> on the person's domain, or linked from any platform page with <code>rel=&quot;openprofile&quot;</code>. A show with its own domain serves its own profile with the Broadcast section under it, and a <code>Host</code> key pointing at the host's file, with the host's Accounts pointing back, is the verification.</p>
+
+<p>We are building a platform that matches on these. The specs are at <a href="https://logicsrc.com/docs/openbroadcast">logicsrc.com/docs/openbroadcast</a> and <a href="https://logicsrc.com/docs/openguest">logicsrc.com/docs/openguest</a>, CC BY 4.0. Write the section once, in a file you own, and every platform that reads OpenProfile.md can book you.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
