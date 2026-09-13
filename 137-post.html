@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>p0dcasters now lists Anchor shows, and you can submit your own &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/137-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T04:16:49Z">
+<meta name="description" content="Anchor let through the platform rule (21,607 to 116,690 shows), a submit form with a person approving each show, and OpenAccess scopes on the same doors.">
+</head>
+<body>
+
+<article>
+
+<h1>p0dcasters now lists Anchor shows, and you can submit your own</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>p0dcasters.com is a directory of independent podcasts built from the Podcast Index. Its one rule was measured, not declared: a domain carrying 25 or more live feeds is a hosting platform, and everything on it stays out. That rule threw out Anchor, Spotify's free host, along with the paid ones. Anchor carries about 99,000 live feeds, 40% of the whole index, and it is where most one-person shows start. Excluding it removed exactly the long tail the directory exists for.</p>
+
+<p>As of today Anchor is the one platform let through. The directory went from 21,607 shows to 116,690 in a single rebuild. Buzzsprout, Libsyn, Megaphone and the other paid hosts and networks stay out.</p>
+
+<h3>Submit a show</h3>
+
+<p>There is a submit form now at <a href="https://p0dcasters.com/submit">p0dcasters.com/submit</a>. Paste the show's site or its feed. The feed is found from the page and checked against the rules right away, so a refusal names the rule on the spot. A feed that passes waits for a person to look at it before it is listed, usually the same day, and then lives at its own page like every other show.</p>
+
+<p>The same door is open to agents. <code>POST /api/submit</code> takes <code>{&quot;url&quot;: &quot;...&quot;}</code> and answers with the show read from its feed, or the rule it missed. A show in the queue comes back as <code>queued</code> with a <code>review</code> entry and a status page to watch. The MCP server at <code>/api/mcp</code> has the same <code>submit_feed</code> tool, and the <code>p0d</code> CLI has <code>p0d submit</code>.</p>
+
+<h3>OpenAccess on the same doors</h3>
+
+<p>The site's OpenAccess descriptor at <code>/.well-known/openaccess.json</code> declares two scopes. <code>podcasts:submit</code> puts the grant's principal on the submission as the submitter. <code>submissions:review</code> opens the review queue at <code>/api/review</code>, so an agent holding that grant can approve or reject on the operator's behalf. Tokens from <a href="https://openaccess.logicsrc.com">openaccess.logicsrc.com</a> are verified offline against the hub's published keys.</p>
+
+<h3>What did not change</h3>
+
+<p>The 90-day rule, the three-episode minimum, the bulk-dump filter and the rest of the platform list are as they were. Submitted shows survive the weekly rebuild, and a show the dump later carries on its own keeps the slug it was approved under.</p>
+
+<p>Drafted with an AI assistant, checked and edited by a person.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
