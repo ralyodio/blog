@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nixamp 0.22: subtitles on every live, and a mic in the trollbox &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/130-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T02:10:05Z">
+<meta name="description" content="Every live stream on nixamp now has open-source subtitles, and a trollbox line can be dictated. Whisper on our own CPU, one ear behind the app, the API, the CLI and MCP.">
+</head>
+<body>
+
+<article>
+
+<h1>nixamp 0.22: subtitles on every live, and a mic in the trollbox</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nixamp 0.22 gives every live stream subtitles, and it hears your mic. Nothing leaves for a speech vendor: the ear is Whisper, run through Transformers.js on nixamp.com's own CPU, and the models are MIT licensed. Here is what shipped and what it took.</p>
+
+<h3>Dictate a trollbox line</h3>
+
+<p>Every live room on nixamp.com has a trollbox. There is now a mic button beside the box. Tap, talk, tap again. The page records with MediaRecorder, decodes it, resamples it to 16 kHz mono itself, and sends nixamp.com a small WAV. The words come back into the box, and Send is still yours, so a misheard word gets fixed before the room sees it. It works in the PWA, the desktop app and on a phone.</p>
+
+<p>The button only exists where a line can be sent from, which is signed in on nixamp.com. The route behind it, POST /api/v1/speech/transcribe, answers 401 to anyone else.</p>
+
+<h3>Subtitles on every live</h3>
+
+<p>The server carrying a channel captions it while somebody is asking. Its own ffmpeg turns the stream into five-second windows, nixamp.com's ear turns each window into a line, and each line is stamped with the wall-clock moment its sound was at the live edge. The lines go out as Server-Sent Events.</p>
+
+<p>The page holds every line until its own playback has reached that moment. A newcomer gets about six seconds of backlog, plus a little buffering, so a line shown the instant it arrived would be seconds ahead of the voice. Held, it lands within about a second. Close to the voice, not on it: a line is a window, not a word. Whisper takes twice as long when asked for word timestamps, and that was not worth it.</p>
+
+<p>The Transcript panel is on by default when you join a live, with a switch per device. On a video channel the current line is laid over the picture too.</p>
+
+<h3>The same ear, three ways</h3>
+
+<p>nixamp transcribe clip.m4a --say <a href="https://server1.chovy.nixamp.com:4321">https://server1.chovy.nixamp.com:4321</a>
+nixamp transcript --channel ID --follow
+nixamp mcp     (transcribe_audio, trollbox_say, trollbox_read, transcript_read)</p>
+
+<h3>Two things that bit</h3>
+
+<p>The model library with the ONNX runtime under it is hundreds of megabytes and native per platform. The nixamp CLI tarball is pure JavaScript and runs anywhere a Node does, so the library is an optional dependency and the packer reads only the regular ones. The tarball stayed at 8 MB. The catch came at deploy: bun's auto-install at first boot reads regular dependencies only, so nixamp.com came up saying it could not hear. The container now carries a production install.</p>
+
+<p>The second was ffmpeg's nobuffer flag. On a pipe it drops the packets it probed, which took the first 1.7 seconds out of every transcript and began every one mid-sentence. It is gone.</p>
+
+<p>Drafted with Claude, checked by running it: the Kennedy sample from whisper.cpp comes out as two five-second lines, in order, in about 1.4 seconds each.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
