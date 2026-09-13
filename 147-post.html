@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenWebring: a webring that says who made it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/147-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T09:20:50Z">
+<meta name="description" content="One file a ring serves about its members, one a member serves about itself, plain links between them, and made_by on every member: human, ai or both. rssamplifier.com is the first host, one ring per topic.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenWebring: a webring that says who made it</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Webrings came back. There are hundreds of them again, on Neocities and personal domains and the fediverse, and every one of them reinvents the same three things: a list of members somebody keeps by hand, a next and a previous link that go somewhere, and a check, usually by eye, that the member still links back. Each ring keeps its list in its own shape, an HTML page, a JSON file, a JavaScript array, a git repo, so a site in four rings is described four ways, and no directory can read a ring without reading its source code.</p>
+
+<p>Meanwhile the one thing a reader in 2026 wants to know about a site, whether a person wrote it, has no place to be said. There are badges, and there are proposals for a header and an attribute, and none of them is something a ring can filter on. A ring for the human web and a ring for the machine web are the same ring with one field, if the field exists.</p>
+
+<p>OpenWebring is that field, and the two files around it. The spec is at <a href="https://logicsrc.com/openwebring">logicsrc.com/openwebring</a>.</p>
+
+<h3>What a member does</h3>
+
+<p>One plain link to the ring on a page the ring can find. Three anchors, no script, no image:</p>
+
+<pre><code class="language-html">&lt;a href=&quot;https://rssamplifier.com/ring/small-web/previous?from=https://chovy.com/&quot;&gt;←&lt;/a&gt;
+&lt;a href=&quot;https://rssamplifier.com/ring/small-web&quot;&gt;Small Web ring&lt;/a&gt;
+&lt;a href=&quot;https://rssamplifier.com/ring/small-web/next?from=https://chovy.com/&quot;&gt;→&lt;/a&gt;</code></pre>
+
+<p>That is the whole obligation, and every member of every existing ring already meets it, because that is what those rings already ask for.</p>
+
+<p>A member may also serve a small file at <code>/.well-known/openwebring.json</code> saying who it is, which rings it belongs to, and <code>made_by</code>: <code>human</code>, <code>ai</code> or <code>both</code>. It is a self-declaration and nothing verifies it, the way every badge before it worked. An optional <code>disclosure</code> field uses the W3C AI Content Disclosure vocabulary word for word, so it lines up with the HTML attribute and the IETF header without translation.</p>
+
+<h3>What a host does</h3>
+
+<p>Serves one file listing its rings, each with a policy on which declarations it admits, a members file in ring order with an active, inactive or pending status, and an OPML twin so a ring is a subscription list in one click. Answers three hops, next, previous and random, as a redirect and nothing else: no cookie, no interstitial, no counter. The hops accept every addressing shape rings already use, the query parameter, the domain, the slug in the path, the bare referrer, so a member written for another ring joins with no change. An unknown starting point gets a random member, never an error. The ring wraps. Inactive members are skipped, listed, and never removed.</p>
+
+<p>Verification is the IndieWeb ring's way: fetch the member's page on a schedule, any link to the ring counts, mark inactive when it is gone, wait for it to come back.</p>
+
+<h3>The first host is rssamplifier.com</h3>
+
+<p><a href="https://rssamplifier.com/ring">rssamplifier.com/ring</a> runs one ring per well-covered topic out of the independent feeds it already reads. The order is fixed once and new members append, so &quot;next from here&quot; means the same thing tomorrow. Each member's own descriptor is read for its <code>made_by</code>, and the ring page says what each site said about itself, or that it said nothing. The hops are exempt from the site's rate limiting, because a refused hop is a broken link on somebody else's page.</p>
+
+<p>If your site is in the directory and in a topic that has a ring, you are already a member, pending. Put the three links on your home page, and the next pass marks you active. Serve the file, and the ring shows who makes your site.</p>
+
+<h3>What is deliberately absent</h3>
+
+<p>No script. No verification of <code>made_by</code>. No central registry: a ring is a file on a host, and two rings with the same name on two hosts are two rings. No reader tracking. The spec text is CC BY 4.0.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

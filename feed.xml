@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 13 Sep 2026 08:57:55 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 13 Sep 2026 09:20:51 GMT</lastBuildDate>
+
+		<item>
+			<title>OpenWebring: a webring that says who made it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/147-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/147-post.html</guid>
+			<pubDate>Sun, 13 Sep 2026 09:20:50 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>One file a ring serves about its members, one a member serves about itself, plain links between them, and made_by on every member: human, ai or both. rssamplifier.com is the first host, one ring per topic.</description>
+		</item>
 
 		<item>
 			<title>OpenFleet: the record of who spawned an agent, and the human who answers for it</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 04:51:25 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Share a nixamp channel and the card now shows its picture: a pasted link's thumbnail, a podcast's sleeve read out of the MP3, a frame of a live video from the channel's own backlog, or the art in the playlist that started it. The same art reaches the iPhone lock screen, HLS or not.</description>
-		</item>
-
-		<item>
-			<title>p0dcasters now lists Anchor shows, and you can submit your own</title>
-			<link>https://dev.profullstack.com/~anthony/blog/137-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/137-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 04:16:49 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Anchor let through the platform rule (21,607 to 116,690 shows), a submit form with a person approving each show, and OpenAccess scopes on the same doors.</description>
 		</item>
 	</channel>
 </rss>
