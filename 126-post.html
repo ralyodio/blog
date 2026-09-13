@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenServer: one file a hosting provider serves about what it sells &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/126-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T01:58:56Z">
+<meta name="description" content="A JSON file at /.well-known/openserver.json listing every offer a host sells, so directories read the provider instead of scraping an aggregator. nichedb.dev reads it first.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenServer: one file a hosting provider serves about what it sells</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We wanted a database of hosting offers on nichedb.dev. The obvious source was an aggregator with 81,000 offers, and its terms forbid automated collection, copying and commercial use. Every comparison site works this way: scrape the providers, then forbid anyone from scraping the scrape. The provider, who wanted its offers seen, is the one party with no say.</p>
+
+<p>So we published the file the provider should serve instead.</p>
+
+<p>OpenServer is a JSON document at /.well-known/openserver.json on the provider's own origin. It lists every offer with its kind, specs, price, location and stock. A directory reads the provider's file, a buyer's agent reads it instead of a pricing page, and the provider stays the author of its own words.</p>
+
+<h3>What it covers</h3>
+
+<p>One enum for kind: cloud, vps, dedicated, bare-metal, colocation, on-prem, shared, managed, paas, serverless, storage, gpu, edge, p2p and hybrid. Then four axes as separate fields, so a reader filters without guessing: premises (on-prem, off-prem, hybrid), management (managed, unmanaged, co-managed), tenancy (shared, dedicated) and model (centralized, p2p).</p>
+
+<p>A peer-to-peer market publishes one descriptor whose offers are its current asks, with stock and price updated as the market moves. That is the case a page scraper can never read.</p>
+
+<p>Only two fields are required: the provider's name and each offer's name. Everything else degrades. Unknown keys are kept.</p>
+
+<h3>The first reader</h3>
+
+<p>nichedb.dev's hosting collection reads it today, beside the plan APIs of Vultr, Linode, Scaleway and OVH and the 185 hosts in findhost.app's CC BY 4.0 registry. Every plan in that collection is stored as an OpenServer offer, so a host that serves the file and a host we read through its API end up in the same shape.</p>
+
+<p>Spec: <a href="https://logicsrc.com/docs/openserver">https://logicsrc.com/docs/openserver</a></p>
+
+<p>Related: OpenCPU, OpenMemory, OpenGPU and OpenBandwidth describe the resource blocks an offer carries. OpenDisk describes a peer renting disk, which lists as an OpenServer offer with kind storage.</p>
+
+<p>This post was drafted with AI assistance and checked by a person.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
