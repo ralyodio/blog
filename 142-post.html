@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>tron automate: Obscura first, Chromium when the page needs it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/142-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T06:53:43Z">
+<meta name="description" content="TronBrowser 3.10 adds an MCP server that renders with Obscura first and hands JS-heavy pages to Chromium, plus a keyless hosted relay at tronbrowser.dev/mcp/tron listed on OpenMCP.">
+</head>
+<body>
+
+<article>
+
+<h1>tron automate: Obscura first, Chromium when the page needs it</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>TronBrowser now has an MCP server for agents that picks its engine per page. <code>tron automate</code> renders with Obscura first and hands the page to the Chromium session when Obscura is not enough. The same server runs hosted at tronbrowser.dev/mcp/tron, keyless, listed on openmcp.logicsrc.com.</p>
+
+<h3>Why two engines</h3>
+
+<p>I benchmarked both on the same pages before building anything. Obscura is a headless browser with its own renderer and a real V8. It starts in milliseconds and holds about 30 MB on a light page. Chromium cannot start in under 700 ms. So for example.com, Obscura answered in 63 ms and a cold Chrome took 774 ms.</p>
+
+<p>Then the order flips. A GitHub repo page took Obscura 17 seconds and a warm Chromium 1.1 seconds. A Wikipedia article was 7.8 seconds against 0.45. Obscura's markdown conversion alone spent 5 seconds on the GitHub DOM. Only Chromium passes a real login or an interactive bot wall.</p>
+
+<p>Neither engine is fastest. A router is.</p>
+
+<h3>What fetch_page does</h3>
+
+<p><code>fetch_page</code> takes a URL and a format (markdown, text, links or html). With the default engine it asks Obscura over stdio with a 20 second budget, then falls back to Chromium when Obscura is missing, errors, runs out of time, or hands back a page that is plainly a wall or empty. It returns the page and one JSON line saying which engine answered and why the fallback ran. <code>engine=obscura</code> or <code>engine=chromium</code> pins one.</p>
+
+<pre><code class="language-sh">tron automate                  # MCP over stdio, for Claude Desktop or an IDE agent
+tron automate serve            # HTTP with an OpenMCP descriptor
+tron automate fetch &lt;url&gt;      # one-shot, prints markdown
+tron automate status           # which engines are usable</code></pre>
+
+<p>Obscura is two 100 MB binaries, so the release tarball does not carry it. The installer downloads the pinned release next to the launcher on install and on <code>tron upgrade</code>.</p>
+
+<h3>The hosted relay</h3>
+
+<p>tronbrowser.dev/mcp/tron is the same router inside the site's container, with the portable ungoogled-chromium build and Obscura baked into the image. It exposes <code>fetch_page</code> and <code>screenshot_page</code> only, opens a fresh tab per call and closes it, and refuses private targets by name and by what the name resolves to. Three pages render at once, thirty calls a minute per caller. The descriptor lives at tronbrowser.dev/.well-known/openmcp.json, so the catalog marks it verified.</p>
+
+<p>Inside the container: Obscura fetched example.com in 60 ms, ungoogled-chromium rendered the GitHub page in 2 seconds, and the whole thing sat at 360 MB with Chromium warm.</p>
+
+<h3>One thing I found on the way</h3>
+
+<p>Obscura's HTTP MCP transport answers the first request on a connection in under 60 ms, then stalls every later request on that keep-alive connection by about 4 seconds. curl never shows it because each curl is a new connection. Over stdio there is no stall at all, which is why <code>tron automate</code> drives Obscura as a child process.</p>
+
+<p>Docs: <a href="https://github.com/profullstack/tronbrowser.dev/blob/main/docs/mcp.md">https://github.com/profullstack/tronbrowser.dev/blob/main/docs/mcp.md</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
