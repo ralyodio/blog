@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nixamp remembers what it heard, and can say it in Swedish &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/148-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-13T09:38:10Z">
+<meta name="description" content="nixamp 0.24 keeps every transcript once, under the media it came from, detects the language it is hearing, translates captions with open models on its own CPU, and serves its tools as an MCP at nixamp.com/mcp.">
+</head>
+<body>
+
+<article>
+
+<h1>nixamp remembers what it heard, and can say it in Swedish</h1>
+
+<p><em>2026-09-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Earlier this week nixamp learned to hear. Now it remembers what it heard, and can say it in Swedish.</p>
+
+<h3>Written down once</h3>
+
+<p>When a channel is captioned, the server carrying it sends five seconds of sound at a time to nixamp.com's ear, an open Whisper model running on our own CPU. That worked, but it had no memory. Play the same film tomorrow and the ear heard the whole thing again. Join the same live from two servers and both paid for every word.</p>
+
+<p>nixamp 0.24.0 keeps what it hears. The transcript is stored under the identity of the media, not the channel that happened to play it: a file by a fingerprint of its bytes, a link by its address, a live as the one broadcast it was. Lines are seconds into the media. The next captioner to meet the same film asks the store first and reads any moment it already knows instead of waking the ear. What it hears beyond that gets added. Over time the store fills in and the ear goes quiet.</p>
+
+<p><code>nixamp transcribe FILE</code> now does the whole thing in one pass, a minute at a time, with the timing of each line, and marks the transcript complete. Then <code>--srt</code>, <code>--vtt</code> or <code>--out DIR</code> gives you subtitle files. Do it once on any machine and every server that puts that film on the air reads the lines back.</p>
+
+<pre><code>nixamp transcribe film.mkv --translate de,sv --out subs/
+nixamp transcript --kept film.mkv --srt
+nixamp transcript --list</code></pre>
+
+<h3>It knows what language it is hearing</h3>
+
+<p>Transformers.js never detects Whisper's language. It quietly assumes English, and a Swedish clip came back as three English words repeated for half a minute. The ear now does what whisper.cpp does: one pass over the first thirty seconds, one decoder step, and the loudest language token wins. About a second, and then a Swedish channel says something in Swedish.</p>
+
+<h3>In another language</h3>
+
+<p>Ask for a language and the lines come translated, by the Helsinki-NLP OPUS-MT models on nixamp.com's own CPU. Each pair is a hundred megabytes and takes about a second per sentence. German and Swedish were the two we wanted, and anything with a model from or into English works; a pair with no model of its own goes through English. A translation is made once and kept beside the original, so nobody translates the same film twice either.</p>
+
+<p>We measured the big many-language models first. NLLB-200 wanted two gigabytes of memory and ten to twenty seconds a sentence on our box. The small pairs won.</p>
+
+<p>On the page there is a picker beside the Captions switch. In the terminal, <code>nixamp transcript --channel ID --language sv</code> follows a live in Swedish, and <code>nixamp translate --to de &quot;...&quot;</code> does a line.</p>
+
+<h3>An MCP for the site</h3>
+
+<p>The tools that <code>nixamp mcp</code> speaks on a pipe are now also at <code>https://nixamp.com/mcp</code> over HTTP. An agent with no nixamp installed sends a nixamp token as the bearer and gets the watch parties, the rooms, and the transcripts: <code>transcript_get</code>, <code>transcripts_list</code>, <code>translate_text</code>, and <code>transcribe_audio</code> for a whole film.</p>
+
+<h3>The API</h3>
+
+<pre><code>GET  /api/v1/transcripts/ID?format=srt        a kept transcript, by id or by media identity
+GET  /api/v1/transcripts/ID?language=de       translated once and kept; 202 with progress while a long one is made
+POST /api/v1/transcripts/ID/lines             keep lines
+GET  /api/channels/ID/captions?language=sv    a live's captions, translated as they are said
+POST /api/v1/translate                        texts in another language</code></pre>
+
+<p>Everything is open models on our own hardware. Nothing goes to a speech vendor, nothing is billed, and the models are baked into the image so a deploy never downloads them again.</p>
+
+<p>nixamp is at <a href="https://nixamp.com">https://nixamp.com</a> and the code is at <a href="https://github.com/profullstack/nixamp">https://github.com/profullstack/nixamp</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
