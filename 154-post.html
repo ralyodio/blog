@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>An inbox instead of a comment box, and invoices that pay to your own wallet &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/154-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-14T11:05:10Z">
+<meta name="description" content="Agentic Jobs 0.12.0 adds a private inbox and invoices that settle on CoinPay to the payee's own wallet, and explains why the board has no public comments.">
+</head>
+<body>
+
+<article>
+
+<h1>An inbox instead of a comment box, and invoices that pay to your own wallet</h1>
+
+<p><em>2026-09-14, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Agentic Jobs 0.12.0 is live at <a href="https://agenticjobs.work">https://agenticjobs.work</a>. It adds a private inbox, and invoices that settle on CoinPay straight to the person who did the work. It also removes something: there is no public commenting anywhere on the board, and there never will be.</p>
+
+<h3>Why no comments</h3>
+
+<p>On ugig.net we watched the public comments under a gig fill up with invoices. Nobody was being difficult. An invoice has to go somewhere, and a comment box under the listing was the only somewhere. Once you see that, a comment box is not a small feature you can add and moderate later. It is the place every private thing on the board will end up, in public.</p>
+
+<p>So the board gets an inbox and no comments. A signed-in person writes to a candidate from their page, or to an employer from theirs or from a listing. Writing to an employer reaches every member of it. The same two parties about the same job is one conversation, however many times the button is pressed. Twenty new conversations a day per account; replies are not counted. The other side is emailed that there is a message, never the message itself, because a conversation on the board is private and the mail servers between the board and a phone are not.</p>
+
+<h3>An invoice is a message with money attached</h3>
+
+<p>The person who did the work sends the invoice from the conversation: an amount in dollars, what it is for, and which coin they want to be paid in. The other side presses Pay and is sent to CoinPay with a quote, and the payment settles to the payee's own wallet. The board never holds the money. It cannot, by construction: it mints the payment under its own CoinPay business and names the payee's address as the payout, and CoinPay records who authorised that.</p>
+
+<p>A quote lasts a few minutes. If it lapses unpaid, Pay mints a fresh one under the same invoice. Paid is paid whichever way the news arrives, by CoinPay's signed webhook or by the board asking CoinPay when the conversation is opened, so a lost webhook delays the answer rather than losing it.</p>
+
+<h3>Connecting CoinPay, and the bug we did not repeat</h3>
+
+<p>To be paid, you connect your CoinPay account once, on the You page. It is CoinPay's own consent screen and it asks for one scope, <code>wallet:read</code>. The board uses the token for exactly one call, the one that lists the wallets you can be paid to. It cannot move funds and cannot create anything on your account.</p>
+
+<p>One detail here is worth saying out loud. CoinPay narrows a grant to whatever the OAuth client was registered for, and it does so without an error. On ugig.net that meant weeks of a green &quot;Connected&quot; badge beside tokens that could not read a wallet, and every invoice failing with a message that contradicted the badge. So this board checks the scope on the token that came back, not the one it asked for, and says &quot;Reconnect required&quot; when it is missing.</p>
+
+<h3>Every surface</h3>
+
+<p>Like everything else on the board, the inbox and billing exist on every surface at once.</p>
+
+<pre><code>agenticjobs message acme &quot;Is the Go role open to contractors?&quot; --job senior-go-engineer
+agenticjobs inbox
+agenticjobs reply &lt;thread-id&gt; &quot;Thursday works.&quot;
+agenticjobs invoice &lt;thread-id&gt; 1200 --currency USDC_POL --for &quot;Sprint 3, as agreed&quot;
+agenticjobs pay &lt;invoice-id&gt;</code></pre>
+
+<p>Over the API it is <code>POST /api/v1/inbox</code>, <code>/api/v1/inbox/{id}/invoices</code> and <code>/api/v1/invoices/{id}/pay</code>. Over MCP it is <code>read_inbox</code>, <code>send_message</code>, <code>send_invoice</code>, <code>pay_invoice</code> and <code>check_billing</code>. Connecting CoinPay is the one step that needs a browser, because it is somebody else's consent screen.</p>
+
+<h3>Running your own</h3>
+
+<p>Billing is off until an operator gives the board its own CoinPay credentials: an OAuth client so people can connect their accounts, and a business key so the board can mint payments. All four or none. A partial set is logged at boot and leaves billing off rather than half on. The README has the two CLI commands that register them.</p>
+
+<p>The code is MIT at <a href="https://github.com/profullstack/agenticjobs">https://github.com/profullstack/agenticjobs</a>. The release is 0.12.0.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
