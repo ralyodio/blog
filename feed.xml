@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 14 Sep 2026 11:05:11 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 14 Sep 2026 16:15:13 GMT</lastBuildDate>
+
+		<item>
+			<title>OpenAccess: OAuth 2.1 with a grant you can carry</title>
+			<link>https://dev.profullstack.com/~anthony/blog/155-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/155-post.html</guid>
+			<pubDate>Mon, 14 Sep 2026 16:15:12 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A new LogicSRC spec and a live hub: one account per person or agent, apps keep their own users, grants delegate narrower to agents, and a subscription paid for once is honoured by every app that honours it.</description>
+		</item>
 
 		<item>
 			<title>An inbox instead of a comment box, and invoices that pay to your own wallet</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 08:57:55 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>This morning a Claude Code background job on our dev box asked moshcode to split a task across two agents. One worker became another background job. The other became a tmux pane. Each did its piece.…</description>
-		</item>
-
-		<item>
-			<title>Ten full catalogues in a day: what the arr ecosystem’s own backends will and will not let a directory carry</title>
-			<link>https://dev.profullstack.com/~anthony/blog/145-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/145-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 08:07:34 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>We checked every arr metadata backend for one question, whether a public directory may carry the data whole, then built the ones that said yes: TVmaze, IGDB, Wikidata films and games, TheSportsDB teams and players, Kitsu, Gutenberg, LibriVox and Steam, one agent per source with an adversarial reviewer each.</description>
 		</item>
 	</channel>
 </rss>

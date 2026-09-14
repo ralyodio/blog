@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenAccess: OAuth 2.1 with a grant you can carry &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/155-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-14T16:15:12Z">
+<meta name="description" content="A new LogicSRC spec and a live hub: one account per person or agent, apps keep their own users, grants delegate narrower to agents, and a subscription paid for once is honoured by every app that honours it.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenAccess: OAuth 2.1 with a grant you can carry</h1>
+
+<p><em>2026-09-14, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every app I run has a permissions model and a billing model, and no two of them agree. I counted this week: across fifteen of our repositories there are twelve distinct permission vocabularies. One app checks <code>payments:create</code>, the next checks <code>invoice.write</code>, five of them redeclare <code>owner</code>, <code>admin</code> and <code>member</code> from scratch, one keeps an untyped bag of booleans, and not one of them shares a validator. An agent that works across those apps holds twelve credentials and understands none of them. A person who pays for a product pays again next door, because the subscription lives in the seller's table and nowhere else.</p>
+
+<p>The pieces to fix this already exist. OAuth 2.1 says how an app asks a person for permission and how a token carries the answer. <code>/.well-known/</code> is where a host says things about itself. Webhooks are how a service tells another service that something happened. What was missing is the convention that makes the grant and the entitlement belong to the person, so they travel across apps while every app's own user table stays exactly where it is.</p>
+
+<p>That convention is OpenAccess. The one line: OAuth 2.1 with a grant you can carry.</p>
+
+<h3>How it works</h3>
+
+<p>A person, an agent or an organisation keeps one account at a hub. Every app they use keeps its own users and links each one to that account once, with ordinary authorization code plus PKCE, or the device flow from a terminal. The app stores the hub's <code>sub</code> beside its own user id. That is the whole link.</p>
+
+<p>An app serves one file at <code>/.well-known/openaccess.json</code>. It lists the scopes the app understands, each with a line a person can read on a consent screen. It lists the products the app sells, with pay, cancel, manage, upgrade and promote links that get the principal filled in so a sale or a referral is attributed. It lists the products the app honours, its own and anyone else's. It names the key the app signs with, so there is no shared secret to leak. A hub registers an app by reading that file from the app's own origin, and lists nothing the registrant typed.</p>
+
+<p>Then the two things OAuth never did.</p>
+
+<p><strong>Grants delegate.</strong> A token that carries <code>grants:delegate</code> can mint a child grant for an agent: a subset of the scopes, spending limits no larger, an expiry no later. The agent gets a refresh token, its access tokens name the parent grant and the agent's OpenProfile, and revoking the parent revokes every child. An app always sees the path back to the person.</p>
+
+<p><strong>Entitlements travel.</strong> When someone pays, the seller reports it to the hub as itself, signed with the key its descriptor names. Every app that honours that product hears by webhook, and every token the hub issues to those apps from then on carries the product. An app that honours <code>profullstack.com/all-access</code> treats its holder the way it treats its own subscribers, whoever sold it. Cancel from the hub and the seller is asked, the seller's cancel link is shown, and the standing stays until the seller reports otherwise, because the seller has the money and the terms. The hub records standing. It moves no money.</p>
+
+<p>One rule shaped the whole thing: a hub never narrows a request in silence. Ask for a scope the app's descriptor does not name and the request fails with that scope's name in the error. We learned that one the hard way. Last month a payments provider started intersecting requested scopes with each client's registration and returning <code>200 OK</code> with fewer scopes than asked for. Every new connection from one of our apps came back without the one scope its invoicing needed, the connection page showed a green badge, and invoicing was silently broken for three weeks. A refused request would have been found in an hour.</p>
+
+<h3>What is there today</h3>
+
+<p>The spec is at <a href="https://logicsrc.com/openaccess">logicsrc.com/openaccess</a>. It sits beside OpenProfile, which names the operator behind an app and the identity of an agent holding a delegated grant, and OpenMCP, where a relay can name a hub as its auth.</p>
+
+<p>A reference hub runs at <a href="https://openaccess.logicsrc.com">openaccess.logicsrc.com</a>. Sign in by magic link and you get one page with every app you linked, every grant you gave, every agent holding a piece of one, and every subscription with its pay and cancel links, whichever app sold it. The same over REST and over MCP with your own hub token, so an agent can ask <code>my_entitlements</code> or hand a narrower grant on.</p>
+
+<p>The code is at <a href="https://github.com/logicsrc/openaccess">github.com/logicsrc/openaccess</a>, published as <code>@logicsrc/openaccess</code>. Node 24, one SQLite file, two dependencies. <code>npx @logicsrc/openaccess serve</code> runs a hub. <code>openaccess keygen</code> and <code>openaccess descriptor</code> get an app started. <code>openaccess login</code> is the device flow from a terminal, and <code>openaccess delegate --scope &quot;jobs:read&quot; --per-day &quot;50 USD&quot; --days 7</code> hands an agent a week of bounded access.</p>
+
+<p>Tokens are Ed25519 JWTs an app verifies offline against the hub's JWKS. Webhooks are signed with the same key. Refresh tokens rotate, and a replayed one revokes the grant, as OAuth 2.1 asks.</p>
+
+<h3>What it deliberately leaves out</h3>
+
+<p>No passwords: a hub signs people in however it likes, and an app never sees a hub credential. No money: the seller charges, by card, by CoinPay, by invoice. No roles: <code>owner</code> and <code>admin</code> are an app's local bundles of scopes, and what crosses the wire is the scopes, so two apps can mean the same thing by the same string. No trust score: verified means the descriptor came from the app's origin, and whether to link an app is the person's call.</p>
+
+<p>Our own apps are next in line to serve a descriptor. If you run one and want subscriptions your users can carry, the spec is short and every rule degrades.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
