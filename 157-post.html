@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Every podcaster and author gets a profile file, and it is theirs to edit &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/157-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-15T16:15:21Z">
+<meta name="description" content="OpenProfile.md on p0dcasters, rssamplifier and OutreachGraph, merged into one People collection on nichedb.dev, claimable and editable from web, API, CLI and MCP with OpenAccess.">
+</head>
+<body>
+
+<article>
+
+<h1>Every podcaster and author gets a profile file, and it is theirs to edit</h1>
+
+<p><em>2026-09-15, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every podcaster on p0dcasters.com now has a profile file, and it is theirs to edit. So does every author on rssamplifier.com, and every person an OutreachGraph workspace chooses to make public. All of them land in one place, the new People collection on nichedb.dev, where a person is one entry no matter how many apps know them.</p>
+
+<p>The file is <a href="https://logicsrc.com/openprofile">OpenProfile.md</a>, the LogicSRC spec for one Markdown profile that people and agents can both read. For a podcaster it carries the <a href="https://logicsrc.com/openbroadcast">Broadcast</a> section: the show, the feed, where to listen, how often it comes out, what it covers. For anyone offering to appear on other people's shows it carries the <a href="https://logicsrc.com/openguest">Guest</a> section. A booking platform reads one against the other instead of two forms.</p>
+
+<h3>Where the files are</h3>
+
+<ul>
+	<li>p0dcasters serves the host's profile next to every show page, at <code>/podcast/&lt;slug&gt;/openprofile.md</code>. The show page points at it with <code>&lt;link rel=&quot;openprofile&quot;&gt;</code> and a Profile button. <a href="https://p0dcasters.com/podcast/inspiring-founders-podcast/openprofile.md">Inspiring Founders Podcast</a> is one.</li>
+	<li>rssamplifier serves every author's file at <code>/authors/&lt;slug&gt;/openprofile.md</code>, built from the accounts the author's own site links to and the shows they own. <a href="https://rssamplifier.com/authors/thomas-umstattd-jr/openprofile.md">Thomas Umstattd Jr.</a> has two shows, so his Broadcast section has two groups.</li>
+	<li>OutreachGraph serves a person's file only when the workspace marked it public, and a public file never carries an email or a phone number.</li>
+	<li>nichedb pulls all three and merges them into <a href="https://nichedb.dev/c/profiles">nichedb.dev/c/profiles</a>. The entry URL is the name plus an id, so two people with the same name never collide, and the wrong name on the right id redirects.</li>
+</ul>
+
+<h3>Generated, then corrected by the person</h3>
+
+<p>Each app generates the profile from what the person already published: a feed's title and categories, the links on their site, their public bios. That is the app's claim, and the specs are strict about what a claim may not contain. OpenBroadcast says a platform never fills in Seeking, Not, Pays or Charges from a feed. So the generated Broadcast section states the show; the person states the terms.</p>
+
+<p>The person does that by claiming the profile. On every one of these apps the claim is verified automatically: the signed-in email matches the feed's owner email or the author's published address, or the person's own site links back to the profile. After that the profile is editable from the web page, the REST API, the app's CLI and its MCP server, and the same edit shape works everywhere: identity keys, a headline, one block of Markdown per section. A section the person did not touch keeps being generated, so a new episode still updates the show while the terms stay as the person wrote them.</p>
+
+<p>Editing also works through <a href="https://logicsrc.com/openaccess">OpenAccess</a>. An agent holding a grant with the <code>openprofile:edit</code> scope can update a person's profile on any of these apps, so one grant covers every place the profile lives.</p>
+
+<h3>One person, not five copies</h3>
+
+<p>nichedb de-duplicates by the rule OpenProfile.md already states: the URL of an account is the identity. Two documents that share a verified account URL, a home page or an email are the same person and merge into one entry that lists every source. Two documents that share only a name stay two people. The merged entry keeps every account and topic from every source and keeps shows apart as separate groups.</p>
+
+<p>Claiming on nichedb works the same way, and a claimed entry can take a handle, so <code>/c/profiles/ada-lovelace-1842</code> can become <code>/c/profiles/ada</code>. The old URL keeps working.</p>
+
+<h3>For developers</h3>
+
+<p>All four apps use one package, <a href="https://www.npmjs.com/package/@profullstack/openprofile">@profullstack/openprofile</a>, which parses, renders, applies an owner's overlay, computes identity keys and merges documents. Each app also exposes a listing endpoint (<code>/api/openprofiles</code> with <code>since</code> and a cursor) that any directory can pull, keyless, with the same shape nichedb reads.</p>
+
+<p>The specs are on logicsrc.com: <a href="https://logicsrc.com/docs/openprofile">OpenProfile.md</a>, <a href="https://logicsrc.com/docs/openbroadcast">OpenBroadcast</a>, <a href="https://logicsrc.com/docs/openguest">OpenGuest</a> and <a href="https://logicsrc.com/docs/openaccess">OpenAccess</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
