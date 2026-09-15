@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 14 Sep 2026 16:15:13 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 15 Sep 2026 08:15:19 GMT</lastBuildDate>
+
+		<item>
+			<title>NicheDB Premium: a dollar a day</title>
+			<link>https://dev.profullstack.com/~anthony/blog/156-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/156-post.html</guid>
+			<pubDate>Tue, 15 Sep 2026 08:15:18 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>NicheDB Premium: $1 a day, $30 a month, $300 a year. No ads, no tracker, the Lounge, 1,000 credits a month, awards, a badge, early access and higher API limits, with a 13-row comparison against Reddit Premium.</description>
+		</item>
 
 		<item>
 			<title>OpenAccess: OAuth 2.1 with a grant you can carry</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 09:20:50 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>One file a ring serves about its members, one a member serves about itself, plain links between them, and made_by on every member: human, ai or both. rssamplifier.com is the first host, one ring per topic.</description>
-		</item>
-
-		<item>
-			<title>OpenFleet: the record of who spawned an agent, and the human who answers for it</title>
-			<link>https://dev.profullstack.com/~anthony/blog/146-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/146-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 08:57:55 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>This morning a Claude Code background job on our dev box asked moshcode to split a task across two agents. One worker became another background job. The other became a tmux pane. Each did its piece.…</description>
 		</item>
 	</channel>
 </rss>
