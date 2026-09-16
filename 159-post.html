@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Why I am calling this terminal experience a Live TUI &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/159-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-16T16:15:29Z">
+<meta name="description" content="A naming proposal for terminal apps that keep a persistent workspace usable while individual panes stream, refresh, and show progress.">
+</head>
+<body>
+
+<article>
+
+<h1>Why I am calling this terminal experience a Live TUI</h1>
+
+<p><em>2026-09-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I want a name for the experience of working in a terminal app that keeps moving while individual tasks wait. My proposal is &quot;Live TUI.&quot;</p>
+
+<p>Picture one persistent workspace. A pane streams data. Another refreshes its own state. A task shows progress where that task lives, and you can keep working elsewhere in the application.</p>
+
+<p>The comparison that makes sense to me is the AJAX moment for web interfaces. Partial updates let the interface respond locally. A single operation does not need to make the whole screen wait.</p>
+
+<p>hqtui-demo is the example behind this idea. The details that interest me are the independent refreshes and the local loading indicators: the interface tells you what is happening while leaving the workspace usable.</p>
+
+<p>The obvious challenge to the name is that the mechanics already exist. That is true. A terminal app can redraw part of its screen and run asynchronous work without adopting a new label. A name only helps if it conveys something useful about the experience.</p>
+
+<p>For me, &quot;Live TUI&quot; sets that expectation: the workspace persists, its state stays visible, and a busy pane does not prevent you from using the rest of the app.</p>
+
+<p>Does the name capture that? I'd like to hear what you would call it.</p>
+
+<p>hqtui-demo: <a href="https://hqtui.com">https://hqtui.com</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

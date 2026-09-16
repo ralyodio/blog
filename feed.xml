@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 16 Sep 2026 08:15:27 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 16 Sep 2026 16:15:30 GMT</lastBuildDate>
+
+		<item>
+			<title>Why I am calling this terminal experience a Live TUI</title>
+			<link>https://dev.profullstack.com/~anthony/blog/159-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/159-post.html</guid>
+			<pubDate>Wed, 16 Sep 2026 16:15:29 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A naming proposal for terminal apps that keep a persistent workspace usable while individual panes stream, refresh, and show progress.</description>
+		</item>
 
 		<item>
 			<title>OpenMCP is live: a browsable catalog of MCP relays, and a headless browser it hosts</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 12:40:45 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>OpenAgent 0.1 publishes the existing LogicSRC agent profile with discovery conventions and bindings to OpenFleet and OpenRental.</description>
-		</item>
-
-		<item>
-			<title>OpenFleet ships: logicsrc fleet, moshcode 0.99.0, and a Claude Code hook</title>
-			<link>https://dev.profullstack.com/~anthony/blog/149-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/149-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 11:04:51 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>This morning we published OpenFleet, the record an agent session carries about who spawned it and which human answers for it. The spec said what three tools would each have to add. By the afternoon…</description>
 		</item>
 	</channel>
 </rss>
