@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 15 Sep 2026 16:15:22 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 16 Sep 2026 08:15:27 GMT</lastBuildDate>
+
+		<item>
+			<title>OpenMCP is live: a browsable catalog of MCP relays, and a headless browser it hosts</title>
+			<link>https://dev.profullstack.com/~anthony/blog/158-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/158-post.html</guid>
+			<pubDate>Wed, 16 Sep 2026 08:15:26 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>OpenMCP, a catalog of MCP relays verified by probe, now has a browsable directory with sign-in by link and hosts Obscura, a stealth headless browser, as a relay that reads pages curl cannot.</description>
+		</item>
 
 		<item>
 			<title>Every podcaster and author gets a profile file, and it is theirs to edit</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 11:04:51 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>This morning we published OpenFleet, the record an agent session carries about who spawned it and which human answers for it. The spec said what three tools would each have to add. By the afternoon…</description>
-		</item>
-
-		<item>
-			<title>nixamp remembers what it heard, and can say it in Swedish</title>
-			<link>https://dev.profullstack.com/~anthony/blog/148-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/148-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 09:38:10 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>nixamp 0.24 keeps every transcript once, under the media it came from, detects the language it is hearing, translates captions with open models on its own CPU, and serves its tools as an MCP at nixamp.com/mcp.</description>
 		</item>
 	</channel>
 </rss>

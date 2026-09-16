@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenMCP is live: a browsable catalog of MCP relays, and a headless browser it hosts &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/158-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-16T08:15:26Z">
+<meta name="description" content="OpenMCP, a catalog of MCP relays verified by probe, now has a browsable directory with sign-in by link and hosts Obscura, a stealth headless browser, as a relay that reads pages curl cannot.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenMCP is live: a browsable catalog of MCP relays, and a headless browser it hosts</h1>
+
+<p><em>2026-09-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every product that speaks MCP is a relay: an endpoint an agent can call over HTTP. Until now each one was found by hand, from a README, and wired into a client's config by a person. OpenMCP is a catalog that lists relays it has actually reached, and it is running at <a href="https://openmcp.logicsrc.com">openmcp.logicsrc.com</a>.</p>
+
+<h3>What a relay does to be listed</h3>
+
+<p>It serves one file, <code>/.well-known/openmcp.json</code>, saying where its MCP endpoint is, how to authenticate, what it is for and who operates it. The catalog probes before it lists: the descriptor from the relay's own origin, then an MCP handshake and <code>tools/list</code>. What is listed is what the probe found, never what somebody typed into a form. A relay that serves the file is marked verified; one that answered the handshake is marked online; both facts are shown, and they are the only two the catalog asserts.</p>
+
+<p>A catalog is itself a relay. Its MCP endpoint offers <code>list_relays</code>, <code>find_tool</code> and <code>call_tool</code>, so an agent that can reach one catalog can reach every relay in it, and pass its own credential for the relay through without the catalog keeping it.</p>
+
+<h3>New today: a directory for people</h3>
+
+<p>The same records are now a web page. <code>openmcp.logicsrc.com</code> in a browser is the directory: search, filter by tag, open a relay to read its tools and their schemas. An agent asking the same URL with an <code>Accept: application/json</code> header gets the JSON index it always did.</p>
+
+<p>Sign-in is an emailed link and nothing else. It doubles as registration: an unknown address makes the account rather than being turned away, and the answer to &quot;send me a link&quot; is the same whether or not the address is known, so the endpoint cannot be used to list who has registered. Once signed in, a relay you register is yours: probe it again whenever you like, or remove it. Relays registered anonymously stay unowned and stay listed.</p>
+
+<h3>New today: Obscura, hosted by the catalog</h3>
+
+<p>A catalog can now run a relay inside its own process. The first one is <a href="https://github.com/h4ckf0r0day/obscura">Obscura</a>, a headless browser written in Rust with a real V8 and Chrome's TLS fingerprint. It is listed at <a href="https://obscura.openmcp.logicsrc.com">obscura.openmcp.logicsrc.com</a>, verified and online like any other relay, with one tool: <code>fetch_page</code> takes a URL and returns the page as markdown, plain text, its links, the rendered HTML, or the original bytes.</p>
+
+<p>The reason it exists is that a lot of the public web now answers a plain HTTP client with 403. The CDC's Health Alert Network page and its MMWR feed do; <code>curl</code> gets nothing, and this relay returns the page in about a second and a half. No key, no account, three fetches at a time, a minute each at most, public hosts only.</p>
+
+<p>From any MCP client, through the catalog:</p>
+
+<p>curl -X POST <a href="https://openmcp.logicsrc.com/v1/relays/obscura.openmcp.logicsrc.com/call">https://openmcp.logicsrc.com/v1/relays/obscura.openmcp.logicsrc.com/call</a> \
+-H 'content-type: application/json' \
+-d '{&quot;tool&quot;:&quot;fetch_page&quot;,&quot;arguments&quot;:{&quot;url&quot;:&quot;https://www.cdc.gov/han/&quot;,&quot;format&quot;:&quot;text&quot;}}'</p>
+
+<p>Or direct, at <code>https://obscura.openmcp.logicsrc.com/mcp</code>.</p>
+
+<h3>Run your own</h3>
+
+<p>The reference catalog is <code>npx @logicsrc/openmcp serve</code>: Node 24, one SQLite file, no build step. <code>OPENMCP_HOSTED=obscura</code> turns on the hosted browser relay when the <code>obscura</code> binary is on the path. The specification is at <a href="https://logicsrc.com/openmcp">logicsrc.com/openmcp</a> and the code is MIT at <a href="https://github.com/logicsrc/openmcp">github.com/logicsrc/openmcp</a>.</p>
+
+<p>To be listed, serve the file. <code>npx @logicsrc/openmcp descriptor https://your.site/mcp</code> prints one to start from.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
