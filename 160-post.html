@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BackToSchool has its own account now, and nixamp is the optional backend &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/160-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-16T16:38:07Z">
+<meta name="description" content="Your host card is saved once and goes on every class, nixamp is an optional OAuth 2.1 connection with a stream picker, and nixamp.com teaches a live room on backtoschool.help in one click.">
+</head>
+<body>
+
+<article>
+
+<h1>BackToSchool has its own account now, and nixamp is the optional backend</h1>
+
+<p><em>2026-09-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>backtoschool.help runs on the nixamp codebase, and until today its sign-in dialog said so: &quot;Your BackToSchool identity is your NixAmp account.&quot; That line did two things I did not want. It made a password manager file the nixamp password under the school's address, and it made nixamp something every teacher had to have before they could teach a class.</p>
+
+<p>Both are gone. A BackToSchool account is a BackToSchool account. nixamp is the broadcast backend you can plug in if you run one, and plugging it in is a choice.</p>
+
+<h3>Your host card, said once</h3>
+
+<p>Every class page shows who is teaching: a name, a homepage, a photo. Those used to be three fields on the class form, blank every time, so the same person typed the same three answers for every class.</p>
+
+<p>Now they live on the account. Open settings from the header, type your name once, upload a photo (PNG, JPEG, WebP or GIF, up to 1 MB, kept as bytes on the server rather than hotlinked from somewhere that may vanish), add a line about what you teach. Every class you make from then on carries it. The class form shows the card and a link to settings instead of asking again.</p>
+
+<p>If you keep an OpenProfile.md, paste its address and press &quot;Fill from OpenProfile&quot;. The name, the Web link, the Avatar and the headline come across in one move, and the address is remembered so the phone line reads your voice from the same file.</p>
+
+<p>The card is shared with nixamp.com. It is one table, read by both sites.</p>
+
+<h3>Connect nixamp, if you want to</h3>
+
+<p>In settings there is a &quot;Connect nixamp&quot; button. It sends you to nixamp.com's consent page, the same OAuth 2.1 flow bittorrented.com uses, with PKCE and a scope called streams that reads the servers you run and what is live on them. Say yes and you come back connected.</p>
+
+<p>What that buys you is a pick list. When you go live, the class form shows your nixamp servers and their channels, and picking one fills in the broadcast link. No more copying a share link out of a terminal. Disconnect from either side and the grant is withdrawn on both.</p>
+
+<p>If you never press the button, nothing changes. Paste a nixamp share link, a PairUX link or a direct media URL as before.</p>
+
+<h3>One click from nixamp.com</h3>
+
+<p>On nixamp.com, next to the copy-link button on a live room, there is now &quot;Teach this on backtoschool.help&quot;. It makes a class from the room you are watching, puts your host card on it, starts it, and opens it in a new tab. One click, and the room is a classroom.</p>
+
+<h3>What is underneath</h3>
+
+<p>nixamp.com was already an OAuth 2.1 authorization server. The school is now a registered public client of it, in the same process, talking to itself over HTTP the way any other client would. The tokens sit against the school account and refresh themselves; a refresh nixamp.com refuses is treated as a withdrawn grant.</p>
+
+<p>The whole thing is tested against a real Postgres: the card round trip with a photo and an import, a class inheriting it, and the connect, consent, callback, streams and disconnect legs run over one server acting as both sides.</p>
+
+<p>Live now on backtoschool.help and nixamp.com.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

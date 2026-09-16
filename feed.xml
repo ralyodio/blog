@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 16 Sep 2026 16:15:30 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 16 Sep 2026 16:38:08 GMT</lastBuildDate>
+
+		<item>
+			<title>BackToSchool has its own account now, and nixamp is the optional backend</title>
+			<link>https://dev.profullstack.com/~anthony/blog/160-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/160-post.html</guid>
+			<pubDate>Wed, 16 Sep 2026 16:38:07 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Your host card is saved once and goes on every class, nixamp is an optional OAuth 2.1 connection with a stream picker, and nixamp.com teaches a live room on backtoschool.help in one click.</description>
+		</item>
 
 		<item>
 			<title>Why I am calling this terminal experience a Live TUI</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 13:07:58 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Pornhub's Apple event traffic offers an unusual look at what makes people interrupt a habit to watch a product launch.</description>
-		</item>
-
-		<item>
-			<title>OpenAgent: one portable profile for an agent</title>
-			<link>https://dev.profullstack.com/~anthony/blog/150-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/150-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 12:40:45 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>OpenAgent 0.1 publishes the existing LogicSRC agent profile with discovery conventions and bindings to OpenFleet and OpenRental.</description>
 		</item>
 	</channel>
 </rss>
