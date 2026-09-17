@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bank transfers come to CoinPay: ACH on Column &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/165-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-17T22:43:37Z">
+<meta name="description" content="CoinPay merchants can link a US bank account and move dollars over ACH, originated by Column. How the rail keeps a retry from debiting twice, and why settled is not completed.">
+</head>
+<body>
+
+<article>
+
+<h1>Bank transfers come to CoinPay: ACH on Column</h1>
+
+<p><em>2026-09-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>CoinPay now has a bank transfer rail. A merchant can link a US bank account and move dollars in or out over ACH, from the new Bank transfers page or the /api/banking routes. The originator is Column, a nationally chartered bank that exposes ACH directly, so there is no processor in the middle whose risk appetite can pull the rail out from under us. That is exactly what happened to the card rail, and it is the reason this one was built behind a provider interface.</p>
+
+<p>Two rules carry the money safety, and they are worth stating because most bank integrations get one of them wrong.</p>
+
+<p><strong>The row is written before the bank is called.</strong> A transfer is inserted with its idempotency key first, and only then sent to the originator. The unique index on that key is what stops two racing requests from originating twice. An application-level check cannot promise that; a unique index can. If the originator rejects the transfer, the row is marked failed with the reason. If the process dies between the insert and the call, the row is left without a provider id and a sweep re-submits it two minutes later under the same key. Column honours the key and returns the original transfer rather than debiting again.</p>
+
+<p><strong>Settled is not completed.</strong> When the bank reports the funds have moved, the transfer is settled and a hold starts, five days by default. After the hold it is completed. That is our decision to stop waiting, not a promise from the network: an ACH debit can come back on an administrative code up to sixty days later. So completed transfers are re-checked once a day for sixty days, and a late return is recorded as a return, with its code, after completion. A failed or canceled word from the provider never un-settles money that has already moved.</p>
+
+<p>Linking an account keeps the provider's reference, the routing number and the last four digits. The account number goes to Column and is not stored. Routing numbers are checked against the ABA checksum before any provider call, so a transposed digit is caught before it costs anything.</p>
+
+<p>ACH is US domestic. There is no ACH to a bank in Lagos or Mumbai, and no setting makes there be one. A cross-border transfer is three legs: pull dollars here, carry the value as a stablecoin, pay into the local rail there. The last two legs already exist across 43 corridors. This was the missing first leg.</p>
+
+<p>The rail is deployed and switches on once Column finishes onboarding our originating account. Until then the page says so and no money moves.</p>
+
+<p>The code is in src/lib/banking in the coinpayportal repository. The docs at docs/BANK-TRANSFERS.md explain the lifecycle and the configuration.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
