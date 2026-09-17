@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>myna 0.25.0: hand every follow to OutreachGraph, cards for the steps only you can do, and an account on any PDS from your OpenProfile &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/163-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-17T16:15:38Z">
+<meta name="description" content="myna 0.24.0 and 0.25.0: followers lists, an afterFollow hook that hands each person followed to OutreachGraph for an OpenProfile and an offer, hand-off cards at mynaposter.com/handoff, and myna atproto signup from your OpenProfile.">
+</head>
+<body>
+
+<article>
+
+<h1>myna 0.25.0: hand every follow to OutreachGraph, cards for the steps only you can do, and an account on any PDS from your OpenProfile</h1>
+
+<p><em>2026-09-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Two myna releases went out today, and OutreachGraph learned to take people in from a social network. Together they close a loop that used to end in a paragraph of instructions.</p>
+
+<h3>Who you follow goes to OutreachGraph for assessment</h3>
+
+<p>myna now reads followers as well as follows. <code>myna followers &lt;account&gt;</code> lists them, a pasted <code>/followers</code> page copies the list at the graph's pace, and <code>graph.expand</code> can read either list for the seeds. Followers count for half of a follow when ranking, because who a seed follows still says more than who follows a seed.</p>
+
+<p>Every follow now fires an <code>afterFollow</code> plugin hook. The bundled OutreachGraph plugin uses it: add <code>--outreachgraph</code> to <code>myna follow</code> or <code>myna graph follow</code>, or turn on <code>graph.outreachgraph</code> for the daemon, and each person followed is handed to <a href="https://outreachgraph.com">OutreachGraph</a>. <code>myna outreachgraph push &lt;account&gt;</code> hands over who you already follow, in pages of 100.</p>
+
+<p>OutreachGraph opens a person for each handle, keeps the bio as a signal, reads the profile through the network's public API, follows the home page it names for its OpenGraph card and rel=me links, and assembles an <a href="https://logicsrc.com/openprofile">OpenProfile.md</a>. A rel=me link back to the profile is two sources agreeing, so the person is raised to 0.9 and the site's accounts, a mailto among them, become identities. Then the recommendation engine decides what to do about them. In the first live run, five people went over and five cards came back within a minute.</p>
+
+<h3>Hand-off cards</h3>
+
+<p>myna posts everywhere it has an account. What is left after a launch is the step only a person can do: a comment on the Reddit thread, a Hacker News submission. <code>myna handoff add</code> writes that step down as a card with the exact text to paste, the page to open and the steps, and publishes it to mynaposter.com/handoff/&lt;id&gt; when you are signed in to myna cloud. Copy, open, paste, mark done, from a phone. The daily recap lists what is waiting on you.</p>
+
+<h3>An account on any PDS, from your OpenProfile</h3>
+
+<p>The network behind Bluesky is servers anyone can run. <code>myna atproto signup &lt;pds&gt;</code> makes an account on one from the OpenProfile myna already keeps: the handle you go by under the server's domain, your email, a generated password kept in the vault, then the profile itself, name, headline, home page and avatar. <code>myna atproto profile</code> pushes the OpenProfile again later, to any connected Bluesky account.</p>
+
+<h3>Get it</h3>
+
+<pre><code>curl -fsSL https://mynaposter.com/install.sh | sh
+myna outreachgraph login
+myna follow bluesky someone.example --outreachgraph</code></pre>
+
+<p>Releases: <a href="https://github.com/profullstack/mynaposter/releases/tag/v0.24.0">v0.24.0</a>, <a href="https://github.com/profullstack/mynaposter/releases/tag/v0.25.0">v0.25.0</a>. OutreachGraph: <a href="https://github.com/profullstack/outreachgraph/pull/72">PR #72</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

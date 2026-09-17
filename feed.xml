@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 17 Sep 2026 10:23:37 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 17 Sep 2026 16:15:39 GMT</lastBuildDate>
+
+		<item>
+			<title>myna 0.25.0: hand every follow to OutreachGraph, cards for the steps only you can do, and an account on any PDS from your OpenProfile</title>
+			<link>https://dev.profullstack.com/~anthony/blog/163-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/163-post.html</guid>
+			<pubDate>Thu, 17 Sep 2026 16:15:38 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>myna 0.24.0 and 0.25.0: followers lists, an afterFollow hook that hands each person followed to OutreachGraph for an OpenProfile and an offer, hand-off cards at mynaposter.com/handoff, and myna atproto signup from your OpenProfile.</description>
+		</item>
 
 		<item>
 			<title>Deals are now a nichedb collection, and c0upons fills itself from it</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 14 Sep 2026 11:05:10 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Agentic Jobs 0.12.0 adds a private inbox and invoices that settle on CoinPay to the payee's own wallet, and explains why the board has no public comments.</description>
-		</item>
-
-		<item>
-			<title>The Chovy tool stack, in one infographic</title>
-			<link>https://dev.profullstack.com/~anthony/blog/153-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/153-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 16:02:41 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>An illustrated map of the tools around Chovy, from agent workflows to publishing and payments.</description>
 		</item>
 	</channel>
 </rss>
