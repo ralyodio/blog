@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 17 Sep 2026 06:23:27 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 17 Sep 2026 10:23:37 GMT</lastBuildDate>
+
+		<item>
+			<title>Deals are now a nichedb collection, and c0upons fills itself from it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/162-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/162-post.html</guid>
+			<pubDate>Thu, 17 Sep 2026 10:23:36 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>nichedb 0.10.0 adds a deals collection from five keyless coupon feeds, and c0upons.com now seeds itself from it every fifteen minutes.</description>
+		</item>
 
 		<item>
 			<title>W3BS is live: open standards for humans, agents and devices</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 16:02:41 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>An illustrated map of the tools around Chovy, from agent workflows to publishing and payments.</description>
-		</item>
-
-		<item>
-			<title>OpenWiki, and webrings you can browse, make and score</title>
-			<link>https://dev.profullstack.com/~anthony/blog/152-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/152-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 13:37:59 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A wiki that is a folder of Markdown files, webrings with a viewer, your own rings and a leaderboard, and both specs saying who made what in the W3C's own AI disclosure words.</description>
 		</item>
 	</channel>
 </rss>

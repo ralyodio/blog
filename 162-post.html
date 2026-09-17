@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deals are now a nichedb collection, and c0upons fills itself from it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/162-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-17T10:23:36Z">
+<meta name="description" content="nichedb 0.10.0 adds a deals collection from five keyless coupon feeds, and c0upons.com now seeds itself from it every fifteen minutes.">
+</head>
+<body>
+
+<article>
+
+<h1>Deals are now a nichedb collection, and c0upons fills itself from it</h1>
+
+<p><em>2026-09-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>c0upons.com launched as a community coupon site and then sat empty. Nobody types a promo code into a page with nothing on it, so the community never formed. That is the chicken and egg every user generated site starts with, and the way out is to seed it. As of today it seeds itself from nichedb.dev.</p>
+
+<h3>Where coupon data actually comes from</h3>
+
+<p>We started by asking where a site like Capital One Shopping gets its catalogue. The answer is nowhere you can plug into. Their codes are crowdsourced from users' checkouts by the browser extension, tested automatically, and monetised through the affiliate networks: Rakuten, CJ, Impact, ShareASale, Pepperjam and Awin. Every one of their hosts refuses requests from a datacenter before it even looks at auth. And every affiliate network's coupon API wants an approved publisher account first.</p>
+
+<p>What does answer, with no key and no contract, are the feeds the deal communities and deal desks publish themselves. So that is what the new collection reads.</p>
+
+<h3>The deals collection</h3>
+
+<p>nichedb 0.10.0 adds <code>deals</code>, with five adapters and nine sources:</p>
+
+<ul>
+	<li>Slickdeals: the front page, the popular list and a search for coupon codes. Every post names its store and the destination host on the outbound link.</li>
+	<li>DealNews: latest and hottest, with the retailer, price, expiry, category, deal type and staff pick published as fields rather than prose.</li>
+	<li>Dealcatcher: fifty deals a day, store read from the title.</li>
+	<li>Ben's Bargains: twenty at a time, and the house style names the code, the discount and the price in every post.</li>
+	<li>r/deals and r/coupons: as posts, with any code lifted from the body.</li>
+</ul>
+
+<p>One shared extractor reads the code, the discount and the price out of the text and writes the same store fields on every row. So a consumer joins on one store key across all five sources, and a <code>coupon-code</code> tag marks the rows a shopper can actually type at checkout. Four feeds ship on day one: coupon codes, editors' picks, Amazon deals, and everything.</p>
+
+<p>The first tick pulled 267 deals and 42 codes. It runs every half hour.</p>
+
+<h3>How c0upons uses it</h3>
+
+<p>c0upons 1.3.0 reads the collection in id order, keeps a cursor, and upserts stores and coupons. A deal that names a store becomes a row, code or not, because a store page with prices on it is what a shopper came for. A Reddit post is taken only when it carries a code. The sync route is keyless and throttles itself to one run every ten minutes, and the same schedule that keeps the database awake now calls it every fifteen. Nothing had to be run by hand: the sync creates the columns it needs on first run.</p>
+
+<p>The made up sample codes the migration used to seed an empty database are gone. What is on the site now is what the deal desks published today.</p>
+
+<h3>Read it yourself</h3>
+
+<p>The collection is at <a href="https://nichedb.dev/c/deals">https://nichedb.dev/c/deals</a> and the API is <code>GET https://nichedb.dev/api/v1/items?collection=deals</code>. The coupon site is <a href="https://c0upons.com">https://c0upons.com</a>. Both are open source: github.com/profullstack/niche-db and github.com/profullstack/c0upons.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
