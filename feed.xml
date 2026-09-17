@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 16 Sep 2026 16:38:08 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 17 Sep 2026 06:23:27 GMT</lastBuildDate>
+
+		<item>
+			<title>W3BS is live: open standards for humans, agents and devices</title>
+			<link>https://dev.profullstack.com/~anthony/blog/161-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/161-post.html</guid>
+			<pubDate>Thu, 17 Sep 2026 06:23:27 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>W3BS.org is live: open standards, a reference stack and a signed prompt registry so humans, AI agents and devices can resolve and verify the same resource through any interface.</description>
+		</item>
 
 		<item>
 			<title>BackToSchool has its own account now, and nixamp is the optional backend</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 13 Sep 2026 13:37:59 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A wiki that is a folder of Markdown files, webrings with a viewer, your own rings and a leaderboard, and both specs saying who made what in the W3C's own AI disclosure words.</description>
-		</item>
-
-		<item>
-			<title>Apple’s Real Competition Is the Tab You Already Have Open</title>
-			<link>https://dev.profullstack.com/~anthony/blog/151-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/151-post.html</guid>
-			<pubDate>Sun, 13 Sep 2026 13:07:58 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Pornhub's Apple event traffic offers an unusual look at what makes people interrupt a habit to watch a product launch.</description>
 		</item>
 	</channel>
 </rss>

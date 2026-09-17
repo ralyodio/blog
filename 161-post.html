@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>W3BS is live: open standards for humans, agents and devices &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/161-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-17T06:23:27Z">
+<meta name="description" content="W3BS.org is live: open standards, a reference stack and a signed prompt registry so humans, AI agents and devices can resolve and verify the same resource through any interface.">
+</head>
+<body>
+
+<article>
+
+<h1>W3BS is live: open standards for humans, agents and devices</h1>
+
+<p><em>2026-09-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>W3BS.org is an open standards initiative for a Web where people, AI agents, software and devices can discover, resolve and verify the same resource through any interface. Think of it as a W3C for the agentic era. It went live today at <a href="https://w3bs.org">https://w3bs.org</a> with community drafts, a reference stack you can run, and a public repository.</p>
+
+<h3>What is on the four sites</h3>
+
+<ul>
+	<li><a href="https://w3bs.org">https://w3bs.org</a> carries the mission, governance and the founding PRD.</li>
+	<li><a href="https://specs.w3bs.org">https://specs.w3bs.org</a> holds eight specifications. Three are implemented community drafts (URI, MANIFEST, RESOLVE) and five are proposals (SURFACE, PROMPT, TRUST, DELEGATION, DISCOVERY). No W3BS Recommendations have been issued.</li>
+	<li><a href="https://prompt.w3bs.org">https://prompt.w3bs.org</a> is the reference registry: ten signed, versioned, MIT licensed prompts you can inspect, download and render.</li>
+	<li><a href="https://browse.w3bs.org">https://browse.w3bs.org</a> is the resolver. Paste a w3bs:// URI into an ordinary browser and see its canonical manifest, publisher, permissions, provenance and signature state.</li>
+</ul>
+
+<h3>The idea in one URI</h3>
+
+<p>w3bs://prompt/w3bs/research@1</p>
+
+<p>That identifier resolves to the same signed manifest whether you ask the web page, the HTTP API, the CLI, the MCP server or the experimental native handler. The version alias picks the newest 1.x. A revoked version stays visible with its revocation, so a client is never silently downgraded to older code.</p>
+
+<p>Try it from a checkout of the repository:</p>
+
+<p>git clone <a href="https://github.com/profullstack/w3bs.org">https://github.com/profullstack/w3bs.org</a> &amp;&amp; cd w3bs.org &amp;&amp; npm ci
+W3BS_API=https://w3bs.org node src/cli.mjs resolve w3bs://prompt/w3bs/research@1</p>
+
+<p>Or from an MCP client, point it at <a href="https://w3bs.org/mcp">https://w3bs.org/mcp</a> and call w3bs_resolve. Machine discovery is at <a href="https://w3bs.org/.well-known/w3bs.json">https://w3bs.org/.well-known/w3bs.json</a> on every host.</p>
+
+<h3>What a manifest guarantees</h3>
+
+<p>Every resource is a JSON manifest canonicalized with RFC 8785 and signed with Ed25519. The registry pins publisher public keys to namespaces, so a valid signature from the wrong namespace fails verification. Content is data by default: a valid signature proves who published it, it does not authorize execution. Rendering a prompt template on the site requires an explicit consent checkbox, and the reference runtime never calls a model or a tool.</p>
+
+<h3>What is under the hood</h3>
+
+<p>The reference stack is one Node 24 service: Express 5, a PostgreSQL registry, the official MCP SDK for both stdio and Streamable HTTP transports, and a server-rendered site with a PWA offline state. A conformance script compares the API, CLI, HTML envelope, both MCP transports and the independent native client against each other and records the evidence in the repository. Fourteen protocol and trust-boundary tests plus eight desktop and mobile browser tests run on every push.</p>
+
+<p>The source is MIT licensed at <a href="https://github.com/profullstack/w3bs.org">https://github.com/profullstack/w3bs.org</a> with issues open. Governance and the contribution process are in the repository and at <a href="https://w3bs.org/governance">https://w3bs.org/governance</a>.</p>
+
+<h3>What is not there yet</h3>
+
+<p>This is a founding stage release. Delegated execution, decentralized discovery, native mobile and desktop parity, a browser engine integration and outside implementations are on the roadmap, not in the build. The reference profile is labeled experimental on purpose. If you build agents, tools or devices that should be able to find and trust the same resource, the drafts are open for implementation and argument.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
