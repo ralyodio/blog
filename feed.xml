@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 18 Sep 2026 10:23:46 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 18 Sep 2026 16:15:48 GMT</lastBuildDate>
+
+		<item>
+			<title>The pit signs now: one root for every Moshpit name</title>
+			<link>https://dev.profullstack.com/~anthony/blog/167-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/167-post.html</guid>
+			<pubDate>Fri, 18 Sep 2026 16:15:47 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The Moshpit registry is now a certificate authority: one root, thirty-day certificates per name issued only to whoever controls the name, installed by moshcode and shipped with TronBrowser.</description>
+		</item>
 
 		<item>
 			<title>TronBrowser 3.13: a Pit button, built like the Tor one, and an engine of its own</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 16 Sep 2026 08:15:26 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>OpenMCP, a catalog of MCP relays verified by probe, now has a browsable directory with sign-in by link and hosts Obscura, a stealth headless browser, as a relay that reads pages curl cannot.</description>
-		</item>
-
-		<item>
-			<title>Every podcaster and author gets a profile file, and it is theirs to edit</title>
-			<link>https://dev.profullstack.com/~anthony/blog/157-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/157-post.html</guid>
-			<pubDate>Tue, 15 Sep 2026 16:15:21 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>OpenProfile.md on p0dcasters, rssamplifier and OutreachGraph, merged into one People collection on nichedb.dev, claimable and editable from web, API, CLI and MCP with OpenAccess.</description>
 		</item>
 	</channel>
 </rss>

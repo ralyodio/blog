@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The pit signs now: one root for every Moshpit name &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/167-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-18T16:15:47Z">
+<meta name="description" content="The Moshpit registry is now a certificate authority: one root, thirty-day certificates per name issued only to whoever controls the name, installed by moshcode and shipped with TronBrowser.">
+</head>
+<body>
+
+<article>
+
+<h1>The pit signs now: one root for every Moshpit name</h1>
+
+<p><em>2026-09-18, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>No public certificate authority will ever issue for a name outside the ICANN root. That is not a policy anyone can appeal; it is what the root programs are for. So https on a Moshpit name has meant a self-signed certificate per origin, a fingerprint of its key published by the registry, and every client learning every name one at a time. It worked. It also meant that a browser had to be taught each site before it would open it, and the teaching kept finding new ways to fail.</p>
+
+<p>Today the registry became a certificate authority.</p>
+
+<h3>Why the registry</h3>
+
+<p>A CA has one real job: knowing who a name belongs to before it signs. The pit already does that job. It is where names are claimed, sold, leased and pointed, and it is the only party that can say with authority that blue.eggs is yours and red.eggs is not. Everything else a CA does is key handling. So the registry signs, and the question of trust moves from &quot;have I learned this name yet&quot; to &quot;do I trust the pit&quot;. Answer that once and every name follows.</p>
+
+<h3>What gets signed, and for whom</h3>
+
+<p>An origin asks for a certificate by sending a signing request for its name. The registry checks that the account asking is the one that controls that exact name: the holder, or the tenant while a lease runs. That rule is what makes resale safe. Whoever owns the .foo ending cannot get a certificate for bar.foo once it has been sold, and ending owners never hold a signing key at all. Only the registry signs.</p>
+
+<p>The certificate names the host and everything under it, is valid for thirty days, and cannot itself sign anything. Short lives are what make revocation unnecessary: a compromised key is out of the world within a month and is simply not renewed. The subject comes from the name, never from the request, so a request for blue.eggs cannot come out naming red.eggs however it is written. Names whose ending is a real top-level domain are refused unconditionally, whatever the registry's own tables say, so a bug cannot mint google.com. And every certificate's key is still published as a pin, so anything that checks pins keeps working.</p>
+
+<h3>Where the root goes</h3>
+
+<p>The root's private key signs the issuing certificate once and then stays cold, in the vault. The registry holds only the issuing key. The root certificate itself is public: <code>curl https://pit.moshcode.sh/api/moshpit/ca.crt</code>.</p>
+
+<p><code>moshcode dns enable</code> now installs it, into the browser store without root and into the system store with sudo, and <code>moshcode dns ca</code> does only that for a machine whose resolution comes from somewhere else. TronBrowser fetches it on install and on every upgrade and trusts it on every start. On an origin, <code>setup-origin.sh</code> asks the registry to sign, serves the chain, and installs a daily timer that renews before day thirty. Nobody has to remember a step.</p>
+
+<h3>What it does not do</h3>
+
+<p>Stock Chrome on a stranger's laptop will not trust <code>.hacker</code>, because public root programs only admit CAs for names under the ICANN root. That limit belongs to the namespace, not to this CA, and it is the same limit every private CA lives with. The root also carries no name constraints, since X.509 cannot say &quot;everything except the ICANN root&quot; across seventeen thousand endings and counting. What bounds it is the signer, which is why installing the root is an explicit act in every client and never something a resolver does on its own.</p>
+
+<p>The registry side is in moshcoder/moshcode, documented at apps/pwa/docs/moshpit-ca.md. The client half shipped as moshcode 0.102.0, the browser half as TronBrowser 3.14.0, and the origin script in moshpit-proxy.</p>
+
+<p>This post was drafted with AI assistance and edited by a human.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
