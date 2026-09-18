@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 17 Sep 2026 22:43:38 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 18 Sep 2026 10:23:46 GMT</lastBuildDate>
+
+		<item>
+			<title>TronBrowser 3.13: a Pit button, built like the Tor one, and an engine of its own</title>
+			<link>https://dev.profullstack.com/~anthony/blog/166-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/166-post.html</guid>
+			<pubDate>Fri, 18 Sep 2026 10:23:45 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>TronBrowser 3.13 adds a Pit button next to Tor: Moshpit names resolve for the session, https included, and TronBrowser now ships its own engine.</description>
+		</item>
 
 		<item>
 			<title>Bank transfers come to CoinPay: ACH on Column</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 15 Sep 2026 16:15:21 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>OpenProfile.md on p0dcasters, rssamplifier and OutreachGraph, merged into one People collection on nichedb.dev, claimable and editable from web, API, CLI and MCP with OpenAccess.</description>
-		</item>
-
-		<item>
-			<title>NicheDB Premium: a dollar a day</title>
-			<link>https://dev.profullstack.com/~anthony/blog/156-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/156-post.html</guid>
-			<pubDate>Tue, 15 Sep 2026 08:15:18 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>NicheDB Premium: $1 a day, $30 a month, $300 a year. No ads, no tracker, the Lounge, 1,000 credits a month, awards, a badge, early access and higher API limits, with a 13-row comparison against Reddit Premium.</description>
 		</item>
 	</channel>
 </rss>

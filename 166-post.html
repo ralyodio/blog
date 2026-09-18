@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TronBrowser 3.13: a Pit button, built like the Tor one, and an engine of its own &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/166-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-18T10:23:45Z">
+<meta name="description" content="TronBrowser 3.13 adds a Pit button next to Tor: Moshpit names resolve for the session, https included, and TronBrowser now ships its own engine.">
+</head>
+<body>
+
+<article>
+
+<h1>TronBrowser 3.13: a Pit button, built like the Tor one, and an engine of its own</h1>
+
+<p><em>2026-09-18, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Moshpit names such as chovy.hacker or anything.moshpit live outside the ICANN root, so a normal resolver has no answer for them. Until now the way to reach them in TronBrowser was <code>moshcode dns enable</code>, which teaches the whole machine but needs root and rewrites the resolver config. On a laptop where DNS is not yours to change, that was the end of the road.</p>
+
+<p>TronBrowser 3.13 adds a 🤘 Pit button in the AI sidebar, right next to 🧅 Tor. Click it and Moshpit names resolve in the running session, http and https. Click it again and they stop. Nothing on the machine changes.</p>
+
+<h3>How it works</h3>
+
+<p>It is the Tor toggle's design, reused. The launcher already runs a small loopback helper at every browser start. That helper now serves three more routes. Start binds a SOCKS5 resolver on 127.0.0.1:9081 that answers names through the public Moshpit DNS-over-HTTPS endpoint and relays the connection. Nothing listens and nothing is contacted until the button asks.</p>
+
+<p>The extension then installs a PAC script with one rule in it. If the system resolver can answer the host, the connection goes direct, untouched. Only a host the system has no answer for is sent to the pit resolver. That is the house policy for Moshpit: clearnet wins, the pit is the fallback. A resolver that silently redirected a domain which already works would be indistinguishable from a hijack.</p>
+
+<p>The rule also sidesteps a problem an ending list cannot solve. The registry holds about 17,600 endings, and real TLDs like .io and .dev are among them. A list saying &quot;this ending belongs to the pit&quot; cannot tell you whether github.io is a Moshpit name. Asking the system resolver first can.</p>
+
+<h3>What about https</h3>
+
+<p>No public certificate authority issues for a name outside the ICANN root, so a Moshpit origin serves a self-signed certificate for its own name, and the registry keeps a fingerprint of that site's key. The first time you open https on a pit name, the helper reads the certificate the site serves, checks its key against the registry's fingerprint, refuses anything marked as a certificate authority, and adds the certificate to the browser's trust store for that one name. It happens before the browser's TLS handshake, so the page loads clean the first time. You do nothing.</p>
+
+<h3>Why TronBrowser now ships its own engine</h3>
+
+<p>That last part fell over on the Flathub build of ungoogled-chromium. It ignores the user's certificate trust store entirely: the certificate sat in the exact database the browser opened, and it still refused it. The same release as a portable build accepts it. So the installer now fetches that portable build, the one the Docker image already runs, and the launcher prefers it over whatever Chromium a machine happens to have. On Ubuntu that also needs a small AppArmor profile so the engine can sandbox itself, which the installer writes once. The launcher tests the engine with a throwaway headless start before using it and falls back if it cannot run, so a missing library is a fallback, never a crash.</p>
+
+<p>Two things worth knowing. Tor and the pit are exclusive: the PAC asks the system resolver about every host, and under Tor that would leak every lookup, so turning Tor on takes the pit down. And the first click after an upgrade can land while the launcher is still swapping in the new helper; the button waits that out instead of failing.</p>
+
+<p>Upgrade with <code>tron upgrade</code>, or grab the build from the <a href="https://github.com/profullstack/tronbrowser.dev/releases/tag/v3.13.1">release page</a>. The design notes, including everything that did not work along the way, are in <a href="https://github.com/profullstack/tronbrowser.dev/blob/main/docs/moshpit-pit-toggle.md">docs/moshpit-pit-toggle.md</a>. Test it by opening <a href="https://chovy.hacker">https://chovy.hacker</a>.</p>
+
+<p>This post was drafted with AI assistance and edited by a human.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
