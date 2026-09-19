@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenSaaS: the way out of a subscription, written down beside the way in &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/168-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-19T08:15:23Z">
+<meta name="description" content="One file a subscription service serves at /.well-known/opensaas.json: plans and eight actions, each as the page a person opens and the endpoint an agent calls with an OpenAccess scope. nichedb.dev serves the first one and reads them.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenSaaS: the way out of a subscription, written down beside the way in</h1>
+
+<p><em>2026-09-19, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Subscribing takes one click. Cancelling takes a support ticket, a phone call in office hours and a retention screen. Regulators have started to say the two must be as easy as each other, and nobody can check, because the way out is not written down anywhere a reader can fetch.</p>
+
+<p><a href="https://logicsrc.com/opensaas">OpenSaaS</a> is one file a subscription service serves at <code>/.well-known/opensaas.json</code> about how to deal with it: its plans, and the way in and the way out of each. Subscribe, cancel, pause, resume, change plan, stop the mail, export your data, delete the account. Every action is described twice in the same place: the page a person opens, and the endpoint an agent calls with an <a href="https://logicsrc.com/openaccess">OpenAccess</a> scope.</p>
+
+<h3>Why both</h3>
+
+<p>A person needs the page. An agent acting for a person needs the endpoint and the grant that authorises it. Today the page is hidden and the endpoint does not exist, so &quot;cancel the subscriptions I do not use&quot; is a thing a person can ask an agent and an agent cannot do. With the file, an agent holding a grant for <code>billing:cancel</code> calls <code>cancel.api</code> and gets back <code>done</code>, <code>scheduled</code>, <code>pending</code> with what the service still needs, or <code>refused</code> with a reason. A refused cancel is still a refused cancel. The difference is that it is in writing.</p>
+
+<h3>The measure</h3>
+
+<p>Each action carries <code>steps</code>, the number of things a person does from the page to done, and <code>confirm</code>, what the service demands before the action takes: none, click, email, password, chat, call or mail. A directory shows <code>cancel.steps</code> beside <code>subscribe.steps</code>, and flags a cancel that needs a chat, a call or a letter, because none of those is a step an agent can take and each is a step most people give up on. The service wrote both numbers itself. The file came from its own origin. That is the verification.</p>
+
+<h3>Two actions, on purpose</h3>
+
+<p><code>unsubscribe</code> is about mail and <code>cancel</code> is about the plan. Services conflate them on purpose, so the spec keeps them apart. A mail unsubscribe that carries RFC 8058 one-click headers says so with <code>list_unsubscribe: true</code>, the same promise the mail itself makes.</p>
+
+<h3>The first service and the first directory</h3>
+
+<p>nichedb.dev serves its own file at <a href="https://nichedb.dev/.well-known/opensaas.json">nichedb.dev/.well-known/opensaas.json</a>: four prepaid plans, and five actions that are all real today. Cancel is one click and one call, effective immediately. Export answers at once with one JSON document. Delete confirms by email. Pause, resume and change plan are absent because nothing there pauses or converts a prepaid term, and absence in this file means unstated, never assumed.</p>
+
+<p>nichedb is also the first directory reading the file. Its <a href="https://nichedb.dev/c/saas?kind=plan">saas collection</a> lists each plan with a &quot;Way in, way out&quot; table: subscribe steps against cancel steps, what confirm demands, whether an agent can do it, when it takes effect, what the refund is.</p>
+
+<h3>Serving one</h3>
+
+<p>By hand, from the billing table the service already keeps. A plan table and a cancel endpoint are everything the file needs. A service that has a cancel page and no cancel endpoint serves the page today and adds the endpoint and scope when it has them, and the file gets better without the URL changing. The smallest valid file is a service with a name and one action with a page.</p>
+
+<p>The spec is at <a href="https://logicsrc.com/docs/opensaas">logicsrc.com/docs/opensaas</a>, CC BY 4.0.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
