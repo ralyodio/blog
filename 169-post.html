@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>profullstack.com/stack: the stack, per use case, written for agents &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/169-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-21T09:01:08Z">
+<meta name="description" content="The current Profullstack stack as eight combos for different jobs, with shared defaults, house rules and the packages to reuse first. Markdown and JSON copies for agents.">
+</head>
+<body>
+
+<article>
+
+<h1>profullstack.com/stack: the stack, per use case, written for agents</h1>
+
+<p><em>2026-09-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We put the current Profullstack stack at <a href="https://profullstack.com/stack">profullstack.com/stack</a>. It has a Markdown copy at <a href="https://profullstack.com/stack.md">/stack.md</a> and a JSON copy at <a href="https://profullstack.com/stack.json">/stack.json</a>. It exists so an agent can read it before it writes code for us.</p>
+
+<h3>There is no single stack</h3>
+
+<p>We run about 170 active repos, and they do not all look alike. A web app, an API service, a CLI and a desktop app want different things. So the page is organised as combos, and the first thing on it is a table that maps the job to the combo.</p>
+
+<ul>
+	<li><code>web-app</code>: Next 16 with a Hono API mounted inside it, Turso for data, one Railway service. The default for anything new.</li>
+	<li><code>web-app-postgres</code>: the previous generation, on Supabase or a self-hosted Postgres. Still the largest by count. Stay on it if the app is already there.</li>
+	<li><code>api-service</code>: Hono on Bun or Node, Turso, a rate limit that answers with a price, an MCP bridge.</li>
+	<li><code>cli-tui</code>: Node, commander, hqtui for dashboards, published to npm with a curl installer.</li>
+	<li><code>desktop</code>: Electron with the CLI bundled inside the app, so one install gives both.</li>
+	<li><code>mobile</code>: Expo inside the product monorepo.</li>
+	<li><code>library</code>: a runtime-neutral <code>@profullstack/*</code> package with subpath exports.</li>
+	<li><code>systems</code>: Rust or Go when it has to be a single fast binary.</li>
+</ul>
+
+<p>Each combo says when to use it, lists its layers with the reasons, and names the live repos built on it.</p>
+
+<h3>What every combo shares</h3>
+
+<p>Below the combos are the defaults that apply everywhere: Railway and Porkbun, secrets in the vault rather than .env files, magic link and passkeys for auth, Resend for mail, CoinPay for payments, the x402 gateway and throttle in front of every public site, vitest, GitHub Actions, and myna for promotion.</p>
+
+<p>Then twelve house rules, the published packages to reuse before writing anything, and a list of what is not in the stack. That last one is for the habits an agent brings from elsewhere: Vercel, next-auth, Prisma, a hand-rolled video player.</p>
+
+<h3>Where it came from</h3>
+
+<p>The content is from a survey of all 251 repos under the org, 171 of them with human commits since June 2025. It counted frameworks, databases, package managers, deploy targets and which of our own packages each repo actually imports. Some of what our older skill file claimed turned out not to be true, and the page says so. Oxc and Rolldown are in six repos, not the default. The Shared AppKit packages were never published. The page now wins where the two disagree.</p>
+
+<h3>How to use it</h3>
+
+<p>Point an agent at it:</p>
+
+<pre><code>curl https://profullstack.com/stack.md</code></pre>
+
+<p>Or install the Profullstack skill from <a href="https://profullstack.com/agents">profullstack.com/agents</a>, which links to it. The page, the Markdown and the JSON all render from one data file in the site repo, so when a default changes, one file changes.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
