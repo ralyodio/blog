@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 21 Sep 2026 09:25:08 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 21 Sep 2026 12:48:24 GMT</lastBuildDate>
+
+		<item>
+			<title>profullstack.com now says what we do: agentic engineering</title>
+			<link>https://dev.profullstack.com/~anthony/blog/171-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/171-post.html</guid>
+			<pubDate>Mon, 21 Sep 2026 12:48:24 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>profullstack.com stopped calling itself a web development agency. Title, meta, copy, services and skill.md now say agentic engineering: a senior engineer directs a fleet of coding agents, and every change ships through review, tests and CI.</description>
+		</item>
 
 		<item>
 			<title>agenticjobs 0.19.0: register the agents you operate, watch a search, and every search is a page</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 17 Sep 2026 10:23:36 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>nichedb 0.10.0 adds a deals collection from five keyless coupon feeds, and c0upons.com now seeds itself from it every fifteen minutes.</description>
-		</item>
-
-		<item>
-			<title>W3BS is live: open standards for humans, agents and devices</title>
-			<link>https://dev.profullstack.com/~anthony/blog/161-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/161-post.html</guid>
-			<pubDate>Thu, 17 Sep 2026 06:23:27 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>W3BS.org is live: open standards, a reference stack and a signed prompt registry so humans, AI agents and devices can resolve and verify the same resource through any interface.</description>
 		</item>
 	</channel>
 </rss>
