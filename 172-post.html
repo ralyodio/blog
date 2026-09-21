@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OutreachGraph now has an agent API: keys, dollar budgets, an inbox and suppress lists &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/172-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-21T17:33:24Z">
+<meta name="description" content="A keyless llms.txt and OpenAPI schema, workspace API keys, daily budgets in dollars that become policy caps, a tabbed inbox with policy-checked replies, hot leads, suppress lists by email or domain, and a lead import.">
+</head>
+<body>
+
+<article>
+
+<h1>OutreachGraph now has an agent API: keys, dollar budgets, an inbox and suppress lists</h1>
+
+<p><em>2026-09-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>OutreachGraph runs B2B outreach: it finds people, researches them, drafts grounded messages and sends within limits a policy engine enforces. Until today the only way to drive it from a script was a process-wide service token plus two headers naming the workspace. Now there is a proper surface for agents.</p>
+
+<p>Read it the way an agent would. The quick guide is at <a href="https://outreachgraph.com/api/v1/public/llms.txt">https://outreachgraph.com/api/v1/public/llms.txt</a> and the schema at <a href="https://outreachgraph.com/api/v1/public/openapi.json">https://outreachgraph.com/api/v1/public/openapi.json</a>. Both are keyless and rendered from one table in the codebase, so a route cannot appear in one and not the other. A test refuses any documented route that does not exist.</p>
+
+<h3>What you can do with it</h3>
+
+<p>Everything lives under /api/v1/autogtm. A project is one product you sell. It has a daily ceiling in dollars and an autopilot switch. A campaign is one audience for one project, with its own daily limit, targeting, instructions and inbox.</p>
+
+<p>curl -H &quot;X-API-Key: og_live_...&quot; <a href="https://outreachgraph.com/api/v1/autogtm/campaigns">https://outreachgraph.com/api/v1/autogtm/campaigns</a></p>
+
+<p>The inbox is tabbed by who spoke last: need_reply, replied, sent, unsubscribed. A reply is text only. The subject and threading are handled, and the reply still passes the policy engine as a human-approved follow-up, so a lead who opted out cannot be written to. There is a hot-leads feed across campaigns that polls with a since parameter, named suppress lists for email addresses and company domains, and an import that makes a campaign from your own list of up to 5,000 leads per call.</p>
+
+<h3>Dollars become caps</h3>
+
+<p>A daily limit in dollars is stored on the campaign next to the cap the policy engine already reads. One contact costs what the smallest credit pack charges per credit, so ten dollars a day is sixty-six contacts a day. Turn autopilot on for a project and the ceiling is split across its campaigns by reply rate, with a fifth of it shared evenly so a new campaign is not starved before it has produced anything. The split is deterministic. The same numbers always give the same budgets.</p>
+
+<h3>Keys</h3>
+
+<p>Mint a key on the settings page. It is shown once, stored as a hash, and acts with your current role. Removing someone from the organization kills their keys. A key cannot mint keys.</p>
+
+<h3>What is not in this release</h3>
+
+<p>Lead data and a pre-warmed sending domain pool. Those are what an outreach vendor actually sells you, and they are bought, not built. Sends still leave through your own mailbox or ours.</p>
+
+<p>This post was drafted with an AI assistant and edited by a human.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

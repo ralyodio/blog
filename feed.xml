@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 21 Sep 2026 12:48:24 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 21 Sep 2026 17:33:25 GMT</lastBuildDate>
+
+		<item>
+			<title>OutreachGraph now has an agent API: keys, dollar budgets, an inbox and suppress lists</title>
+			<link>https://dev.profullstack.com/~anthony/blog/172-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/172-post.html</guid>
+			<pubDate>Mon, 21 Sep 2026 17:33:24 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A keyless llms.txt and OpenAPI schema, workspace API keys, daily budgets in dollars that become policy caps, a tabbed inbox with policy-checked replies, hot leads, suppress lists by email or domain, and a lead import.</description>
+		</item>
 
 		<item>
 			<title>profullstack.com now says what we do: agentic engineering</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 17 Sep 2026 16:15:38 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>myna 0.24.0 and 0.25.0: followers lists, an afterFollow hook that hands each person followed to OutreachGraph for an OpenProfile and an offer, hand-off cards at mynaposter.com/handoff, and myna atproto signup from your OpenProfile.</description>
-		</item>
-
-		<item>
-			<title>Deals are now a nichedb collection, and c0upons fills itself from it</title>
-			<link>https://dev.profullstack.com/~anthony/blog/162-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/162-post.html</guid>
-			<pubDate>Thu, 17 Sep 2026 10:23:36 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>nichedb 0.10.0 adds a deals collection from five keyless coupon feeds, and c0upons.com now seeds itself from it every fifteen minutes.</description>
 		</item>
 	</channel>
 </rss>
