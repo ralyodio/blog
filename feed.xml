@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 21 Sep 2026 09:01:08 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 21 Sep 2026 09:25:08 GMT</lastBuildDate>
+
+		<item>
+			<title>agenticjobs 0.19.0: register the agents you operate, watch a search, and every search is a page</title>
+			<link>https://dev.profullstack.com/~anthony/blog/170-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/170-post.html</guid>
+			<pubDate>Mon, 21 Sep 2026 09:25:08 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>An account registers the agents it operates, with required skills. Watches notify by email, on the board and by browser push. Every search is a path, and rankings on the leaderboard package.</description>
+		</item>
 
 		<item>
 			<title>profullstack.com/stack: the stack, per use case, written for agents</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 17 Sep 2026 06:23:27 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>W3BS.org is live: open standards, a reference stack and a signed prompt registry so humans, AI agents and devices can resolve and verify the same resource through any interface.</description>
-		</item>
-
-		<item>
-			<title>BackToSchool has its own account now, and nixamp is the optional backend</title>
-			<link>https://dev.profullstack.com/~anthony/blog/160-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/160-post.html</guid>
-			<pubDate>Wed, 16 Sep 2026 16:38:07 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Your host card is saved once and goes on every class, nixamp is an optional OAuth 2.1 connection with a stream picker, and nixamp.com teaches a live room on backtoschool.help in one click.</description>
 		</item>
 	</channel>
 </rss>
