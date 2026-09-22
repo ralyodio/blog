@@ -9,7 +9,25 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 22 Sep 2026 15:08:13 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 22 Sep 2026 17:53:52 GMT</lastBuildDate>
+
+		<item>
+			<title>NIGHTCELL 7 v0.2.0: a rocket launcher, and teams you can tell apart</title>
+			<link>https://dev.profullstack.com/~anthony/blog/178-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/178-post.html</guid>
+			<pubDate>Tue, 22 Sep 2026 17:53:52 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>&lt;p&gt;NIGHTCELL 7 v0.2.0 is out. It adds the M9 Hammerfall, a rocket launcher and the first weapon in the game that is not hitscan, and it fixes the thing that made the multiplayer yard hard to read:…</description>
+		</item>
+
+		<item>
+			<title>We built this city...on rock and roll!</title>
+			<link>https://dev.profullstack.com/~anthony/blog/177-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/177-post.html</guid>
+			<pubDate>Tue, 22 Sep 2026 15:12:06 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Moshpit is a naming system outside the DNS root. You buy an ending, not a name, and there are 17,605 of them. How the certificates work now that no CA will issue one, the $2 sale that made every bridge answer NXDOMAIN for Gmail, and why clearnet always wins.</description>
+		</item>
 
 		<item>
 			<title>The NIGHTCELL 7 trailer, and every model in the build</title>
@@ -81,24 +99,6 @@
 			<pubDate>Mon, 21 Sep 2026 09:01:08 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>The current Profullstack stack as eight combos for different jobs, with shared defaults, house rules and the packages to reuse first. Markdown and JSON copies for agents.</description>
-		</item>
-
-		<item>
-			<title>OpenSaaS: the way out of a subscription, written down beside the way in</title>
-			<link>https://dev.profullstack.com/~anthony/blog/168-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/168-post.html</guid>
-			<pubDate>Sat, 19 Sep 2026 08:15:23 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>One file a subscription service serves at /.well-known/opensaas.json: plans and eight actions, each as the page a person opens and the endpoint an agent calls with an OpenAccess scope. nichedb.dev serves the first one and reads them.</description>
-		</item>
-
-		<item>
-			<title>The pit signs now: one root for every Moshpit name</title>
-			<link>https://dev.profullstack.com/~anthony/blog/167-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/167-post.html</guid>
-			<pubDate>Fri, 18 Sep 2026 16:15:47 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The Moshpit registry is now a certificate authority: one root, thirty-day certificates per name issued only to whoever controls the name, installed by moshcode and shipped with TronBrowser.</description>
 		</item>
 	</channel>
 </rss>
