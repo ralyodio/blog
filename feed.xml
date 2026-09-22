@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 22 Sep 2026 13:26:59 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 22 Sep 2026 15:08:13 GMT</lastBuildDate>
+
+		<item>
+			<title>The NIGHTCELL 7 trailer, and every model in the build</title>
+			<link>https://dev.profullstack.com/~anthony/blog/176-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/176-post.html</guid>
+			<pubDate>Tue, 22 Sep 2026 15:08:12 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>&lt;p&gt;NIGHTCELL 7 is a tactical shooter that runs in a browser. Until today its home page was still images and prose. It now opens with a 26 second gameplay trailer, and further down carries four…</description>
+		</item>
 
 		<item>
 			<title>fleetsysops.com: a manifesto for running a fleet of coding agents</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 18 Sep 2026 16:15:47 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>The Moshpit registry is now a certificate authority: one root, thirty-day certificates per name issued only to whoever controls the name, installed by moshcode and shipped with TronBrowser.</description>
-		</item>
-
-		<item>
-			<title>TronBrowser 3.13: a Pit button, built like the Tor one, and an engine of its own</title>
-			<link>https://dev.profullstack.com/~anthony/blog/166-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/166-post.html</guid>
-			<pubDate>Fri, 18 Sep 2026 10:23:45 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>TronBrowser 3.13 adds a Pit button next to Tor: Moshpit names resolve for the session, https included, and TronBrowser now ships its own engine.</description>
 		</item>
 	</channel>
 </rss>
