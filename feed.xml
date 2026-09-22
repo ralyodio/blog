@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 22 Sep 2026 09:18:55 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 22 Sep 2026 10:04:51 GMT</lastBuildDate>
+
+		<item>
+			<title>One key for every Profullstack service</title>
+			<link>https://dev.profullstack.com/~anthony/blog/174-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/174-post.html</guid>
+			<pubDate>Tue, 22 Sep 2026 10:04:51 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>One Power Key opens all 54 Profullstack services: Ed25519-signed, verified offline by every site, $299 lifetime, half off with 50OFF, paid through CoinPay.</description>
+		</item>
 
 		<item>
 			<title>d0rz now sells scheduled delivery routes to businesses</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 17 Sep 2026 22:43:37 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>CoinPay merchants can link a US bank account and move dollars over ACH, originated by Column. How the rail keeps a retry from debiting twice, and why settled is not completed.</description>
-		</item>
-
-		<item>
-			<title>r4ck.dev is live: one search over 1,601 server offers, and the same query runs from a browser, a curl, the CLI or an MCP tool</title>
-			<link>https://dev.profullstack.com/~anthony/blog/164-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/164-post.html</guid>
-			<pubDate>Thu, 17 Sep 2026 21:14:34 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>r4ck.dev is a server search engine built for agents: every VPS, cloud, bare metal, GPU and PaaS offer for sale, searchable by spec, price and place, with the same query on the page, the API, the CLI and MCP.</description>
 		</item>
 	</channel>
 </rss>

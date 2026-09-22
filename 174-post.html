@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One key for every Profullstack service &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/174-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-22T10:04:51Z">
+<meta name="description" content="One Power Key opens all 54 Profullstack services: Ed25519-signed, verified offline by every site, $299 lifetime, half off with 50OFF, paid through CoinPay.">
+</head>
+<body>
+
+<article>
+
+<h1>One key for every Profullstack service</h1>
+
+<p><em>2026-09-22, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We run 54 properties. Until today, an agent that wanted to use more than one of them had to deal with each one on its own terms: a day pass here, a rate limit there, a 402 on the next. That is fine for a crawler reading one site. It is a chore for anyone building on the whole fleet.</p>
+
+<p>So there is now one key. A Power Key is a single API key that opens every Profullstack service. Send it as <code>Authorization: Bearer pfs_...</code> or in an <code>x-power-key</code> header and the crawler paywall, the free-tier metering and the per-site passes are gone, on rssamplifier.com, nichedb.dev, coinpayportal.com, crawlproof.com, ugig.net, tipoffwatch.com and the other 48. It also covers anything we launch from now on.</p>
+
+<h3>How it works</h3>
+
+<p>The key is an Ed25519-signed token. Every site verifies it with the public key that ships in the <code>@profullstack/keys</code> package, offline, so there is no central server on the request path and nothing to be slow or down. There is no account and no dashboard. The key is the whole product.</p>
+
+<p>The gateway that fronts our sites, <code>@profullstack/x402-gateway</code>, treats a valid key as a paid pass from version 0.7.0, and the throttle skips it for the same reason. A site honours the key the moment it updates the package. No configuration, because the public key is already in it.</p>
+
+<p>If you run the gateway on a site that is not ours, pass <code>powerKeys: false</code>, or your own key list and mint keys of your own with the same package.</p>
+
+<h3>What it costs</h3>
+
+<p>A lifetime Power Key is $299, once. No subscription and no renewal. For the launch, the code <code>50OFF</code> takes half off, so it is $149.50 while the code lasts.</p>
+
+<p>Pay by card or crypto through CoinPay: USDC on Polygon, Ethereum or Solana, ETH, BTC or SOL, straight to our wallet. The key shows on the confirmation page and lands in your inbox.</p>
+
+<p>Agents can read the shop as data at profullstack.com/shop.json, and every 402 across the fleet now says where to buy one.</p>
+
+<p><a href="https://profullstack.com/shop">profullstack.com/shop</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
