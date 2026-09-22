@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 21 Sep 2026 17:33:25 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 22 Sep 2026 09:18:55 GMT</lastBuildDate>
+
+		<item>
+			<title>d0rz now sells scheduled delivery routes to businesses</title>
+			<link>https://dev.profullstack.com/~anthony/blog/173-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/173-post.html</guid>
+			<pubDate>Tue, 22 Sep 2026 09:18:55 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Per-stop pricing for pharmacies, labs, dental and vet practices, law firms, florists and caterers in the SF Bay Area, with proof of delivery on every stop and a two-week pilot.</description>
+		</item>
 
 		<item>
 			<title>OutreachGraph now has an agent API: keys, dollar budgets, an inbox and suppress lists</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 17 Sep 2026 21:14:34 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>r4ck.dev is a server search engine built for agents: every VPS, cloud, bare metal, GPU and PaaS offer for sale, searchable by spec, price and place, with the same query on the page, the API, the CLI and MCP.</description>
-		</item>
-
-		<item>
-			<title>myna 0.25.0: hand every follow to OutreachGraph, cards for the steps only you can do, and an account on any PDS from your OpenProfile</title>
-			<link>https://dev.profullstack.com/~anthony/blog/163-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/163-post.html</guid>
-			<pubDate>Thu, 17 Sep 2026 16:15:38 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>myna 0.24.0 and 0.25.0: followers lists, an afterFollow hook that hands each person followed to OutreachGraph for an OpenProfile and an offer, hand-off cards at mynaposter.com/handoff, and myna atproto signup from your OpenProfile.</description>
 		</item>
 	</channel>
 </rss>
