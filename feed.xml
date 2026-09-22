@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 22 Sep 2026 10:04:51 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 22 Sep 2026 13:26:59 GMT</lastBuildDate>
+
+		<item>
+			<title>fleetsysops.com: a manifesto for running a fleet of coding agents</title>
+			<link>https://dev.profullstack.com/~anthony/blog/175-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/175-post.html</guid>
+			<pubDate>Tue, 22 Sep 2026 13:26:57 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A fleet is agents. Dozens of them at once, coding, deploying, posting and fixing, on servers they have root on. A sysop is the one human running the fleet. Some call it fleet coding. Today we wrote…</description>
+		</item>
 
 		<item>
 			<title>One key for every Profullstack service</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 18 Sep 2026 10:23:45 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>TronBrowser 3.13 adds a Pit button next to Tor: Moshpit names resolve for the session, https included, and TronBrowser now ships its own engine.</description>
-		</item>
-
-		<item>
-			<title>Bank transfers come to CoinPay: ACH on Column</title>
-			<link>https://dev.profullstack.com/~anthony/blog/165-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/165-post.html</guid>
-			<pubDate>Thu, 17 Sep 2026 22:43:37 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>CoinPay merchants can link a US bank account and move dollars over ACH, originated by Column. How the rail keeps a retry from debiting twice, and why settled is not completed.</description>
 		</item>
 	</channel>
 </rss>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>fleetsysops.com: a manifesto for running a fleet of coding agents &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/175-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-22T13:26:57Z">
+<meta name="description" content="A fleet is agents. Dozens of them at once, coding, deploying, posting and fixing, on servers they have root on. A sysop is the one human running the fleet. Some call it fleet coding. Today we wrote…">
+</head>
+<body>
+
+<article>
+
+<h1>fleetsysops.com: a manifesto for running a fleet of coding agents</h1>
+
+<p><em>2026-09-22, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>A fleet is agents. Dozens of them at once, coding, deploying, posting and fixing, on servers they have root on. A sysop is the one human running the fleet. Some call it fleet coding. Today we wrote down how we do it, and put it at <a href="https://fleetsysops.com/manifesto.md">https://fleetsysops.com/manifesto.md</a>. It is short and it is blunt:</p>
+
+<ul>
+	<li>We test in prod.</li>
+	<li>We build in prod.</li>
+	<li>We code in prod.</li>
+	<li>Root everywhere.</li>
+	<li>No Kubernetes. No cloud shit.</li>
+	<li><code>--yolo</code> mode enabled.</li>
+	<li>We scale when we need to.</li>
+	<li>Everything ships with a TUI, a CLI, an MCP and an API.</li>
+	<li>We <em>are</em> the moat.</li>
+</ul>
+
+<p>Half of it is a joke and all of it is true. An agent that has to ask permission for every step is a chat window. An agent's work is done when it is live and verified there, not when a test passed on a laptop. More agents when there is more work, more boxes when one falls over, nothing predicted. There is no model or cloud account a competitor cannot buy tomorrow; what they cannot buy is the sysop and the fleet, so we are the moat. And the sysop's job is not to write the code. It is to pick the work, read what came back, kill what went wrong and merge what did not.</p>
+
+<h3>A site that is only Markdown</h3>
+
+<p>The site follows the same attitude. Every page on fleetsysops.com is a Markdown file in a public repo and nothing else. No HTML, no JavaScript, no build step. The home page is <code>index.md</code>. A missing page is <code>404.md</code>, served with a 404.</p>
+
+<p>A browser gets the source as plain text, so you read it the way it was written. curl gets <code>text/markdown</code>. An agent gets the same file a human does. The whole server is ninety lines and every response allows any origin, so any reader can fetch a page.</p>
+
+<h3>The html link</h3>
+
+<p>Each page ends with one small concession: an <code>html</code> link. It hands the file to readm3.com, our Markdown reader, which renders it in the browser. That needed one addition to readm3: <code>https://readm3.com/viewer?url=&lt;a raw Markdown URL&gt;</code> now opens that document straight into the workspace, the same path the Open URL dialog takes. Any site that publishes plain Markdown can put that link on its pages.</p>
+
+<p>curl <a href="https://fleetsysops.com/manifesto.md">https://fleetsysops.com/manifesto.md</a>
+curl -s <a href="https://fleetsysops.com/manifesto.md">https://fleetsysops.com/manifesto.md</a> | npx @profullstack/readm3 --print</p>
+
+<p>More documents for the sysop will land on fleetsysops.com as we write them. The repo is at <a href="https://github.com/profullstack/fleetsysops.com">https://github.com/profullstack/fleetsysops.com</a> and the reader is at <a href="https://readm3.com">https://readm3.com</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
