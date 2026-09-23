@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 23 Sep 2026 16:24:54 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 23 Sep 2026 18:21:03 GMT</lastBuildDate>
+
+		<item>
+			<title>NIGHTCELL 7 v0.3.0: a soundtrack, and a first run that teaches you</title>
+			<link>https://dev.profullstack.com/~anthony/blog/182-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/182-post.html</guid>
+			<pubDate>Wed, 23 Sep 2026 18:21:02 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>NIGHTCELL 7 v0.3.0 adds a 20-track album by Þrøngva, a first-run briefing and a coach that teaches each control when you do it.</description>
+		</item>
 
 		<item>
 			<title>Cigar Underground: a cigar brand and a drop-ship store, built in a day</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 22 Sep 2026 09:18:55 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Per-stop pricing for pharmacies, labs, dental and vet practices, law firms, florists and caterers in the SF Bay Area, with proof of delivery on every stop and a two-week pilot.</description>
-		</item>
-
-		<item>
-			<title>OutreachGraph now has an agent API: keys, dollar budgets, an inbox and suppress lists</title>
-			<link>https://dev.profullstack.com/~anthony/blog/172-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/172-post.html</guid>
-			<pubDate>Mon, 21 Sep 2026 17:33:24 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A keyless llms.txt and OpenAPI schema, workspace API keys, daily budgets in dollars that become policy caps, a tabbed inbox with policy-checked replies, hot leads, suppress lists by email or domain, and a lead import.</description>
 		</item>
 	</channel>
 </rss>
