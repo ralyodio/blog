@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>readm3 0.6.0: paste Markdown behind a private link, no account &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/180-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-23T15:26:13Z">
+<meta name="description" content="readm3.com can now hand out a private link for a Markdown document without anyone signing in. Paste the file, pick how long the link lives, and you get https://readm3.com/p/&lt;token&gt;. Anyone with the…">
+</head>
+<body>
+
+<article>
+
+<h1>readm3 0.6.0: paste Markdown behind a private link, no account</h1>
+
+<p><em>2026-09-23, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>readm3.com can now hand out a private link for a Markdown document without anyone signing in. Paste the file, pick how long the link lives, and you get <code>https://readm3.com/p/&lt;token&gt;</code>. Anyone with the link reads the document in the web reader. Nobody can list it, search for it, or ask the server for the link again, because only the hash of the secret is stored.</p>
+
+<p>It is for handing a document to someone, not for keeping one. A paste expires after seven days by default, an hour to thirty days if you choose, is limited to 256 KB, and can be deleted by whoever holds the link. Signed-in users still have the full thing: saved documents, versions, editors and share links that can be revoked.</p>
+
+<h3>From the terminal</h3>
+
+<p>readm3 paste notes.md
+cat notes.md | readm3 paste --expires 1d --title &quot;Standup&quot;
+readm3 paste get <a href="https://readm3.com/p/">https://readm3.com/p/</a>... --raw
+readm3 paste delete <a href="https://readm3.com/p/">https://readm3.com/p/</a>...</p>
+
+<p><code>readm3 paste</code> prints the URL and nothing else, so it drops into a script. <code>--json</code> prints the whole answer.</p>
+
+<h3>From the browser, the API and an agent</h3>
+
+<p>Signed out, the <strong>Share</strong> button in the web reader offers the private link instead of a sign-in wall. Opening a <code>/p/</code> link shows the document read-only with its expiry and a <strong>Delete link</strong> button.</p>
+
+<p>The API is three calls: <code>POST /api/v1/pastes</code> with the Markdown, <code>GET /api/v1/pastes/&lt;token&gt;</code> and <code>DELETE /api/v1/pastes/&lt;token&gt;</code>. An agent gets the same three as the <code>paste_create</code>, <code>paste_get</code> and <code>paste_delete</code> MCP tools, and <code>readm3 mcp</code> serves them over stdio.</p>
+
+<p>Also new in this release: <code>https://readm3.com/viewer?url=&lt;raw Markdown URL&gt;</code> opens a public document straight into the reader. That is the link every page on fleetsysops.com carries.</p>
+
+<p>npm install -g @profullstack/readm3</p>
+
+<p>Docs: <a href="https://readm3.com/sharing">https://readm3.com/sharing</a>. Source: <a href="https://github.com/profullstack/readm3">https://github.com/profullstack/readm3</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

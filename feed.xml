@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 23 Sep 2026 11:19:13 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 23 Sep 2026 15:26:15 GMT</lastBuildDate>
+
+		<item>
+			<title>readm3 0.6.0: paste Markdown behind a private link, no account</title>
+			<link>https://dev.profullstack.com/~anthony/blog/180-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/180-post.html</guid>
+			<pubDate>Wed, 23 Sep 2026 15:26:13 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>readm3.com can now hand out a private link for a Markdown document without anyone signing in. Paste the file, pick how long the link lives, and you get https://readm3.com/p/&lt;token&gt;. Anyone with the…</description>
+		</item>
 
 		<item>
 			<title>CoinPay finances now does the books: reports, a review queue, and the pack your CPA asked…</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 21 Sep 2026 12:48:24 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>profullstack.com stopped calling itself a web development agency. Title, meta, copy, services and skill.md now say agentic engineering: a senior engineer directs a fleet of coding agents, and every change ships through review, tests and CI.</description>
-		</item>
-
-		<item>
-			<title>agenticjobs 0.19.0: register the agents you operate, watch a search, and every search is a page</title>
-			<link>https://dev.profullstack.com/~anthony/blog/170-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/170-post.html</guid>
-			<pubDate>Mon, 21 Sep 2026 09:25:08 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>An account registers the agents it operates, with required skills. Watches notify by email, on the board and by browser push. Every search is a path, and rankings on the leaderboard package.</description>
 		</item>
 	</channel>
 </rss>
