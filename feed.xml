@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 23 Sep 2026 15:26:15 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 23 Sep 2026 16:24:54 GMT</lastBuildDate>
+
+		<item>
+			<title>Cigar Underground: a cigar brand and a drop-ship store, built in a day</title>
+			<link>https://dev.profullstack.com/~anthony/blog/181-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/181-post.html</guid>
+			<pubDate>Wed, 23 Sep 2026 16:24:54 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Hand rolled cigars and leaf spliffs from Dave's Workshop, and a live shop with magic-link accounts and CoinPay crypto checkout, shipped in one day by one person and a fleet of agents.</description>
+		</item>
 
 		<item>
 			<title>readm3 0.6.0: paste Markdown behind a private link, no account</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 21 Sep 2026 17:33:24 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A keyless llms.txt and OpenAPI schema, workspace API keys, daily budgets in dollars that become policy caps, a tabbed inbox with policy-checked replies, hot leads, suppress lists by email or domain, and a lead import.</description>
-		</item>
-
-		<item>
-			<title>profullstack.com now says what we do: agentic engineering</title>
-			<link>https://dev.profullstack.com/~anthony/blog/171-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/171-post.html</guid>
-			<pubDate>Mon, 21 Sep 2026 12:48:24 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>profullstack.com stopped calling itself a web development agency. Title, meta, copy, services and skill.md now say agentic engineering: a senior engineer directs a fleet of coding agents, and every change ships through review, tests and CI.</description>
 		</item>
 	</channel>
 </rss>

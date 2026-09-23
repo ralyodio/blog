@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cigar Underground: a cigar brand and a drop-ship store, built in a day &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/181-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-23T16:24:54Z">
+<meta name="description" content="Hand rolled cigars and leaf spliffs from Dave's Workshop, and a live shop with magic-link accounts and CoinPay crypto checkout, shipped in one day by one person and a fleet of agents.">
+</head>
+<body>
+
+<article>
+
+<h1>Cigar Underground: a cigar brand and a drop-ship store, built in a day</h1>
+
+<p><em>2026-09-23, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I spent three years out of work after the software jobs went to AI. So I went out back, to a little workshop at the far end of my mom's yard. The sign over the door still says Dave's Workshop, 1996. My dad built it. That is where I rolled the first one.</p>
+
+<p>That brand is live now: <a href="https://cigarunderground.org">Cigar Underground</a>. It went from a domain check to a working store in one day, built the way we build everything now: one person picking the work and a fleet of coding agents doing it.</p>
+
+<h3>What it is</h3>
+
+<p>Hand rolled cigars and leaf spliffs. The first line is the <strong>Chovy Premium Blend</strong>, as a long-filler cigar or as a spliff: cannabis flower and ground cigar tobacco rolled inside a whole tobacco leaf, no paper. Neither one is sold online. They go to the waitlist first, and cannabis only ever goes out where state and local law allow, through licensed channels.</p>
+
+<p>We also smoke sploofs: cigar tobacco and weed crumbled together and packed in a regular tobacco pipe. It is now line thirteen of the <a href="https://fleetsysops.com/manifesto">Fleet SysOps Manifesto</a>, right after &quot;We work in our dad's workshop, not our mom's basement.&quot;</p>
+
+<h3>The shop</h3>
+
+<p>What is for sale online is everything around the smoke: <a href="https://cigarunderground.org/shop">cigar tips, briar pipes, cases, a cutter and humidor jars</a>. It is a drop-ship store. A paid order is placed with the maker, who ships straight to the buyer. A hand-carved humidor is coming soon, made to order.</p>
+
+<ul>
+	<li><strong>Accounts</strong> are a magic link or a passkey. No passwords, and the first link is the sign-up.</li>
+	<li><strong>Checkout</strong> is <a href="https://coinpayportal.com">CoinPay</a>, crypto only: USDC or USDT on Solana, USDC on Ethereum, BTC, ETH or SOL.</li>
+	<li><strong>Settlement</strong> happens on a signed webhook. It marks an order paid once, and only for the amount we charged.</li>
+	<li><strong>Fulfilment</strong> is an email with the supplier link and the ship-to address, then an admin page to mark it placed and shipped, which emails the buyer the tracking number.</li>
+	<li><strong>Local delivery</strong> can be booked door to door for $100 on <a href="https://d0rz.com/business">d0rz.com</a>. That covers shop orders only. Cannabis is never handed to a courier.</li>
+</ul>
+
+<h3>How one day went</h3>
+
+<p>The domain I asked for turned out not to be ours and could not be bought that day, so it launched on the one we already had. The rest was the usual fleet day: agents researched the leaf suppliers and the drop-ship catalog in the background while others built the store, and I picked what shipped. It is a small Bun server on Postgres, on its own Railway project, with Resend for mail. There are 28 tests, and they include a full order run against a real database.</p>
+
+<p>Two things from the day are worth passing on:</p>
+
+<ul>
+	<li><strong>A test payment caught a dead coin before any buyer did.</strong> Importing our wallets into the new CoinPay business silently skipped USDC on Base. A one-dollar probe payment failed with &quot;No USDC_BASE wallet configured&quot;, so that option came off the checkout before anyone could pick it.</li>
+	<li><strong>Supplier listings are not your listings.</strong> The catalog comes from a factory store that does not let resellers use its brand, so every product has our own name, copy and illustration. The &quot;custom hand made&quot; tips turned out to be a stock set, so the listing says what they are.</li>
+</ul>
+
+<p>The photos are AI placeholders until my kit arrives. The logo is real: a cigar band with a lit cigar across a cured leaf, and it says &quot;hand rolled&quot; because that is the whole point.</p>
+
+<p>If you are 21 or older, <a href="https://cigarunderground.org">come look</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
