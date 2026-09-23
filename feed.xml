@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 22 Sep 2026 17:53:52 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 23 Sep 2026 11:19:13 GMT</lastBuildDate>
+
+		<item>
+			<title>CoinPay finances now does the books: reports, a review queue, and the pack your CPA asked…</title>
+			<link>https://dev.profullstack.com/~anthony/blog/179-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/179-post.html</guid>
+			<pubDate>Wed, 23 Sep 2026 11:19:12 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>CoinPay finances now syncs your bank and card accounts every 30 minutes, keeps every raw provider response, produces exact monthly and quarterly reports, keeps your bank statements beside them, auto-categorises every transaction for tax with a review queue, emails the pack to your accountant, and sends a weekly digest on the days you choose.</description>
+		</item>
 
 		<item>
 			<title>NIGHTCELL 7 v0.2.0: a rocket launcher, and teams you can tell apart</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 21 Sep 2026 09:25:08 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>An account registers the agents it operates, with required skills. Watches notify by email, on the board and by browser push. Every search is a path, and rankings on the leaderboard package.</description>
-		</item>
-
-		<item>
-			<title>profullstack.com/stack: the stack, per use case, written for agents</title>
-			<link>https://dev.profullstack.com/~anthony/blog/169-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/169-post.html</guid>
-			<pubDate>Mon, 21 Sep 2026 09:01:08 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The current Profullstack stack as eight combos for different jobs, with shared defaults, house rules and the packages to reuse first. Markdown and JSON copies for agents.</description>
 		</item>
 	</channel>
 </rss>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoinPay finances now does the books: reports, a review queue, and the pack your CPA asked… &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/179-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-23T11:19:12Z">
+<meta name="description" content="CoinPay finances now syncs your bank and card accounts every 30 minutes, keeps every raw provider response, produces exact monthly and quarterly reports, keeps your bank statements beside them, auto-categorises every transaction for tax with a review queue, emails the pack to your accountant, and sends a weekly digest on the days you choose.">
+</head>
+<body>
+
+<article>
+
+<h1>CoinPay finances now does the books: reports, a review queue, and the pack your CPA asked…</h1>
+
+<p><em>2026-09-23, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>CoinPay finances now does the books: reports, a review queue, and the pack your CPA asked for</h2>
+
+<p>Since August, CoinPay has been able to link your bank and card accounts read-only and show balances, a ledger and a running cashflow view. Today it does the boring part everyone eventually pays somebody for: it pulls your accounts on a schedule, keeps every raw response, produces August or Q2 as a document with exact totals, categorises every transaction for tax, queues the doubtful ones for your review, and exports what an accountant works from.</p>
+
+<p>Everything below is live at coinpayportal.com/finances and in <code>coinpay</code> 0.10.0 or later.</p>
+
+<h3>Synced every 30 minutes, with the originals kept</h3>
+
+<p>Opt a connection in and the same in-process daemon that watches CoinPay payments pulls it every 30 minutes, throttled to the provider's daily allowance rather than the clock, so the Sync button always has budget left. Every response from the bank bridge is archived exactly as received, encrypted, with a record of the request that produced it. A parser or a rule can change next year; what the bank actually sent in August does not.</p>
+
+<h3>Calendar periods, exact totals, frozen reports</h3>
+
+<p>A month is a calendar month in your timezone, a quarter is 91 or 92 days, and a custom range ends on an exclusive date so nothing is counted twice across adjacent reports. Money never touches a floating point number: amounts are exact decimals, summed in the database and re-summed on the way out, and a report that disagrees with itself fails instead of shipping. Once a report is ready it never changes; regenerate and you get revision 2 with revision 1 kept and marked superseded.</p>
+
+<pre><code>coinpay finances report --period 2026-08 --format pdf --output ./2026-08.pdf
+coinpay finances backfill --period 2026-Q2 --wait</code></pre>
+
+<p>Every report carries three facts instead of one &quot;complete&quot; badge: whether every local row made the export, how much of the period was ever fetched from the provider (derived from what was requested, never guessed from the rows), and whether it has been reconciled against a statement. Opening and closing balances are unavailable until you enter them from a statement, and the provider's current balance is shown with its own timestamp, never dressed up as a closing figure.</p>
+
+<h3>Your bank's PDF, kept beside the report</h3>
+
+<p>Upload the statement the bank gave you, say which account and period it covers, and it is stored encrypted and labelled exactly what it is: an imported bank statement, user supplied. Enter the printed opening and closing balances and CoinPay checks them against a report revision with exact arithmetic. A match plus your acknowledgement is &quot;user reconciled&quot;. It is never called &quot;bank verified&quot;, because nobody compared every transaction identity, and the report says so.</p>
+
+<h3>The books</h3>
+
+<p>This is the part that used to go to the CPA as a shoebox. Every transaction now arrives with a category, a tax category in the shape of a Schedule C, and a business or personal scope, from the best source available: a rule you made, a language model when one is configured, or the built-in heuristics. Each carries a confidence. Anything under 90 percent waits in a review queue at coinpayportal.com/finances/books with the suggestion filled in. You confirm or correct, and one checkbox turns a correction into a rule, so the next sync gets that merchant right on its own. Rows you confirmed are never re-derived.</p>
+
+<p>Transfers between your own accounts, card payments, owner draws and estimated tax payments are excluded lines, never expenses. Personal spending on a business card is personal. Groceries on a business account are left uncategorised on purpose, so a person decides instead of the books quietly writing them off.</p>
+
+<p>The Tax summary tab totals the reviewed books by tax category for a year, quarter or month, per currency, in exact arithmetic, and exports the pack as CSV, PDF, HTML or JSON. It prints how many rows are still unreviewed. Nothing in it is tax advice; it is the mapping an accountant starts from.</p>
+
+<pre><code>coinpay finances books queue
+coinpay finances books confirm &lt;id&gt; --category software --tax software_subscriptions --always
+coinpay finances books categorize --wait
+coinpay finances books export --period 2026 --format pdf --output ./2026-books.pdf</code></pre>
+
+<h3>Send it to your accountant, or let Monday do it</h3>
+
+<p>Any report or the CPA pack can be emailed to up to five addresses: the PDF and CSV attached, plus a download link that needs no CoinPay login, expires in two weeks, and counts its downloads. The email carries totals and the period, never a transaction. And a weekly digest, on the weekdays you choose at the hour you choose in your own timezone, sends the previous seven days of the books with the pack attached, so the bookkeeping question is answered before anyone asks it.</p>
+
+<pre><code>coinpay finances books send --to cpa@example.com,you@example.com --period 2026
+coinpay finances digest set --days mon,fri --hour 8 --to you@example.com</code></pre>
+
+<h3>Where to get it</h3>
+
+<ul>
+	<li>Web: <a href="https://coinpayportal.com/finances">https://coinpayportal.com/finances</a> and <a href="https://coinpayportal.com/finances/books">https://coinpayportal.com/finances/books</a></li>
+	<li>CLI: <code>curl -fsSL https://coinpayportal.com/install.sh | sh</code>, or <code>npm i @profullstack/coinpay</code></li>
+	<li>Release notes: <a href="https://github.com/profullstack/coinpayportal/releases/tag/sdk-v0.10.0">https://github.com/profullstack/coinpayportal/releases/tag/sdk-v0.10.0</a></li>
+	<li>Docs: <a href="https://github.com/profullstack/coinpayportal/blob/master/docs/BOOKS.md">https://github.com/profullstack/coinpayportal/blob/master/docs/BOOKS.md</a>, <a href="https://github.com/profullstack/coinpayportal/blob/master/docs/FINANCES-REPORTS.md">https://github.com/profullstack/coinpayportal/blob/master/docs/FINANCES-REPORTS.md</a> and <a href="https://github.com/profullstack/coinpayportal/blob/master/docs/STATEMENTS.md">https://github.com/profullstack/coinpayportal/blob/master/docs/STATEMENTS.md</a></li>
+</ul>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
