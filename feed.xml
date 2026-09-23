@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 23 Sep 2026 18:21:03 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 23 Sep 2026 23:04:00 GMT</lastBuildDate>
+
+		<item>
+			<title>NIGHTCELL 7: When the Ravens Lied, a second Þrøngva album made in code</title>
+			<link>https://dev.profullstack.com/~anthony/blog/183-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/183-post.html</guid>
+			<pubDate>Wed, 23 Sep 2026 23:04:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Twelve new Viking metal and hip-hop tracks for NIGHTCELL 7, every note synthesised from a lyric sheet by a numpy script.</description>
+		</item>
 
 		<item>
 			<title>NIGHTCELL 7 v0.3.0: a soundtrack, and a first run that teaches you</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 22 Sep 2026 10:04:51 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>One Power Key opens all 54 Profullstack services: Ed25519-signed, verified offline by every site, $299 lifetime, half off with 50OFF, paid through CoinPay.</description>
-		</item>
-
-		<item>
-			<title>d0rz now sells scheduled delivery routes to businesses</title>
-			<link>https://dev.profullstack.com/~anthony/blog/173-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/173-post.html</guid>
-			<pubDate>Tue, 22 Sep 2026 09:18:55 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Per-stop pricing for pharmacies, labs, dental and vet practices, law firms, florists and caterers in the SF Bay Area, with proof of delivery on every stop and a two-week pilot.</description>
 		</item>
 	</channel>
 </rss>

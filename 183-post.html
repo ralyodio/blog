@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NIGHTCELL 7: When the Ravens Lied, a second Þrøngva album made in code &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/183-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-23T23:04:00Z">
+<meta name="description" content="Twelve new Viking metal and hip-hop tracks for NIGHTCELL 7, every note synthesised from a lyric sheet by a numpy script.">
+</head>
+<body>
+
+<article>
+
+<h1>NIGHTCELL 7: When the Ravens Lied, a second Þrøngva album made in code</h1>
+
+<p><em>2026-09-23, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>NIGHTCELL 7 has a second soundtrack album: <em>When the Ravens Lied</em> by Þrøngva, twelve new tracks in the same drop-D Viking metal and hip-hop style as <em>After the Winter of Want</em>. They are in the game now, next to the first album's twenty.</p>
+
+<h3>Who this is for</h3>
+
+<p>Anyone playing the free sandbox, in the browser or on the desktop client. Nothing here costs money.</p>
+
+<h3>What the album is about</h3>
+
+<p>Odin sends two ravens out every morning and believes what they bring back. On this album somebody has taught them to lie. Forged smoke and forged voices tell two halls that the other one struck first, and a merchant sells spears to both sides. It is the game's MIRAGE plot told as a saga. No real country is named, and neither side is the villain: the lie is, and so is whoever profits from it. The last track, &quot;True Dawn&quot;, answers the episode title, FALSE DAWN.</p>
+
+<ol>
+	<li>Huginn Brings the Word</li>
+	<li>Who Fired First</li>
+	<li>Loki's Mirror</li>
+	<li>Merchant of the Long Knife</li>
+	<li>Ledger of Ash</li>
+	<li>Heimdall Does Not Sleep</li>
+	<li>Same Rain on Both Shields</li>
+	<li>Lower the Spear</li>
+	<li>Muninn Remembers</li>
+	<li>Longship Bounce</li>
+	<li>Not Our Ragnarök</li>
+	<li>True Dawn</li>
+</ol>
+
+<h3>How it was made</h3>
+
+<p>Every note is synthesised by a Python script with numpy and ffmpeg. Nothing is sampled, and no AI audio model or music service was used. The script reads a lyric sheet that gives each section a tempo and a direction (&quot;male baritone half-rap, drop-D riff with pockets of silence&quot;) and arranges it. It plays a riff with the kick doubling the guitar, boom-bap or 808 drums on the hip-hop tracks, and choir, strings, tagelharpa, a throat-singing drone and horns. It also adds the wind, rain and ravens the sheet asks for.</p>
+
+<p>The voice is the honest limit. It is formant synthesis, one note per syllable on that syllable's vowel, so it follows the rhythm of the lyrics without being words you can make out. The lyrics ship inside every MP3's tags, and the repo has paste-ready sheets for a sung version later.</p>
+
+<p>Nobody listened to the first render, because the session that made it cannot hear. A spectrogram and an energy count showed 73% of the energy below 150 Hz, which is mud, so the mix was rebalanced before all twelve tracks were rendered. Each one is a 320 kbps, 48 kHz MP3 at about -10 LUFS.</p>
+
+<h3>How to use it</h3>
+
+<p>Open <a href="https://nightcell7.com/play">nightcell7.com/play</a> and turn your volume up in the yard. Both albums play shuffled, one track after another, and stream as they are needed, so they add nothing to the download before your first match. The lyric sheet and the synthesiser are in the repo at <a href="https://github.com/profullstack/nightcell7/tree/main/docs/music/when-the-ravens-lied">github.com/profullstack/nightcell7</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
