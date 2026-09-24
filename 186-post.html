@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TronBrowser v3.15.0: agents can finally fill in a real form &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/186-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-24T08:15:18Z">
+<meta name="description" content="Upload, custom dropdowns, stable refs and a few other fixes that let tron automate complete a real job application, plus jobhunt in cli-tools.">
+</head>
+<body>
+
+<article>
+
+<h1>TronBrowser v3.15.0: agents can finally fill in a real form</h1>
+
+<p><em>2026-09-24, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I pointed TronBrowser's agent tools at a real job application and it could not finish one form. So I fixed what broke, and then let it apply to jobs for me.</p>
+
+<p>TronBrowser v3.15.0 is out. <code>tron upgrade</code> gets it.</p>
+
+<h3>What broke</h3>
+
+<p><code>tron automate</code> is an MCP server: an agent opens a page, takes a snapshot of refs like <code>@e7</code>, and fills and clicks by ref. On a Greenhouse or Ashby application it fell over at every step:</p>
+
+<ul>
+	<li><strong>No way to attach a file.</strong> The resume field is a hidden <code>&lt;input type=file&gt;</code> behind an &quot;Attach&quot; button, snapshots did not even list it, and there was no upload tool.</li>
+	<li><strong>Dropdowns did nothing.</strong> <code>browser_select</code> only knew native <code>&lt;select&gt;</code>. Every modern form uses a React combobox that opens on a real mouse press and ignores synthetic events.</li>
+	<li><strong>Fills landed in the wrong field.</strong> Every snapshot renumbered every ref. Open one dropdown, its options become refs, everything after it shifts, and the next fill types &quot;Yes&quot; into the Gender box.</li>
+	<li><strong>Clicks missed.</strong> With <code>scroll-behavior: smooth</code> the element was measured mid-scroll, so the click landed a few thousand pixels off-screen.</li>
+	<li><strong>&quot;Thanks for applying&quot; was invisible.</strong> Text extraction read <code>textContent</code>, so an inlined JS bundle used up the whole 20k character budget before any word a person could see.</li>
+</ul>
+
+<h3>What changed</h3>
+
+<ul>
+	<li><code>browser_upload</code> and <code>tron upload &lt;ref&gt; &lt;file&gt;</code> attach files through CDP, and snapshots always list file inputs, hidden or not.</li>
+	<li><code>browser_select</code> and <code>tron select</code> drive custom comboboxes with trusted mouse and keyboard input, then click the matching option.</li>
+	<li><code>browser_press</code> and <code>tron press</code> send trusted key events.</li>
+	<li>Refs are stable. An element keeps its ref across snapshots, new elements get new numbers, and a ref from a vanished element is never handed to something else.</li>
+	<li>Snapshots mark <code>[required]</code> fields, and extraction returns rendered text.</li>
+</ul>
+
+<h3>What it did with that</h3>
+
+<p>The same MCP session then filled and submitted real applications end to end: resume upload, location autocomplete, work authorization dropdowns, checkbox groups, and Greenhouse's emailed security code.</p>
+
+<p>That flow is now a command in cli-tools, <code>jobhunt</code>. It finds remote roles at the companies on a public list of AI startups hiring, filters by title, workplace and pay, and applies through Tron. It keeps multiple profiles with their own resume and cover letter, stops and resumes runs, logs everything it does, and reads the security code from your inbox. It will not tick a consent or arbitration box for you, and it never sends the same application twice.</p>
+
+<ul>
+	<li>TronBrowser: <a href="https://tronbrowser.dev">https://tronbrowser.dev</a></li>
+	<li>cli-tools: <a href="https://github.com/profullstack/cli-tools">https://github.com/profullstack/cli-tools</a></li>
+</ul>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

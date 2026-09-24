@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 24 Sep 2026 08:14:59 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 24 Sep 2026 08:15:19 GMT</lastBuildDate>
+
+		<item>
+			<title>TronBrowser v3.15.0: agents can finally fill in a real form</title>
+			<link>https://dev.profullstack.com/~anthony/blog/186-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/186-post.html</guid>
+			<pubDate>Thu, 24 Sep 2026 08:15:18 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Upload, custom dropdowns, stable refs and a few other fixes that let tron automate complete a real job application, plus jobhunt in cli-tools.</description>
+		</item>
 
 		<item>
 			<title>$20 a smoke, and the weekly Cigar Underground Herf</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 22 Sep 2026 15:12:06 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Moshpit is a naming system outside the DNS root. You buy an ending, not a name, and there are 17,605 of them. How the certificates work now that no CA will issue one, the $2 sale that made every bridge answer NXDOMAIN for Gmail, and why clearnet always wins.</description>
-		</item>
-
-		<item>
-			<title>The NIGHTCELL 7 trailer, and every model in the build</title>
-			<link>https://dev.profullstack.com/~anthony/blog/176-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/176-post.html</guid>
-			<pubDate>Tue, 22 Sep 2026 15:08:12 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>&lt;p&gt;NIGHTCELL 7 is a tactical shooter that runs in a browser. Until today its home page was still images and prose. It now opens with a 26 second gameplay trailer, and further down carries four…</description>
 		</item>
 	</channel>
 </rss>
