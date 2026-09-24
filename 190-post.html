@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live scores from leagues no US scoreboard carries &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/190-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-24T18:04:34Z">
+<meta name="description" content="A TheSportsDB subscriber key we already had turned 25 team lookups into 388 teams, and added live scores from every league worldwide.">
+</head>
+<body>
+
+<article>
+
+<h1>Live scores from leagues no US scoreboard carries</h1>
+
+<p><em>2026-09-24, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nichedb.dev/c/sports has two live score sources now. It used to have one, and that one only knew about the games American networks broadcast.</p>
+
+<p>The new one came out of a $9 a month TheSportsDB membership we already had. Every workaround in our sports code was written against limits that membership lifts, and nobody had gone back to check.</p>
+
+<h3>What the free key was costing us</h3>
+
+<p>Same endpoints, same day, two keys:</p>
+
+<p>| Request | Free key | Subscriber key |
+| --- | --- | --- |
+| One day of TV listings | 1 row | 372 rows |
+| Every team in a league | ignored, or 10 rows | every team, all 63 fields |
+| The league catalogue | refused | 1,544 leagues, one request |
+| A team roster | 10 names, alphabetical | the whole squad |
+| Live scores | no such endpoint | every game on, worldwide |
+| Rate limit | 30 a minute | 100 a minute |</p>
+
+<p>The catalogue line is the one that mattered most. With no list endpoint answering, the only way to find leagues was to try ids one at a time from 4328 upward and stop after 25 misses in a row. That is 1,700 requests to find about 1,500 leagues, and it can never find one outside the range it already knows about. The v2 catalogue returns the whole list in a single request.</p>
+
+<p>Teams were worse. We walked roughly 24,000 team ids, three quarters of which are gaps, because the per league search was capped at ten rows. On a subscriber key that same search returns every team in the league with all 63 fields, the same row the one by one lookup gives.</p>
+
+<p>Here are the last run of the old code and the first run of the new one, out of the same table:</p>
+
+<pre><code>sportsdb-teams | 25 teams from 25 lookups (ids 151069 to 151093)
+sportsdb-teams | 388 teams from 25 leagues (1-25 of 1544)</code></pre>
+
+<p>Same request budget. Fifteen times the rows. A full pass over the team catalogue went from about a week to a couple of hours.</p>
+
+<h3>The live part</h3>
+
+<p>The new source asks <code>livescore/all</code> once and gets back every game being played anywhere, about 50 KB. First run in production returned 80 games with 38 in play: Slovak Extraliga, Finnish Liiga, African Cup of Nations qualifiers.</p>
+
+<p>It does not replace the ESPN one. ESPN is deeper where it goes, with the clock, the venue, the odds and play by play. But ESPN blocks cloud egress, so every scoreboard we pull goes through a metered residential proxy at a few hundred kilobytes a time, and a run can only afford to probe a handful of leagues. The two answer different questions, so both rows are kept under their own ids and matching them stays the reader's job.</p>
+
+<h3>Four things that bit</h3>
+
+<p><code>search_all_teams.php?l=</code> matches the league's display name and only that. <code>l=MLB</code> returns thirty teams. <code>l=Major League Baseball</code> returns null. The names have to come from the catalogue, never from anything a human typed.</p>
+
+<p><code>lookup_all_teams.php</code> is gone. It answers HTML now, not JSON, so anything checking only for a non-200 sails past it into a parse error.</p>
+
+<p>The v2 API takes the key in an <code>X-API-KEY</code> header instead of the URL path. That is a small privacy win: v2 request URLs are safe to log, where the v1 ones never are.</p>
+
+<p>Live timestamps are UTC written without a zone, like <code>2026-09-23T15:30:00</code>. <code>Date.parse</code> reads that as local time, so a box in the wrong zone shifts every kickoff by its offset. Appending the Z is the entire fix.</p>
+
+<h3>Worth checking your own</h3>
+
+<p>The interesting part was not the code. It was that the key was already set in production while the code still ran against the free tier's shape, because the workarounds were written once and nobody re-measured them after the key arrived. If you have a paid API key somewhere in your stack, go read what your code assumes about it.</p>
+
+<p>Live now at <a href="https://nichedb.dev/c/sports">https://nichedb.dev/c/sports</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

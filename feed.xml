@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 24 Sep 2026 15:02:39 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 24 Sep 2026 18:04:35 GMT</lastBuildDate>
+
+		<item>
+			<title>Live scores from leagues no US scoreboard carries</title>
+			<link>https://dev.profullstack.com/~anthony/blog/190-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/190-post.html</guid>
+			<pubDate>Thu, 24 Sep 2026 18:04:34 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A TheSportsDB subscriber key we already had turned 25 team lookups into 388 teams, and added live scores from every league worldwide.</description>
+		</item>
 
 		<item>
 			<title>Your audience is already the list</title>
@@ -48,7 +57,7 @@
 		</item>
 
 		<item>
-			<title>$20 a smoke, and the weekly Cigar Underground Herf</title>
+			<title>$20 a smoke, and the Cigar Underground Herf</title>
 			<link>https://dev.profullstack.com/~anthony/blog/185-post.html</link>
 			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/185-post.html</guid>
 			<pubDate>Thu, 24 Sep 2026 08:14:59 GMT</pubDate>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 23 Sep 2026 16:24:54 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Hand rolled cigars and leaf spliffs from Dave's Workshop, and a live shop with magic-link accounts and CoinPay crypto checkout, shipped in one day by one person and a fleet of agents.</description>
-		</item>
-
-		<item>
-			<title>readm3 0.6.0: paste Markdown behind a private link, no account</title>
-			<link>https://dev.profullstack.com/~anthony/blog/180-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/180-post.html</guid>
-			<pubDate>Wed, 23 Sep 2026 15:26:13 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>readm3.com can now hand out a private link for a Markdown document without anyone signing in. Paste the file, pick how long the link lives, and you get https://readm3.com/p/&lt;token&gt;. Anyone with the…</description>
 		</item>
 	</channel>
 </rss>
