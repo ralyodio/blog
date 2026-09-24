@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 24 Sep 2026 18:04:35 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 24 Sep 2026 20:19:29 GMT</lastBuildDate>
+
+		<item>
+			<title>MediaAnalyzer: a description and the right folder for every file you own</title>
+			<link>https://dev.profullstack.com/~anthony/blog/191-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/191-post.html</guid>
+			<pubDate>Thu, 24 Sep 2026 20:19:28 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Point it at a folder and every photo, video, song and document gets a searchable description and moves into the folder it belongs in.</description>
+		</item>
 
 		<item>
 			<title>Live scores from leagues no US scoreboard carries</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 23 Sep 2026 18:21:02 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>NIGHTCELL 7 v0.3.0 adds a 20-track album by Þrøngva, a first-run briefing and a coach that teaches each control when you do it.</description>
-		</item>
-
-		<item>
-			<title>Cigar Underground: a cigar brand and a drop-ship store, built in a day</title>
-			<link>https://dev.profullstack.com/~anthony/blog/181-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/181-post.html</guid>
-			<pubDate>Wed, 23 Sep 2026 16:24:54 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Hand rolled cigars and leaf spliffs from Dave's Workshop, and a live shop with magic-link accounts and CoinPay crypto checkout, shipped in one day by one person and a fleet of agents.</description>
 		</item>
 	</channel>
 </rss>

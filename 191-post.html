@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MediaAnalyzer: a description and the right folder for every file you own &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/191-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-24T20:19:28Z">
+<meta name="description" content="Point it at a folder and every photo, video, song and document gets a searchable description and moves into the folder it belongs in.">
+</head>
+<body>
+
+<article>
+
+<h1>MediaAnalyzer: a description and the right folder for every file you own</h1>
+
+<p><em>2026-09-24, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I had about 250 GB of photos and videos in folders called <code>Camera</code>, <code>Downloads</code> and <code>New folder (3)</code>. Search was hopeless because nothing in there had words attached to it. So I built <a href="https://mediaanalyzer.pro">MediaAnalyzer</a>.</p>
+
+<p>Point it at a folder. It writes a short, searchable description next to every photo, video, song and document, and moves each one into the folder it belongs in, from a list you control. PDFs, Word, Excel, PowerPoint, OpenDocument, e-books, Markdown, camera RAW, Photoshop files, MP3 and FLAC all work: anything ffmpeg, ImageMagick, LibreOffice or pandoc can open.</p>
+
+<pre><code class="language-sh">curl -fsSL https://mediaanalyzer.pro/install.sh | sh
+mediaanalyzer login
+mediaanalyzer scan ~/Pictures
+mediaanalyzer apply ~/Pictures --yes</code></pre>
+
+<h3>Originals stay home</h3>
+
+<p>The CLI shrinks each photo to a 768 pixel preview on your machine and uploads only that. Videos become a single 3×3 contact sheet of frames, so a two hour video costs the same as one photo. Documents become a picture of the first page and a short text excerpt; songs become their tags and cover art. The server re-encodes every upload, which strips EXIF and GPS, and deletes the preview as soon as the file is described. We keep the text, never the pictures.</p>
+
+<h3>Nothing moves until you say so</h3>
+
+<p><code>apply</code> prints the plan first: how many files land in each folder, and the first moves. Nothing changes until you add <code>--yes</code>. Name clashes get <code> (2)</code> instead of overwriting anything, every move is journaled, and <code>mediaanalyzer undo</code> puts the tree back exactly as it was. Re-running <code>scan</code> resumes where it stopped and never pays for a file twice, even after <code>apply</code> has moved it.</p>
+
+<h3>Bring your own model, no typing</h3>
+
+<p>The Providers page connects OpenRouter in one click. For Anthropic, OpenAI, Gemini, Groq or Together, a button opens the page where you make a key; paste it and it is checked, saved, and a good vision model is picked for you, with the cost per 1,000 photos shown next to each one. A self-hosted Ollama or vLLM works too.</p>
+
+<p>On your own key MediaAnalyzer costs $0.20 per 1,000 files. A cheap vision model such as Gemini 2.5 Flash Lite adds about $0.25 per 1,000 photos on your provider's bill, so a 40,000 photo library comes to roughly $18 all in. Hosted tiers on our own GPUs are coming.</p>
+
+<p><code>mediaanalyzer bench</code> runs the same sample through a self-hosted vLLM model and Claude side by side and writes a page of their descriptions next to each other, so you can judge by eye whether the cheap model is good enough before you spend anything.</p>
+
+<h3>Also in DiskPush</h3>
+
+<p><a href="https://github.com/profullstack/diskpush/releases/latest">DiskPush 0.12</a> grew a plugin system, and MediaAnalyzer is the first plugin: select files in the desktop app or the TUI, choose Analyze media, and the descriptions and folders appear right there.</p>
+
+<p>Try it at <a href="https://mediaanalyzer.pro">mediaanalyzer.pro</a>. Every account starts with $1 of free credit.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
