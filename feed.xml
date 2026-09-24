@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 24 Sep 2026 00:17:29 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 24 Sep 2026 08:14:59 GMT</lastBuildDate>
+
+		<item>
+			<title>$20 a smoke, and the weekly Cigar Underground Herf</title>
+			<link>https://dev.profullstack.com/~anthony/blog/185-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/185-post.html</guid>
+			<pubDate>Thu, 24 Sep 2026 08:14:59 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>We put Cigar Underground online two days ago with the Chovy Premium Blend at $200 a cigar. Then we looked at the waitlist. It had two names on it, and I know both of them.</description>
+		</item>
 
 		<item>
 			<title>NIGHTCELL 7 v0.4.0: When the Ravens Lied remade, and a shuffle across both albums</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 22 Sep 2026 15:08:12 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>&lt;p&gt;NIGHTCELL 7 is a tactical shooter that runs in a browser. Until today its home page was still images and prose. It now opens with a 26 second gameplay trailer, and further down carries four…</description>
-		</item>
-
-		<item>
-			<title>fleetsysops.com: a manifesto for running a fleet of coding agents</title>
-			<link>https://dev.profullstack.com/~anthony/blog/175-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/175-post.html</guid>
-			<pubDate>Tue, 22 Sep 2026 13:26:57 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A fleet is agents. Dozens of them at once, coding, deploying, posting and fixing, on servers they have root on. A sysop is the one human running the fleet. Some call it fleet coding. Today we wrote…</description>
 		</item>
 	</channel>
 </rss>
