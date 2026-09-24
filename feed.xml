@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 23 Sep 2026 23:04:00 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 24 Sep 2026 00:17:29 GMT</lastBuildDate>
+
+		<item>
+			<title>NIGHTCELL 7 v0.4.0: When the Ravens Lied remade, and a shuffle across both albums</title>
+			<link>https://dev.profullstack.com/~anthony/blog/184-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/184-post.html</guid>
+			<pubDate>Thu, 24 Sep 2026 00:17:29 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Þrøngva's second album is now full songs made in Suno, and the soundtrack shuffles all 32 tracks across both albums.</description>
+		</item>
 
 		<item>
 			<title>NIGHTCELL 7: When the Ravens Lied, a second Þrøngva album made in code</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 22 Sep 2026 13:26:57 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A fleet is agents. Dozens of them at once, coding, deploying, posting and fixing, on servers they have root on. A sysop is the one human running the fleet. Some call it fleet coding. Today we wrote…</description>
-		</item>
-
-		<item>
-			<title>One key for every Profullstack service</title>
-			<link>https://dev.profullstack.com/~anthony/blog/174-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/174-post.html</guid>
-			<pubDate>Tue, 22 Sep 2026 10:04:51 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>One Power Key opens all 54 Profullstack services: Ed25519-signed, verified offline by every site, $299 lifetime, half off with 50OFF, paid through CoinPay.</description>
 		</item>
 	</channel>
 </rss>
