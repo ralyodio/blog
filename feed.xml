@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 24 Sep 2026 08:15:19 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 24 Sep 2026 08:51:10 GMT</lastBuildDate>
+
+		<item>
+			<title>OpenEmoji and OpenIcon: 3,963 emoji, 370 icons, and your terminal gets them too</title>
+			<link>https://dev.profullstack.com/~anthony/blog/187-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/187-post.html</guid>
+			<pubDate>Thu, 24 Sep 2026 08:51:09 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Two open specs and a complete set for each: every standard emoji drawn as one family with install packs for 22 networks, and UI icons that know what to draw in a terminal. Built into HQTUI.</description>
+		</item>
 
 		<item>
 			<title>TronBrowser v3.15.0: agents can finally fill in a real form</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 22 Sep 2026 17:53:52 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>&lt;p&gt;NIGHTCELL 7 v0.2.0 is out. It adds the M9 Hammerfall, a rocket launcher and the first weapon in the game that is not hitscan, and it fixes the thing that made the multiplayer yard hard to read:…</description>
-		</item>
-
-		<item>
-			<title>We built this city...on rock and roll!</title>
-			<link>https://dev.profullstack.com/~anthony/blog/177-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/177-post.html</guid>
-			<pubDate>Tue, 22 Sep 2026 15:12:06 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Moshpit is a naming system outside the DNS root. You buy an ending, not a name, and there are 17,605 of them. How the certificates work now that no CA will issue one, the $2 sale that made every bridge answer NXDOMAIN for Gmail, and why clearnet always wins.</description>
 		</item>
 	</channel>
 </rss>

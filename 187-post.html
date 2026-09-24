@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenEmoji and OpenIcon: 3,963 emoji, 370 icons, and your terminal gets them too &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/187-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-24T08:51:09Z">
+<meta name="description" content="Two open specs and a complete set for each: every standard emoji drawn as one family with install packs for 22 networks, and UI icons that know what to draw in a terminal. Built into HQTUI.">
+</head>
+<body>
+
+<article>
+
+<h1>OpenEmoji and OpenIcon: 3,963 emoji, 370 icons, and your terminal gets them too</h1>
+
+<p><em>2026-09-24, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Today we shipped two open specs and a complete set for each: OpenEmoji, with all 3,963 standard emoji, and OpenIcon, with 370 UI and brand icons. Both are built into HQTUI and on by default.</p>
+
+<h3>OpenEmoji</h3>
+
+<p>An emoji set is usually locked to someone's operating system. OpenEmoji is a folder: one openemoji.json that says which Unicode version it covers, what is missing, its licence, and what drew it, plus files named by codepoint (1f525.png is the fire).</p>
+
+<p>The reference set is every fully-qualified sequence in Emoji 18.0, drawn by gpt-image-2 as one family. Six anchor glyphs were drawn first and every later glyph was an edit that saw them, so the light and gloss hold across the set. Skin tones are edits of the base glyph that change only the skin. The manifest says so: made_by ai, disclosure ai-generated.</p>
+
+<p>Two things the model got wrong on the way: it kept drawing a famous red-haired mermaid and a famous blonde fairy, and a general &quot;be original&quot; instruction did not stop it. A specific brief for each did.</p>
+
+<p>Browse it at <a href="https://logicsrc.com/openemoji/catalog">https://logicsrc.com/openemoji/catalog</a>. Search by name or keyword (&quot;lol&quot; finds the crying-laughing face), filter by group, skin tone or Emoji version, and pick a network under &quot;Install on&quot;. There are bundles for 22 of them: custom emoji for Slack, Discord, Mastodon (a tootctl tarball), Misskey, Pleroma, Telegram and more, sticker packs for Signal and WhatsApp where custom emoji do not exist, and flag images for X. Colour fonts (CBDT and sbix) are in the release.</p>
+
+<h3>OpenIcon</h3>
+
+<p>OpenIcon does the same for UI icons, and adds the part icon sets leave out: what to draw in a terminal. Every icon carries a Nerd Font glyph, a Unicode symbol and an ASCII fallback, so a status bar never turns into boxes over SSH. The set has 259 icons in two styles, a simple line style and a full-colour HQ style, plus 111 brand logos taken from Simple Icons in their owners' colours. See all of them at <a href="https://logicsrc.com/openicon">https://logicsrc.com/openicon</a>.</p>
+
+<h3>In HQTUI</h3>
+
+<pre><code class="language-ts">import { icon, emoji, emojify } from &quot;@profullstack/hqtui&quot;;
+
+icon(&quot;mail&quot;);     // Nerd glyph, or ✉, or @
+emoji(&quot;rocket&quot;);  // 🚀, or [rocket] where emoji cannot render
+emojify(&quot;ship it :oe_rocket:&quot;);</code></pre>
+
+<p><code>bunx @profullstack/hqtui fonts install</code> puts the emoji font in your terminal through fontconfig, Kitty or WezTerm. Emoji width is also fixed in all six ports: a thumbs-up with a skin tone used to measure four columns.</p>
+
+<p>The specs are open and the sets are CC BY: <a href="https://github.com/profullstack/openemoji">https://github.com/profullstack/openemoji</a> and <a href="https://github.com/profullstack/openicon">https://github.com/profullstack/openicon</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
