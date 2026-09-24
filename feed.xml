@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 24 Sep 2026 11:34:35 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 24 Sep 2026 15:02:39 GMT</lastBuildDate>
+
+		<item>
+			<title>Your audience is already the list</title>
+			<link>https://dev.profullstack.com/~anthony/blog/189-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/189-post.html</guid>
+			<pubDate>Thu, 24 Sep 2026 15:02:38 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>OutreachGraph 0.6.0 reads the people who engage with your own Bluesky or X account and turns them into prospects, with the engagement kept as the reason to write.</description>
+		</item>
 
 		<item>
 			<title>You can buy MediaAnalyzer credit with crypto now</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 23 Sep 2026 15:26:13 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>readm3.com can now hand out a private link for a Markdown document without anyone signing in. Paste the file, pick how long the link lives, and you get https://readm3.com/p/&lt;token&gt;. Anyone with the…</description>
-		</item>
-
-		<item>
-			<title>CoinPay finances now does the books: reports, a review queue, and the pack your CPA asked…</title>
-			<link>https://dev.profullstack.com/~anthony/blog/179-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/179-post.html</guid>
-			<pubDate>Wed, 23 Sep 2026 11:19:12 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>CoinPay finances now syncs your bank and card accounts every 30 minutes, keeps every raw provider response, produces exact monthly and quarterly reports, keeps your bank statements beside them, auto-categorises every transaction for tax with a review queue, emails the pack to your accountant, and sends a weekly digest on the days you choose.</description>
 		</item>
 	</channel>
 </rss>

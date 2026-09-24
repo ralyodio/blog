@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your audience is already the list &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/189-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-24T15:02:38Z">
+<meta name="description" content="OutreachGraph 0.6.0 reads the people who engage with your own Bluesky or X account and turns them into prospects, with the engagement kept as the reason to write.">
+</head>
+<body>
+
+<article>
+
+<h1>Your audience is already the list</h1>
+
+<p><em>2026-09-24, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every way OutreachGraph found people started from a stranger. You give it a keyword, it finds companies, it reads their pages, it finds the people named on them. Or it searches public feeds for someone complaining about the category you sell into. Both work. Both start from zero.</p>
+
+<p>Neither of them ever looked at the people who had already raised a hand.</p>
+
+<p>Somebody followed your account this morning. Somebody reposted the thing you wrote about your release. Somebody replied to it with a question. Those are not strangers. They are the warmest names you will get all week, and until today the product could not see a single one of them.</p>
+
+<p>Now it can. Point a watch at your own Bluesky or X account and the people who follow, like, repost, reply to or mention you become prospects in a campaign, with the thing they engaged with kept as the reason to write to them.</p>
+
+<h3>The engagement is the evidence</h3>
+
+<p>This matters more than it sounds. Everything OutreachGraph writes has to be grounded in something it stored, with a source. No source, no claim, and the draft gets withheld rather than invented.</p>
+
+<p>An engagement is the cleanest source there is. It happened in public. It names both parties. Nothing about it was guessed, scored or inferred by a model. The network told us who reposted what, and the post's own words go into the signal so a draft has something real to open with.</p>
+
+<p>It is also the fastest to go stale. A like from this morning is something the person still remembers. A like from three weeks ago is not, and a message that opens by reminding them reads worse than a cold one. So this signal decays on the same fast curve as an explicit buying question. Act on it this week or do not bring it up.</p>
+
+<h3>A like is not permission</h3>
+
+<p>Here is what a watch deliberately does not do.</p>
+
+<p>It does not make anybody reachable. Someone who clicked a heart is still just a handle to us, so they land at the same low identity confidence as any other social lead, below the floor the policy engine requires before it will allow an outbound message. The engine goes on refusing until something else works out who they actually are. That is the behaviour we want, not a gap to route around. The honest path from a like to a message runs through finding out who the person is.</p>
+
+<p>It does not send anything. The watcher has no path to a network that writes.</p>
+
+<p>And it does not invent warmth. If someone likes a post, unlikes it, then likes it again, that is one signal. We cannot tell that apart from our own poll reading the same window twice, and turning a re-read into a second data point would be manufacturing enthusiasm that was never there.</p>
+
+<p>What turns an engagement into outreach is the same automation rule that has always turned a signal into an enrollment. A rule can queue work. It cannot send. So you write something like &quot;anyone whose engagement scores above 0.6, put them on this sequence&quot; and you get repliers and reposters rather than every passing follower, because relevance follows effort:</p>
+
+<p>| What they did | Relevance |
+| --- | --- |
+| followed | 0.35 |
+| liked | 0.45 |
+| reposted | 0.65 |
+| replied | 0.80 |
+| mentioned | 0.80 |</p>
+
+<p>Everything after the rule is machinery that already existed. The branching sequences, the daily caps, the sender pool, the unified inbox, human approval. An audience member is a warmer stranger, not a different kind of record, so the right way to add them was a new source feeding the machine rather than a second path around it.</p>
+
+<h3>Three networks, and two of them say no</h3>
+
+<p>Bluesky works the moment you type a handle. The AppView is genuinely public: no key, no plan, no contract, nobody's permission. That is why it shipped first, and it is the reason you can try this feature today without a purchase order attached.</p>
+
+<p>X is a different story, and it is worth being blunt about why. Reading your own followers and likers needs scopes our sender never asked for, because the sender only ever needed to write. It also needs a paid API tier. So a connection made before today gets refused before we make a single call, with a message naming exactly what to reconnect, and a refusal from X itself is reported as needing a paid tier. Both of those stop the watch and tell you, rather than quietly burning a daily quota rediscovering the same no every half hour. A rate limit is the opposite case: the reason is recorded, the watch stays on, the next tick tries again.</p>
+
+<p>LinkedIn stays a hand off, on purpose. Acting there runs through your own session and only after you have explicitly accepted that risk, and that acceptance covers invitations, visits, follows and messages. It does not cover scraping the reaction list off a post. Anything new on LinkedIn goes through that same gate or it stays manual, so this stays manual: you post what you saw, and it produces exactly the same rows a poll would.</p>
+
+<h3>Try it</h3>
+
+<pre><code>og audience watch bluesky:you.bsky.social --campaign cmp_123 --kinds like,repost,reply
+og audience run awt_...</code></pre>
+
+<p>The second command reads it immediately instead of waiting for the interval, because the first thing anybody wants to know is whether it works.</p>
+
+<p>One knob is worth setting deliberately. A cap on how many engagements a single run will turn into people, defaulting to a hundred. Without it, one post going wide puts a thousand strangers into your campaign in a single tick, and you spend the rest of the week deleting them.</p>
+
+<p>OutreachGraph 0.6.0 is live at <a href="https://outreachgraph.com">outreachgraph.com</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
