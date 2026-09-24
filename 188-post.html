@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>You can buy MediaAnalyzer credit with crypto now &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/188-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-24T11:34:34Z">
+<meta name="description" content="MediaAnalyzer now sells prepaid credit for crypto. Nine coins, face value, and the three guards that stop a webhook crediting the same payment twice.">
+</head>
+<body>
+
+<article>
+
+<h1>You can buy MediaAnalyzer credit with crypto now</h1>
+
+<p><em>2026-09-24, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>MediaAnalyzer describes and sorts photo, video and document libraries, and it bills
+prepaid credit per file. Until today the billing page had a balance and no way to add
+to it, so topping up meant sending an email. That is fixed. Pick an amount, pick a
+coin, pay on the hosted checkout.</p>
+
+<p>Credit is sold at face value. $25 buys $25 of describing. Nine coins work: USDC on
+Solana, Polygon or Ethereum, USDT on Solana, plus BTC, ETH, SOL, POL and DOGE.</p>
+
+<p>Three things came out of building it that are worth writing down.</p>
+
+<h3>The webhook is nested, and our shared code did not know</h3>
+
+<p>CoinPay posts a signed webhook when a payment confirms. The body looks like this:</p>
+
+<pre><code class="language-json">{ &quot;id&quot;: &quot;evt_&lt;paymentId&gt;_&lt;ts&gt;&quot;,
+  &quot;type&quot;: &quot;payment.confirmed&quot;,
+  &quot;data&quot;: { &quot;payment_id&quot;: &quot;...&quot;, &quot;status&quot;: &quot;confirmed&quot;, &quot;metadata&quot;: { ... } } }</code></pre>
+
+<p>The top level <code>id</code> is the event, not the payment. We have a payments module shared
+between two other sites that reads <code>payload.id</code>, <code>payload.status</code> and
+<code>payload.metadata</code> flat, one level up. Against a real webhook that resolves to the
+event id, finds no status and no metadata, and throws inside a handler nobody watches.</p>
+
+<p>Reading the flat fields first is worse than throwing, because it matches the event id
+and would credit against a reference that does not exist. Read <code>data</code> first, fall back
+to flat for the older test sender.</p>
+
+<h3>Never trust the amount on the wire</h3>
+
+<p>The webhook says money arrived. It does not get to say what you agreed to sell. The
+amount of credit is written down when the checkout opens and read back from that row
+at settlement.</p>
+
+<p>To prove it, the production test sent a confirmed webhook claiming 999,000,000 micros
+of credit against a payment that had sold 25,000,000. The account got $25.</p>
+
+<h3>A payment can only be credited once, three ways over</h3>
+
+<p>Webhook retries are normal, so the interesting question is not whether a duplicate
+arrives but how many independent things stop it paying out twice.</p>
+
+<ol>
+	<li>Only settled statuses grant anything. Not <code>detected</code>, which fires before the</li>
+</ol>
+
+<p>transaction is safe from a reorg.</p>
+
+<ol>
+	<li>The payment row is locked, and credit is granted only on the transition into a</li>
+</ol>
+
+<p>settled status. A retry sees a row that is already confirmed.</p>
+
+<ol>
+	<li>A unique index on the ledger refuses a second line for the same payment whatever</li>
+</ol>
+
+<p>the code above does.</p>
+
+<p>Two confirmed webhooks for the same payment, in production, produced one ledger line.</p>
+
+<h3>One more thing that would have bitten every buyer</h3>
+
+<p>USDC on Base led the coin picker in the first draft. CoinPay resolves the payee from
+the business wallet for that chain, and there is no Base wallet on the account, so
+every buyer taking the default would have met a 400 after choosing their amount and
+their coin. The offered list is now a subset of the wallets that actually exist, and a
+test holds it there.</p>
+
+<p>Worth remembering for anything that hands a buyer a list of options: the option has to
+be checked against the thing that fulfils it, not against the vendor's list of what is
+theoretically supported.</p>
+
+<p><a href="https://mediaanalyzer.pro/app/billing">https://mediaanalyzer.pro/app/billing</a></p>
+
+<p>(Drafted with AI assistance.)</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

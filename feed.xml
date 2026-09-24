@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 24 Sep 2026 08:51:10 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 24 Sep 2026 11:34:35 GMT</lastBuildDate>
+
+		<item>
+			<title>You can buy MediaAnalyzer credit with crypto now</title>
+			<link>https://dev.profullstack.com/~anthony/blog/188-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/188-post.html</guid>
+			<pubDate>Thu, 24 Sep 2026 11:34:34 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>MediaAnalyzer now sells prepaid credit for crypto. Nine coins, face value, and the three guards that stop a webhook crediting the same payment twice.</description>
+		</item>
 
 		<item>
 			<title>OpenEmoji and OpenIcon: 3,963 emoji, 370 icons, and your terminal gets them too</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 23 Sep 2026 11:19:12 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>CoinPay finances now syncs your bank and card accounts every 30 minutes, keeps every raw provider response, produces exact monthly and quarterly reports, keeps your bank statements beside them, auto-categorises every transaction for tax with a review queue, emails the pack to your accountant, and sends a weekly digest on the days you choose.</description>
-		</item>
-
-		<item>
-			<title>NIGHTCELL 7 v0.2.0: a rocket launcher, and teams you can tell apart</title>
-			<link>https://dev.profullstack.com/~anthony/blog/178-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/178-post.html</guid>
-			<pubDate>Tue, 22 Sep 2026 17:53:52 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>&lt;p&gt;NIGHTCELL 7 v0.2.0 is out. It adds the M9 Hammerfall, a rocket launcher and the first weapon in the game that is not hitscan, and it fixes the thing that made the multiplayer yard hard to read:…</description>
 		</item>
 	</channel>
 </rss>
