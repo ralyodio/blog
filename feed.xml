@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 25 Sep 2026 16:36:38 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 25 Sep 2026 20:19:58 GMT</lastBuildDate>
+
+		<item>
+			<title>CrawlProof: which site has legs, and ads aimed at what people are building this week</title>
+			<link>https://dev.profullstack.com/~anthony/blog/195-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/195-post.html</guid>
+			<pubDate>Fri, 25 Sep 2026 20:19:56 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Two crawlproof.com releases: the dashboard opens any domain on its own with traffic and money, and scores each property from risk to viral; and ad campaigns can target trending topics fed by SameBrain on chovy.com, free for 90 days.</description>
+		</item>
 
 		<item>
 			<title>Population data from the world down to the ZIP code</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 24 Sep 2026 08:15:18 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Upload, custom dropdowns, stable refs and a few other fixes that let tron automate complete a real job application, plus jobhunt in cli-tools.</description>
-		</item>
-
-		<item>
-			<title>$20 a smoke, and the Cigar Underground Herf</title>
-			<link>https://dev.profullstack.com/~anthony/blog/185-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/185-post.html</guid>
-			<pubDate>Thu, 24 Sep 2026 08:14:59 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>We put Cigar Underground online two days ago with the Chovy Premium Blend at $200 a cigar. Then we looked at the waitlist. It had two names on it, and I know both of them.</description>
 		</item>
 	</channel>
 </rss>

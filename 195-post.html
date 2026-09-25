@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CrawlProof: which site has legs, and ads aimed at what people are building this week &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/195-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-25T20:19:56Z">
+<meta name="description" content="Two crawlproof.com releases: the dashboard opens any domain on its own with traffic and money, and scores each property from risk to viral; and ad campaigns can target trending topics fed by SameBrain on chovy.com, free for 90 days.">
+</head>
+<body>
+
+<article>
+
+<h1>CrawlProof: which site has legs, and ads aimed at what people are building this week</h1>
+
+<p><em>2026-09-25, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Two things shipped on crawlproof.com today. One is in the CLI, one is in the ad network.</p>
+
+<h3>Open a domain, and a score</h3>
+
+<p><code>crawlproof dashboard</code> ranked properties by visitors. On this fleet that is the one number that lies: a visitor is any hit the tracker did not call a crawler, so the busiest row was routinely the least interesting one.</p>
+
+<p>On the Traffic screen, up and down pick a site and Enter opens it. One domain on its own: pageviews, visits, humans against bots, AI referrals, a sparkline of human visits, arrival channels, top pages. Under that, the money: the burn prorated onto it by pageview share and by visit share (they disagree by orders of magnitude here, so picking one quietly would be a lie), ad earnings, ad spend, and CoinPay commission when it can be attributed to exactly one business. Opening a domain fires no request. The detail is rebuilt from the snapshot the list was drawn from, so the two can never disagree.</p>
+
+<p>Every property also gets a score out of 100:</p>
+
+<pre><code>score = 100 x viral x (1 - risk/2)
+viral = momentum .40 + discovery .30 + humanity .20 + money .10
+risk  = volatility .40 + concentration .30 + bot dependence .20 + unmonetised .10</code></pre>
+
+<p>Momentum is human visits in the recent half of the window against the earlier half. Discovery is the share arriving through search, social, an AI assistant, an ad or a link rather than direct. Humanity is humans over humans plus bots, read unfiltered, because a filtered read has a zero bot column by construction and would call a crawler farm 100% human. Money is revenue per 1,000 human visits against a $2 target. Volatility is the coefficient of variation of the human series, so a small site is not punished for being small. Concentration is the largest single channel's share.</p>
+
+<p>It is arithmetic over numbers already on the screen, not a model, and the domain screen prints the raw figure under every component. A component with no data is dropped and its weight redistributed, never counted as zero. A site whose stats call failed is unscored. A trailing ~ marks fewer than 25 human visits.</p>
+
+<p>On a realistic fixture, a growing, human, well-spread property scores 56 and a 99% crawler property with declining human visits and one channel scores 11. The visitor ranking had them the other way round, ten to one.</p>
+
+<p><code>s</code> cycles the order, <code>--sort=score</code> starts there, and <code>--json</code> carries <code>.sites[].score</code> with every component. Docs: <a href="https://crawlproof.com/docs/cli">https://crawlproof.com/docs/cli</a>.</p>
+
+<h3>Ads on what is trending, 90 days free</h3>
+
+<p>A campaign can now be marked as trending. The signals come from SameBrain on chovy.com: what founders are asking to build this week, derived from the ideas typed into the intake box, counted once per workspace with a floor of two, scored by volume times growth. No sentence anybody typed ever leaves that endpoint.</p>
+
+<p>Two halves have to agree before a campaign is preferred: its own subject has to be trending, and the page being filled has to be about that subject. Either half alone is how a crypto ad ends up on a recipe blog. A match carries 4x its bid weight into the same lottery, and every other eligible campaign still rotates.</p>
+
+<p>Turn it on and the next 90 days of clicks are billed at $0.00. The campaign competes for real placement during that time and books as free, so no spend and no publisher earnings are written for money that did not move. After the promo, a click is about $0.02.</p>
+
+<p>A trend list older than 36 hours stops steering delivery. A failed pull keeps the last list. On a network where nobody has opted in, this costs one cached query a minute.</p>
+
+<p><code>crawlproof ads trends</code>, <code>crawlproof ads create &lt;url&gt; --trending --topics=...</code>, <code>crawlproof ads trending &lt;ref&gt; on|off</code>, or the checkbox on the new-campaign form. The ad network: <a href="https://crawlproof.com/ads">https://crawlproof.com/ads</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
