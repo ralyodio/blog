@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>readm3 now opens any file, and pastes anything &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/192-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-25T11:34:51Z">
+<meta name="description" content="readm3 0.7.0 to 0.9.0: pastes of any language with a front door at readm3.com/paste, and an editor that opens any text file, PDF or image.">
+</head>
+<body>
+
+<article>
+
+<h1>readm3 now opens any file, and pastes anything</h1>
+
+<p><em>2026-09-25, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>readm3 started as a Markdown reader, and until today that was a hard line: the editor would only import .md files, and a paste was a Markdown file by definition. The first thing people tried to paste was JSON. The first thing they tried to open was a folder full of code. Both are fixed, in 0.7.0, 0.8.0 and 0.9.0, shipped the same day.</p>
+
+<h3>Pastes take any language, and have a front door</h3>
+
+<p>A paste is now whatever you pasted. Markdown still renders as a document. Everything else renders as code: JSON, JavaScript, TypeScript, Python, shell, YAML, HTML, CSS, SQL, Go, Rust, Java, C, Dockerfiles, diffs and some thirty languages in all, with syntax colors taken from the reader's own theme, line numbers, and folding. Click the arrow beside a line and its block collapses to <code>{ ⋯ 12 lines }</code>. Minified JSON is shown pretty-printed. A PDF or an image pastes too, and shows as itself.</p>
+
+<p>You do not have to say what it is. If the file name has a known extension, that decides. If there is no name, because you piped something in, the content is sniffed: valid JSON is JSON, a shebang names its shell, a heading on the first line is Markdown, and a small classifier looks for two independent tell-tale constructs per language before it believes anything, so a note that happens to contain the word &quot;select&quot; does not become SQL.</p>
+
+<p>The front door is <a href="https://readm3.com/paste">https://readm3.com/paste</a>: paste text or drop a file, pick how long the link lives, get the link. The same page opens any paste by its link, and shows the CLI, curl, API and MCP forms of the same thing, because the page is only a form over one endpoint:</p>
+
+<p>readm3 paste config.json                     # the name decides
+kubectl get pods -o yaml | readm3 paste      # YAML, nobody said so
+curl <a href="https://readm3.com/p/&lt;token&gt;/raw">https://readm3.com/p/&lt;token&gt;/raw</a>        # the text itself</p>
+
+<p>No account, and none needed. Only the hash of the secret is stored, so nobody can list or find a paste, and whoever holds the link can read or delete it. Raw is always served as plain text, so a pasted HTML page can never run as readm3.com; <code>?download=1</code> sends the file with its own type. In the editor, the new Paste link button does it for the file you have open.</p>
+
+<h3>The editor opens any viewable file</h3>
+
+<p>Open files, Open folder, drag-and-drop and Open URL now take any file a browser can show. A text file of any kind opens as the same highlighted, foldable code, and you can edit it with <code>e</code> like a note; the view re-renders when you leave the editor and the edit is saved on this device. A file with no extension is sniffed once on import and remembers what it is across reloads and sync.</p>
+
+<p>PDFs and images open in the browser's own viewer, with an open-in-a-new-tab link and Download. Archives, executables, media and office files are skipped without being read, and so is anything that turns out to be binary once it is; the explorer tells you how many were left out and why. Hidden and build directories stay pruned as before.</p>
+
+<h3>Same limits, same privacy</h3>
+
+<p>Nothing leaves the browser unless you choose Share or Paste link. Files are 4 MB each and 20 MB per workspace; a PDF counts as its base64 size. Pastes are 256 KB and expire after seven days by default.</p>
+
+<p>Install with <code>npm i -g @profullstack/readm3</code>, open <a href="https://readm3.com/viewer">https://readm3.com/viewer</a>, or paste at <a href="https://readm3.com/paste">https://readm3.com/paste</a>. Source: <a href="https://github.com/profullstack/readm3">https://github.com/profullstack/readm3</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
