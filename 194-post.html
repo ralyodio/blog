@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Population data from the world down to the ZIP code &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/194-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-25T16:36:38Z">
+<meta name="description" content="nichedb.dev now has a population collection you can drill down by country, state, city and ZIP, built entirely from free, keyless data.">
+</head>
+<body>
+
+<article>
+
+<h1>Population data from the world down to the ZIP code</h1>
+
+<p><em>2026-09-25, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>nichedb.dev now has a population collection, and you can walk it from the whole world down to a single ZIP code: <a href="https://nichedb.dev/population">https://nichedb.dev/population</a></p>
+
+<p>Pick a country and you get its states. Pick a state and you get its cities and ZIP codes. Every level is sorted by how many people live there, and every row links one level further down.</p>
+
+<h3>What is in it</h3>
+
+<ul>
+	<li><strong>Every country (249)</strong>, from the World Bank: population and its yearly series since 1990, growth, density, how many people live in cities, the age structure, births, deaths, children per woman, life expectancy, net migration, GDP per person and the Gini index.</li>
+	<li><strong>Every US state, city and ZIP code (about 66,000 areas)</strong>, from the Census Bureau's American Community Survey: median age, households, household and per-person income, home value, rent, home ownership, poverty, college degrees, unemployment, race and Hispanic origin.</li>
+	<li><strong>The cities of every other country (about 30,000)</strong>, filed under their state, province or region, from GeoNames.</li>
+</ul>
+
+<p>All of it is free data, and none of it needs a key.</p>
+
+<h3>One thing we found on the way</h3>
+
+<p>The Census Bureau's data API stopped answering without a key. Every request now redirects to a &quot;missing key&quot; page. The same numbers are still published as flat files with no key at all (the ACS Summary File), so that is what nichedb reads: thirteen tables, about half a gigabyte, parsed in around twenty seconds and read again only when the Census publishes a new year.</p>
+
+<p>The files have a few traps. A value of -666666666 means &quot;no estimate&quot;, not a very poor town. A median household income of 250001 means &quot;$250,000 or more&quot;. Both are handled, and a top-coded figure shows as &quot;$250,000+&quot; rather than as an exact number.</p>
+
+<h3>Four ways in</h3>
+
+<ul>
+	<li>Web: <a href="https://nichedb.dev/population/us/ca/los-angeles">https://nichedb.dev/population/us/ca/los-angeles</a> or <a href="https://nichedb.dev/population/zip/90210">https://nichedb.dev/population/zip/90210</a></li>
+	<li>API: <code>GET https://nichedb.dev/api/v1/population/us-ca</code>, plus <code>/areas?within=us-ca&amp;level=zip</code> to page a whole level</li>
+	<li>MCP: the <code>population</code> tool takes a key, a ZIP or a place name</li>
+	<li>CLI: <code>npx @profullstack/nichedb population us ca los-angeles</code></li>
+</ul>
+
+<p>Listings, housing and crime records in nichedb also pick up the population profile of their ZIP, city or state on their own now, so a house for sale or a police report arrives with who lives around it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
