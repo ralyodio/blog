@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>182 YC companies say they ship an MCP server. 14 answered. &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/193-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-25T14:53:23Z">
+<meta name="description" content="We probed every YC company Installmap flags for an MCP server: 53 endpoints found, 14 answered an unauthenticated handshake, 39 want a key, none serve an OpenMCP descriptor. Now in nichedb.dev with each company's accounts and founders.">
+</head>
+<body>
+
+<article>
+
+<h1>182 YC companies say they ship an MCP server. 14 answered.</h1>
+
+<p><em>2026-09-25, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Installmap crawled every reachable Y Combinator company on September 23 and published the result as a CSV, under CC BY 4.0. Their headline: 43 of the 119 sampled YC companies with an MCP server show no public API at all. Startups are skipping the API and going straight to MCP.</p>
+
+<p>That dataset is now a source in nichedb.dev/c/mcp. It had one gap worth filling. The CSV knows that a company has a server, but mostly not where it is. The evidence column says &quot;home text MCP Server&quot; about as often as it says &quot;mcp subdomain 200&quot;.</p>
+
+<p>So we went and knocked.</p>
+
+<h3>What knocking found</h3>
+
+<p>Each company became an OpenMCP record (logicsrc.com/openmcp). The address comes from Installmap's evidence first, then from the official MCP registry's remotes under the company's reverse domain name (io.anakin, com.bitmovin), then from the company's own /.well-known/openmcp.json. After that, an unauthenticated initialize and tools/list, the same handshake any MCP client does.</p>
+
+<p>| | Companies |
+| --- | --- |
+| In the dataset | 182 |
+| An endpoint we could find | 53 |
+| Answered and listed their tools | 14 |
+| Answered 401 or 403 (a real server that wants a key) | 39 |
+| Serve an OpenMCP descriptor | 0 |
+| Only mention MCP on the site | 114 |</p>
+
+<p>The biggest open ones: NewsCatcher with 61 tools, Clueso with 44, Pluggy with 31.</p>
+
+<p>A 401 counts. That is a server that exists and wants a credential this probe will never send, so it is listed as offline with the reason attached, not dropped. A 405 to a POST, or an HTML page sitting at /mcp, does not count. Several companies have a nice page at /mcp that is marketing, not a relay.</p>
+
+<h3>Who is behind them</h3>
+
+<p>Every row also carries the company's own accounts and its founders. The homepage is the real source here. 165 of the 182 link at least one account, and schema.org markup named founders on 28 sites. Wikidata matched only 25 of these companies on their official website, and knew the founders of 2.</p>
+
+<p>If a homepage links four X accounts because it quotes three customers, we keep the one whose handle matches the company, and if none does we keep nothing. A wrong handle is worse than a missing one.</p>
+
+<p>The companies and the 49 founders are also OpenProfile documents in nichedb.dev/c/profiles, so a founder is someone you can follow, not a string in a JSON blob.</p>
+
+<p>We did not read ycombinator.com. Its company pages carry founders and socials in the markup, but its terms forbid scraping, and the popular yc-oss dataset is a scrape of it.</p>
+
+<h3>The zero</h3>
+
+<p>Not one of these companies serves an OpenMCP descriptor. That is the one file that would have made most of this unnecessary: where the endpoint is, what auth it wants, which tools work without a key. The whole thing is five lines of JSON at /.well-known/openmcp.json.</p>
+
+<p>Browse them at <a href="https://nichedb.dev/c/mcp?tag=yc">https://nichedb.dev/c/mcp?tag=yc</a>. Data: Installmap, September 2026 (CC BY 4.0).</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

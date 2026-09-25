@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 25 Sep 2026 11:34:52 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 25 Sep 2026 14:53:23 GMT</lastBuildDate>
+
+		<item>
+			<title>182 YC companies say they ship an MCP server. 14 answered.</title>
+			<link>https://dev.profullstack.com/~anthony/blog/193-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/193-post.html</guid>
+			<pubDate>Fri, 25 Sep 2026 14:53:23 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>We probed every YC company Installmap flags for an MCP server: 53 endpoints found, 14 answered an unauthenticated handshake, 39 want a key, none serve an OpenMCP descriptor. Now in nichedb.dev with each company's accounts and founders.</description>
+		</item>
 
 		<item>
 			<title>readm3 now opens any file, and pastes anything</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 24 Sep 2026 00:17:29 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Þrøngva's second album is now full songs made in Suno, and the soundtrack shuffles all 32 tracks across both albums.</description>
-		</item>
-
-		<item>
-			<title>NIGHTCELL 7: When the Ravens Lied, a second Þrøngva album made in code</title>
-			<link>https://dev.profullstack.com/~anthony/blog/183-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/183-post.html</guid>
-			<pubDate>Wed, 23 Sep 2026 23:04:00 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Twelve new Viking metal and hip-hop tracks for NIGHTCELL 7, every note synthesised from a lyric sheet by a numpy script.</description>
 		</item>
 	</channel>
 </rss>
