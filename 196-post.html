@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TronBrowser now has its own push service &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/196-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-26T15:26:03Z">
+<meta name="description" content="ungoogled-chromium ships without a push service, so every site's notifications failed. TronBrowser v3.16.0 brings its own: standard Web Push, end-to-end encrypted, and a setting to use your own.">
+</head>
+<body>
+
+<article>
+
+<h1>TronBrowser now has its own push service</h1>
+
+<p><em>2026-09-26, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Turn on browser notifications for a site in ungoogled-chromium and you get this:</p>
+
+<pre><code>Registration failed - push service error</code></pre>
+
+<p>It is not the site's fault. Web Push works through a push service that the browser picks. Chrome uses Google's, Firefox uses Mozilla's, Safari uses Apple's. The browser keeps one connection open to it, sites send their messages there, and it wakes the browser up. ungoogled-chromium takes the Google one out and puts nothing in its place, and a web page has no way to choose a different one. So <code>pushManager.subscribe()</code> fails on every site.</p>
+
+<p>TronBrowser runs on ungoogled-chromium, so it had the same problem. As of v3.16.0 it doesn't.</p>
+
+<h3>What changed</h3>
+
+<p>TronBrowser now runs its own push service at <code>https://tronbrowser.dev/api/1/push</code>, and the browser uses it by default.</p>
+
+<ul>
+	<li><strong>Sites don't change anything.</strong> A page subscribes the usual way and gets an endpoint on our service. Its server sends the same standard request it sends to Google or Mozilla: an encrypted body (RFC 8291) signed with its VAPID key (RFC 8292). <code>web-push</code>, <code>@profullstack/notifications</code> and every other library that follows the spec already work.</li>
+	<li><strong>We can't read your notifications.</strong> Each message is encrypted to a key that only your browser holds. The service stores the ciphertext and passes it along, and the browser decrypts it.</li>
+	<li><strong>No account.</strong> A browser is identified by a random secret it generates. The service keeps which site subscribed and each message until it is delivered or expires.</li>
+	<li><strong>It's a setting.</strong> Settings, Push notifications: TronBrowser (the default), any compatible service you run yourself, or off. The protocol is short and documented at <a href="https://tronbrowser.dev/push">tronbrowser.dev/push</a>.</li>
+</ul>
+
+<h3>How it fits in</h3>
+
+<p>The engine ships as a prebuilt ungoogled-chromium, so TronBrowser can't add a push service inside Chromium. The built-in extension handles it instead. It replaces <code>pushManager</code> in every page before the page's own scripts run, keeps the subscription keys itself, and holds a WebSocket to the push service. When a message comes in, it decrypts it and shows the notification, and a click opens the link in the payload.</p>
+
+<p>One thing works differently. An extension can't start a site's own service worker, so TronBrowser shows the notification from the payload's <code>title</code>, <code>body</code>, <code>icon</code> and <code>url</code> rather than running the site's <code>push</code> handler. For nearly every site that sends a notification, that is the same thing.</p>
+
+<p>I tested it against the actual engine, ungoogled-chromium 152. Without the extension, <code>subscribe()</code> fails with the error above. With it, the site gets a working subscription, a real server's push comes back <code>201</code>, and the notification appears within three seconds.</p>
+
+<p>Update with <code>tron upgrade</code>, or grab v3.16.0 from <a href="https://tronbrowser.dev">tronbrowser.dev</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

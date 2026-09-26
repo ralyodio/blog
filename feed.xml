@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 25 Sep 2026 20:19:58 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 26 Sep 2026 15:26:04 GMT</lastBuildDate>
+
+		<item>
+			<title>TronBrowser now has its own push service</title>
+			<link>https://dev.profullstack.com/~anthony/blog/196-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/196-post.html</guid>
+			<pubDate>Sat, 26 Sep 2026 15:26:03 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>ungoogled-chromium ships without a push service, so every site's notifications failed. TronBrowser v3.16.0 brings its own: standard Web Push, end-to-end encrypted, and a setting to use your own.</description>
+		</item>
 
 		<item>
 			<title>CrawlProof: which site has legs, and ads aimed at what people are building this week</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 24 Sep 2026 08:51:09 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Two open specs and a complete set for each: every standard emoji drawn as one family with install packs for 22 networks, and UI icons that know what to draw in a terminal. Built into HQTUI.</description>
-		</item>
-
-		<item>
-			<title>TronBrowser v3.15.0: agents can finally fill in a real form</title>
-			<link>https://dev.profullstack.com/~anthony/blog/186-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/186-post.html</guid>
-			<pubDate>Thu, 24 Sep 2026 08:15:18 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Upload, custom dropdowns, stable refs and a few other fixes that let tron automate complete a real job application, plus jobhunt in cli-tools.</description>
 		</item>
 	</channel>
 </rss>
