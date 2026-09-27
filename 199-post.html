@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Every MCP server we could find, deduplicated &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/199-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-27T15:26:12Z">
+<meta name="description" content="nichedb.dev now indexes MCP servers from nine sources, deduplicated so one server is one row, plus collections for skills, subagents, commands, plugins and hooks.">
+</head>
+<body>
+
+<article>
+
+<h1>Every MCP server we could find, deduplicated</h1>
+
+<p><em>2026-09-27, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>There are a dozen lists of MCP servers and nobody maintains the union of them.</p>
+
+<p>The official registry has what people published, with their packages and status. Docker has what it packaged, with pull counts and the tools each server exposes. Smithery knows how often a server actually gets called. Three big awesome lists on GitHub carry thousands of servers that were never published to any registry. GitHub's own topic search knows what was tagged this morning.</p>
+
+<p>nichedb.dev/c/mcp reads all nine of those. It went live today with 3,619 servers.</p>
+
+<p>Beside it are six collections for the other half of the question, which is how people work with these agents at all: /workflows, /skills, /agents, /commands, /plugins and /hooks. The workflows come from r/ClaudeWorkflows, where each one is published as its own post and voted on, so a workflow arrives with a rating, a freshness score and a difficulty level already attached.</p>
+
+<h3>The work is not the scraping</h3>
+
+<p>Reading nine sources is a day of adapters. Getting them to agree on what counts as one server took longer.</p>
+
+<p>The same server is written five ways. github.com/Owner/Repo. The same with a trailing slash. The same with .git on the end. A blob link pointing into a subdirectory. A tree link pinned to a commit sha. Compared as strings, that is five different servers.</p>
+
+<p>So every URL is folded before it is stored. Owner and repo lowercased, because GitHub does not care about case. Trailing slashes and .git dropped. blob and tree treated as the same page. Any ref replaced with HEAD, so a pinned sha and main agree.</p>
+
+<p>What the fold deliberately does not do is drop the path inside the repository. modelcontextprotocol/servers holds seven different servers under src/. awslabs/mcp holds a dozen. Folding those to the repository root would turn a dozen servers into one row, which is a worse bug than the duplication it fixes.</p>
+
+<p>Measured across the four big lists: 4,761 entries, 4,507 distinct servers. The effect is visible in the live source counts. The punkpeye list ran first and wrote 4,217 servers. The wong2 list then added 124 and appcypher added 54. Everything else was recognised as a server already there.</p>
+
+<h3>Two things that looked like deduplication and were data loss</h3>
+
+<p>The official registry lists every published version as its own entry, so three versions of one server arrive as three rows. It also has publishers who put a repository URL in that is not theirs. Three unrelated servers all pointed at the MCP registry's own repository.</p>
+
+<p>Left alone, those two turned 300 entries into 174 unique URLs. That is not deduplication. That is 126 published servers quietly vanishing into each other. The registry adapter now keeps one row per server at its newest version, and a URL that more than one server name claims is treated as identifying none of them. Those fall back to their own registry page instead.</p>
+
+<p>The second one was smaller and the same shape. A component catalogue we read ships 14 project templates with no path of their own, so all 14 would have landed on the same URL and become one. They are not ingested.</p>
+
+<h3>What a row carries</h3>
+
+<p>A server row knows its packages and remote endpoints, its registry status, how many times its image has been pulled, how often it has been called through Smithery, and what tools it exposes. A workflow row knows its rating and what problem it solves. A skill, command or plugin row knows how many times it has been installed and the exact line that installs it.</p>
+
+<p>Every collection has an RSS feed. The CLI is @profullstack/nichedb, now at 0.30.0.</p>
+
+<p>Have a look at nichedb.dev/c/mcp.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
