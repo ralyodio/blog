@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>myna 0.22.0: engage, did, follow everyone somebody follows, and an AT Protocol directory &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/197-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-27T05:33:38Z">
+<meta name="description" content="myna engage answers the people who reply, repost or follow you from a queue you read first; myna did attaches a CoinPay DID; a pasted follows page becomes a paced follow list; and a public directory of AT Protocol servers.">
+</head>
+<body>
+
+<article>
+
+<h1>myna 0.22.0: engage, did, follow everyone somebody follows, and an AT Protocol directory</h1>
+
+<p><em>2026-09-27, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>The people who reply to your posts, repost them, or follow you are the whole point of posting, and they are the easiest people to ignore. myna 0.22.0 is mostly about not ignoring them, and about who you are while you do it.</p>
+
+<h3>myna engage</h3>
+
+<p><code>myna engage on</code> and the daemon reads your notifications every fifteen minutes. A reply, a mention or a quote gets a reply drafted by the writer from what the person actually said, with your original post as context, in your saved voice. A repost gets a thank-you under the post they shared. A new follower gets a follow-back. Likes are ignored unless you ask, because a like is not a conversation.</p>
+
+<p>Nothing goes out in the same breath it was noticed. Everything lands in a queue with an id, and <code>myna engage</code> shows every drafted reply before it is sent:</p>
+
+<pre><code>a1b2c3  2026-09-12 12:10  bluesky:you  reply from ada.bsky.social  +follow
+    they said: Does it work on Windows?
+    reply: Not yet, the build is Linux and macOS today. Windows is next on the list. Followed you back.</code></pre>
+
+<p><code>skip &lt;id&gt;</code> drops one, <code>edit &lt;id&gt; &quot;...&quot;</code> changes it. Sends go out one per account every ten minutes, at most twenty a day, one follow-up per person per week. A second message from the same person before the first goes out re-drafts the pending reply so it answers what they said last. Without an API key the reply is a plain thank-you, marked as a template so you can see which ones to fix.</p>
+
+<h3>myna did</h3>
+
+<p>A decentralized identifier is a name that resolves to keys, not to a company. CoinPay issues one per account and lets a person's stand behind an agent's. <code>myna did login</code> proves yours through a CoinPay OAuth grant in the browser, or <code>--cli</code> reuses the session <code>coinpay login</code> left on the machine. Either way the DID is CoinPay's answer, never what was typed.</p>
+
+<p><code>myna did assign all</code> makes it the owner of every account. <code>myna did assign bluesky:bot --role operator</code> says the DID is answerable for an account that is itself an agent. The <a href="https://logicsrc.com/openprofile">OpenProfile.md</a> myna publishes carries it accordingly: the identity block for a person, the Operator section for an agent.</p>
+
+<h3>Follow everyone somebody follows</h3>
+
+<p>Paste their follows page:</p>
+
+<pre><code>myna follow bluesky https://bsky.app/profile/mary.my.id/follows</code></pre>
+
+<p>myna reads the list and follows each person through the same ledger and the same hourly and daily ceilings the follow graph uses, so four hundred people become a few an hour rather than a burst that gets the account flagged. People already followed cost nothing. Run it again tomorrow and it picks up where it stopped.</p>
+
+<h3>A directory of AT Protocol servers</h3>
+
+<p>The network behind Bluesky is servers anyone can run: a PDS holds accounts, a relay streams the firehose, a feed generator serves a feed. myna now keeps a public directory of them at <a href="https://mynaposter.com/listing/atproto">mynaposter.com/listing/atproto</a>, probed before they are shown and every half hour after. <code>myna atproto add https://pds.example</code> lists one; a PDS listed there is a place to make an account, and <code>myna login bluesky</code> takes its URL as the service.</p>
+
+<h3>Also in this cut</h3>
+
+<p>An update to an agenticjobs board now goes through the board's own MCP server, and <code>myna_update</code> on myna's MCP server offers the same to any agent driving myna. The cloud default is <code>api.mynaposter.com</code>. Install or update with the one-liner on <a href="https://mynaposter.com">mynaposter.com</a>; on a box that runs the daemon, rebuild the binary and restart it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
