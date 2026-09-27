@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OutreachGraph now runs the whole sequence: LinkedIn, branching, A/B angles, an inbox and… &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/198-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-27T11:19:10Z">
+<meta name="description" content="OutreachGraph adds branching sequences, LinkedIn actions through your own session, A/B angles, a triaged inbox with drafted replies, pooled sending accounts and webhooks/CRM sync.">
+</head>
+<body>
+
+<article>
+
+<h1>OutreachGraph now runs the whole sequence: LinkedIn, branching, A/B angles, an inbox and…</h1>
+
+<p><em>2026-09-27, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<h2>OutreachGraph now runs the whole sequence: LinkedIn, branching, A/B angles, an inbox and your CRM</h2>
+
+<p>OutreachGraph started as the part most outreach tools skip: finding the thing a prospect said forty minutes ago that makes a message worth sending, and refusing to send anything the platform, the person or your own limits say it shouldn't.</p>
+
+<p>Today it also runs the outreach after that. Six changes shipped to <a href="https://outreachgraph.com">https://outreachgraph.com</a>:</p>
+
+<h3>Sequences that branch</h3>
+
+<p>A cadence step can now wait on a condition: if connected, if not connected, if no reply, if they clicked. A LinkedIn connection request can hold the next step for up to a week while it waits for an accept. So &quot;visit their profile, connect with a note, then DM if they accept or email if they don't&quot; is one plan. A reply still ends it.</p>
+
+<h3>LinkedIn through your own session</h3>
+
+<p>Connection requests with a note, profile visits, follows, messages and comments now run through your own logged-in session. It stays off until the workspace owner accepts the risk, and it is paced and capped under LinkedIn's limits: 20 invitations a day and 100 a week per account. Without the opt-in, LinkedIn steps become hand-off cards you do yourself.</p>
+
+<h3>A/B test the angle, not a template</h3>
+
+<p>Give a step two, three or four reasons to write (&quot;reference their talk&quot;, &quot;ask who owns onboarding&quot;). Each prospect is assigned one arm. Every message is still written from that prospect's own words and still has to pass the grounding checks. The plan page shows sends, clicks, opens and reply rate per arm.</p>
+
+<p>Open tracking exists now too, and it is off by default. Apple Mail fetches every image on delivery, so an open is an upper bound and never raises a prospect's score.</p>
+
+<h3>One inbox, triaged</h3>
+
+<p>Replies are labelled interested, question, referral, not interested, out of office, bounce or unsubscribe. Rules go first and a model only labels what the rules can't. An unsubscribe suppresses the person immediately. Out-of-office notices no longer count as replies, so they don't stop a sequence. Interested and question replies get a drafted answer to approve. If you put a campaign on trusted automation and switch replies to autonomous, a confident answer to a direct question can go out unattended, and everything short of that stays a card.</p>
+
+<h3>More sending accounts, warmed up</h3>
+
+<p>Connect several mailboxes, LinkedIn sessions and X accounts. A conversation stays on the account that started it, a new account ramps its daily cap (email from 5 a day), and an account whose bounce rate passes 5% pauses itself.</p>
+
+<h3>Webhooks, Slack and your CRM</h3>
+
+<p>Signed webhooks for replies, clicks, approvals, sends, completed sequences and opt-outs, so Zapier, Make and n8n work out of the box. There is a Slack format, and replies and approvals are written to HubSpot or Pipedrive as notes.</p>
+
+<h3>Two fixes worth mentioning</h3>
+
+<p>Unsubscribe links and tracked links were answering 404 in production because the server only routed /api to the API. They work now. Autopilot sends were also missing the unsubscribe line and the List-Unsubscribe header. Every send path now shares one builder, so they can't drift apart again.</p>
+
+<p>Free while in beta: <a href="https://outreachgraph.com">https://outreachgraph.com</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

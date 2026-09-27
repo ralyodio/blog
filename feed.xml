@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 27 Sep 2026 05:33:40 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 27 Sep 2026 11:19:11 GMT</lastBuildDate>
+
+		<item>
+			<title>OutreachGraph now runs the whole sequence: LinkedIn, branching, A/B angles, an inbox and…</title>
+			<link>https://dev.profullstack.com/~anthony/blog/198-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/198-post.html</guid>
+			<pubDate>Sun, 27 Sep 2026 11:19:10 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>OutreachGraph adds branching sequences, LinkedIn actions through your own session, A/B angles, a triaged inbox with drafted replies, pooled sending accounts and webhooks/CRM sync.</description>
+		</item>
 
 		<item>
 			<title>myna 0.22.0: engage, did, follow everyone somebody follows, and an AT Protocol directory</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 24 Sep 2026 15:02:38 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>OutreachGraph 0.6.0 reads the people who engage with your own Bluesky or X account and turns them into prospects, with the engagement kept as the reason to write.</description>
-		</item>
-
-		<item>
-			<title>You can buy MediaAnalyzer credit with crypto now</title>
-			<link>https://dev.profullstack.com/~anthony/blog/188-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/188-post.html</guid>
-			<pubDate>Thu, 24 Sep 2026 11:34:34 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>MediaAnalyzer now sells prepaid credit for crypto. Nine coins, face value, and the three guards that stop a webhook crediting the same payment twice.</description>
 		</item>
 	</channel>
 </rss>
