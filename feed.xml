@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 28 Sep 2026 11:19:20 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 28 Sep 2026 15:26:21 GMT</lastBuildDate>
+
+		<item>
+			<title>NIGHTCELL 7 introduces its cast, and teaches you the game one control at a time</title>
+			<link>https://dev.profullstack.com/~anthony/blog/203-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/203-post.html</guid>
+			<pubDate>Mon, 28 Sep 2026 15:26:20 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>&lt;p&gt;NIGHTCELL 7 now has a cast page, and the game now teaches a new player how to play it. Both came out of the same gap: the story had people in it that nobody could see, and the sandbox dropped…</description>
+		</item>
 
 		<item>
 			<title>PairUX 0.10.0: booking links, calendar invites, and a toll gate for AI crawlers</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 25 Sep 2026 16:36:38 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>nichedb.dev now has a population collection you can drill down by country, state, city and ZIP, built entirely from free, keyless data.</description>
-		</item>
-
-		<item>
-			<title>182 YC companies say they ship an MCP server. 14 answered.</title>
-			<link>https://dev.profullstack.com/~anthony/blog/193-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/193-post.html</guid>
-			<pubDate>Fri, 25 Sep 2026 14:53:23 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>We probed every YC company Installmap flags for an MCP server: 53 endpoints found, 14 answered an unauthenticated handshake, 39 want a key, none serve an OpenMCP descriptor. Now in nichedb.dev with each company's accounts and founders.</description>
 		</item>
 	</channel>
 </rss>
