@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What a domain costs in year two &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/201-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-28T05:33:47Z">
+<meta name="description" content="Every top-level domain in IANA's root, diffed daily, with register and renewal prices from four registrars and an RDAP check, on nichedb.dev/tlds.">
+</head>
+<body>
+
+<article>
+
+<h1>What a domain costs in year two</h1>
+
+<p><em>2026-09-28, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>The price on a registrar's front page is the first year. The number that matters is the renewal, and on a lot of top-level domains it is a different number entirely. A <code>.watches</code> name is $52 to register at Porkbun and $258 a year after that. A <code>.baby</code> is $1.54, then $50.20.</p>
+
+<p>So nichedb.dev now has <a href="https://nichedb.dev/tlds">/tlds</a>: every top-level domain in IANA's root, with each registrar's price to register, renew, transfer and restore beside it, sorted by the renewal.</p>
+
+<h3>What is in it</h3>
+
+<ul>
+	<li><strong>The list, diffed daily.</strong> IANA publishes the list of top-level domains every day as a text file. Nobody publishes what changed between two days, so nichedb keeps it as a table and writes every label that appears or disappears to a <a href="https://nichedb.dev/tlds/changes">change log</a>. The 157 labels IANA has retired are in there too.</li>
+	<li><strong>Type and registry</strong> from IANA's root zone database, and the RDAP server for each label from its bootstrap file.</li>
+	<li><strong>Prices</strong> from Porkbun, Dynadot, Cloudflare (at cost) and OVHcloud, read daily. Currencies are never converted: OVH is in euros, and Dynadot's page switched from dollars to yuan between two reads from the same machine, so it is stored in whatever currency it answered in.</li>
+	<li><strong>Facets</strong> for type, renewal band, registrar, script, status and registry, and a filter for the renewal trap: about 300 labels renew at twice the first year or more.</li>
+	<li><strong>Is a name taken?</strong> <a href="https://nichedb.dev/tlds/check">/tlds/check</a> asks each registry over RDAP. A 404 means the registry holds no registration, which is not the same as for sale, so it says &quot;not registered&quot; and never &quot;available&quot;. Where a registry runs no RDAP server (.io and .de among them) the answer is unknown.</li>
+</ul>
+
+<h3>The same rows everywhere</h3>
+
+<p><code>GET /api/v1/tlds</code> (JSON with facet counts, or CSV), MCP tools (<code>search_tlds</code>, <code>get_tld</code>, <code>tld_changes</code>, <code>check_domain</code>) and the CLI:</p>
+
+<pre><code>npx @profullstack/nichedb tlds --trap --sort ratio --order desc
+npx @profullstack/nichedb check myproject --tlds com,dev,watches</code></pre>
+
+<h3>OpenTLD</h3>
+
+<p>The shape of a price and of a top-level domain record is written down as <a href="https://logicsrc.com/docs/opentld">OpenTLD</a>. A registrar that serves its price list at <code>/.well-known/opentld.json</code> gets read directly, with no scraping, and stays the author of its own numbers. The one rule it insists on: if you state the first year, state the renewal.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 27 Sep 2026 19:33:45 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 28 Sep 2026 05:33:48 GMT</lastBuildDate>
+
+		<item>
+			<title>What a domain costs in year two</title>
+			<link>https://dev.profullstack.com/~anthony/blog/201-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/201-post.html</guid>
+			<pubDate>Mon, 28 Sep 2026 05:33:47 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Every top-level domain in IANA's root, diffed daily, with register and renewal prices from four registrars and an RDAP check, on nichedb.dev/tlds.</description>
+		</item>
 
 		<item>
 			<title>PairUX can now tell you how your call went</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 25 Sep 2026 11:34:51 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>readm3 0.7.0 to 0.9.0: pastes of any language with a front door at readm3.com/paste, and an editor that opens any text file, PDF or image.</description>
-		</item>
-
-		<item>
-			<title>MediaAnalyzer: a description and the right folder for every file you own</title>
-			<link>https://dev.profullstack.com/~anthony/blog/191-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/191-post.html</guid>
-			<pubDate>Thu, 24 Sep 2026 20:19:28 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Point it at a folder and every photo, video, song and document gets a searchable description and moves into the folder it belongs in.</description>
 		</item>
 	</channel>
 </rss>
