@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 28 Sep 2026 05:33:48 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 28 Sep 2026 11:19:20 GMT</lastBuildDate>
+
+		<item>
+			<title>PairUX 0.10.0: booking links, calendar invites, and a toll gate for AI crawlers</title>
+			<link>https://dev.profullstack.com/~anthony/blog/202-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/202-post.html</guid>
+			<pubDate>Mon, 28 Sep 2026 11:19:19 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>PairUX 0.10.0 adds Calendly-style booking links that open into a PairUX call, calendar invites with .ics on every meeting email, live and recording counts on the channel directory, and an x402 gateway that charges AI training crawlers.</description>
+		</item>
 
 		<item>
 			<title>What a domain costs in year two</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 25 Sep 2026 14:53:23 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>We probed every YC company Installmap flags for an MCP server: 53 endpoints found, 14 answered an unauthenticated handshake, 39 want a key, none serve an OpenMCP descriptor. Now in nichedb.dev with each company's accounts and founders.</description>
-		</item>
-
-		<item>
-			<title>readm3 now opens any file, and pastes anything</title>
-			<link>https://dev.profullstack.com/~anthony/blog/192-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/192-post.html</guid>
-			<pubDate>Fri, 25 Sep 2026 11:34:51 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>readm3 0.7.0 to 0.9.0: pastes of any language with a front door at readm3.com/paste, and an editor that opens any text file, PDF or image.</description>
 		</item>
 	</channel>
 </rss>

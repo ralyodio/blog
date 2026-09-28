@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PairUX 0.10.0: booking links, calendar invites, and a toll gate for AI crawlers &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/202-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-28T11:19:19Z">
+<meta name="description" content="PairUX 0.10.0 adds Calendly-style booking links that open into a PairUX call, calendar invites with .ics on every meeting email, live and recording counts on the channel directory, and an x402 gateway that charges AI training crawlers.">
+</head>
+<body>
+
+<article>
+
+<h1>PairUX 0.10.0: booking links, calendar invites, and a toll gate for AI crawlers</h1>
+
+<p><em>2026-09-28, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>PairUX 0.10.0 is out. It is the first minor bump since the 0.9 series, and it carries nineteen changes across the web app, the desktop builds and mobile.</p>
+
+<h3>Booking links</h3>
+
+<p>You can now hand someone a link and let them pick a time. A booking page lives at <code>/book/&lt;username&gt;/&lt;slug&gt;</code>, shows the slots you actually have free in the visitor's own timezone, and books the call. The part that matters is what happens next: the meeting is a PairUX room, not a calendar entry pointing at some other product. Whoever books lands in the same screen share and pairing session you would have sent them manually.</p>
+
+<h3>Every meeting email carries the calendar</h3>
+
+<p>Invites, updates and reminders now go out with add-to-calendar links and an <code>.ics</code> attachment. Google, Outlook and anything that reads an ics file get the same event, with the join URL inside it. Before this, a reminder email told you a meeting was coming and left you to make the calendar entry yourself.</p>
+
+<h3>Channels show what is live</h3>
+
+<p>The <code>/channels</code> directory now counts live sessions and recordings per channel, so an empty channel reads as empty and a busy one reads as busy. Small change, but the directory was previously a wall of names with no signal about which of them anyone was using.</p>
+
+<h3>A toll gate for AI crawlers</h3>
+
+<p>PairUX now runs the x402 gateway in front of its content. An AI training crawler that wants the pages can pay for them; a reader browsing normally is unaffected. Blog pages also ship with a CrawlProof unit by default, and the site serves an OpenAccess descriptor at <code>/.well-known/openaccess.json</code> so an agent can find the terms without guessing.</p>
+
+<h3>Desktop and mobile</h3>
+
+<p>The desktop app got P2P relay and media lifecycle parity with the web client, which fixes the cases where a peer-to-peer call on desktop behaved differently from the same call in a browser. Group call audio and negotiation stay in sync through a reconnect now, and a viewer who denies microphone access gets a recoverable prompt instead of a dead call. On mobile, chat drafts survive a backgrounded app, session refresh is bounded so a reconnect can actually finish, and Android screen share startup is hardened.</p>
+
+<p>Next.js is updated to clear a set of critical security advisories.</p>
+
+<h3>Getting it</h3>
+
+<p>Desktop builds are published for macOS (Intel and Apple Silicon), Linux (x64 and arm64) and Windows, and the package manager repos are updated: Homebrew, Scoop, Chocolatey, apt, rpm, Nix and Gentoo.</p>
+
+<p>Release notes and downloads: <a href="https://github.com/profullstack/pairux.com/releases/tag/v0.10.0">https://github.com/profullstack/pairux.com/releases/tag/v0.10.0</a></p>
+
+<p>The web app is live at <a href="https://pairux.com">https://pairux.com</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
