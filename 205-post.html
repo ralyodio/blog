@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Antikythera mechanism was an astronomy app with a crank &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/205-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-01T12:25:58Z">
+<meta name="description" content="A 2,000-year-old bronze calculator that showed Sun and Moon positions, Moon phase, eclipse months and the Olympic cycle. Its algorithm was cut into the gears.">
+</head>
+<body>
+
+<article>
+
+<h1>The Antikythera mechanism was an astronomy app with a crank</h1>
+
+<p><em>2026-10-01, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>In 1901, sponge divers working an ancient wreck off the Greek island of
+Antikythera pulled up a lump of corroded bronze. It turned out to be a geared
+calculator, built somewhere around the 2nd or 1st century BC.</p>
+<p>You picked a date by turning a handle. Gears moved the dials, and the dials
+showed you what the sky would look like on that day, plus when an eclipse might
+happen. It was an astronomy app. The code was made of bronze teeth.</p>
+<h3>What it showed you</h3>
+<table>
+<thead>
+<tr><th>Output</th><th>What it meant</th></tr>
+</thead>
+<tbody>
+<tr><td>Sun and Moon positions</td><td>Where each would sit along the zodiac, the band of sky they move through.</td></tr>
+<tr><td>Moon phase</td><td>New, full, crescent, and so on.</td></tr>
+<tr><td>Eclipse predictions</td><td>Months when a solar or lunar eclipse could occur, with an estimated hour inscribed on the dial.</td></tr>
+<tr><td>Calendar cycles</td><td>How lunar months lined up with solar years, using a 19-year cycle of 235 lunar months.</td></tr>
+<tr><td>Games schedule</td><td>Which year in the cycle had the Olympics and the other Greek games.</td></tr>
+</tbody>
+</table>
+<p>Each of these is backed by surviving gears, dials, or inscriptions
+(<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4116162/">PMC</a>).</p>
+<h3>The algorithm is the hardware</h3>
+<p>A gear ratio is a multiplication. If a 60-tooth gear drives a 20-tooth gear,
+the small one turns three times for every turn of the big one. Chain enough
+ratios together and "days advanced" becomes "where the Moon is" or "how far we
+are through the eclipse cycle."</p>
+<p>The cleverest part is the Moon. The real Moon doesn't move across the sky at a
+constant speed. It runs faster when it's closer to Earth and slower when it's
+farther away. The mechanism handled this with two gears on slightly offset
+axles, coupled by a pin riding in a slot. The output wheel speeds up and slows
+down once a month, which is roughly what the Moon does
+(<a href="https://www.nature.com/articles/nature05357">Nature, 2006</a>). Nobody
+wrote a formula for that. They cut it into metal.</p>
+<h3>What it couldn't do</h3>
+<p>The front of the device is mostly gone. It probably showed the five planets
+known at the time (Mercury, Venus, Mars, Jupiter, Saturn), and in 2021 a UCL
+team published a full reconstruction of how that might have worked
+(<a href="https://www.ucl.ac.uk/news/2021/mar/experts-recreate-mechanical-cosmos-worlds-first-computer">UCL News</a>).
+But the planetary gearing is inferred, not recovered, so treat it as a strong
+guess.</p>
+<p>The eclipse predictions were also approximate. The dial could tell you a
+solar eclipse was possible in a given month. It couldn't tell you whether it
+would be visible from your town.</p>
+<h3>Why I keep coming back to it</h3>
+<p>Most of what we call software is a model of something, run on general-purpose
+hardware. This is the other way around: a model of the sky with no separation
+between program and machine. Change the prediction and you have to recut the
+gears.</p>
+<p>It's also a reminder that the people who built it had good data. You don't get
+a 235-month cycle or eclipse timings from a guess. You get them from centuries
+of Babylonian and Greek observation, written down, checked, and finally turned
+into something you could hold in your hands and crank.</p>
+<h3>Sources</h3>
+<ul>
+	<li><a href="https://www.ucl.ac.uk/news/2021/mar/experts-recreate-mechanical-cosmos-worlds-first-computer">UCL News: Experts recreate a mechanical Cosmos for the world's first computer (2021)</a></li>
+	<li><a href="https://www.nature.com/articles/nature05357">Freeth et al., Decoding the ancient Greek astronomical calculator known as the Antikythera Mechanism, Nature (2006)</a></li>
+	<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4116162/">PMC: Antikythera Mechanism research article</a></li>
+</ul>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
