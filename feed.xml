@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 01 Oct 2026 12:25:58 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 01 Oct 2026 12:50:50 GMT</lastBuildDate>
+
+		<item>
+			<title>Tuning a production box with 334 containers and no memory limits</title>
+			<link>https://dev.profullstack.com/~anthony/blog/206-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/206-post.html</guid>
+			<pubDate>Thu, 01 Oct 2026 12:50:50 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>How we took a shared production server from 3 GB to 32 GB of free memory in one day, watched with hqtui-demo and defended with ThreatCrush.</description>
+		</item>
 
 		<item>
 			<title>The Antikythera mechanism was an astronomy app with a crank</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 27 Sep 2026 05:33:38 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>myna engage answers the people who reply, repost or follow you from a queue you read first; myna did attaches a CoinPay DID; a pasted follows page becomes a paced follow list; and a public directory of AT Protocol servers.</description>
-		</item>
-
-		<item>
-			<title>TronBrowser now has its own push service</title>
-			<link>https://dev.profullstack.com/~anthony/blog/196-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/196-post.html</guid>
-			<pubDate>Sat, 26 Sep 2026 15:26:03 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>ungoogled-chromium ships without a push service, so every site's notifications failed. TronBrowser v3.16.0 brings its own: standard Web Push, end-to-end encrypted, and a setting to use your own.</description>
 		</item>
 	</channel>
 </rss>

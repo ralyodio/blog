@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tuning a production box with 334 containers and no memory limits &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/206-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-01T12:50:50Z">
+<meta name="description" content="How we took a shared production server from 3 GB to 32 GB of free memory in one day, watched with hqtui-demo and defended with ThreatCrush.">
+</head>
+<body>
+
+<article>
+
+<h1>Tuning a production box with 334 containers and no memory limits</h1>
+
+<p><em>2026-10-01, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>One of our production servers runs most of the fleet: 32 cores, 91 GB of RAM, 334 Docker containers, one shared Supabase Postgres that a dozen apps talk to, and not a single <code>mem_limit</code> in the compose files. This morning it was down to about 3 GB available, swap was 100% full, and the apps kept logging &quot;the database system is in recovery mode&quot;.</p>
+
+<p>By the afternoon it had 32 GB available. Nothing got bigger. Here is what we changed and the tools we used to find it.</p>
+
+<h3>Watching it: hqtui-demo</h3>
+
+<p>I gauge a box with <code>hqtui-demo</code>, the demo app for hqtui, our terminal UI library. On Linux it reads <code>/proc</code>, the systemd units, sshd logins from the journal and the nginx access log, so it is a live view of the real machine and not a canned animation.</p>
+
+<p>npm i -g @profullstack/hqtui-demo
+hqtui-demo</p>
+
+<p>I keep the dashboard sorted by memory (F6), the services screen open for crash loops, and the traffic screen for whatever is hitting nginx. I don't trust a fix until the numbers move on that screen.</p>
+
+<h3>1. earlyoom was killing Postgres</h3>
+
+<p>The box runs earlyoom with an <code>--avoid</code> regex so it never touches the database. The regex said <code>postgres</code>. The Supabase image runs Postgres as <code>.postgres-wrapp</code>, because the kernel truncates process names to 15 characters. So it was never avoided.</p>
+
+<p><code>journalctl -u earlyoom</code> showed 16 SIGKILLs of Postgres in a day, each one a full crash recovery, plus 1,334 SIGTERMs to the checkpointer. Adding <code>\.postgres-wrapp</code> to the avoid list stopped it.</p>
+
+<p>Two traps if you set this up yourself. systemd reads <code>EARLYOOM_ARGS</code> from the env file with no shell quote removal, so <code>--avoid '^(sshd|postgres)$'</code> passes the quote characters into the regex. Write it unquoted. And the service starts fine either way, so check the real arguments with <code>ps -o args= -C earlyoom</code>.</p>
+
+<h3>2. shared_buffers was 23 GB</h3>
+
+<p>Postgres was the biggest thing on the box at 25.5 GB. That was not a leak. <code>shared_buffers</code> was set to 23336MB. The per-backend RSS of 4 to 5 GB that made earlyoom think each connection was a monster is the same shared pages counted again in every process.</p>
+
+<p>We capped it at 8 GB and set per-tenant connection limits (one app was holding 126 of the 300 connections). The tuning lives in a script, so the next box gets it too. Check the value after the run, not the exit code. Our first run copied an old version of the script and happily wrote 23336MB back.</p>
+
+<h3>3. A worker spinning on a missing dependency</h3>
+
+<p>One worker sat at 3.4 to 3.8 GB within 25 seconds of starting and had restarted 4,292 times. BullMQ 6 made <code>ioredis</code> an optional peer dependency. The repo never installed it, so the worker failed to load it and retried about 6,000 times a second, forever, ignoring SIGTERM.</p>
+
+<p>Adding <code>ioredis</code> and a circuit breaker on the error path took it to 70 MB and zero restarts. If you are on BullMQ 6 or later, list <code>ioredis</code> yourself.</p>
+
+<h3>4. Sixteen Node workers sized from the host</h3>
+
+<p>Our RSS Amplifier web service forks one Node worker per CPU, reading the count from the cgroup. On this box the containers have no cgroup limits, so it read the host: 32 CPUs, 91 GB. It started 16 workers with a 3.5 GB heap each. Lazy GC under a high ceiling let each one drift to about 970 MB over six days, 11.7 GB in total.</p>
+
+<p>Now it runs at most 4 workers and splits one 4 GB heap budget between them. After the deploy: 5 processes, 605 MB.</p>
+
+<h3>The load that is not yours</h3>
+
+<p>A decent production load includes people you did not invite. ThreatCrush runs as a root daemon on every box and bans from nft.</p>
+
+<p>The nginx log had 189,000 paywall 402s from 111,576 IPs, about 1.7 requests each. No per-IP rule catches that, and the single busiest address was real Googlebot, which you must not ban. So ThreatCrush rules can now group by endpoint instead of IP and alert on the crowd, and the real cap is an nginx <code>limit_req</code> zone with a constant key that limits total throughput on the expensive route.</p>
+
+<p>For the attackers it can name, bans now double from 5 minutes up to 7 days and strikes are remembered for 30 days.</p>
+
+<p>One more lesson from today. Our own CLI login polled the server every 3 seconds and got a 400 back while waiting, as the OAuth device flow spec says. That is 20 errors a minute, which is exactly what the scanner rule looks for, and the box banned four of our own servers. Pending is a 202 now, and every fleet IP is on the protected list. If your own daemons poll an endpoint, a routine state must not be a 4xx.</p>
+
+<h3>What I would do first on any box</h3>
+
+<ul>
+	<li>Sort by memory and ask why the top five are that big. Usually it is configured, not leaked.</li>
+	<li>Read <code>journalctl -u earlyoom</code> (or <code>journalctl -k | grep -i oom</code>) before blaming the app.</li>
+	<li>Size workers and heaps from a budget, never from <code>os.cpus()</code> on a box without limits.</li>
+	<li>Count requests per IP before writing a per-IP rule.</li>
+</ul>
+
+<p>Links: <a href="https://hqtui.com/?utm_source=htmlblog&amp;utm_medium=blog&amp;utm_campaign=launch-announcement">hqtui</a>, <a href="https://threatcrush.com">ThreatCrush</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
