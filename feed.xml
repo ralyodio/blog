@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 01 Oct 2026 12:50:50 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 01 Oct 2026 17:11:20 GMT</lastBuildDate>
+
+		<item>
+			<title>Perfection is my middlename and whatever rhymes with eloquent...</title>
+			<link>https://dev.profullstack.com/~anthony/blog/207-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/207-post.html</guid>
+			<pubDate>Thu, 01 Oct 2026 17:11:20 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Primus is coming to Berkeley in October, a home game for the East Bay's weirdest bass band.</description>
+		</item>
 
 		<item>
 			<title>Tuning a production box with 334 containers and no memory limits</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 27 Sep 2026 11:19:10 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>OutreachGraph adds branching sequences, LinkedIn actions through your own session, A/B angles, a triaged inbox with drafted replies, pooled sending accounts and webhooks/CRM sync.</description>
-		</item>
-
-		<item>
-			<title>myna 0.22.0: engage, did, follow everyone somebody follows, and an AT Protocol directory</title>
-			<link>https://dev.profullstack.com/~anthony/blog/197-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/197-post.html</guid>
-			<pubDate>Sun, 27 Sep 2026 05:33:38 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>myna engage answers the people who reply, repost or follow you from a queue you read first; myna did attaches a CoinPay DID; a pasted follows page becomes a paced follow list; and a public directory of AT Protocol servers.</description>
 		</item>
 	</channel>
 </rss>
