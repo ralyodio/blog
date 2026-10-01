@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Off the cloud: sh1pt deploys to your own server now &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/204-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-01T10:11:29Z">
+<meta name="description" content="sh1pt now deploys to your own server, Railway style: git or rsync, systemd, nginx and TLS, Postgres, vault secrets, instant rollback. The on-box contract is OpenInstall.">
+</head>
+<body>
+
+<article>
+
+<h1>Off the cloud: sh1pt deploys to your own server now</h1>
+
+<p><em>2026-10-01, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Railway made deploying easy. Then it broke on us one too many times, and every
+outage was a reminder that we were renting someone else's computer to run our
+own code. So we are moving everything onto three boxes we own, and we built the
+part that made Railway worth paying for into sh1pt.</p>
+
+<h3>One command, your box</h3>
+
+<pre><code class="language-bash">sh1pt ship --target deploy-ssh</code></pre>
+
+<p>That pushes the current commit to a server over ssh and puts it into service:</p>
+
+<ul>
+	<li><strong>Source from any git host.</strong> GitHub, GitLab, Codeberg, or your own Gitea at</li>
+</ul>
+
+<p>git.example.com. The box keeps a mirror and checks out the exact commit. No
+git remote? It rsyncs the working tree instead.</p>
+
+<ul>
+	<li><strong>Releases, not overwrites.</strong> Each deploy lands in its own directory while</li>
+</ul>
+
+<p>the old one keeps serving. A <code>current</code> symlink flips when the new release is
+healthy. If the health check fails, it flips back on its own. Rollback is a
+symlink and a restart, with no rebuild.</p>
+
+<ul>
+	<li><strong>systemd and nginx, no containers.</strong> Your app runs as a systemd unit (bun is</li>
+</ul>
+
+<p>installed for you), and nginx sits in front with a Let's Encrypt certificate.</p>
+
+<ul>
+	<li><strong>Databases on the box.</strong> <code>postgres: true</code> creates a role and a database and</li>
+</ul>
+
+<p>hands the app <code>DATABASE_URL</code>. <code>redis: true</code> does the same for Redis.</p>
+
+<ul>
+	<li><strong>Secrets from the vault.</strong> The keys you list are written to a 0600 file on</li>
+</ul>
+
+<p>the server. They travel over ssh's stdin, so they never show up in a process
+list.</p>
+
+<h3>The contract is a shell script in your repo</h3>
+
+<p>All the work on the server is done by one file, <code>bin/install.sh</code>, and it lives
+in your repo. It has four phases (setup, build, activate, status), it reads its
+settings from <code>bin/install.conf</code>, and running it twice changes nothing the
+second time. It never touches a systemd unit or an nginx site it did not write.</p>
+
+<p>That means you do not need sh1pt to use it:</p>
+
+<pre><code class="language-bash">git clone https://codeberg.org/me/myapp &amp;&amp; cd myapp &amp;&amp; ./bin/install.sh</code></pre>
+
+<p>We wrote the convention down as an open spec,
+<a href="https://logicsrc.com/openinstall">OpenInstall</a>, so any tool can produce or
+run these scripts. To add one to a repo:</p>
+
+<pre><code class="language-bash">openinstall init --port 3100 --domains &quot;myapp.com www.myapp.com&quot; --postgres</code></pre>
+
+<p><code>openinstall</code> ships in <a href="https://github.com/profullstack/cli-tools">cli-tools</a>,
+and the target is <code>@profullstack/sh1pt-target-deploy-ssh</code> on npm.</p>
+
+<h3>What is next</h3>
+
+<p>The nginx and TLS path goes live on our big database box next, then
+<code>sh1pt logs</code>, deploy-on-merge for any git host, and moving our Railway
+services over one at a time with <code>sh1pt migrate</code>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

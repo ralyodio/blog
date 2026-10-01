@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 28 Sep 2026 15:26:21 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 01 Oct 2026 10:11:30 GMT</lastBuildDate>
+
+		<item>
+			<title>Off the cloud: sh1pt deploys to your own server now</title>
+			<link>https://dev.profullstack.com/~anthony/blog/204-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/204-post.html</guid>
+			<pubDate>Thu, 01 Oct 2026 10:11:29 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>sh1pt now deploys to your own server, Railway style: git or rsync, systemd, nginx and TLS, Postgres, vault secrets, instant rollback. The on-box contract is OpenInstall.</description>
+		</item>
 
 		<item>
 			<title>NIGHTCELL 7 introduces its cast, and teaches you the game one control at a time</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 25 Sep 2026 20:19:56 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Two crawlproof.com releases: the dashboard opens any domain on its own with traffic and money, and scores each property from risk to viral; and ad campaigns can target trending topics fed by SameBrain on chovy.com, free for 90 days.</description>
-		</item>
-
-		<item>
-			<title>Population data from the world down to the ZIP code</title>
-			<link>https://dev.profullstack.com/~anthony/blog/194-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/194-post.html</guid>
-			<pubDate>Fri, 25 Sep 2026 16:36:38 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>nichedb.dev now has a population collection you can drill down by country, state, city and ZIP, built entirely from free, keyless data.</description>
 		</item>
 	</channel>
 </rss>
