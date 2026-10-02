@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 02 Oct 2026 01:29:49 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 02 Oct 2026 13:48:24 GMT</lastBuildDate>
+
+		<item>
+			<title>NIGHTCELL 7 now has a Play online button</title>
+			<link>https://dev.profullstack.com/~anthony/blog/210-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/210-post.html</guid>
+			<pubDate>Fri, 02 Oct 2026 13:48:24 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Quick match and private match codes are live in NIGHTCELL 7: a free, server-authoritative 6v6 alpha where bots hold the empty seats.</description>
+		</item>
 
 		<item>
 			<title>myna now has a dashboard for the posts only you can make</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 28 Sep 2026 05:33:47 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Every top-level domain in IANA's root, diffed daily, with register and renewal prices from four registrars and an RDAP check, on nichedb.dev/tlds.</description>
-		</item>
-
-		<item>
-			<title>PairUX can now tell you how your call went</title>
-			<link>https://dev.profullstack.com/~anthony/blog/200-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/200-post.html</guid>
-			<pubDate>Sun, 27 Sep 2026 19:33:43 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>PairUX now has AI call analysis: switch it on before an interview, team sync or presentation and get a private feedback report after the call.</description>
 		</item>
 	</channel>
 </rss>

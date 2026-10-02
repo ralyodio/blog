@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NIGHTCELL 7 now has a Play online button &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/210-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-02T13:48:24Z">
+<meta name="description" content="Quick match and private match codes are live in NIGHTCELL 7: a free, server-authoritative 6v6 alpha where bots hold the empty seats.">
+</head>
+<body>
+
+<article>
+
+<h1>NIGHTCELL 7 now has a Play online button</h1>
+
+<p><em>2026-10-02, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>The NIGHTCELL 7 match server has worked end to end since v0.5.3. The trouble was that nothing in the game ever asked it for a match. The server was running, the tickets were being signed, and no player could get in.</p>
+
+<p>v0.5.4 adds the way in.</p>
+
+<h3>What you can do now</h3>
+
+<p>Open <a href="https://nightcell7.com/play/">nightcell7.com/play</a> and the start screen has a Play online section with two choices.</p>
+
+<p><strong>Quick match</strong> puts you in the public 6v6 Team Deathmatch lobby on Ardavan Yard. If the room is not full, bots hold the empty seats and give them up as people join, so you never wait on an empty server.</p>
+
+<p><strong>Private match</strong> gives you a six character code and a link to send a friend. They paste the link, or type the code, and land in the same room. Nobody from Quick match can wander in.</p>
+
+<p>If you are not signed in, either button takes you to the sign in page and then straight back to the match you asked for.</p>
+
+<h3>What the screen tells you</h3>
+
+<p>The lobby says what is happening instead of spinning: requesting a ticket, connecting, waiting for players (with a count of people and bots), live, match over with the score, or connection lost with a Rejoin button. If the server turns you away it says why, for example that your email still needs verifying or that the page is out of date.</p>
+
+<h3>How it works</h3>
+
+<p>The server is authoritative. Your browser sends what you pressed and where you are looking, and the server decides movement, hits, damage, deaths and the score. The yard you see is drawn from the server's state: other players on the same operator models the bots use, your health and ammo from the server, and a banner with the phase, team scores and clock.</p>
+
+<p>The flow is covered by a test that runs two players through the real API, the gateway and the match server and checks they end up in the same room. I also ran it in the production image with two headless Chromium browsers, signing in from the start screen, and both landed in one room with ten bots.</p>
+
+<p>Multiplayer is free and needs a verified account. It is still an alpha, so expect rough edges, and tell us what breaks.</p>
+
+<p>Play: <a href="https://nightcell7.com/play/">nightcell7.com/play</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
