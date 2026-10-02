@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>myna now has a dashboard for the posts only you can make &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/209-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-02T01:29:48Z">
+<meta name="description" content="The hand-off cards myna makes for Hacker News, Reddit and the other places it cannot post to are now on one page at mynaposter.com/dashboard: copy, open, mark done, from a phone.">
+</head>
+<body>
+
+<article>
+
+<h1>myna now has a dashboard for the posts only you can make</h1>
+
+<p><em>2026-10-02, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>myna posts to Bluesky, Mastodon, LinkedIn and the rest on its own. Some places it can't post to: Hacker News has no write API, a subreddit wants a human, and X is off for us. For those, myna writes a hand-off card. The card holds the exact text, the page to paste it into and a button to mark it done.</p>
+
+<p>Until today, to see those cards you ran <code>myna handoff list</code> in a terminal, or opened each card's own link. Now they are all in one place:</p>
+
+<p><strong>https://mynaposter.com/dashboard</strong></p>
+
+<h3>What you see</h3>
+
+<p>Sign in with your myna cloud account, the same one <code>myna cloud login</code> uses. The page lists every open card, newest first, with its place, its title and when it was made. Tap one to open it and you get:</p>
+
+<ul>
+	<li>the text, with a <strong>Copy</strong> button</li>
+	<li><strong>Open reddit.com</strong> (or wherever the card goes), so the paste target is one tap away</li>
+	<li><strong>Mark done</strong>, which the CLI sees too</li>
+	<li>a link to the card's own page</li>
+</ul>
+
+<p><strong>Show done</strong> brings back the finished cards, each with <strong>Undo</strong>. It works on a phone, which is where I actually use it: myna makes the cards from the terminal, and I paste them from the couch.</p>
+
+<h3>How the sign-in works</h3>
+
+<p>It uses the same email and password as the CLI. The server sets the session as an HttpOnly cookie, so the page's JavaScript never sees the token, and the cookie only works on reads. Every write in the API still needs the bearer token the CLI sends. Marking a card done needs no sign-in at all, because the card's link is its permission. Magic link and passkey sign-in are next.</p>
+
+<p><code>myna handoff list</code> now prints the dashboard link when you are signed in. Update with <code>myna update</code> to get 0.40.0.</p>
+
+<p>Your post queue isn't on the dashboard. It stays on the machine that sends it, and <code>myna queue</code> still shows it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

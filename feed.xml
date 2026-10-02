@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 02 Oct 2026 00:45:21 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 02 Oct 2026 01:29:49 GMT</lastBuildDate>
+
+		<item>
+			<title>myna now has a dashboard for the posts only you can make</title>
+			<link>https://dev.profullstack.com/~anthony/blog/209-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/209-post.html</guid>
+			<pubDate>Fri, 02 Oct 2026 01:29:48 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The hand-off cards myna makes for Hacker News, Reddit and the other places it cannot post to are now on one page at mynaposter.com/dashboard: copy, open, mark done, from a phone.</description>
+		</item>
 
 		<item>
 			<title>It's all about information supremacy now, and agents are how you deploy it</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 27 Sep 2026 19:33:43 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>PairUX now has AI call analysis: switch it on before an interview, team sync or presentation and get a private feedback report after the call.</description>
-		</item>
-
-		<item>
-			<title>Every MCP server we could find, deduplicated</title>
-			<link>https://dev.profullstack.com/~anthony/blog/199-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/199-post.html</guid>
-			<pubDate>Sun, 27 Sep 2026 15:26:12 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>nichedb.dev now indexes MCP servers from nine sources, deduplicated so one server is one row, plus collections for skills, subagents, commands, plugins and hooks.</description>
 		</item>
 	</channel>
 </rss>
