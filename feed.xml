@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 01 Oct 2026 17:11:20 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 02 Oct 2026 00:44:32 GMT</lastBuildDate>
+
+		<item>
+			<title>It’s all about information supremacy now, and agents are how you deploy it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/208-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/208-post.html</guid>
+			<pubDate>Fri, 02 Oct 2026 00:44:32 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>How we patched 34 Next.js web apps for critical RCE advisories in under an hour with agents, and how Chovy puts the same machinery behind your web app.</description>
+		</item>
 
 		<item>
 			<title>Perfection is my middlename and whatever rhymes with eloquent...</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 27 Sep 2026 15:26:12 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>nichedb.dev now indexes MCP servers from nine sources, deduplicated so one server is one row, plus collections for skills, subagents, commands, plugins and hooks.</description>
-		</item>
-
-		<item>
-			<title>OutreachGraph now runs the whole sequence: LinkedIn, branching, A/B angles, an inbox and…</title>
-			<link>https://dev.profullstack.com/~anthony/blog/198-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/198-post.html</guid>
-			<pubDate>Sun, 27 Sep 2026 11:19:10 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>OutreachGraph adds branching sequences, LinkedIn actions through your own session, A/B angles, a triaged inbox with drafted replies, pooled sending accounts and webhooks/CRM sync.</description>
 		</item>
 	</channel>
 </rss>

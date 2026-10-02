@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>It&rsquo;s all about information supremacy now, and agents are how you deploy it &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/208-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-02T00:44:32Z">
+<meta name="description" content="How we patched 34 Next.js web apps for critical RCE advisories in under an hour with agents, and how Chovy puts the same machinery behind your web app.">
+</head>
+<body>
+
+<article>
+
+<h1>It&rsquo;s all about information supremacy now, and agents are how you deploy it</h1>
+
+<p><em>2026-10-02, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>On September 30 GitHub published GHSA-vcvr-r3jv-pc5j, a remote code execution bug in Next.js's image response code. Three weeks earlier it had published two more, in the image optimizer. If you run web apps on Next.js, those three advisories are a race. Somebody is going to scan the internet for vulnerable versions. The only question is whether you know which of your apps are exposed before they do.</p>
+
+<p>We run 81 web apps on one production box. Last night I asked for the fix at about 11 PM UTC. Here is what happened next.</p>
+
+<p>An agent read the lockfile on the default branch of every repo we deploy, 71 of them, and checked the locked Next.js version against GitHub's advisory database. That took about a minute. 43 repos use Next.js. 34 were on a vulnerable version: 30 on 16.x below 16.3.6 and four still on 15.x.</p>
+
+<p>Six agents split the 34 between them and worked through them one at a time. For every repo they bumped Next.js and nothing else, checked that the lockfile diff touched only Next and its own dependencies, ran the type check, tests and build, booted the app the way production runs it, and compared pages, OG images and the image endpoint against the live site. Then a pull request, green CI, merge, release, deploy, and a read-only check on the production box that the new version was actually running with zero restarts.</p>
+
+<p>All 34 were patched and verified in under an hour. Four needed a small fix (a stricter type check in Next 16.3 tripped on two test files, and one ESLint config had to change). None went down.</p>
+
+<p>Earlier that day the same approach moved 56 of those apps from Node to Bun, each through its own pull request and deploy. Apps that had been on generic auto-generated images came out at roughly half the memory, with images about five times smaller. One agent caught a bug that would have broken every login on one app, because Bun's crypto callback passes undefined where Node passes null. Another found that a deploy workflow had silently stopped shipping one site for a week while every run showed green.</p>
+
+<p>None of that is clever code. It is knowing things faster than anyone else does: which version is running where, what the advisory actually covers, what changed in a lockfile, whether production really runs what CI says it runs. Ten years ago that took a platform team. Now the advantage goes to whoever has the most accurate picture of their own systems, and the shortest path from that picture to a verified change.</p>
+
+<p>That is what we build at Profullstack, and it is what Chovy is for.</p>
+
+<p>Chovy (<a href="https://chovy.com">https://chovy.com</a>) is how we put the same machinery behind someone else's web app. You describe the app in your own words. Chovy turns it into a plan with screens and steps, and you fix what's wrong before anyone builds. Agents build it while you watch, and a person at Profullstack supervises them. You open the preview and approve it or ask for changes. Nothing is published to the internet, no domain is bought, and no email goes to your customers without you saying yes. You own the code, the repository and the domain.</p>
+
+<p>The agents do the part that used to need a team: reading all of it and running the dull checks every time, not only when someone remembers. You keep the decisions.</p>
+
+<p>There is a 24-hour free trial, plans start at $20 a month, and there is a $1,000 lifetime deal for one app. Start at <a href="https://chovy.com">https://chovy.com</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
