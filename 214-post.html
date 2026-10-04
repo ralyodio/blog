@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Is that visitor a person or an agent? CrawlProof now lets them say so &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/214-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-04T13:49:01Z">
+<meta name="description" content="CrawlProof's tracker now takes an opt-in declaration of human or agent, with a one-way trust rule so lying never pays.">
+</head>
+<body>
+
+<article>
+
+<h1>Is that visitor a person or an agent? CrawlProof now lets them say so</h1>
+
+<p><em>2026-10-04, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>An AI agent driving a real Chrome looks exactly like a person. Same TLS handshake, same headers, it runs your JavaScript and scrolls. User-agent checks catch the crawlers that announce themselves and nothing else. On one of our sites a headless scraper was showing up as 31,000 &quot;humans&quot; a day from Singapore before we caught it by volume.</p>
+
+<p>Some agents are perfectly happy to say what they are, though. Mine is. So CrawlProof's tracker now accepts a declaration: this visit is a person, or this visit is an agent, and here is who.</p>
+
+<h3>How it works</h3>
+
+<p>You register actors on your CrawlProof account: an email and a kind, human or agent. An agent can name the human who runs it. Each actor gets one or more <code>cpa_</code> tokens, and the visitor sends the token with its visits:</p>
+
+<pre><code class="language-sh">crawlproof actors add anthony@example.com --kind=human
+crawlproof actors add mybot@example.com --kind=agent --operator=anthony@example.com</code></pre>
+
+<pre><code># an agent sets one header on every request (Playwright extraHTTPHeaders, Puppeteer)
+Crawlproof-Actor: cpa_...
+
+# a person opens each site once; the token is kept for that site and stripped from the URL
+https://example.com/?crp_actor=cpa_...</code></pre>
+
+<p>The token is the credential. Typing someone's email claims nothing, and an address only shows as verified after a link sent to it is clicked (your own login address is verified on the spot). One verified claim per address, across every account.</p>
+
+<h3>Built for people who will lie</h3>
+
+<p>It is the honor system, so the rule is one-way. If a visit says it is an agent, we believe it and count it as a bot, including in unique visitors. Nobody gains anything by pretending to be a bot.</p>
+
+<p>If a visit says it is a human, we write that down and change nothing. When the user agent or our scripted-browser cap says bot, it stays a bot, and the actor gets a contradiction on its record. A token with contradictions piling up is a token being used by something it should not be.</p>
+
+<p>Names are private to whoever registered them. Other site owners see counts per kind, not who.</p>
+
+<p>The tracker stays cookieless. I started with a cookie so one click would declare you on every site, then remembered our docs say &quot;No cookies&quot;, so it is a link per site instead.</p>
+
+<h3>Where to see it</h3>
+
+<p><code>crawlproof stats</code> prints a &quot;Declared (self-reported)&quot; block when anyone declared, kept apart from the measured numbers. There is also a settings page with a link per tracked site for declaring a browser, MCP tools (<code>list_actors</code>, <code>add_actor</code>, <code>mint_actor_token</code>) and the API under <code>/api/tracker/v1/actors</code>.</p>
+
+<p>My agent, riotcoder, is the first registered agent. Its first beacon came in through a stock Chrome user agent and landed in <code>bot:declared</code>, which is the point.</p>
+
+<p>Docs: <a href="https://crawlproof.com/docs/statistics#declared-actors">https://crawlproof.com/docs/statistics#declared-actors</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
