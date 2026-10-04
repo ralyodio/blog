@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your bank statements, downloaded for you: CoinPay and moshcode now fetch them &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/213-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-04T13:05:38Z">
+<meta name="description" content="SimpleFIN gives you transactions, never the PDF statements. CoinPay, moshcode and cli-tools now sign in to each bank once and download every new statement for you.">
+</head>
+<body>
+
+<article>
+
+<h1>Your bank statements, downloaded for you: CoinPay and moshcode now fetch them</h1>
+
+<p><em>2026-10-04, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>SimpleFIN is a good way to read your bank accounts. It gives an app balances and transactions for every bank you link. What it never gives you is the statement: the PDF the bank issues each month, the one your accountant, your lender and the IRS actually ask for. The protocol has no document endpoint, and the Bridge keeps none.</p>
+
+<p>So every month meant signing in to eight banks and clicking through each account by hand. We built the thing that does the clicking.</p>
+
+<h3>How it works</h3>
+
+<pre><code class="language-sh">coinpay finances statements login chase    # once per bank, in a real window
+coinpay finances statements fetch          # every new statement, every signed-in bank
+coinpay finances statements coverage       # which account-months are still missing</code></pre>
+
+<p><code>login</code> opens the bank in its own Chrome profile on your computer. You sign in (MFA and all) and go to the page that lists your statements, then close the window. That page is where every later fetch starts. No bank password is asked for or stored, and the session never leaves your machine.</p>
+
+<p><code>fetch</code> opens that profile headless and looks for what every statements page has in common: a dated row with a Download, PDF or View statement control. It clicks the rows it has not fetched before, presses a dialog's Download button when a click opens one, and catches the file through Chrome's download events. Each PDF is matched to an account by the last four digits on the row and to a period by the statement cycle printed beside it. Then it lands in CoinPay's statement library, ready to reconcile against a report. A copy stays on disk too.</p>
+
+<p>When a bank has ended the session, the page asks for a password again. <code>fetch</code> notices, says which bank, moves on, and exits 3, so a weekly cron entry can tell you:</p>
+
+<pre><code>30 7 * * 1 coinpay finances statements fetch</code></pre>
+
+<h3>Everywhere CoinPay is</h3>
+
+<ul>
+	<li><strong>Web:</strong> /finances/statements has a 12-month grid per account (have, missing, this month) and each bank's last fetch.</li>
+	<li><strong>API:</strong> <code>/api/finances/statements/coverage</code> and <code>/api/finances/statements/fetch-runs</code>.</li>
+	<li><strong>MCP:</strong> <code>coinpay mcp</code> is new. <code>claude mcp add coinpay -- coinpay mcp</code> gives an agent the coverage, the library and a <code>statements_fetch</code> tool that runs on your machine.</li>
+</ul>
+
+<h3>Without CoinPay</h3>
+
+<p>The same fetcher ships in moshcode and cli-tools for anyone on a SimpleFIN Bridge:</p>
+
+<pre><code class="language-sh">moshcode install statements
+statements claim &lt;setup-token&gt;     # or reuse CoinPay's account list
+statements login citi
+statements fetch                   # ~/Documents/statements/&lt;bank&gt;/&lt;account&gt;/&lt;YYYY-MM&gt;.pdf</code></pre>
+
+<p>Bank pages change without notice, so nothing here depends on one bank's markup. When it cannot find statement links it says so, and <code>statements assist &lt;bank&gt;</code> gives you a window where every PDF you download is filed for you.</p>
+
+<p>CoinPay SDK 0.12.0, moshcode 0.109.0, cli-tools 0.53.0. Drafted with AI help, reviewed and shipped by me.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
