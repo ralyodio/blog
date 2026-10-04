@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ThreatCrush now keeps every attack so you can check if it worked &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/212-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-04T10:34:38Z">
+<meta name="description" content="ThreatCrush 0.13.21 logs every attack to disk and sorts by whether the app answered it, so you can check if it worked and fix the real holes.">
+</head>
+<body>
+
+<article>
+
+<h1>ThreatCrush now keeps every attack so you can check if it worked</h1>
+
+<p><em>2026-10-04, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>A ban tells you who attacked. It does not tell you whether the attack worked.</p>
+
+<p>ThreatCrush 0.13.21 adds watchdog mode. The daemon writes every attack it sees to a log on disk, whether or not anyone has the dashboard open. Each one can then be checked later, and the real holes fixed.</p>
+
+<h3>The question that matters</h3>
+
+<p>A SQL injection probe that nginx answered with a 404 is noise. The same probe answered with a 200 is a finding. The log watcher now records the HTTP status of every request, and the watchdog sorts by it:</p>
+
+<ul>
+	<li><strong>answered</strong> (2xx): the app served the payload. Check this first.</li>
+	<li><strong>errored</strong> (5xx): the app crashed on it. Input reached code that did not expect it.</li>
+	<li><strong>refused</strong> (4xx): probably fine. Kept for the record and hidden by default.</li>
+</ul>
+
+<p>Repeats are grouped by site, method, path and attack type, so ten thousand scanner hits on <code>/wp-login.php</code> are one row.</p>
+
+<h3>Triage from the terminal</h3>
+
+<pre><code class="language-sh">threatcrush watchdog                # what to look at, worst first
+threatcrush watchdog show &lt;id&gt;      # samples, sources, a curl to replay it
+threatcrush watchdog brief &lt;id&gt;     # a Markdown hand-off for an issue, PR or agent
+threatcrush watchdog mark &lt;id&gt; fp --note &quot;static route&quot;
+threatcrush watchdog mark &lt;id&gt; fixed --pr &lt;url&gt;</code></pre>
+
+<p><code>brief</code> is the piece I use most. It prints the evidence, a replay command against your own site, and the steps to verify and fix. Paste it into a coding agent and it has everything it needs to write the failing test and the PR.</p>
+
+<p>On a root install the log lives in <code>/var/lib/threatcrush/watchdog</code>, shared with the <code>adm</code> group, so anyone who can read your logs can triage without sudo. It is on by default; <code>[watchdog] enabled = false</code> turns it off.</p>
+
+<p>Upgrade and restart the daemon to start logging:</p>
+
+<pre><code class="language-sh">threatcrush update
+threatcrush restart</code></pre>
+
+<p>Source and docs: <a href="https://github.com/profullstack/threatcrush">github.com/profullstack/threatcrush</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
