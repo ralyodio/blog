@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 04 Oct 2026 13:49:01 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 04 Oct 2026 19:22:10 GMT</lastBuildDate>
+
+		<item>
+			<title>The Online S-Corp Field Guide: a free 69-page handbook for Los Gatos founders</title>
+			<link>https://dev.profullstack.com/~anthony/blog/215-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/215-post.html</guid>
+			<pubDate>Sun, 04 Oct 2026 19:22:10 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Edition 1.3 of our free field guide for online S corporations in Los Gatos and Santa Clara County: local approvals, owner pay, tax, bookkeeping and digital sales.</description>
+		</item>
 
 		<item>
 			<title>Is that visitor a person or an agent? CrawlProof now lets them say so</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 01 Oct 2026 12:50:50 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>How we took a shared production server from 3 GB to 32 GB of free memory in one day, watched with hqtui-demo and defended with ThreatCrush.</description>
-		</item>
-
-		<item>
-			<title>The Antikythera mechanism was an astronomy app with a crank</title>
-			<link>https://dev.profullstack.com/~anthony/blog/205-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/205-post.html</guid>
-			<pubDate>Thu, 01 Oct 2026 12:25:58 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A 2,000-year-old bronze calculator that showed Sun and Moon positions, Moon phase, eclipse months and the Olympic cycle. Its algorithm was cut into the gears.</description>
 		</item>
 	</channel>
 </rss>
