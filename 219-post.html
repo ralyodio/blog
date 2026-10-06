@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your coding agents, on your phone &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/219-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-06T10:37:37Z">
+<meta name="description" content="moshcode 0.112.0 puts your herd of coding agents on your phone: one-tap approvals for Claude Code and Codex, push when one blocks, and no SSH or Tailscale because the box dials out.">
+</head>
+<body>
+
+<article>
+
+<h1>Your coding agents, on your phone</h1>
+
+<p><em>2026-10-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Nobody watches Claude Code work any more. You start four agents, walk off, and come back when one of them is stuck. The moment that actually needs you is a permission prompt, and it shows up while you are on the couch or in a meeting.</p>
+
+<p>moshcode 0.112.0 puts the herd on your phone. On the box running your agents:</p>
+
+<pre><code class="language-sh">moshcode herd phone on</code></pre>
+
+<p>Then open <a href="https://app.moshcode.sh/m">https://app.moshcode.sh/m</a> on your phone, add it to the home screen and turn on notifications. That is the whole setup.</p>
+
+<h3>No SSH, no Tailscale</h3>
+
+<p>The usual way to do this is an SSH client on the phone and a VPN to reach the box. We went the other way. <code>herd phone on</code> installs a small relay as a user service, and the relay dials out to app.moshcode.sh. Nothing listens on your machine, so there is no port to open and no key to copy to the phone. You sign in with the passkey you already have.</p>
+
+<h3>What you get</h3>
+
+<p>Every session on every paired machine, with blocked ones at the top. Tap one and you get Allow, Deny and &quot;Allow all this session&quot;. Those send the keys the engine's own dialog wants: <code>1</code>, <code>2</code> or Esc for Claude Code, and <code>y</code>, <code>a</code> or Esc for Codex.</p>
+
+<p>There is a live view of the pane's screen, streamed only while you are looking at it, a key bar for Esc, Tab, arrows and Ctrl-C, and a box to type a reply or a new prompt.</p>
+
+<p>When an agent blocks or finishes, your phone buzzes. On Android the notification itself has Allow and Deny, so you can answer without opening anything. iPhone does not show those buttons yet, so the tap opens the approval instead.</p>
+
+<h3>The bug we found on the way</h3>
+
+<p>A phone tap is late by nature. You see the prompt, you unlock, you tap, and by then someone may have answered at the keyboard. So the relay re-reads the screen before it types anything, and refuses a tap that no longer matches.</p>
+
+<p>The first version checked that the dialog was somewhere in the bottom 25 lines of the screen. Testing it against a live tmux session showed the problem: an answered dialog stays on screen until the engine redraws, and a second Allow typed <code>1</code> into whatever came next. Now the dialog's menu has to be the last thing on the screen, and anything below it means the question is over. There is a test for that exact screen.</p>
+
+<p>Approvals from the notification use a one-time token, so a double tap, or the same notification on two devices, answers once.</p>
+
+<h3>Try it</h3>
+
+<pre><code class="language-sh">moshcode upgrade self
+moshcode herd phone on</code></pre>
+
+<p>New to moshcode: <code>curl -fsSL https://moshcoding.com/install.sh | sh</code>. The design is in PRD 0020 in the repo. Next up is a chat view of each session that shows the edits and commands, sealed end to end, so the relay only ever sees ciphertext.</p>
+
+<p><em>Drafted with AI assistance and edited by me.</em></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
