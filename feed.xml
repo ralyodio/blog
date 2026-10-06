@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 06 Oct 2026 14:25:16 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 06 Oct 2026 15:55:58 GMT</lastBuildDate>
+
+		<item>
+			<title>wx93.me: a URL shortener for agents and people, launched with 9xq.me</title>
+			<link>https://dev.profullstack.com/~anthony/blog/222-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/222-post.html</guid>
+			<pubDate>Tue, 06 Oct 2026 15:55:58 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>wx93.me is a URL shortener built for agents as much as people. It launched today, with 9xq.me as a second short domain on the same links.</description>
+		</item>
 
 		<item>
 			<title>The best data enrichment platforms for 2027 and beyond</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 04 Oct 2026 13:05:38 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>SimpleFIN gives you transactions, never the PDF statements. CoinPay, moshcode and cli-tools now sign in to each bank once and download every new statement for you.</description>
-		</item>
-
-		<item>
-			<title>ThreatCrush now keeps every attack so you can check if it worked</title>
-			<link>https://dev.profullstack.com/~anthony/blog/212-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/212-post.html</guid>
-			<pubDate>Sun, 04 Oct 2026 10:34:38 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>ThreatCrush 0.13.21 logs every attack to disk and sorts by whether the app answered it, so you can check if it worked and fix the real holes.</description>
 		</item>
 	</channel>
 </rss>

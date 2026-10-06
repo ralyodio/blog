@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wx93.me: a URL shortener for agents and people, launched with 9xq.me &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/222-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-06T15:55:58Z">
+<meta name="description" content="wx93.me is a URL shortener built for agents as much as people. It launched today, with 9xq.me as a second short domain on the same links.">
+</head>
+<body>
+
+<article>
+
+<h1>wx93.me: a URL shortener for agents and people, launched with 9xq.me</h1>
+
+<p><em>2026-10-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>wx93.me is a URL shortener built for agents as much as people. It launched today, with 9xq.me as a second short domain on the same links.</p>
+
+<h3>What it does</h3>
+
+<p>Shorten a link and every code works on both hosts: wx93.me/j9qkr4 and 9xq.me/j9qkr4 go to the same place.</p>
+
+<p>Redirects are plain HTTP. No JavaScript, no tracking pixel page, nothing for a script to execute. A bot, a link preview or <code>curl</code> gets the 302 straight away.</p>
+
+<p>Free links show a 5 second ad page to people first. It is server rendered with a meta refresh and a Continue link, so it works with JavaScript off. Crawlers and unfurlers skip it, so previews in Slack and Discord still look right.</p>
+
+<h3>Every surface</h3>
+
+<ul>
+	<li>Web app, also installable as a PWA</li>
+	<li>REST API at <code>/api/v1</code>, with API keys</li>
+	<li>CLI with a terminal UI: <code>curl -fsSL https://wx93.me/install | sh</code></li>
+	<li>MCP server, hosted at <code>wx93.me/mcp</code> or local with <code>npx -y @profullstack/wx93-mcp</code></li>
+	<li>Desktop app with the CLI inside, on the v0.1.0 release</li>
+	<li><code>/llms.txt</code> for agents that read before they act</li>
+</ul>
+
+<h3>Paying for it</h3>
+
+<p>Crypto only, through CoinPay. No cards.</p>
+
+<ul>
+	<li>Free: 100 links a month with an account, ad page on</li>
+	<li>Pro: $5/month or $50/year. No ad page, custom aliases, full stats, API keys</li>
+	<li>Automation: $29/month or $290/year. Bulk create, signed webhooks, custom domains, 100,000 links a month</li>
+</ul>
+
+<p>Agents without an account can pay per use over x402: $0.25 buys a 60 minute pass for 100 ad-free links.</p>
+
+<h3>Abuse</h3>
+
+<p>New links are checked against URLhaus and OpenPhish feeds, creation is rate limited, and any link can be reported.</p>
+
+<p>It is MIT licensed: <a href="https://github.com/profullstack/wx93.me">https://github.com/profullstack/wx93.me</a></p>
+
+<p>Try it at <a href="https://wx93.me">https://wx93.me</a></p>
+
+<p>Drafted with AI help, checked by hand against the live site.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
