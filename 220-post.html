@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Booking.com&rsquo;s Node savings don&rsquo;t carry over to Bun. Autoheal does. &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/220-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-06T12:35:20Z">
+<meta name="description" content="Booking.com wrote up how they cut Node.js costs by 38% with Watt. They swapped pm2's cluster module for worker threads that accept connections themselves, gave each worker its own port behind nginx,…">
+</head>
+<body>
+
+<article>
+
+<h1>Booking.com&rsquo;s Node savings don&rsquo;t carry over to Bun. Autoheal does.</h1>
+
+<p><em>2026-10-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Booking.com wrote up how they cut Node.js costs by 38% with Watt. They swapped pm2's cluster module for worker threads that accept connections themselves, gave each worker its own port behind nginx, and let Watt restart any worker whose event loop blocks. Result: 30% fewer pods, 20% less memory per pod, lower tail latency.</p>
+
+<p>We run about 230 containers on one box, most of them Bun. So we measured before copying anything.</p>
+
+<h3>Consolidation: 13MB per app, not worth it</h3>
+
+<p>The appeal is packing many small apps into one process. On Bun the numbers are small:</p>
+
+<ul>
+	<li>a bare <code>Bun.serve</code> process: 15MB</li>
+	<li>10 servers as Workers inside one process: 34MB, about 2MB each</li>
+</ul>
+
+<p>Our small apps sit at 50 to 150MB, and that is their own heap, which a shared process would not share. The ceiling across all 111 Bun processes is about 1.4GB. The price is that one crash takes down every app in the process. We skipped it. Booking's gain came from Node's heavier baseline and pm2's IPC supervisor, and we have neither.</p>
+
+<h3>The part that did apply: restart the stuck process</h3>
+
+<p>We had 183 containers with a Docker HEALTHCHECK. Docker runs it, counts the failures, marks the container <code>unhealthy</code>, and then does nothing. A restart policy only fires when the process exits, and a process with a blocked event loop has not exited. An in-process watchdog can't help either, because its timer never runs.</p>
+
+<p>So <code>@profullstack/watchdog</code> 0.3.0 ships <code>watchdog-autoheal</code>:</p>
+
+<pre><code class="language-sh">npm install -g @profullstack/watchdog
+watchdog-autoheal status     # healthy, unhealthy, and who has no healthcheck
+watchdog-autoheal            # one pass: restart what Docker marked unhealthy</code></pre>
+
+<p>It trusts Docker's failure streak instead of adding its own, so a real wedge gets restarted within about a minute. Restarts are budgeted: three per container per hour, then one email saying it needs a person. A broken image or a dead database comes back unhealthy, and looping on it only hides the problem.</p>
+
+<p>It has run on our production box every minute since today. The first <code>status</code> also turned up 47 containers with no healthcheck at all, so that's the next job: one request to <code>/healthz</code> each.</p>
+
+<p>Zero dependencies, MIT: <a href="https://github.com/profullstack/watchdog">https://github.com/profullstack/watchdog</a></p>
+
+<p>It is also on <a href="https://profullstack.com/stack">https://profullstack.com/stack</a>, the list of modules we are pulling out of our apps so you can reuse them.</p>
+
+<p>Drafted with AI help, edited and measured by hand.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
