@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bun vs Node.js in late 2026: the benchmarks disagree, so measure your own &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/223-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-06T18:51:05Z">
+<meta name="description" content="Five top-ranked Bun vs Node.js articles report Bun anywhere from 4x faster to 14x slower. What each one measured, why they disagree, and how to pick.">
+</head>
+<body>
+
+<article>
+
+<h1>Bun vs Node.js in late 2026: the benchmarks disagree, so measure your own</h1>
+
+<p><em>2026-10-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We ran &quot;bun vs node&quot; through our own search tool, which asks Ceramic, Exa and Linkup at once and ranks what they agree on. The five pages it put on top are all confident. They are also wildly inconsistent: depending on which one you read, Bun is four times faster than Node.js or fourteen times slower.</p>
+
+<p>Both claims are true. They just measured different things.</p>
+
+<h3>What each source measured</h3>
+
+<p>| Source | Test | Bun | Node.js |
+| --- | --- | --- | --- |
+| Alex Aslam, DEV (Jun 2025) | HTTP server, Bun 1.0 vs Node 20 on EC2 | 28,000 req/s | 8,000 req/s |
+| Better Stack (Jan 2026) | Express throughput | 52,479 req/s | 13,255 req/s |
+| Bun's own benchmark, via Strapi | Bun 1.4 vs Node 26.7, bombardier | 48,243 req/s | 25,181 req/s |
+| JCSI peer-reviewed study, via Strapi | I/O-bound workload | 27,500 req/s | 28,200 req/s |
+| Platformatic (Jan 2026), via AlexHost | Next.js on AWS EKS, average latency | 233.76 ms | 16.44 ms |</p>
+
+<p>Generalist Programmer, also in the top five, says 3 to 4x faster without naming a test. The first three rows are hello-world servers. They measure the HTTP layer and very little else, and Bun's HTTP layer is genuinely fast. The last two run something closer to a real application, and the gap closes or flips.</p>
+
+<h3>Why the numbers move</h3>
+
+<p>Allocation-heavy code is where Bun loses ground. A Bun GitHub investigation cited by Strapi measured 36,887 vs 26,050 req/s in Bun's favor on hello-world, then 11,800 vs 16,200 in Node's favor once the handler churned objects. A later Bun PR cut that penalty from 33% to 8%, but it shows the shape of the problem.</p>
+
+<p>Memory flips too. The DEV post measured 95 MB for Bun against 210 MB for Node on a small service. Strapi found a Next.js standalone server on Bun 1.4.0 at 179 MB after startup and 318 MB after 45 idle seconds, against 80 MB on Node 24.</p>
+
+<h3>Where Bun is clearly ahead</h3>
+
+<p><strong>Installs.</strong> Bun's benchmark on a project of about 220 packages: 1.41 s for a cold install, against 13.49 s for pnpm and 18.12 s for npm. The DEV author saw 0.4 s against 12 s. Nobody disputes this one, and it is the easiest win to take.</p>
+
+<p><strong>TypeScript.</strong> Bun runs <code>.ts</code> files with enums, namespaces and decorators, no config. Node 24+ runs TypeScript natively too, but only erasable syntax: annotations and interfaces, not enums.</p>
+
+<p><strong>One binary.</strong> Bundler, test runner, SQLite, a Postgres client and an S3 client ship inside Bun. On Node that is four or five packages and their configs.</p>
+
+<h3>Where Node is still ahead</h3>
+
+<p><strong>Compatibility.</strong> Bun 1.4 passes 97% of Node's tests for <code>node:http</code>, <code>node:fs</code> and <code>node:stream</code>, and 94% for <code>node:http2</code>. The DEV author hit <code>bcrypt</code> failures; Strapi lists <code>bcrypt</code> as unreliable and <code>sharp</code> with open segfault reports. As AlexHost puts it, the last 5% can be the whole project.</p>
+
+<p><strong>Observability.</strong> Datadog, New Relic and OpenTelemetry do not officially support Bun. If your on-call depends on an APM, that decides it.</p>
+
+<p><strong>Security.</strong> Node has an opt-in <code>--permission</code> flag, with bypasses its own docs admit to. Bun has no runtime sandbox at all; its &quot;Secure Mode&quot; PR was closed in June 2026.</p>
+
+<p><strong>Hosting.</strong> AWS Lambda has managed Node 22, 24 and 26 runtimes and no managed Bun runtime.</p>
+
+<h3>One from our own repos</h3>
+
+<p>We run Bun on the repos that pin it. The gotcha that cost us the most time was not speed: Bun's built-in Postgres client sends a JavaScript array as the string <code>a,b</code> instead of a Postgres array, and the query then fails with one of three unrelated-looking errors. Every runtime has a list like this. Bun's is shorter than it was, but it is still being written.</p>
+
+<h3>How to choose</h3>
+
+<ul>
+	<li><strong>New service, CLI or internal tool:</strong> Bun. The install, startup and TypeScript wins are real, and you have no legacy native modules to trip over.</li>
+	<li><strong>Next.js, an APM-dependent service, Lambda, or anything using native addons:</strong> Node.</li>
+	<li><strong>An existing Node app:</strong> keep Node as the runtime and use <code>bun install</code> and <code>bun test</code> for speed in development and CI. Strapi recommends exactly this split for its own stack.</li>
+</ul>
+
+<p>Whichever way you lean, run your real handler under load before you switch. Every number above is someone else's workload.</p>
+
+<h3>Sources</h3>
+
+<ul>
+	<li><a href="https://strapi.io/blog/bun-vs-nodejs-performance-comparison-guide">Strapi: Bun vs Node.js, Performance, Features &amp; Migration 2026</a> (updated Sep 14, 2026)</li>
+	<li><a href="https://betterstack.com/community/guides/scaling-nodejs/nodejs-vs-deno-vs-bun/">Better Stack: Node.js vs Deno vs Bun</a> (Jan 30, 2026)</li>
+	<li><a href="https://alexhost.com/info/bun-vs-node-js-speed-compatibility-and-what-actually-matters/">AlexHost: Bun vs Node.js, Speed, Compatibility, and What Actually Matters</a> (Apr 22, 2026)</li>
+	<li><a href="https://dev.to/alex_aslam/bun-vs-deno-vs-nodejs-the-ultimate-javascript-runtime-showdown-g52">Alex Aslam on DEV: Bun vs Deno vs Node.js</a> (Jun 26, 2025)</li>
+	<li><a href="https://generalistprogrammer.com/comparisons/bun-vs-node">Generalist Programmer: Bun vs Node.js Complete Runtime Comparison</a></li>
+</ul>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
