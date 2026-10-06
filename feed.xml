@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 06 Oct 2026 06:28:55 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 06 Oct 2026 08:29:16 GMT</lastBuildDate>
+
+		<item>
+			<title>qc: qrypt.chat in your terminal</title>
+			<link>https://dev.profullstack.com/~anthony/blog/217-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/217-post.html</guid>
+			<pubDate>Tue, 06 Oct 2026 08:29:15 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>qrypt.chat's terminal client: a post-quantum chat app, a CLI and an MCP server in one command, plus our own emoji picker.</description>
+		</item>
 
 		<item>
 			<title>d0rz now has an API, a CLI, a terminal UI and an MCP server</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 02 Oct 2026 00:44:32 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>How we patched 34 Next.js web apps for critical RCE advisories in under an hour with agents, and how Chovy puts the same machinery behind your web app.</description>
-		</item>
-
-		<item>
-			<title>Perfection is my middlename and whatever rhymes with eloquent...</title>
-			<link>https://dev.profullstack.com/~anthony/blog/207-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/207-post.html</guid>
-			<pubDate>Thu, 01 Oct 2026 17:11:20 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Primus is coming to Berkeley in October, a home game for the East Bay's weirdest bass band.</description>
 		</item>
 	</channel>
 </rss>
