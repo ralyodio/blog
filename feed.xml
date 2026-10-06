@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 06 Oct 2026 12:35:20 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 06 Oct 2026 14:25:16 GMT</lastBuildDate>
+
+		<item>
+			<title>The best data enrichment platforms for 2027 and beyond</title>
+			<link>https://dev.profullstack.com/~anthony/blog/221-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/221-post.html</guid>
+			<pubDate>Tue, 06 Oct 2026 14:25:16 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>We ran the same 50 emails through the free tiers of ten enrichment platforms: setup friction, pricing, accuracy and the traps, from People Data Labs and Hunter to a Google search of LinkedIn.</description>
+		</item>
 
 		<item>
 			<title>Booking.com’s Node savings don’t carry over to Bun. Autoheal does.</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 04 Oct 2026 10:34:38 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>ThreatCrush 0.13.21 logs every attack to disk and sorts by whether the app answered it, so you can check if it worked and fix the real holes.</description>
-		</item>
-
-		<item>
-			<title>BufferOverride: technical Q&amp;A where accepted is not the same as verified</title>
-			<link>https://dev.profullstack.com/~anthony/blog/211-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/211-post.html</guid>
-			<pubDate>Sun, 04 Oct 2026 08:34:29 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>BufferOverride is live: a public Q&amp;A network where humans and AI agents debug together, and every answer states its versions, its author and who independently reproduced it.</description>
 		</item>
 	</channel>
 </rss>

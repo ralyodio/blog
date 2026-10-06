@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The best data enrichment platforms for 2027 and beyond &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/221-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-06T14:25:16Z">
+<meta name="description" content="We ran the same 50 emails through the free tiers of ten enrichment platforms: setup friction, pricing, accuracy and the traps, from People Data Labs and Hunter to a Google search of LinkedIn.">
+</head>
+<body>
+
+<article>
+
+<h1>The best data enrichment platforms for 2027 and beyond</h1>
+
+<p><em>2026-10-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We needed job titles, company domains and LinkedIn URLs for a few thousand of our own users, so we signed up for the free tier of ten enrichment platforms on the same afternoon and ran the same 50 email addresses through each one. Half were work addresses where we already knew the right answer. Half were gmail, hotmail and proton addresses, which is where most real signups live.</p>
+
+<p>Every signup used one work email, no card and no phone. That last rule decided more than anything else.</p>
+
+<h3>Who gave us a working API key</h3>
+
+<p>| Platform | Free tier | Signup friction | Time to key |
+|---|---|---|---|
+| People Data Labs | 100 credits a month | Work email, reCAPTCHA, 4 onboarding screens | about 6 minutes hands-on |
+| Hunter.io | 50 credits a month | Cloudflare check twice, strict password rules | about 7 minutes |
+| ContactOut | 30 API credits, once | Work email, Turnstile | about 7 minutes |
+| Serper.dev | 2,500 Google searches | reCAPTCHA plus Turnstile | about 19 minutes |
+| FullEnrich | 50 credits | SMS code to unlock credits | blocked |
+| Lusha | 40 credits a month | Phone number on the signup form | blocked |
+| RocketReach | Small trial | SMS verification | blocked |
+| SerpApi | 250 searches a month | Phone verification | blocked |
+| Brave Search API | $5 credit a month | Card in Stripe checkout | blocked |
+| Explee | $30 of credits | None, but no lookup by email exists | not applicable |</p>
+
+<p>Five of ten wanted a phone number or a card before giving out a single free lookup. CAPTCHAs were everywhere and cost a few cents to get past. The phone check is the real gate.</p>
+
+<h3>How good the data was</h3>
+
+<p>| Platform | Work emails found | Personal emails found | Title right | LinkedIn right | Cost per enriched person |
+|---|---|---|---|---|---|
+| People Data Labs | 17 of 25 | 2 of 25 | 14 of 16 | 11 of 12 | $0.28 (from $98 a month, billed per match) |
+| Hunter.io | 13 of 25 | 0 (webmail refused) | 7 of 12 | 6 of 7 | about $0.005 (from $49 a month) |
+| ContactOut | 14 of 21 | 4 of 20 | 10 of 14 | 7 of 9 | API price only through sales |
+| Serper.dev (Google search of LinkedIn) | 17 of 25 | 12 of 25, mostly unverifiable | 12 of 17 | 9 of 11 | about $0.002 ($1 per 1,000 searches) |
+| Apollo (our reference) | about half of work emails | weak | | | about $0.02 per credit |</p>
+
+<h3>What each one is like to live with</h3>
+
+<p><strong>People Data Labs</strong> was the most accurate and the most honest API in the group. Every response says how many credits it spent and carries a likelihood score from 0 to 10. There is a bulk endpoint for 100 people at a time. On the free plan it returns titles, companies and LinkedIn URLs but hides email and phone values. It is also the only seller here whose license lets you build its data into your own product, which matters if you plan to show the results to anyone. Its titles matched Apollo word for word in 12 of 16 cases, so part of its lead is two vendors drawing on the same public profiles.</p>
+
+<p><strong>Hunter.io</strong> is the cheapest real database by a wide margin. Misses are free and 13 hits cost 2.4 credits. It refuses webmail with a clean 400, so it is a work email tool and nothing else. The trap: its API sits behind a Cloudflare challenge that blocked curl and node from our datacenter server, so test from wherever your code actually runs.</p>
+
+<p><strong>ContactOut</strong> found the most personal emails of the paid databases, but it has the worst failure mode we saw anywhere. Once the 30 free credits were gone, the API kept answering HTTP 200 with made up people and a note asking us to book a sales call. A pipeline that only checks the status code would save fake contacts.</p>
+
+<p><strong>Serper.dev</strong> is not an enrichment product. It is Google search as an API, and searching <code>site:linkedin.com/in &quot;First Last&quot; company</code> matched the best paid database on work emails for about a fifth of a cent each. The weakness is identity. On a gmail address with a common name, Google happily returns a stranger with the same name. Use it for work emails where the company name narrows the search, and do not trust it alone on personal ones.</p>
+
+<p><strong>Explee</strong> is an outreach agent with a B2B database, not an enrichment API. It can find an email from a name and a domain, but it cannot tell you who an email belongs to.</p>
+
+<p><strong>Proxycurl</strong> is gone. It shut down in July 2025 after LinkedIn sued. <strong>Clearbit</strong> now only exists inside paid HubSpot.</p>
+
+<h3>What we would use</h3>
+
+<p>For work emails, start with a Google search of LinkedIn and Hunter. Together they cost well under a cent a person and cover most business contacts. Send whatever is left to People Data Labs, especially anything you plan to publish, because its license allows that.</p>
+
+<p>For personal emails, expect little from anyone. The best paid result here was 4 of 20. If your list is mostly gmail signups, no platform will turn it into a B2B list, and the honest move is to ask your users what they do.</p>
+
+<p>Test results are from October 2026 on free tiers. Prices are from each platform's pricing page that day, except RocketReach, which blocks automated readers.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
