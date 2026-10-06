@@ -29,13 +29,16 @@
 
 <h3>What each source measured</h3>
 
-<p>| Source | Test | Bun | Node.js |
-| --- | --- | --- | --- |
-| Alex Aslam, DEV (Jun 2025) | HTTP server, Bun 1.0 vs Node 20 on EC2 | 28,000 req/s | 8,000 req/s |
-| Better Stack (Jan 2026) | Express throughput | 52,479 req/s | 13,255 req/s |
-| Bun's own benchmark, via Strapi | Bun 1.4 vs Node 26.7, bombardier | 48,243 req/s | 25,181 req/s |
-| JCSI peer-reviewed study, via Strapi | I/O-bound workload | 27,500 req/s | 28,200 req/s |
-| Platformatic (Jan 2026), via AlexHost | Next.js on AWS EKS, average latency | 233.76 ms | 16.44 ms |</p>
+<table>
+<thead><tr><th>Source</th><th>Test</th><th>Bun</th><th>Node.js</th></tr></thead>
+<tbody>
+<tr><td>Alex Aslam, DEV (Jun 2025)</td><td>HTTP server, Bun 1.0 vs Node 20 on EC2</td><td>28,000 req/s</td><td>8,000 req/s</td></tr>
+<tr><td>Better Stack (Jan 2026)</td><td>Express throughput</td><td>52,479 req/s</td><td>13,255 req/s</td></tr>
+<tr><td>Bun&#x27;s own benchmark, via Strapi</td><td>Bun 1.4 vs Node 26.7, bombardier</td><td>48,243 req/s</td><td>25,181 req/s</td></tr>
+<tr><td>JCSI peer-reviewed study, via Strapi</td><td>I/O-bound workload</td><td>27,500 req/s</td><td>28,200 req/s</td></tr>
+<tr><td>Platformatic (Jan 2026), via AlexHost</td><td>Next.js on AWS EKS, average latency</td><td>233.76 ms</td><td>16.44 ms</td></tr>
+</tbody>
+</table>
 
 <p>Generalist Programmer, also in the top five, says 3 to 4x faster without naming a test. The first three rows are hello-world servers. They measure the HTTP layer and very little else, and Bun's HTTP layer is genuinely fast. The last two run something closer to a real application, and the gap closes or flips.</p>
 
