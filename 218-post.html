@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pwamart: an app store for web apps &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/218-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-06T10:29:16Z">
+<meta name="description" content="pwamart.com is an app store for Progressive Web Apps: install on any device from web, CLI, TUI, MCP or desktop.">
+</head>
+<body>
+
+<article>
+
+<h1>pwamart: an app store for web apps</h1>
+
+<p><em>2026-10-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Progressive Web Apps install like native apps on every platform that matters, but there has never been a good place to find them. The app stores do not list them, and the ones that do want a review queue and a cut. So we built one: <strong><a href="https://pwamart.com">pwamart.com</a></strong>.</p>
+
+<p>pwamart lists installable web apps and installs them on iPhone, Android, Mac, Windows and Linux. No review queue, no 30% cut, nothing to root or jailbreak.</p>
+
+<h3>The Install button</h3>
+
+<p>A store cannot press another site's install button, so the details page does the most each browser allows:</p>
+
+<ul>
+	<li><strong>Chrome and Edge with the Web Install API:</strong> one click, the browser installs it.</li>
+	<li><strong>Android:</strong> open it and confirm, and it lands in the app drawer.</li>
+	<li><strong>iPhone and iPad:</strong> the two taps in Safari, or a one-tap profile that puts the icon on the Home Screen from Settings.</li>
+	<li><strong>TronBrowser:</strong> the app opens in its own TronBrowser window, with the launcher's settings.</li>
+	<li><strong>Safari and Firefox on desktop:</strong> the exact steps for that browser.</li>
+</ul>
+
+<h3>Every surface</h3>
+
+<ul>
+	<li><strong>Web and PWA:</strong> the store itself installs as an app.</li>
+	<li><strong>CLI:</strong> <code>npx -y @profullstack/pwamart search notes</code>, then <code>pwamart install &lt;slug&gt;</code> opens it as an app window and adds a launcher entry.</li>
+	<li><strong>TUI:</strong> <code>pwamart tui</code> is the whole store in a terminal, built on <a href="https://hqtui.com/?utm_source=htmlblog&amp;utm_medium=blog&amp;utm_campaign=launch-announcement">hqtui</a>.</li>
+	<li><strong>MCP:</strong> <code>claude mcp add pwamart -- npx -y @profullstack/pwamart-mcp</code>, or the hosted endpoint at <code>https://pwamart.com/mcp</code>. Agents can search, read listings and get install steps for any platform.</li>
+	<li><strong>API:</strong> <code>https://pwamart.com/api/v1</code>, documented in <a href="https://pwamart.com/llms.txt">llms.txt</a>.</li>
+	<li><strong>Desktop:</strong> pwamart Desktop for Mac, Windows and Linux installs any listing as its own window with its own storage.</li>
+</ul>
+
+<h3>Publishing</h3>
+
+<p>Paste your app's URL. pwamart reads the manifest, grades installability (HTTPS, icons, display mode, start URL, service worker, screenshots), and builds the listing. Prove you own the domain with a file, a meta tag or a DNS record, then publish.</p>
+
+<p>Pricing is per account, paid yearly through CoinPay:</p>
+
+<ul>
+	<li><strong>Free:</strong> 1 publisher, 10 apps</li>
+	<li><strong>Pro, $10 a year:</strong> 10 publishers, 100 apps</li>
+	<li><strong>Unlimited, $199 a year:</strong> no limits, plus shared orgs, teams and projects</li>
+</ul>
+
+<p>Installing is always free, and pwamart never takes a cut of what your app sells.</p>
+
+<p>We launched with 50 of our own apps already listed. <a href="https://pwamart.com/apps">Browse them</a>, or <a href="https://pwamart.com/console/submit">list yours</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
