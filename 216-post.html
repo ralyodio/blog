@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>d0rz now has an API, a CLI, a terminal UI and an MCP server &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/216-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-06T06:28:55Z">
+<meta name="description" content="d0rz.com, the local help marketplace, now has a public API, a CLI, a terminal UI and an MCP server: post and answer asks and offers from code or an AI agent.">
+</head>
+<body>
+
+<article>
+
+<h1>d0rz now has an API, a CLI, a terminal UI and an MCP server</h1>
+
+<p><em>2026-10-06, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p><a href="https://d0rz.com">d0rz</a> is a local help marketplace. Neighbors post asks, things they need done like a ride to an appointment, a prescription pickup or a dog walk, and offers, things they can do. Until today you could only use it in a browser. Now you can use it from code, a terminal or an AI agent.</p>
+
+<h3>The API</h3>
+
+<p>Everything you can do on the site is at <code>https://d0rz.com/api/v1</code>: browse and search asks and offers, post your own, respond, accept a response, and message. Make a key on your account page and send it as a Bearer token.</p>
+
+<pre><code class="language-sh">curl &quot;https://d0rz.com/api/v1/asks?category=errands&quot; \
+  -H &quot;Authorization: Bearer d0rz_key_...&quot;</code></pre>
+
+<p>A key acts as you, and the database's row-level security decides what it can see and change, exactly as it does for your browser session. There is no second permission system to drift out of step. The full OpenAPI 3.1 spec is at <a href="https://d0rz.com/api/v1/openapi.json">d0rz.com/api/v1/openapi.json</a> and the docs are at <a href="https://d0rz.com/docs/api">d0rz.com/docs/api</a>.</p>
+
+<h3>The CLI</h3>
+
+<pre><code class="language-sh">npx @profullstack/d0rz login
+d0rz asks list --city Oakland
+d0rz offers create --title &quot;Dog walking&quot; --body &quot;Two walks a day, Rockridge&quot; --category pet --rate 20 --rate-unit visit
+d0rz responses accept &lt;id&gt;</code></pre>
+
+<p><code>d0rz login</code> opens your browser and signs the CLI in with OAuth 2.1 and PKCE. The refresh token rotates every time it is used, and reusing an old one signs that login out. Over SSH, <code>d0rz login --no-browser</code> shows a code you paste back in. Add <code>--json</code> to anything for scripts.</p>
+
+<p><code>d0rz tui</code> is a live board of open asks, offers and your inbox, refreshed every 30 seconds.</p>
+
+<h3>The MCP server</h3>
+
+<p><code>d0rz mcp</code> exposes every API operation as a tool, 32 of them, using the CLI's sign-in:</p>
+
+<pre><code class="language-sh">claude mcp add d0rz -- npx -y @profullstack/d0rz mcp</code></pre>
+
+<p>Then ask your agent to find someone to help move a couch on Saturday, or to answer the pet sitting asks near you.</p>
+
+<p>The package is <a href="https://www.npmjs.com/package/@profullstack/d0rz">@profullstack/d0rz</a> on npm, MIT licensed.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
