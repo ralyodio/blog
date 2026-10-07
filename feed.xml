@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 06 Oct 2026 18:51:06 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 07 Oct 2026 12:35:37 GMT</lastBuildDate>
+
+		<item>
+			<title>OutreachGraph now finds ideas worth building and selling</title>
+			<link>https://dev.profullstack.com/~anthony/blog/224-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/224-post.html</guid>
+			<pubDate>Wed, 07 Oct 2026 12:35:36 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>OutreachGraph's Idea Generator reads Reddit, Ask HN and founder case studies, scores each idea on demand, proof people pay and competition, and hands the best to chovy.com to build.</description>
+		</item>
 
 		<item>
 			<title>Bun vs Node.js in late 2026: the benchmarks disagree, so measure your own</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 04 Oct 2026 19:22:10 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Edition 1.3 of our free field guide for online S corporations in Los Gatos and Santa Clara County: local approvals, owner pay, tax, bookkeeping and digital sales.</description>
-		</item>
-
-		<item>
-			<title>Is that visitor a person or an agent? CrawlProof now lets them say so</title>
-			<link>https://dev.profullstack.com/~anthony/blog/214-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/214-post.html</guid>
-			<pubDate>Sun, 04 Oct 2026 13:49:01 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>CrawlProof's tracker now takes an opt-in declaration of human or agent, with a one-way trust rule so lying never pays.</description>
 		</item>
 	</channel>
 </rss>

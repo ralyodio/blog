@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OutreachGraph now finds ideas worth building and selling &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/224-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-07T12:35:36Z">
+<meta name="description" content="OutreachGraph's Idea Generator reads Reddit, Ask HN and founder case studies, scores each idea on demand, proof people pay and competition, and hands the best to chovy.com to build.">
+</head>
+<body>
+
+<article>
+
+<h1>OutreachGraph now finds ideas worth building and selling</h1>
+
+<p><em>2026-10-07, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Building got cheap. The hard part now is knowing what to build, and whether anyone will pay for it. OutreachGraph has a new Idea Generator that answers both from public evidence, then hands the winner to chovy.com to build.</p>
+
+<h3>Where the ideas come from</h3>
+
+<p>It reads two kinds of places.</p>
+
+<p>People asking for tools. Subreddits like r/SomebodyMakeThis, r/AppIdeas and r/webapps, plus Ask HN and r/bootstrapping. A post like &quot;is there an app that transcribes recordings I already have and exports to docx&quot; is a demand signal.</p>
+
+<p>People showing what sells. Founder case studies and essays from Starter Story, Indieniche, Micro SaaS Idea, Startup Acquisition Stories, mtlynch.io, Silicon Opera, Hypothesis Lab and others, all read through the RSS Amplifier directory. A title like &quot;$25K/month Stagetimer app&quot; says a stage countdown timer is a business.</p>
+
+<p>Show HN is read too, but never as demand. A recent launch that matches an idea counts as competition.</p>
+
+<h3>How an idea is scored</h3>
+
+<p>Each idea gets a worth score:</p>
+
+<ul>
+	<li>Demand: how many different people asked, and how much attention their posts got.</li>
+	<li>Money: +15 for each source showing people pay, up to three. A revenue figure in a case study counts, and so does an asker writing &quot;I would pay for this&quot;.</li>
+	<li>Reach: +8 for each extra place it comes up, up to four. One forum is one community's quirk.</li>
+	<li>Rivals: one matching launch is a market (+5), two or three is a fight (-5), four or more is crowded (-20).</li>
+</ul>
+
+<p>The verdict follows from that. Build means wanted and paid for. Validate means one of the two. Watch means neither yet. Crowded means four or more similar launches.</p>
+
+<h3>Keeping it honest</h3>
+
+<p>A model judge reads every candidate and throws out general advice, founders pitching their own tool, and revenue stories that never say what the product does. &quot;How I grew my mobile app to $17K per month&quot; is a story, not an idea. A rule backs the model up: an idea whose name is only generic words like app, mobile, game or business, or a dollar figure, is dropped either way.</p>
+
+<p>On a test run against five feeds, 38 posts reached the judge and 3 ideas survived, each with revenue proof: a stage countdown timer at $25K a month, a video calling app at $14,000 a month, and a sports prediction market that was sold.</p>
+
+<h3>Using it</h3>
+
+<ul>
+	<li>Web: <a href="https://outreachgraph.com/ideas">https://outreachgraph.com/ideas</a> (sign in first), with a Build it button that opens chovy.com's build intake with the idea filled in.</li>
+	<li>CLI: <code>og ideas list</code>, <code>og ideas show &lt;id&gt;</code>, <code>og ideas scan</code>, <code>og ideas feeds</code>.</li>
+	<li>MCP: <code>list_ideas</code>, <code>get_idea</code>, <code>scan_ideas</code>, <code>set_idea_feeds</code>, <code>build_idea</code>.</li>
+	<li>API: <code>/api/v1/ideas</code>.</li>
+</ul>
+
+<p>Scans run every six hours. You can add any RSS Amplifier feed as a source, as asks, signals or launches.</p>
+
+<p><a href="https://outreachgraph.com">https://outreachgraph.com</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
