@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 07 Oct 2026 12:35:37 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 07 Oct 2026 15:56:08 GMT</lastBuildDate>
+
+		<item>
+			<title>hqterm 0.3: sessions that never drop, on every machine you own</title>
+			<link>https://dev.profullstack.com/~anthony/blog/225-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/225-post.html</guid>
+			<pubDate>Wed, 07 Oct 2026 15:56:07 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>hqterm 0.3: persistent, shareable terminal sessions over plain ssh that survive sleep and network changes, with Linux, macOS and Windows hosts and Tailscale built in.</description>
+		</item>
 
 		<item>
 			<title>OutreachGraph now finds ideas worth building and selling</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 06 Oct 2026 06:28:55 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>d0rz.com, the local help marketplace, now has a public API, a CLI, a terminal UI and an MCP server: post and answer asks and offers from code or an AI agent.</description>
-		</item>
-
-		<item>
-			<title>The Online S-Corp Field Guide: a free 69-page handbook for Los Gatos founders</title>
-			<link>https://dev.profullstack.com/~anthony/blog/215-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/215-post.html</guid>
-			<pubDate>Sun, 04 Oct 2026 19:22:10 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Edition 1.3 of our free field guide for online S corporations in Los Gatos and Santa Clara County: local approvals, owner pay, tax, bookkeeping and digital sales.</description>
 		</item>
 	</channel>
 </rss>
