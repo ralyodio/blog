@@ -110,9 +110,8 @@
 	<li>Ask the host to check you now instead of waiting a week:</li>
 </ol>
 
-<p>```sh
-curl -X POST 'https://rssamplifier.com/ring/profullstack/check?url=https://yoursite.example/'
-```</p>
+<pre><code class="language-sh">curl -X POST 'https://rssamplifier.com/ring/profullstack/check?url=https://yoursite.example/'
+</code></pre>
 
 <p>The response tells you whether you are active and which page the link was found on.</p>
 
@@ -134,11 +133,10 @@ curl -X POST 'https://rssamplifier.com/ring/profullstack/check?url=https://yours
 	<li><strong>Sites</strong>: one per line. Each line can be a site address, a feed address or a directory slug:</li>
 </ul>
 
-<p>```
-<a href="https://example.com/">https://example.com/</a>
-<a href="https://another.example/feed.xml">https://another.example/feed.xml</a>
+<pre><code>https://example.com/
+https://another.example/feed.xml
 some-blog
-```</p>
+</code></pre>
 
 <p>The order you list them in becomes the ring's order. Click <strong>Publish the ring</strong>. If an entry is not in the directory, the form names it so you can submit it and try again.</p>
 
