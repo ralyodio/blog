@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 07 Oct 2026 15:56:08 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 10 Oct 2026 09:38:19 GMT</lastBuildDate>
+
+		<item>
+			<title>The Profullstack webring: 72 sites, five links, and how to start your own</title>
+			<link>https://dev.profullstack.com/~anthony/blog/226-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/226-post.html</guid>
+			<pubDate>Sat, 10 Oct 2026 09:38:19 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Every Profullstack site carries &lt;&lt; Profullstack &gt;&gt; in its footer. How the ring works, anonymous voting, how a site joins, and how to make and run a webring of your own on RSS Amplifier.</description>
+		</item>
 
 		<item>
 			<title>hqterm 0.3: sessions that never drop, on every machine you own</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 06 Oct 2026 08:29:15 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>qrypt.chat's terminal client: a post-quantum chat app, a CLI and an MCP server in one command, plus our own emoji picker.</description>
-		</item>
-
-		<item>
-			<title>d0rz now has an API, a CLI, a terminal UI and an MCP server</title>
-			<link>https://dev.profullstack.com/~anthony/blog/216-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/216-post.html</guid>
-			<pubDate>Tue, 06 Oct 2026 06:28:55 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>d0rz.com, the local help marketplace, now has a public API, a CLI, a terminal UI and an MCP server: post and answer asks and offers from code or an AI agent.</description>
 		</item>
 	</channel>
 </rss>

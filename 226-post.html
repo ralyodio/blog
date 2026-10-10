@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Profullstack webring: 72 sites, five links, and how to start your own &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/226-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-10T09:38:19Z">
+<meta name="description" content="Every Profullstack site carries &lt;&lt; Profullstack &gt;&gt; in its footer. How the ring works, anonymous voting, how a site joins, and how to make and run a webring of your own on RSS Amplifier.">
+</head>
+<body>
+
+<article>
+
+<h1>The Profullstack webring: 72 sites, five links, and how to start your own</h1>
+
+<p><em>2026-10-10, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Scroll to the bottom of almost any Profullstack site and you will find this:</p>
+
+<pre><code>&lt;&lt; Profullstack &gt;&gt; ⚄ ▲</code></pre>
+
+<p>That is a webring. The <code>&gt;&gt;</code> link takes you to the next site in the ring and <code>&lt;&lt;</code> takes you to the previous one. The die picks a random site, the triangle votes for the site you are on, and the name opens the full member list.</p>
+
+<p>Webrings were how people found each other on the web before search engines took over. A ring is a circle of sites that agree to link to each other, so a visitor can walk from one to the next. We brought one back because we run a lot of sites. Most of our visitors find one product and never learn that the other seventy exist.</p>
+
+<h3>What is in the ring</h3>
+
+<p>As of today the ring has <strong>72 members</strong>. <strong>59 are active</strong> and 13 are inactive. Here is a sample:</p>
+
+<ul>
+	<li><strong>Products:</strong> <a href="https://coinpayportal.com/">CoinPay</a>, <a href="https://ugig.net/">ugig.net</a>, <a href="https://threatcrush.com/">ThreatCrush</a>, <a href="https://crawlproof.com/">CrawlProof</a>, <a href="https://pairux.com/">PairUX</a>, <a href="https://sh1pt.com/">sh1pt</a>, <a href="https://qrypt.chat/">qrypt.chat</a></li>
+	<li><strong>Directories and data:</strong> <a href="https://rssamplifier.com/">RSS Amplifier</a>, <a href="https://nichedb.dev/">nichedb.dev</a>, <a href="https://outreachgraph.com/">OutreachGraph</a>, <a href="https://datamart.help/">datamart.help</a></li>
+	<li><strong>Media:</strong> <a href="https://bittorrented.com/">bittorrented</a>, <a href="https://genrewatch.com/">genrewatch</a>, <a href="https://tipoffwatch.com/">tipoffwatch</a>, <a href="https://nixamp.com/">nixamp</a>, <a href="https://p0dcasters.com/">p0dcasters</a></li>
+	<li><strong>Developer tools:</strong> <a href="https://moshcode.sh/">moshcode</a>, <a href="https://hqtui.com/?utm_source=htmlblog&amp;utm_medium=blog&amp;utm_campaign=launch-announcement">hqtui</a>, <a href="https://hqterm.sh/">hqterm.sh</a>, <a href="https://r4ck.dev/">r4ck.dev</a>, <a href="https://bufferoverride.com/">BufferOverride</a></li>
+	<li><strong>Blogs:</strong> <a href="https://dev.profullstack.com/~anthony/blog/?utm_source=htmlblog&amp;utm_medium=blog&amp;utm_campaign=launch-announcement">Chovy's blog</a>, the <a href="https://logicsrc.com/blog">LogicSRC blog</a> and the <a href="https://crawlproof.com/blog">CrawlProof blog</a></li>
+</ul>
+
+<p>The full list, in ring order, is at <a href="https://rssamplifier.com/ring/profullstack">rssamplifier.com/ring/profullstack</a>. You can also get it as <a href="https://rssamplifier.com/ring/profullstack/openwebring.json">JSON</a> or as an <a href="https://rssamplifier.com/ring/profullstack/opml">OPML file</a> of every member's feed. The OPML file subscribes you to the whole ring in one import.</p>
+
+<h3>How it works</h3>
+
+<p>The ring runs on <a href="https://logicsrc.com/openwebring">OpenWebring</a>, an open spec we published at LogicSRC. <a href="https://rssamplifier.com/ring">RSS Amplifier</a> is the first host.</p>
+
+<p>A member site owes the ring a few plain links and nothing else. There is no script, no widget, no tracking pixel and no iframe. Here is the footer, with the two icons shortened to <code>…</code>:</p>
+
+<pre><code class="language-html">&lt;nav class=&quot;webring&quot; aria-label=&quot;Profullstack webring&quot;&gt;
+  &lt;a href=&quot;https://rssamplifier.com/ring/profullstack/previous?from=https%3A%2F%2Fprofullstack.com%2F&quot; rel=&quot;prev&quot;&gt;&amp;lt;&amp;lt;&lt;/a&gt;
+  &lt;a href=&quot;https://rssamplifier.com/ring/profullstack&quot;&gt;Profullstack&lt;/a&gt;
+  &lt;a href=&quot;https://rssamplifier.com/ring/profullstack/next?from=https%3A%2F%2Fprofullstack.com%2F&quot; rel=&quot;next&quot;&gt;&amp;gt;&amp;gt;&lt;/a&gt;
+  &lt;a href=&quot;https://rssamplifier.com/ring/profullstack/random?from=https%3A%2F%2Fprofullstack.com%2F&quot; title=&quot;Random site&quot; aria-label=&quot;Random site&quot;&gt;&lt;svg …/&gt;&lt;/a&gt;
+  &lt;a href=&quot;https://rssamplifier.com/ring/profullstack/vote?from=https%3A%2F%2Fprofullstack.com%2F&quot; title=&quot;Vote for this site&quot; aria-label=&quot;Vote for this site&quot;&gt;&lt;svg …/&gt;&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+
+<p>The die and the triangle are the <code>random</code> and <code>vote</code> icons from <a href="https://github.com/profullstack/openicon">OpenIcon</a>, our open icon set. They are drawn inline with <code>currentColor</code>, so they take the colour of each site's footer and load nothing from anywhere.</p>
+
+<p>Our own sites do not paste this by hand. They render <a href="https://github.com/profullstack/footer"><code>@profullstack/footer</code></a>, which fetches the latest template at render time. One release of that package updates every footer in the fleet.</p>
+
+<p>Each link is a redirect. The <code>from=</code> parameter tells the host where you are, and the host answers with a <code>302</code> to the right neighbour. Because of this, <strong>the ring's order lives only on the host</strong>. When a site joins or leaves, nobody edits seventy footers.</p>
+
+<p>The host follows a few rules:</p>
+
+<ul>
+	<li><strong>It skips inactive members.</strong> A hop never lands you on a site that has dropped its links or gone down.</li>
+	<li><strong>It wraps.</strong> &quot;Next&quot; from the last member goes to the first.</li>
+	<li><strong>Random never returns you to the page you came from.</strong></li>
+	<li><strong>An unknown <code>from</code> gets a random hop</strong>, so a copied snippet still goes somewhere useful.</li>
+	<li><strong>It accepts other rings' URL shapes.</strong> That includes <code>?host=</code> (Fediring), <code>?via=</code> (webri.ng), <code>?url=</code>, <code>/&lt;member&gt;/next</code> (IndieWeb and Hotline style), and a bare Referer. A site that already uses another ring's markup does not have to rewrite it.</li>
+</ul>
+
+<h4>Staying active</h4>
+
+<p>The host checks every member about once a week. It fetches the homepage and looks for a link back to the ring. If it finds one, the member is <strong>active</strong>. If it does not, the member is marked <strong>inactive</strong> and hops skip it. Members are never deleted. When the links come back, so does the member.</p>
+
+<p>The links have to be in the HTML the server sends. A footer that only appears after JavaScript runs will never be seen by the checker.</p>
+
+<h4>Voting</h4>
+
+<p>The triangle is a vote for the site you are reading. It opens a small page on the ring host that shows the site and a <strong>Vote</strong> button. You do not need an account.</p>
+
+<p>Each visitor gets one vote per site per day, and at most ten votes an hour across the whole ring. We never store your IP address. A vote is keyed on a salted hash of the address and the date, so it cannot be linked to you or followed from one day to the next. The vote itself is a button press, so a search crawler or a link prefetcher that follows the footer link never casts one. Vote counts show next to each site on the ring page.</p>
+
+<h4>Who made it: human, AI or both</h4>
+
+<p>Each member can publish a small descriptor at <code>/.well-known/openwebring.json</code>:</p>
+
+<pre><code class="language-json">{
+  &quot;openwebring&quot;: &quot;0.1&quot;,
+  &quot;site&quot;: { &quot;url&quot;: &quot;https://profullstack.com/&quot;, &quot;name&quot;: &quot;Profullstack&quot; },
+  &quot;made_by&quot;: &quot;both&quot;,
+  &quot;rings&quot;: [{ &quot;ring&quot;: &quot;https://rssamplifier.com/ring/profullstack&quot;, &quot;slug&quot;: &quot;profullstack-com&quot; }]
+}</code></pre>
+
+<p><code>made_by</code> is <code>human</code>, <code>ai</code> or <code>both</code>. An optional <code>disclosure</code> field uses the W3C AI-disclosure vocabulary (<code>none</code>, <code>ai-assisted</code>, <code>ai-generated</code>, <code>autonomous</code>). Both are the site's own claim, and the host does not verify them. If a site leaves the field out, the host lists it as &quot;unstated&quot; and does not guess. Most of our sites say <code>both</code>, because they are built by people running fleets of AI coding agents. The ring page shows each member's declaration.</p>
+
+<h3>Join the Profullstack ring</h3>
+
+<p>The Profullstack ring is curated, so it is for Profullstack properties and close friends. If you run one, email us and we will add it. Then:</p>
+
+<ol>
+	<li>Paste the five links above into your footer, or render <code>@profullstack/footer</code>, and change <code>from=</code> to your own homepage, URL-encoded. The ring page has the full snippet with the icons.</li>
+	<li>Optionally publish <code>/.well-known/openwebring.json</code> with your <code>made_by</code>.</li>
+	<li>Ask the host to check you now instead of waiting a week:</li>
+</ol>
+
+<p>```sh
+curl -X POST 'https://rssamplifier.com/ring/profullstack/check?url=https://yoursite.example/'
+```</p>
+
+<p>The response tells you whether you are active and which page the link was found on.</p>
+
+<h3>Make your own webring</h3>
+
+<p>You do not need us to run a ring. Anyone with an RSS Amplifier account can make one, and it is public as soon as you save it.</p>
+
+<h4>1. Put your sites in the directory</h4>
+
+<p>Ring members are sites in the <a href="https://rssamplifier.com/">RSS Amplifier directory</a>. If a site you want is not there yet, <a href="https://rssamplifier.com/submit">submit its feed</a> first. Submission is free and needs no key.</p>
+
+<h4>2. Create the ring</h4>
+
+<p>Sign in and open <strong><a href="https://rssamplifier.com/ring/new">rssamplifier.com/ring/new</a></strong>. The form has three fields:</p>
+
+<ul>
+	<li><strong>Title</strong>: for example, &quot;Indie game devlogs&quot;. This becomes the URL slug, such as <code>/ring/indie-game-devlogs</code>.</li>
+	<li><strong>About it</strong>: one optional line on what the ring is for.</li>
+	<li><strong>Sites</strong>: one per line. Each line can be a site address, a feed address or a directory slug:</li>
+</ul>
+
+<p>```
+<a href="https://example.com/">https://example.com/</a>
+<a href="https://another.example/feed.xml">https://another.example/feed.xml</a>
+some-blog
+```</p>
+
+<p>The order you list them in becomes the ring's order. Click <strong>Publish the ring</strong>. If an entry is not in the directory, the form names it so you can submit it and try again.</p>
+
+<p>The new ring immediately gets the same things the Profullstack ring has:</p>
+
+<ul>
+	<li>A ring page at <code>/ring/&lt;slug&gt;</code></li>
+	<li>Hops at <code>/ring/&lt;slug&gt;/next</code>, <code>/previous</code> and <code>/random</code>, and voting at <code>/ring/&lt;slug&gt;/vote</code></li>
+	<li>A member file at <code>/ring/&lt;slug&gt;/openwebring.json</code></li>
+	<li>An OPML of every member's feed at <code>/ring/&lt;slug&gt;/opml</code></li>
+	<li>A listing on the <a href="https://rssamplifier.com/ring">ring index</a> and in the host file every OpenWebring directory reads</li>
+</ul>
+
+<h4>3. Hand out the snippet</h4>
+
+<p>Each member pastes the footer from the earlier section, with your ring's slug in place of <code>profullstack</code> and their own homepage in <code>from=</code>. The ring page has a ready-made join snippet. Until a member's links are live they stay <strong>pending</strong>, and hops skip them. Members who don't want to wait for the weekly check can run the <code>curl</code> check above against your ring.</p>
+
+<h4>4. Manage it</h4>
+
+<p>Open <strong><code>/ring/&lt;slug&gt;/edit</code></strong>, which only the ring's owner can see. From there you can:</p>
+
+<ul>
+	<li><strong>Rename the ring</strong> or change its description.</li>
+	<li><strong>Add sites.</strong> Paste them one per line. New members go on the end, and nobody else's position changes.</li>
+	<li><strong>Remove a site.</strong> It leaves the ring at once, and the sites on either side become neighbours.</li>
+	<li><strong>Watch the votes.</strong> Each site's vote count shows on the ring page, so you can see which members readers like.</li>
+</ul>
+
+<p>Changes are live the moment they save. Every form is a plain HTML post, so editing works with JavaScript turned off.</p>
+
+<p>There is a shortcut, too. <strong>Every topic in the directory is already a ring.</strong> Open any topic page and you will find a webring link built from the feeds in that topic. If a site in that topic adds the links, the ring becomes a real one with that site as an active member.</p>
+
+<h4>Points</h4>
+
+<p>All ring activity earns points on the <a href="https://rssamplifier.com/ring/leaders">ring leaderboard</a>: viewing, liking, following, sharing, adding a site and making a ring. Making a ring earns the most. Readers and rings both rank, and the most-liked rings appear in RSS Amplifier's footer.</p>
+
+<h3>For agents</h3>
+
+<p>Everything here is also machine-readable. RSS Amplifier's MCP server has <code>list_rings</code>, <code>get_ring</code> and <code>ring_next</code>, so an agent can walk a ring the way a person clicks <code>&gt;&gt;</code>. Every ring is also listed in <a href="https://nichedb.dev/c/webrings">nichedb.dev's webrings collection</a> along with members from other hosts.</p>
+
+<h3>Why we did it</h3>
+
+<p>Search engines and social feeds decide what you see. A webring lets the sites themselves decide. Each site in the circle vouches for its neighbours with an ordinary link. We like that it costs a site a handful of anchors and costs the visitor nothing, and that the whole system runs on 302 redirects.</p>
+
+<p>Click <code>&gt;&gt;</code> at the bottom of this page and see where you land.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
