@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>hqterm desktop 0.4: now on Mac and Windows &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/227-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-12T10:22:57Z">
+<meta name="description" content="hqterm desktop 0.4.0 adds a Mac app for Apple silicon and Intel and a Windows installer: tabs, splits, HD emoji, inline images and ssh sessions that never drop.">
+</head>
+<body>
+
+<article>
+
+<h1>hqterm desktop 0.4: now on Mac and Windows</h1>
+
+<p><em>2026-10-12, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>hqterm desktop was a Linux AppImage until today. Version 0.4.0 adds a Mac app for Apple silicon and Intel, and a Windows installer. Same app on all three: tabs, split panes that come back where you left them, HD emoji, and inline images from hqtui and qc, drawn properly.</p>
+
+<p>The point of hqterm is that your terminal sessions don't die. Close the laptop on Wi-Fi, open it on 5G, and your shell, your editor and that long build are still there, over the ssh you already use. The desktop app is the window built for that: every remote pane is an hqsh session, so a restart reattaches all of them.</p>
+
+<h3>Install</h3>
+
+<p>On a Mac or Linux:</p>
+
+<pre><code class="language-sh">curl -fsSL https://hqterm.sh/install | sh</code></pre>
+
+<p>On a Mac that now also puts hqterm.app in ~/Applications. On Windows, in PowerShell:</p>
+
+<pre><code class="language-powershell">irm https://hqterm.sh/install.ps1 | iex</code></pre>
+
+<p>That installs hqsh and the desktop app, per user, no admin. Or download them directly:</p>
+
+<ul>
+	<li>Mac, Apple silicon: <a href="https://github.com/profullstack/hqterm/releases/latest/download/hqterm-desktop-macos-arm64.dmg">https://github.com/profullstack/hqterm/releases/latest/download/hqterm-desktop-macos-arm64.dmg</a></li>
+	<li>Mac, Intel: <a href="https://github.com/profullstack/hqterm/releases/latest/download/hqterm-desktop-macos-x64.dmg">https://github.com/profullstack/hqterm/releases/latest/download/hqterm-desktop-macos-x64.dmg</a></li>
+	<li>Windows x64: <a href="https://github.com/profullstack/hqterm/releases/latest/download/hqterm-desktop-windows-x64-setup.exe">https://github.com/profullstack/hqterm/releases/latest/download/hqterm-desktop-windows-x64-setup.exe</a></li>
+</ul>
+
+<h3>What is different per platform</h3>
+
+<p>On the Mac, Cmd does what Ctrl+Shift does elsewhere: Cmd+T for a tab, Cmd+D to split right, Cmd+Shift+D to split down, Cmd+C and Cmd+V to copy and paste. Option+drag selects text even when the program in the pane is using the mouse. Started from Finder, the app still finds what Homebrew and the installer put on your PATH.</p>
+
+<p>On Windows, panes open PowerShell 7 if you have it, otherwise Windows PowerShell. Remote panes run hqsh.exe, which install.ps1 puts on your PATH.</p>
+
+<p>The builds are not signed by Apple or Microsoft yet. A dmg downloaded in a browser needs a right-click and Open the first time; SmartScreen may want More info, then Run anyway. The curl installer on a Mac skips that step.</p>
+
+<p>Every build is launched for real in CI on each platform before release: window, shell, split, layout restore and text selection.</p>
+
+<p>Docs: <a href="https://hqterm.sh/docs#desktop">https://hqterm.sh/docs#desktop</a>
+Source: <a href="https://github.com/profullstack/hqterm">https://github.com/profullstack/hqterm</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

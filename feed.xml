@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 10 Oct 2026 09:38:19 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 12 Oct 2026 10:22:57 GMT</lastBuildDate>
+
+		<item>
+			<title>hqterm desktop 0.4: now on Mac and Windows</title>
+			<link>https://dev.profullstack.com/~anthony/blog/227-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/227-post.html</guid>
+			<pubDate>Mon, 12 Oct 2026 10:22:57 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>hqterm desktop 0.4.0 adds a Mac app for Apple silicon and Intel and a Windows installer: tabs, splits, HD emoji, inline images and ssh sessions that never drop.</description>
+		</item>
 
 		<item>
 			<title>The Profullstack webring: 72 sites, five links, and how to start your own</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 06 Oct 2026 10:29:16 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>pwamart.com is an app store for Progressive Web Apps: install on any device from web, CLI, TUI, MCP or desktop.</description>
-		</item>
-
-		<item>
-			<title>qc: qrypt.chat in your terminal</title>
-			<link>https://dev.profullstack.com/~anthony/blog/217-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/217-post.html</guid>
-			<pubDate>Tue, 06 Oct 2026 08:29:15 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>qrypt.chat's terminal client: a post-quantum chat app, a CLI and an MCP server in one command, plus our own emoji picker.</description>
 		</item>
 	</channel>
 </rss>
