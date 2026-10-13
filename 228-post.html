@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Real emoji and icons in your terminal, even over SSH and tmux &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/228-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-13T06:51:25Z">
+<meta name="description" content="qc and hqtui 0.9.0 draw our OpenEmoji and OpenIcon artwork as real images in Kitty and Ghostty, even over SSH and tmux.">
+</head>
+<body>
+
+<article>
+
+<h1>Real emoji and icons in your terminal, even over SSH and tmux</h1>
+
+<p><em>2026-10-13, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Terminal apps have always drawn emoji with whatever font the terminal happens to have. Our chat client for qrypt.chat, <code>qc</code>, now draws our own OpenEmoji and OpenIcon artwork as actual images, in color and at full resolution, right inside the chat.</p>
+
+<p>It works in Kitty and Ghostty, and it keeps working when you SSH into a server and run <code>qc</code> inside tmux. That last part is the hard one.</p>
+
+<h3>How it works</h3>
+
+<p>A full-screen terminal app redraws constantly, and an image written straight to the screen gets wiped the moment the text under it changes. So we used the Kitty graphics protocol's Unicode placeholders instead:</p>
+
+<ol>
+	<li>Each PNG goes to the terminal once, under a small numeric id.</li>
+	<li>The app then prints a special placeholder character in the cells where the image belongs, colored with that id.</li>
+	<li>The terminal paints the image wherever those characters appear.</li>
+</ol>
+
+<p>Because the placeholders are ordinary characters, everything a TUI already does keeps working: redraws, scrolling, clipping, resizing. tmux only has to pass the one-time upload through to your terminal (<code>set -g allow-passthrough on</code>), and it keeps the placeholders in its own screen like any other text.</p>
+
+<h3>Try it</h3>
+
+<pre><code>npm i -g @profullstack/qryptchat
+qc login
+qc</code></pre>
+
+<p>In Kitty or Ghostty it turns on by itself. Over SSH or inside tmux, start it with <code>QC_HD=1 qc</code>. Everywhere else you get the normal emoji characters, so nothing breaks.</p>
+
+<h3>Use it in your own TUI</h3>
+
+<p>The image layer lives in hqtui 0.9.0, our immediate-mode TUI library, so any hqtui app can use it:</p>
+
+<pre><code class="language-ts">import { createImageStore, drawRichText, drawIcon } from &quot;@profullstack/hqtui&quot;;
+
+const images = createImageStore({
+  write: (s) =&gt; app.terminal.write(s),
+  onReady: () =&gt; app.invalidate(),
+});
+
+// inside a draw callback
+drawRichText(surface, x, y, &quot;ship it 🚀&quot;, { fg }, images);
+drawIcon(surface, x, y, &quot;lock&quot;, images, &quot;🔒&quot;);</code></pre>
+
+<p>Images load lazily, show the plain character until they arrive, and are cached on disk after the first fetch. <code>HQTUI_IMAGES=1</code> turns it on where the terminal cannot be detected, and <code>HQTUI_IMAGES=0</code> turns it off.</p>
+
+<p>The same release fixed a long-standing color bug: an explicit 256-color palette entry used to come out as a dark blue in truecolor terminals. It is now sent as the palette index it is.</p>
+
+<p>Links:</p>
+
+<ul>
+	<li>hqtui 0.9.0: <a href="https://github.com/profullstack/hqtui/releases/tag/v0.9.0">https://github.com/profullstack/hqtui/releases/tag/v0.9.0</a></li>
+	<li>qc and qrypt.chat 0.5.5: <a href="https://github.com/profullstack/qryptchat-web/releases/tag/v0.5.5">https://github.com/profullstack/qryptchat-web/releases/tag/v0.5.5</a></li>
+	<li>qrypt.chat: <a href="https://qrypt.chat">https://qrypt.chat</a></li>
+</ul>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 12 Oct 2026 10:22:57 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 13 Oct 2026 06:51:26 GMT</lastBuildDate>
+
+		<item>
+			<title>Real emoji and icons in your terminal, even over SSH and tmux</title>
+			<link>https://dev.profullstack.com/~anthony/blog/228-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/228-post.html</guid>
+			<pubDate>Tue, 13 Oct 2026 06:51:25 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>qc and hqtui 0.9.0 draw our OpenEmoji and OpenIcon artwork as real images in Kitty and Ghostty, even over SSH and tmux.</description>
+		</item>
 
 		<item>
 			<title>hqterm desktop 0.4: now on Mac and Windows</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 06 Oct 2026 10:37:37 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>moshcode 0.112.0 puts your herd of coding agents on your phone: one-tap approvals for Claude Code and Codex, push when one blocks, and no SSH or Tailscale because the box dials out.</description>
-		</item>
-
-		<item>
-			<title>pwamart: an app store for web apps</title>
-			<link>https://dev.profullstack.com/~anthony/blog/218-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/218-post.html</guid>
-			<pubDate>Tue, 06 Oct 2026 10:29:16 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>pwamart.com is an app store for Progressive Web Apps: install on any device from web, CLI, TUI, MCP or desktop.</description>
 		</item>
 	</channel>
 </rss>
