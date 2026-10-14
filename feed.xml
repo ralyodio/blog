@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 13 Oct 2026 06:51:26 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 14 Oct 2026 00:23:29 GMT</lastBuildDate>
+
+		<item>
+			<title>OutreachGraph now runs Hunter’s 12-month outreach planner by itself</title>
+			<link>https://dev.profullstack.com/~anthony/blog/229-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/229-post.html</guid>
+			<pubDate>Wed, 14 Oct 2026 00:23:28 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>OutreachGraph 0.10.0 runs Hunter's 12-month outreach planner on its own: verify before sending, a 2% bounce gate, one contact per company, A/B tests that end, business hours, and a play per month built from engagement.</description>
+		</item>
 
 		<item>
 			<title>Real emoji and icons in your terminal, even over SSH and tmux</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 06 Oct 2026 12:35:20 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Booking.com wrote up how they cut Node.js costs by 38% with Watt. They swapped pm2's cluster module for worker threads that accept connections themselves, gave each worker its own port behind nginx,…</description>
-		</item>
-
-		<item>
-			<title>Your coding agents, on your phone</title>
-			<link>https://dev.profullstack.com/~anthony/blog/219-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/219-post.html</guid>
-			<pubDate>Tue, 06 Oct 2026 10:37:37 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>moshcode 0.112.0 puts your herd of coding agents on your phone: one-tap approvals for Claude Code and Codex, push when one blocks, and no SSH or Tailscale because the box dials out.</description>
 		</item>
 	</channel>
 </rss>

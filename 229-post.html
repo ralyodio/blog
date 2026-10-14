@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OutreachGraph now runs Hunter&rsquo;s 12-month outreach planner by itself &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/229-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-14T00:23:28Z">
+<meta name="description" content="OutreachGraph 0.10.0 runs Hunter's 12-month outreach planner on its own: verify before sending, a 2% bounce gate, one contact per company, A/B tests that end, business hours, and a play per month built from engagement.">
+</head>
+<body>
+
+<article>
+
+<h1>OutreachGraph now runs Hunter&rsquo;s 12-month outreach planner by itself</h1>
+
+<p><em>2026-10-14, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Hunter publishes an <a href="https://hunter.io/pdf/hunter-outreach-planner.pdf">Outreach Planner</a>: a year of B2B email outreach mapped month by month. Every month has a buying mode, a play and a health check. January is three fresh lists. February is a case study to anyone who opened January's email but never replied. March is a roundtable invite to the slow movers, and so on through the December check-ins.</p>
+
+<p>It is a good plan. It is also a to-do list a person has to work through every month, filtering by &quot;Status = Opened&quot;, finding the next contact at each company, remembering to re-verify. <a href="https://outreachgraph.com">OutreachGraph</a> 0.10.0 does that work on its own.</p>
+
+<h3>What runs all year</h3>
+
+<ul>
+	<li><strong>Verify before sending.</strong> Every address is checked (MX, then an SMTP RCPT probe where port 25 is open) before its first message and again after 90 days. A bounced address is never sent to again.</li>
+	<li><strong>Under 2% bounce.</strong> A campaign that passes 2% over 50 sends pauses, re-verifies everything still queued, drops what fails and starts again on a fresh window. Accept-all addresses only go out while the campaign is at or under 1%.</li>
+	<li><strong>One contact per company.</strong> Titles are read as budget holder, end user, blocker (legal, security, IT, finance) or champion. The budget holder goes first, the next person 21 days later, each with an angle written for their role.</li>
+	<li><strong>A/B tests that end.</strong> At 50 sends per arm the leader wins on reply rate at 95% confidence, and at 200 the best arm wins anyway. The winner becomes the default.</li>
+	<li><strong>Timing.</strong> Cold mail leaves Monday to Friday, 8 to 5, in the recipient's timezone, guessed from their location, their company's, or their mail domain. A conversation that goes quiet for a week after we answered gets one follow-up, never two.</li>
+</ul>
+
+<h3>What runs each month</h3>
+
+<p>On the first sweep of a month, every product gets that month's plays, built from its own engagement data and launched as a campaign in the product's own approval mode. Autopilot products get autopilot plays. Products where you approve everything get cards.</p>
+
+<p>Building it turned up a real bug: cadence email steps never carried the signal the composer grounds a message in, so the composer refused to write them. Every multi-step email plan had been stalling at &quot;no drafted message&quot;. That is fixed too.</p>
+
+<p>There is a Planner page under Settings, plus <code>og planner</code>, <code>GET /api/v1/planner</code> and MCP tools for agents.</p>
+
+<p>This post was drafted with AI assistance and edited by a human.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
