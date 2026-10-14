@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 14 Oct 2026 18:51:46 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 14 Oct 2026 22:23:17 GMT</lastBuildDate>
+
+		<item>
+			<title>Free ebook: Software Engineering in the Agentic Era</title>
+			<link>https://dev.profullstack.com/~anthony/blog/231-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/231-post.html</guid>
+			<pubDate>Wed, 14 Oct 2026 22:23:16 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A free, open-source field guide to building software with a fleet of AI coding agents. PDF, EPUB and HTML.</description>
+		</item>
 
 		<item>
 			<title>CoinPay Finances: due soon, recurring charges and a daily summary</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 06 Oct 2026 15:55:58 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>wx93.me is a URL shortener built for agents as much as people. It launched today, with 9xq.me as a second short domain on the same links.</description>
-		</item>
-
-		<item>
-			<title>The best data enrichment platforms for 2027 and beyond</title>
-			<link>https://dev.profullstack.com/~anthony/blog/221-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/221-post.html</guid>
-			<pubDate>Tue, 06 Oct 2026 14:25:16 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>We ran the same 50 emails through the free tiers of ten enrichment platforms: setup friction, pricing, accuracy and the traps, from People Data Labs and Hunter to a Google search of LinkedIn.</description>
 		</item>
 	</channel>
 </rss>
