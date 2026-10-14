@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoinPay Finances: due soon, recurring charges and a daily summary &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/230-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-14T18:51:45Z">
+<meta name="description" content="CoinPay Finances now lists what is due soon across every bank and card, with recurring charge detection, card due days, a daily summary email and MCP tools.">
+</head>
+<body>
+
+<article>
+
+<h1>CoinPay Finances: due soon, recurring charges and a daily summary</h1>
+
+<p><em>2026-10-14, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>CoinPay Finances already pulled every linked bank account and card into one ledger. What it did not answer was the question you actually ask in the morning: what is about to leave, and did anything slip?</p>
+
+<h3>Due soon, across every account</h3>
+
+<p>The new Due soon card on /finances lists everything due in the next 7, 14 or 30 days, business and personal together. It comes from two places:</p>
+
+<ul>
+	<li><strong>Recurring charges</strong>, detected from your own history. A charge seen three times on a steady weekly, biweekly, monthly, quarterly or annual cadence is expected again one interval after the last one. Subscriptions billed to a card count now too; before, only payments onto a card did.</li>
+	<li><strong>Statement due days</strong> on cards and loans. No bank feed carries them, so you set the day once per account (and a fixed amount for a loan). If a payment this cycle already covers it, it shows as paid.</li>
+</ul>
+
+<p>Banks post late, so a date that has passed is not automatically a problem. If the account has reported newer rows and the charge is still missing, it is <strong>overdue</strong>. If the account has reported nothing since, it is <strong>not posted yet</strong> and stays out of the overdue total. A charge that is weeks late on a feed that has moved on lands under <strong>not seen lately</strong>, which usually means cancelled or moved to another card.</p>
+
+<p>Investment accounts are left out on purpose: a monthly ETF buy is not a bill.</p>
+
+<h3>A daily summary email</h3>
+
+<p>Turn it on from the card, or with <code>coinpay finances daily on --hour 7</code>. Each morning it sends what is overdue, what is due soon, what was imported since the last one, and the balance sheet.</p>
+
+<h3>CLI and MCP</h3>
+
+<pre><code>coinpay finances due --days 14
+coinpay finances recurring
+coinpay finances due-day &lt;account-id&gt; 15 --amount 810.46
+coinpay finances daily send-now</code></pre>
+
+<p><code>coinpay mcp</code> gains <code>finance_due_soon</code>, <code>finance_recurring</code>, <code>finance_summary</code>, <code>finance_transactions</code>, <code>finance_set_due_day</code> and <code>finance_daily_summary</code>, so an agent can answer &quot;what do I owe this week&quot; from the same data. The server also now returns the list metadata Claude Code requires, so it connects cleanly.</p>
+
+<p>Install or update with <code>npm i -g @profullstack/coinpay@0.16.0</code>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

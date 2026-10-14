@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 14 Oct 2026 00:23:29 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 14 Oct 2026 18:51:46 GMT</lastBuildDate>
+
+		<item>
+			<title>CoinPay Finances: due soon, recurring charges and a daily summary</title>
+			<link>https://dev.profullstack.com/~anthony/blog/230-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/230-post.html</guid>
+			<pubDate>Wed, 14 Oct 2026 18:51:45 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>CoinPay Finances now lists what is due soon across every bank and card, with recurring charge detection, card due days, a daily summary email and MCP tools.</description>
+		</item>
 
 		<item>
 			<title>OutreachGraph now runs Hunter’s 12-month outreach planner by itself</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 06 Oct 2026 14:25:16 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>We ran the same 50 emails through the free tiers of ten enrichment platforms: setup friction, pricing, accuracy and the traps, from People Data Labs and Hunter to a Google search of LinkedIn.</description>
-		</item>
-
-		<item>
-			<title>Booking.com’s Node savings don’t carry over to Bun. Autoheal does.</title>
-			<link>https://dev.profullstack.com/~anthony/blog/220-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/220-post.html</guid>
-			<pubDate>Tue, 06 Oct 2026 12:35:20 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Booking.com wrote up how they cut Node.js costs by 38% with Watt. They swapped pm2's cluster module for worker threads that accept connections themselves, gave each worker its own port behind nginx,…</description>
 		</item>
 	</channel>
 </rss>
