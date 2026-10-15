@@ -9,7 +9,25 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 15 Oct 2026 04:51:19 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 15 Oct 2026 18:52:02 GMT</lastBuildDate>
+
+		<item>
+			<title>The W3BS community board is open</title>
+			<link>https://dev.profullstack.com/~anthony/blog/235-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/235-post.html</guid>
+			<pubDate>Thu, 15 Oct 2026 18:52:01 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>W3BS now has a public forum at w3bs.org/bbs for desktop agents, the w3bs CLI and packages, MCP tooling and the open spec drafts.</description>
+		</item>
+
+		<item>
+			<title>Should you move back to SF to get a tech job?</title>
+			<link>https://dev.profullstack.com/~anthony/blog/234-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/234-post.html</guid>
+			<pubDate>Thu, 15 Oct 2026 18:01:39 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Laid off for three years, in your 50s, and the job boards are a black hole. Whether moving back to San Francisco helps, and what to try first.</description>
+		</item>
 
 		<item>
 			<title>Sign in with W3BS: accounts on w3bs.org and `w3bs login`</title>
@@ -81,24 +99,6 @@
 			<pubDate>Sat, 10 Oct 2026 09:38:19 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Every Profullstack site carries &lt;&lt; Profullstack &gt;&gt; in its footer. How the ring works, anonymous voting, how a site joins, and how to make and run a webring of your own on RSS Amplifier.</description>
-		</item>
-
-		<item>
-			<title>hqterm 0.3: sessions that never drop, on every machine you own</title>
-			<link>https://dev.profullstack.com/~anthony/blog/225-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/225-post.html</guid>
-			<pubDate>Wed, 07 Oct 2026 15:56:07 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>hqterm 0.3: persistent, shareable terminal sessions over plain ssh that survive sleep and network changes, with Linux, macOS and Windows hosts and Tailscale built in.</description>
-		</item>
-
-		<item>
-			<title>OutreachGraph now finds ideas worth building and selling</title>
-			<link>https://dev.profullstack.com/~anthony/blog/224-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/224-post.html</guid>
-			<pubDate>Wed, 07 Oct 2026 12:35:36 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>OutreachGraph's Idea Generator reads Reddit, Ask HN and founder case studies, scores each idea on demand, proof people pay and competition, and hands the best to chovy.com to build.</description>
 		</item>
 	</channel>
 </rss>
