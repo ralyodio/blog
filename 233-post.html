@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in with W3BS: accounts on w3bs.org and `w3bs login` &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/233-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-15T04:51:18Z">
+<meta name="description" content="w3bs.org accounts: passkeys or a password, an emailed link as the fallback, w3bs login for the CLI, and Sign in with W3BS for apps over OAuth 2.1.">
+</head>
+<body>
+
+<article>
+
+<h1>Sign in with W3BS: accounts on w3bs.org and `w3bs login`</h1>
+
+<p><em>2026-10-15, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>w3bs.org has accounts now. One account works on the site, in the <code>w3bs</code> command line, and in any app that adds a &quot;Sign in with W3BS&quot; button.</p>
+
+<h3>Getting in</h3>
+
+<p>Make an account at <a href="https://w3bs.org/signup">w3bs.org/signup</a>. You pick a username and give an email address. We send a link, and the account exists once you click it. That way nobody can register your address before you do, and the form never tells a stranger whether an address already has an account.</p>
+
+<p>After that you sign in with a passkey or a password. A passkey is the better choice: your fingerprint, face or device PIN, and nothing a phishing page can steal. The emailed link stays around as the fallback for a lost password or a new laptop.</p>
+
+<h3>The command line</h3>
+
+<pre><code class="language-sh">curl -fsSL https://w3bs.org/install.sh | sh
+w3bs login
+w3bs whoami</code></pre>
+
+<p><code>w3bs login</code> opens your browser, you approve it once, and the CLI keeps its tokens in <code>~/.config/w3bs/auth.json</code>. <code>w3bs logout</code> revokes the session on the server too, not just on your machine. Every signed-in device is listed on your account page, where you can sign any of them out.</p>
+
+<h3>For app developers</h3>
+
+<p>w3bs.org is an OAuth 2.1 authorization server. Register an app on your account page and you get a client id. There is no client secret: every app uses the authorization code flow with PKCE, which works the same for web, mobile and native apps.</p>
+
+<p>Refresh tokens rotate on every use. If an old one ever shows up again, the whole sign-in is revoked, because two parties holding the same token means one of them stole it. The metadata is at <code>/.well-known/oauth-authorization-server</code> and the details are in the <a href="https://w3bs.org/developers#accounts">developer guide</a>.</p>
+
+<p>The code is open source in <a href="https://github.com/profullstack/w3bs.org">profullstack/w3bs.org</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

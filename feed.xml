@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 15 Oct 2026 02:23:48 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 15 Oct 2026 04:51:19 GMT</lastBuildDate>
+
+		<item>
+			<title>Sign in with W3BS: accounts on w3bs.org and `w3bs login`</title>
+			<link>https://dev.profullstack.com/~anthony/blog/233-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/233-post.html</guid>
+			<pubDate>Thu, 15 Oct 2026 04:51:18 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>w3bs.org accounts: passkeys or a password, an emailed link as the fallback, w3bs login for the CLI, and Sign in with W3BS for apps over OAuth 2.1.</description>
+		</item>
 
 		<item>
 			<title>w3bs: one command line for the open Web</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 07 Oct 2026 12:35:36 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>OutreachGraph's Idea Generator reads Reddit, Ask HN and founder case studies, scores each idea on demand, proof people pay and competition, and hands the best to chovy.com to build.</description>
-		</item>
-
-		<item>
-			<title>Bun vs Node.js in late 2026: the benchmarks disagree, so measure your own</title>
-			<link>https://dev.profullstack.com/~anthony/blog/223-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/223-post.html</guid>
-			<pubDate>Tue, 06 Oct 2026 18:51:05 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Five top-ranked Bun vs Node.js articles report Bun anywhere from 4x faster to 14x slower. What each one measured, why they disagree, and how to pick.</description>
 		</item>
 	</channel>
 </rss>
