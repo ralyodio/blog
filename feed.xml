@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 15 Oct 2026 18:52:02 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 15 Oct 2026 22:23:32 GMT</lastBuildDate>
+
+		<item>
+			<title>Agentic Desktop Layer 0.2: your agents on your real desktop, on Linux, macOS and Windows</title>
+			<link>https://dev.profullstack.com/~anthony/blog/236-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/236-post.html</guid>
+			<pubDate>Thu, 15 Oct 2026 22:23:32 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Version 0.2 lets Claude Code, OpenCode and Codex drive your real desktop on Linux, macOS and Windows, starting disabled, behind a switch you control.</description>
+		</item>
 
 		<item>
 			<title>The W3BS community board is open</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 12 Oct 2026 10:22:57 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>hqterm desktop 0.4.0 adds a Mac app for Apple silicon and Intel and a Windows installer: tabs, splits, HD emoji, inline images and ssh sessions that never drop.</description>
-		</item>
-
-		<item>
-			<title>The Profullstack webring: 72 sites, five links, and how to start your own</title>
-			<link>https://dev.profullstack.com/~anthony/blog/226-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/226-post.html</guid>
-			<pubDate>Sat, 10 Oct 2026 09:38:19 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Every Profullstack site carries &lt;&lt; Profullstack &gt;&gt; in its footer. How the ring works, anonymous voting, how a site joins, and how to make and run a webring of your own on RSS Amplifier.</description>
 		</item>
 	</channel>
 </rss>

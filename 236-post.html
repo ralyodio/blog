@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agentic Desktop Layer 0.2: your agents on your real desktop, on Linux, macOS and Windows &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/236-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-15T22:23:32Z">
+<meta name="description" content="Version 0.2 lets Claude Code, OpenCode and Codex drive your real desktop on Linux, macOS and Windows, starting disabled, behind a switch you control.">
+</head>
+<body>
+
+<article>
+
+<h1>Agentic Desktop Layer 0.2: your agents on your real desktop, on Linux, macOS and Windows</h1>
+
+<p><em>2026-10-15, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Claude Code, OpenCode and Codex are good at code and bad at everything that lives in a GUI. The usual fix is a browser sandbox or a pile of cloud connectors. We wanted something else: the agent drives the desktop you already use, with a real mouse and keyboard, and you hold the switch.</p>
+
+<p>That is the Agentic Desktop Layer, a W3BS project. Version 0.2 installs with one line on Linux, macOS and Windows. Docs at <a href="https://w3bs.org/desktop">w3bs.org/desktop</a>, code in <a href="https://github.com/profullstack/w3bs.org/tree/main/desktop">the w3bs.org repo</a>, Apache-2.0.</p>
+
+<pre><code># macOS and Linux
+curl -fsSL https://w3bs.org/desktop/install.sh | sh
+
+# Windows (PowerShell)
+irm https://w3bs.org/desktop/install.ps1 | iex</code></pre>
+
+<h3>How it behaves</h3>
+
+<ul>
+	<li>It starts <strong>Disabled</strong> after install, login, restart or a crash. Only you turn it on, from the tray (KDE, Windows), the GNOME panel or the macOS menu bar. Agents cannot enable it or approve their own requests.</li>
+	<li><strong>Disable</strong> stops everything at once and releases any keys the layer was holding. So does the emergency shortcut: Super+Alt+Escape on Linux, Win+Alt+Esc on Windows, Control+Option+Command+Escape on macOS. Locking the screen does too.</li>
+	<li>Permission is checked before every single input event. One agent controls the mouse and keyboard at a time.</li>
+	<li>Every click names its target. A click on a window something else now covers, or typing after focus moved, is refused instead of guessed.</li>
+	<li>The audit log keeps metadata only. Never screenshots, never typed text.</li>
+</ul>
+
+<p>Agents connect through a local stdio MCP server: <code>w3bs-desktop setup claude-code</code> prints the line to add it.</p>
+
+<h3>How it was tested</h3>
+
+<p>Not on our laptops. The KDE Plasma and GNOME backends run in disposable containers with real headless sessions: 52 checks on KDE, 72 on GNOME. Windows and macOS run on GitHub's hosted desktops: 54 checks on Windows, 22 on macOS, plus both installers end to end. The checks type real text (including é, € and emoji), move the pointer and read its position back, click, take screenshots, and pull the plug mid-typing.</p>
+
+<h3>What is not done</h3>
+
+<p>No platform is certified yet. Multiple monitors, the lock screen and password prompts on Windows and macOS, and a real logout and login have not been proven on the test machines. Builds are not code-signed, so macOS may ask for permissions again after an upgrade. On GNOME, text with characters your keyboard layout lacks is refused rather than typed partially.</p>
+
+<h3>A note on Vela</h3>
+
+<p>We were told the Vela desktop had every hook we needed. We checked it clean room: one agent read the GPL code and wrote down only the interfaces, the implementer never opened the source. Vela's window, lock and password-prompt hooks are good and the layer uses them. Mouse and keyboard injection only exists behind a debug switch, so the safety model lives in the layer.</p>
+
+<p><em>Drafted with AI assistance and reviewed before publishing.</em></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
