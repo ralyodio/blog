@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>w3bs: one command line for the open Web &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/232-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-15T02:23:47Z">
+<meta name="description" content="The w3bs CLI is live: one command line for the open Web. w3bs packages lists 65 dev and agentic CLIs, each installed with its publisher's curl | sh, and w3bs update keeps them current.">
+</head>
+<body>
+
+<article>
+
+<h1>w3bs: one command line for the open Web</h1>
+
+<p><em>2026-10-15, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>The <code>w3bs</code> CLI is live. It is one binary for every W3BS surface, and packages are its first app.</p>
+
+<pre><code class="language-sh">curl -fsSL https://w3bs.org/install.sh | sh
+w3bs packages            # 65 tools, same list as w3bs.org/packages
+w3bs install claude-code
+w3bs update              # update everything you installed</code></pre>
+
+<h3>The catalog</h3>
+
+<p><a href="https://w3bs.org/packages">w3bs.org/packages</a> lists 65 command line tools: Claude Code, Codex, Copilot CLI, Aider, OpenCode, goose, Cursor and Kiro, plus all 42 of our own, from moshcode and cli-tools to myna, sh1pt and threatcrush.</p>
+
+<p>There is one rule for getting listed: a <code>curl | sh</code> installer. Your script can use npm or pip inside, but <code>w3bs</code> only ever runs your installer. That rule is why every one of our tools got a curl installer this week.</p>
+
+<h3>Signed when you want it</h3>
+
+<p>Publishers who want more than a script can run a signed repository with <code>w3bs-publish</code>. Those packages get TUF-signed metadata, checked downloads, pins, rollback and crash-safe updates. The format is an open spec, <a href="https://logicsrc.com/docs/openpkg">OpenPkg</a>, and <code>w3bs</code> is its reference implementation.</p>
+
+<h3>More than packages</h3>
+
+<p>The same CLI resolves and verifies signed <code>w3bs://</code> resources (<code>w3bs resolve</code>, <code>w3bs verify</code>), and more W3BS apps will land in it as new commands.</p>
+
+<p>Linux and macOS, x86_64 and arm64. No Node, Python or Rust needed. Source: <a href="https://github.com/profullstack/w3bs.org">github.com/profullstack/w3bs.org</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 14 Oct 2026 22:23:17 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 15 Oct 2026 02:23:48 GMT</lastBuildDate>
+
+		<item>
+			<title>w3bs: one command line for the open Web</title>
+			<link>https://dev.profullstack.com/~anthony/blog/232-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/232-post.html</guid>
+			<pubDate>Thu, 15 Oct 2026 02:23:47 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The w3bs CLI is live: one command line for the open Web. w3bs packages lists 65 dev and agentic CLIs, each installed with its publisher's curl | sh, and w3bs update keeps them current.</description>
+		</item>
 
 		<item>
 			<title>Free ebook: Software Engineering in the Agentic Era</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 06 Oct 2026 18:51:05 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Five top-ranked Bun vs Node.js articles report Bun anywhere from 4x faster to 14x slower. What each one measured, why they disagree, and how to pick.</description>
-		</item>
-
-		<item>
-			<title>wx93.me: a URL shortener for agents and people, launched with 9xq.me</title>
-			<link>https://dev.profullstack.com/~anthony/blog/222-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/222-post.html</guid>
-			<pubDate>Tue, 06 Oct 2026 15:55:58 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>wx93.me is a URL shortener built for agents as much as people. It launched today, with 9xq.me as a second short domain on the same links.</description>
 		</item>
 	</channel>
 </rss>
