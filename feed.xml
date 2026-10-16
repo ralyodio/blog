@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 15 Oct 2026 22:23:32 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 16 Oct 2026 02:24:03 GMT</lastBuildDate>
+
+		<item>
+			<title>W3BS Training: teach agents by doing the task yourself</title>
+			<link>https://dev.profullstack.com/~anthony/blog/237-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/237-post.html</guid>
+			<pubDate>Fri, 16 Oct 2026 02:24:03 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Record a task from the desktop tray, review every capture, and let one agent you choose retrieve the approved examples over MCP.</description>
+		</item>
 
 		<item>
 			<title>Agentic Desktop Layer 0.2: your agents on your real desktop, on Linux, macOS and Windows</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 13 Oct 2026 06:51:25 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>qc and hqtui 0.9.0 draw our OpenEmoji and OpenIcon artwork as real images in Kitty and Ghostty, even over SSH and tmux.</description>
-		</item>
-
-		<item>
-			<title>hqterm desktop 0.4: now on Mac and Windows</title>
-			<link>https://dev.profullstack.com/~anthony/blog/227-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/227-post.html</guid>
-			<pubDate>Mon, 12 Oct 2026 10:22:57 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>hqterm desktop 0.4.0 adds a Mac app for Apple silicon and Intel and a Windows installer: tabs, splits, HD emoji, inline images and ssh sessions that never drop.</description>
 		</item>
 	</channel>
 </rss>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>W3BS Training: teach agents by doing the task yourself &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/237-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-16T02:24:03Z">
+<meta name="description" content="Record a task from the desktop tray, review every capture, and let one agent you choose retrieve the approved examples over MCP.">
+</head>
+<body>
+
+<article>
+
+<h1>W3BS Training: teach agents by doing the task yourself</h1>
+
+<p><em>2026-10-16, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Agents are bad at the tasks only you know how to do: your release checklist, your expense report, the three windows you open in a certain order. W3BS Training lets you show them once and decide exactly who gets to learn from it.</p>
+
+<h3>How it works</h3>
+
+<ol>
+	<li><strong>Record.</strong> In the Agentic Desktop Layer tray, choose <em>Start training…</em>, say what you are about to do and tick the apps it may see. It keeps pictures of those apps' focused window only. An unapproved window in front, or overlapping, is a gap, never a frame. No keystrokes, typed text, clipboard or audio.</li>
+	<li><strong>Review.</strong> Each recording is a task card: confirm the goal, say how it went, clear privacy warnings. Nothing is used until you review it.</li>
+	<li><strong>Share with one agent.</strong> Freeze reviewed tasks into a dataset version, approve it for a purpose (private retrieval does not approve model training) and grant a named agent. It retrieves examples over MCP as evidence, never as instructions.</li>
+	<li><strong>Check it helped.</strong> Agents report each attempt with and without the examples, and the app compares the two with confidence intervals instead of claims.</li>
+</ol>
+
+<h3>Local first, hosted when you want it</h3>
+
+<p><code>w3bs training open</code> runs the review app on your machine, from a one-time link, with frames encrypted (AES-256-GCM) by a key in your keyring. When you want your tasks on another device, or a hosted agent to use them, <code>w3bs training push</code> sends reviewed tasks to your own workspace at <a href="https://w3bs.org/training/app/">w3bs.org/training/app</a>. Each account gets its own database schema there. The server can decrypt what you push, and the docs say so plainly.</p>
+
+<p>Everything uses one open format, the W3BS Demonstration Dataset Format 0.1, so you can export a bundle, a JSONL dataset or next-action training examples and take them anywhere.</p>
+
+<h3>Honest limits</h3>
+
+<p>Recording is verified on KDE Plasma; GNOME, Windows and macOS share the code but have not been through the test rig. Wayland has no passive input tap, so recordings are screenshots of approved windows: they show an agent how a task is done, but they are not action-level training data. There is no model-training integration yet.</p>
+
+<h3>Try it</h3>
+
+<pre><code class="language-sh">curl -fsSL https://w3bs.org/training/install.sh | sh</code></pre>
+
+<p>Or <code>w3bs install w3bs-training</code>. On Linux, also install libsecret's <code>secret-tool</code> (<code>sudo apt install libsecret-tools</code> on Debian and Ubuntu) so the encryption key lives in your desktop keyring; without a keyring it refuses to store recordings. Recording needs the <a href="https://w3bs.org/desktop">Agentic Desktop Layer</a>. More at <a href="https://w3bs.org/training">w3bs.org/training</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
