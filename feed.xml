@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 17 Oct 2026 07:24:15 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 17 Oct 2026 07:52:20 GMT</lastBuildDate>
+
+		<item>
+			<title>pit.world: private search, and a doorway to the Moshpit network</title>
+			<link>https://dev.profullstack.com/~anthony/blog/240-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/240-post.html</guid>
+			<pubDate>Sat, 17 Oct 2026 07:52:20 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A search engine that keeps no logs, sets no cookies and works without JavaScript, and that also searches the Moshpit network: 17,609 endings outside ICANN's root.</description>
+		</item>
 
 		<item>
 			<title>CoinPay invoicing: reminders, late fees, a client portal and time tracking</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 14 Oct 2026 22:23:16 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A free, open-source field guide to building software with a fleet of AI coding agents. PDF, EPUB and HTML.</description>
-		</item>
-
-		<item>
-			<title>CoinPay Finances: due soon, recurring charges and a daily summary</title>
-			<link>https://dev.profullstack.com/~anthony/blog/230-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/230-post.html</guid>
-			<pubDate>Wed, 14 Oct 2026 18:51:45 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>CoinPay Finances now lists what is due soon across every bank and card, with recurring charge detection, card due days, a daily summary email and MCP tools.</description>
 		</item>
 	</channel>
 </rss>

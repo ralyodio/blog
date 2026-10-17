@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pit.world: private search, and a doorway to the Moshpit network &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/240-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-17T07:52:20Z">
+<meta name="description" content="A search engine that keeps no logs, sets no cookies and works without JavaScript, and that also searches the Moshpit network: 17,609 endings outside ICANN's root.">
+</head>
+<body>
+
+<article>
+
+<h1>pit.world: private search, and a doorway to the Moshpit network</h1>
+
+<p><em>2026-10-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p><a href="https://pit.world">pit.world</a> is live. It is a search engine that keeps nothing about you, and it searches a second internet as well as the first one.</p>
+
+<h3>Private by construction</h3>
+
+<p>Your browser only ever talks to pit.world. pit.world asks one search provider for results (the Google index, through Serper) and sends it the words. Not your IP, not your browser, not a cookie, not a referrer.</p>
+
+<p>On our side there is nothing to hand over:</p>
+
+<ul>
+	<li>nginx keeps no access log for the site, and its error log is raised to <code>crit</code> so a failed request never writes your query down either.</li>
+	<li>No cookies. The server strips <code>Set-Cookie</code> from every response.</li>
+	<li>Rate limiting keys on an HMAC of your IP under a secret that is regenerated every hour and never stored.</li>
+	<li>Result links go straight to the site with <code>no-referrer</code>. No click tracking, no redirect through us.</li>
+	<li>It works with JavaScript off, so Tor Browser on Safest is fine.</li>
+</ul>
+
+<p>I tested the no-logs claim on the live box: searched a made-up word, then grepped every nginx log and the service journal for it. Zero hits.</p>
+
+<h3>The Moshpit network</h3>
+
+<p>Moshpit is a namespace beside ICANN's. Anyone can claim an ending like <code>.hacker</code>, <code>.eggs</code> or <code>.pit</code>, put names under it, and point them anywhere. The registry is open and append-only, and it signs real certificates, so <code>https://chovy.hacker</code> is a working site for anyone on the network. There are 17,609 endings claimed right now.</p>
+
+<p>Type a Moshpit name into pit.world and it resolves through the registry, next to your web results. The front page shows what was claimed lately and which endings are for sale.</p>
+
+<p>To open Moshpit names in your browser, either install moshcode and run <code>moshcode dns enable</code>, or point your browser's secure DNS at <code>https://dns.moshcode.sh/dns-query</code>.</p>
+
+<h3>Make it your default</h3>
+
+<p>Firefox picks it up from the address bar. Chrome, Brave and Edge take <code>https://pit.world/search?q=%s</code> as a custom engine. Bangs work too: <code>!gh hqtui</code>, <code>rust lifetimes !so</code>, <code>!pit chovy.hacker</code>.</p>
+
+<h3>Terminal and agents</h3>
+
+<pre><code>bun add -g pitworld
+pit search &quot;private search engines&quot;
+pit resolve chovy.hacker
+pit                         # the TUI
+claude mcp add pit -- pit mcp</code></pre>
+
+<p>There is a JSON API at <code>/api/search</code>, no key needed. The code is MIT at <a href="https://github.com/moshcoder/pit.world">github.com/moshcoder/pit.world</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
