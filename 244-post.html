@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>We built a desktop AI assistant you can train by doing the task once &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/244-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-17T13:12:09Z">
+<meta name="description" content="An AI agent ran a Reddit account on a real desktop through the W3BS Agentic Desktop Layer. W3BS Training lets you record a task once so the agent learns how you do it.">
+</head>
+<body>
+
+<article>
+
+<h1>We built a desktop AI assistant you can train by doing the task once</h1>
+
+<p><em>2026-10-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Today an AI agent ran a Reddit account on my desktop. It logged in, wrote and submitted a post, asked my own browser to make it a moderator of my eight subreddits, accepted the invites, and pulled its posts back out of the spam queue. I watched from the next window. I approved it once, from the tray, and it did the rest.</p>
+
+<p>It runs on two pieces of W3BS.</p>
+
+<h3>The Agentic Desktop Layer</h3>
+
+<p><a href="https://w3bs.org/desktop">w3bs desktop</a> gives an agent a mouse, a keyboard and a screen, and nothing else unless you say so. Access starts off. You turn it on from the tray, the agent asks for the window it wants, and a global hotkey revokes everything at once. It works on KDE and GNOME, and the same agent can drive a headless desktop on a server.</p>
+
+<h3>W3BS Training</h3>
+
+<p>The agent got things wrong today. A click missed a form field, so text went into the box above it. A browser tab opened on its own and caught a keystroke meant for the address bar, which turned into a stray comment it then had to delete. Coordinates go stale. Pages move.</p>
+
+<p>That is the job of <a href="https://w3bs.org/training">W3BS Training</a>. You press Start training in the tray and do the task yourself, once. The recorder keeps screenshots of the windows you approved, encrypted on your machine. No keystrokes, typed text, clipboard or audio. You review the recording (confirm the goal, clear privacy warnings, split or merge tasks) and share it only with the agents you choose. Next time, the agent looks up how you did it before it touches anything, and reports every attempt back so you can see what failed.</p>
+
+<p>Recordings use an open format, the W3BS Demonstration Dataset Format 0.1. You can export a JSONL dataset or next-action training examples and train your own model with them. W3BS does not do the model training itself yet.</p>
+
+<h3>Try it</h3>
+
+<p>curl -fsSL <a href="https://w3bs.org/install.sh">https://w3bs.org/install.sh</a> | sh
+w3bs install agentic-desktop-layer w3bs-training</p>
+
+<p>Then turn on the desktop layer from the tray and record one task you are tired of doing. Start at <a href="https://w3bs.org/training">w3bs.org/training</a>.</p>
+
+<p><em>Drafted with an AI agent, the same one this post is about.</em></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
