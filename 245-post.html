@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>seo.rank: a free SEO audit, and business listings anyone can claim on pit.world &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/245-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-17T14:40:27Z">
+<meta name="description" content="seo.rank is a free, open-source on-page SEO audit (10 a day, CLI, MCP), and every website now has a business listing on pit.world that its owner can claim with a DNS record or a meta tag.">
+</head>
+<body>
+
+<article>
+
+<h1>seo.rank: a free SEO audit, and business listings anyone can claim on pit.world</h1>
+
+<p><em>2026-10-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Two launches today, and they fit together.</p>
+
+<h3>seo.rank</h3>
+
+<p><a href="https://github.com/moshcoder/seo.rank">seo.rank</a> audits one page for on-page SEO and tells you what to fix first. It checks about 25 things: title and meta description, headings, canonical, robots.txt and sitemap, noindex, HTTPS and HSTS, Open Graph and X cards, JSON-LD, hreflang, image alt text, internal links, response time and page weight. It also lists the words and phrases the page repeats most. You get a score out of 100, a grade, and a fix list sorted by impact.</p>
+
+<p>It is free for 10 audits a day per visitor and costs us almost nothing to run: no paid APIs, no headless Chrome, just a fetch and a parse. That is why the limit can stay free.</p>
+
+<p>Try it from any terminal:</p>
+
+<pre><code>bunx seorank audit https://your-site.com</code></pre>
+
+<p>It is also a TUI (<code>seorank</code>), a JSON API and an MCP server for your agents:</p>
+
+<pre><code>claude mcp add seorank -- bunx seorank mcp</code></pre>
+
+<p>The web version lives at <a href="https://seo.rank">https://seo.rank</a>, a name on the Moshpit network. If your browser does not open it yet, <a href="https://pit.world/connect">connect to Moshpit</a> first. The CLI and MCP server find it on their own.</p>
+
+<p>seo.rank is MIT licensed. Read it, fork it, run your own.</p>
+
+<h3>Business listings on pit.world</h3>
+
+<p>Every website now has a listing on <a href="https://pit.world">pit.world</a>, the private search engine: <code>pit.world/b/your-domain.com</code>. Until the owner claims it, it shows what the site's own homepage says about itself.</p>
+
+<p>Claiming takes a minute and needs no account:</p>
+
+<ol>
+	<li>Open your listing and press <strong>Claim this listing</strong>.</li>
+	<li>Add a DNS TXT record, or a meta tag on your homepage, with the code pit.world gives you.</li>
+	<li>Press <strong>Verify</strong>. You get an edit key, shown once.</li>
+</ol>
+
+<p>Then write your listing yourself: what you do, hours, address, phone, links and your Moshpit name. When someone searches your domain on pit.world, your listing shows beside the results. Like the rest of pit.world: no cookies, no tracking, no email.</p>
+
+<p>From the terminal: <code>pit claim your-domain.com</code>.</p>
+
+<p>seo.rank is the first claimed listing: <a href="https://pit.world/b/seo.rank">pit.world/b/seo.rank</a>.</p>
+
+<h3>Build an app for $49</h3>
+
+<p>While you are on pit.world: <a href="https://pit.world/build">describe an app</a> and an AI product team builds it on the open source Profullstack stack for $49, then keeps it online for $2 a month. Paid in crypto through CoinPay.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

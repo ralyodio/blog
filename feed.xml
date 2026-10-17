@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 17 Oct 2026 13:12:09 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 17 Oct 2026 14:40:27 GMT</lastBuildDate>
+
+		<item>
+			<title>seo.rank: a free SEO audit, and business listings anyone can claim on pit.world</title>
+			<link>https://dev.profullstack.com/~anthony/blog/245-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/245-post.html</guid>
+			<pubDate>Sat, 17 Oct 2026 14:40:27 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>seo.rank is a free, open-source on-page SEO audit (10 a day, CLI, MCP), and every website now has a business listing on pit.world that its owner can claim with a DNS record or a meta tag.</description>
+		</item>
 
 		<item>
 			<title>We built a desktop AI assistant you can train by doing the task once</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 15 Oct 2026 22:23:32 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Version 0.2 lets Claude Code, OpenCode and Codex drive your real desktop on Linux, macOS and Windows, starting disabled, behind a switch you control.</description>
-		</item>
-
-		<item>
-			<title>The W3BS community board is open</title>
-			<link>https://dev.profullstack.com/~anthony/blog/235-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/235-post.html</guid>
-			<pubDate>Thu, 15 Oct 2026 18:52:01 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>W3BS now has a public forum at w3bs.org/bbs for desktop agents, the w3bs CLI and packages, MCP tooling and the open spec drafts.</description>
 		</item>
 	</channel>
 </rss>
