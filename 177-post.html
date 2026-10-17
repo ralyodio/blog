@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>We built this city...on rock and roll! &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/177-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-09-22T15:12:06Z">
+<meta name="description" content="Moshpit is a naming system outside the DNS root. You buy an ending, not a name, and there are 17,605 of them. How the certificates work now that no CA will issue one, the $2 sale that made every bridge answer NXDOMAIN for Gmail, and why clearnet always wins.">
+</head>
+<body>
+
+<article>
+
+<h1>We built this city...on rock and roll!</h1>
+
+<p><em>2026-09-22, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Moshpit is a naming system that sits outside the DNS root. You do not buy a name in it, you buy an ending. Claim <code>.hacker</code> and every name under it is yours to hand out: <code>chovy.hacker</code>, <code>auto.hacker</code>, whatever you want. Endings cost $10 in USDC. There are 17,605 of them in the registry today.</p>
+
+<p>Turning it on is one command:</p>
+
+<pre><code>moshcode dns enable</code></pre>
+
+<p>That routes Moshpit endings to a local bridge and leaves the rest of your DNS alone. Without it you can still read any Moshpit site through the gateway at pit.moshcode.sh, which fetches it server side.</p>
+
+<h3>Nobody will sell you a certificate for a name like this</h3>
+
+<p>The CA/Browser Forum banned certificates for non-IANA names in 2015. No public CA will issue for <code>.hacker</code> at any price. The usual fallback is a self-signed certificate and a browser warning, which is not a fallback, it is a dead end.</p>
+
+<p>So since September 16 the registry is its own certificate authority. The root key was generated on a box and pushed to a vault, and it is on no server anywhere. An online issuer signs 30 day leaves, ECDSA P-256, one per name, to whoever the registry currently says controls that name. <code>moshcode dns enable</code> installs the root, which turns the whole thing back into an ordinary chain check.</p>
+
+<p>The rule worth stealing is who gets to ask. Issuance keys on who controls the <em>name</em>, never on who owns the ending. Sell <code>.foo</code> and the old owner cannot mint <code>bar.foo</code> the next morning. The CSR never chooses its own subject.</p>
+
+<h3>The $2 mistake</h3>
+
+<p>Early on, endings sold for whatever anyone offered, and somebody bought <code>.sh</code> for $2. It is Saint Helena's country code. It is also where the registry lives, at pit.moshcode.sh.</p>
+
+<p>Every bridge that loaded the ending list then decided its own registry was a Moshpit name, refused to forward the query, and tried to resolve it through the registry it had just made unreachable. The symptom was a resolver that was running, listening, correctly routed to, and answering NXDOMAIN for everything. Not just Moshpit names. Gmail too.</p>
+
+<p>v0.80.0 ships all 1438 IANA TLDs and refuses to sell or answer for any of them. The 622 endings that already collided were revoked and archived with their owner, price and original date, so they are restorable. 334 of them were mine.</p>
+
+<h3>Clearnet wins</h3>
+
+<p>People claim real TLDs as endings anyway, so the resolver has to decide what happens when a name works in both places. It takes the boring option every time: if the name resolves on the public internet, that answer wins. A resolver that quietly sends example.com somewhere else is indistinguishable from a hijack, and no amount of usefulness is worth being that.</p>
+
+<p>The same instinct shows up in the web server config. A Moshpit site serves port 80 and port 443, and neither redirects to the other. Redirecting to HTTPS is correct for a name in the public root and wrong here, because a visitor who has not installed the root gets sent to a page they can never load. Both ports serve the site and the client takes the one it can actually verify.</p>
+
+<p>Claim an ending at <a href="https://moshcoding.com">moshcoding.com</a>, or just look around the directory at <a href="https://pit.moshcode.sh">pit.moshcode.sh</a>.</p>
+
+<p>We built this city on rock and roll. Mostly we built it on refusing to hijack anybody's domain, but rock and roll sounds better.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
