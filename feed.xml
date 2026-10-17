@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 17 Oct 2026 18:42:33 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 17 Oct 2026 19:51:46 GMT</lastBuildDate>
+
+		<item>
+			<title>pay.agent: get paid in crypto with one link</title>
+			<link>https://dev.profullstack.com/~anthony/blog/247-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/247-post.html</guid>
+			<pubDate>Sat, 17 Oct 2026 19:51:46 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>pay.agent gives you a link anyone, person or agent, can pay in crypto, straight to your CoinPay wallet or business. Two choices to set up.</description>
+		</item>
 
 		<item>
 			<title>family.ancestry: a private, open-source family tree with a friends network built in</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 17 Oct 2026 05:24:10 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>CoinPay invoices now carry line items, per-line tax, discounts and a saved catalog of products and tax rates.</description>
-		</item>
-
-		<item>
-			<title>W3BS Training: teach agents by doing the task yourself</title>
-			<link>https://dev.profullstack.com/~anthony/blog/237-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/237-post.html</guid>
-			<pubDate>Fri, 16 Oct 2026 02:24:03 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Record a task from the desktop tray, review every capture, and let one agent you choose retrieve the approved examples over MCP.</description>
 		</item>
 	</channel>
 </rss>

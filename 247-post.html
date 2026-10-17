@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pay.agent: get paid in crypto with one link &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/247-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-17T19:51:46Z">
+<meta name="description" content="pay.agent gives you a link anyone, person or agent, can pay in crypto, straight to your CoinPay wallet or business. Two choices to set up.">
+</head>
+<body>
+
+<article>
+
+<h1>pay.agent: get paid in crypto with one link</h1>
+
+<p><em>2026-10-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>pay.agent gives you a link, <code>pay.agent/yourname</code>, that anyone can pay in crypto. A person opens it, types an amount in dollars, picks a coin and scans a QR code. An agent does the same thing with one API call. The money goes to your own CoinPay wallet or CoinPay business. pay.agent never holds it.</p>
+
+<p>Try it: <a href="https://pay.agent.pit.world/">pay.agent.pit.world</a>. On Moshpit DNS it is just <a href="https://pay.agent">pay.agent</a>.</p>
+
+<h3>Setting up takes two choices</h3>
+
+<ol>
+	<li>Sign in with CoinPay. No account yet? You make one on the way.</li>
+	<li>Pick your name, and pick where money lands: your CoinPay wallet, or one of your CoinPay businesses.</li>
+</ol>
+
+<p>That is the whole form. Behind it, pay.agent does the CoinPay side for you in one pass: it makes a small business to take your payments if you need one, adds the payout address you paste (if you have none yet), points the payment webhook at itself, and reads back which coins your link can take. You land on a page with your link, a QR code, and a list of exactly what it set up.</p>
+
+<h3>Paying someone</h3>
+
+<p>Open their link, enter an amount, choose a coin (USDC on Solana, Polygon or Ethereum, USDT, BTC, ETH, SOL, and more), and send the exact amount shown to the address shown. The page turns green when CoinPay sees the payment. Each address is good for an hour.</p>
+
+<p>pay.agent adds no fee. CoinPay takes its normal fee when it forwards the payment, and the payer pays their own network fee.</p>
+
+<h3>Built for agents</h3>
+
+<p>Every link is an API, and paying someone needs no key:</p>
+
+<pre><code>curl -X POST https://pay.agent.pit.world/api/v1/users/profullstack/payments \
+  -H 'content-type: application/json' \
+  -d '{&quot;amount_usd&quot;: 5, &quot;coin&quot;: &quot;usdc_sol&quot;, &quot;note&quot;: &quot;thanks&quot;}'</code></pre>
+
+<p>The answer is an address, an exact amount and an expiry. Poll <code>GET /api/v1/payments/:id</code> until it says <code>confirmed</code> or <code>forwarded</code>. The same thing ships as a CLI and terminal UI (<code>bunx @profullstack/payagent profullstack 5 usdc_sol</code>) and as an MCP server (<code>claude mcp add payagent -- bunx @profullstack/payagent mcp</code>), so a coding agent can pay a person by name.</p>
+
+<h3>The onboarding is a package</h3>
+
+<p>The one-pass setup is <a href="https://github.com/profullstack/coinpay-onboard">@profullstack/coinpay-onboard</a>. pay.agent is its first user, and every new site we launch runs it too: <code>coinpay-onboard site &lt;name&gt; --webhook &lt;url&gt;</code> makes the site's CoinPay business, copies the payout wallets in, sets the webhook, and writes the keys into the site's vault. Taking payment is now part of launching, not a project after it.</p>
+
+<p>To make that possible, CoinPay's OAuth <code>merchant</code> permission now covers adding payout addresses, importing them into a business and setting its webhook, so an app you sign in to can finish the setup instead of sending you to a dashboard. Routes that send money out stay dashboard-only.</p>
+
+<h3>Source</h3>
+
+<p>pay.agent is open source: <a href="https://github.com/moshcoder/pay.agent">github.com/moshcoder/pay.agent</a>. It is a Bun and Hono app with SQLite, and it is on the <a href="https://pit.world/ring">Moshpit ring</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
