@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A/B testing on w3bs.org, and OpenABTest 0.2 &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/243-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-17T12:05:41Z">
+<meta name="description" content="Free hosted A/B testing on w3bs.org with sticky server-side assignment and no automatic winners, plus OpenABTest 0.2 goal conversions.">
+</head>
+<body>
+
+<article>
+
+<h1>A/B testing on w3bs.org, and OpenABTest 0.2</h1>
+
+<p><em>2026-10-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>W3BS now hosts A/B tests at <a href="https://w3bs.org/ab-testing">w3bs.org/ab-testing</a>. It is free, and it is built on <a href="https://logicsrc.com/docs/openabtest">OpenABTest</a>, the open experiment format we publish on LogicSRC.</p>
+
+<h3>How it works</h3>
+
+<p>You define an experiment on the page: an id, two or more variants with weights and JSON parameters, and a goal such as <code>signup-completed</code>. Your server makes three calls with a key from the page:</p>
+
+<pre><code class="language-sh">curl -s https://w3bs.org/api/ab/assign \
+  -H &quot;Authorization: Bearer $W3BS_AB_KEY&quot; -H 'Content-Type: application/json' \
+  -d '{&quot;experiment&quot;:&quot;checkout-button&quot;,&quot;participant&quot;:&quot;user-1842&quot;}'</code></pre>
+
+<p><code>assign</code> returns the variant and its parameters. Then <code>exposure</code> when you showed it, and <code>conversion</code> when the goal happened. The same calls work from the terminal with <code>w3bs ab</code> in CLI 0.1.8.</p>
+
+<h3>What it refuses to do</h3>
+
+<p>Most A/B tools are generous with good news. This one is strict on purpose.</p>
+
+<ul>
+	<li>The variant is picked on the server and stored the first time. A reload, a second device or a cleared cookie never moves someone to the other arm.</li>
+	<li>Assigned, exposed and converted are separate counts. A conversion with no recorded exposure is shown, not dropped.</li>
+	<li>Zero participants reads &quot;no data&quot;, not 0%.</li>
+	<li>Results show a 95% interval and a p-value against the control, and never a winner. A person decides.</li>
+	<li>A started experiment cannot be edited. To test something else, make a new one.</li>
+</ul>
+
+<h3>OpenABTest 0.2: goal conversions</h3>
+
+<p>OpenABTest 0.1 treated every conversion as a purchase with a price, which fits pricing experiments and nothing else. Version 0.2 adds goal conversions: a manifest names its goal, and a conversion carries either a price or that goal, with an optional observed value. Every 0.1 document is still valid. The schemas, validators and SDK are on npm as <code>@logicsrc/schemas</code> and <code>@logicsrc/validators</code> 0.5.0 and <code>@logicsrc/sdk</code> 0.4.0.</p>
+
+<p>Every experiment on w3bs.org exports as an OpenABTest manifest and event stream, checked against those validators, so the data is yours to take anywhere.</p>
+
+<p>Start at <a href="https://w3bs.org/ab-testing">w3bs.org/ab-testing</a>. The guide is at <a href="https://w3bs.org/docs/ab-testing.md">w3bs.org/docs/ab-testing.md</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

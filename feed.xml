@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 17 Oct 2026 09:52:39 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 17 Oct 2026 12:05:42 GMT</lastBuildDate>
+
+		<item>
+			<title>A/B testing on w3bs.org, and OpenABTest 0.2</title>
+			<link>https://dev.profullstack.com/~anthony/blog/243-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/243-post.html</guid>
+			<pubDate>Sat, 17 Oct 2026 12:05:41 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Free hosted A/B testing on w3bs.org with sticky server-side assignment and no automatic winners, plus OpenABTest 0.2 goal conversions.</description>
+		</item>
 
 		<item>
 			<title>DiskPush 0.13 and 0.14: database backups and S3 buckets</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 15 Oct 2026 18:01:39 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Laid off for three years, in your 50s, and the job boards are a black hole. Whether moving back to San Francisco helps, and what to try first.</description>
-		</item>
-
-		<item>
-			<title>Sign in with W3BS: accounts on w3bs.org and `w3bs login`</title>
-			<link>https://dev.profullstack.com/~anthony/blog/233-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/233-post.html</guid>
-			<pubDate>Thu, 15 Oct 2026 04:51:18 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>w3bs.org accounts: passkeys or a password, an emailed link as the fallback, w3bs login for the CLI, and Sign in with W3BS for apps over OAuth 2.1.</description>
 		</item>
 	</channel>
 </rss>
