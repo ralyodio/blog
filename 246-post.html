@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>family.ancestry: a private, open-source family tree with a friends network built in &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/246-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-17T18:42:33Z">
+<meta name="description" content="An open-source, private family tree with GEDCOM, a friends network, an inbox, a CLI, an MCP server and a desktop app.">
+</head>
+<body>
+
+<article>
+
+<h1>family.ancestry: a private, open-source family tree with a friends network built in</h1>
+
+<p><em>2026-10-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I wanted somewhere to put my family's tree that wasn't a subscription and wasn't public. So I built family.ancestry. It's open source, it's free, and nobody sees a tree unless the owner invites them.</p>
+
+<p>It runs at <a href="https://family.ancestry.pit.world">https://family.ancestry.pit.world</a> (the native name, <a href="https://family.ancestry">https://family.ancestry</a>, resolves on the Moshpit network).</p>
+
+<h3>What it does</h3>
+
+<ul>
+	<li><strong>Family trees.</strong> People, parents, partners, children, siblings (full, half, adopted, foster, step), events, sources and photos. There's a pedigree chart, a descendants view, and &quot;how are we related?&quot; answered in words, like &quot;your daughter's boyfriend&quot; or &quot;your second cousin once removed&quot;.</li>
+	<li><strong>GEDCOM in and out.</strong> Import the .ged file from Ancestry, FamilySearch or any other tree program. Export gives you everything back, and the privacy export leaves out living people.</li>
+	<li><strong>Private by default.</strong> There is no public tree setting. Someone who isn't in a tree gets a 404, so they can't even tell it exists. Invite people as viewers or editors. If you invite someone as a person in the tree, they manage their own profile.</li>
+	<li><strong>A network for people you actually know.</strong> Every account has contacts sorted into family, friends, neighbors and business, with vCard import and export. On anyone's page in the tree you can add them to your network and send one email asking to connect. From your own page you can invite a friend. Messages only go between people who said yes or who share a tree. There are no public profiles, no follower counts and no &quot;people you may know&quot;.</li>
+	<li><strong>Recommendations hand to hand.</strong> Pass a plumber or a babysitter to one person you know. It lands in their inbox with a Save button.</li>
+	<li><strong>Family businesses, pets and a photo album.</strong> Businesses get founders, owners and staff from the tree. Pets come with the one-time Family plan ($49 in crypto through CoinPay). Everything else is free.</li>
+</ul>
+
+<h3>Every surface</h3>
+
+<p>There's the web app (a PWA), a JSON API, a CLI with a terminal UI, an MCP server so an assistant can work on your tree, and an Electron desktop app.</p>
+
+<pre><code>npm i -g familyancestry
+ancestry login
+ancestry import ~/Downloads/family.ged
+ancestry contact add --person &quot;Aunt Rose&quot; --email rose@example.com --connect
+ancestry mcp    # claude mcp add ancestry -- ancestry mcp</code></pre>
+
+<p>It runs on Bun, Hono and a single SQLite file, with the photos stored in the same file. Want to host your own? Run <code>ancestry serve</code>.</p>
+
+<p>Source: <a href="https://github.com/moshcoder/family.ancestry">https://github.com/moshcoder/family.ancestry</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 17 Oct 2026 14:40:27 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 17 Oct 2026 18:42:33 GMT</lastBuildDate>
+
+		<item>
+			<title>family.ancestry: a private, open-source family tree with a friends network built in</title>
+			<link>https://dev.profullstack.com/~anthony/blog/246-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/246-post.html</guid>
+			<pubDate>Sat, 17 Oct 2026 18:42:33 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>An open-source, private family tree with GEDCOM, a friends network, an inbox, a CLI, an MCP server and a desktop app.</description>
+		</item>
 
 		<item>
 			<title>seo.rank: a free SEO audit, and business listings anyone can claim on pit.world</title>
@@ -90,15 +99,6 @@
 			<pubDate>Fri, 16 Oct 2026 02:24:03 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Record a task from the desktop tray, review every capture, and let one agent you choose retrieve the approved examples over MCP.</description>
-		</item>
-
-		<item>
-			<title>Agentic Desktop Layer 0.2: your agents on your real desktop, on Linux, macOS and Windows</title>
-			<link>https://dev.profullstack.com/~anthony/blog/236-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/236-post.html</guid>
-			<pubDate>Thu, 15 Oct 2026 22:23:32 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Version 0.2 lets Claude Code, OpenCode and Codex drive your real desktop on Linux, macOS and Windows, starting disabled, behind a switch you control.</description>
 		</item>
 	</channel>
 </rss>
