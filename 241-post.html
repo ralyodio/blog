@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Are we all just going to be human CAPTCHA solvers? &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/241-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-17T08:51:48Z">
+<meta name="description" content="I've automated nearly my whole business with the w3bs.org Agentic Desktop Layer, driven from the moshcode CLI. What my agents still stop and wait for me on is mostly proving I'm human. A few questions about what that means.">
+</head>
+<body>
+
+<article>
+
+<h1>Are we all just going to be human CAPTCHA solvers?</h1>
+
+<p><em>2026-10-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Honest question: are we all just going to end up as human CAPTCHA solvers?</p>
+
+<p>I ask because I've pretty much automated my entire business, lol. I run the <a href="https://w3bs.org/desktop">Agentic Desktop Layer</a> on my machines, which lets my agents use the real desktop: they type, click, read the screen and work the same apps I do. And I steer all of it from one terminal with <a href="https://moshcode.sh">moshcode</a>. I type what I want, the agents go off and do it, and I review what comes back.</p>
+
+<p>Deploys, invoices, newsletters, social posts, bug fixes, support email, bank statements, signups for new services: most of my day used to be that stuff, and now it isn't.</p>
+
+<h3>So what's left for me?</h3>
+
+<p>Look at where the agents actually stop and wait for me:</p>
+
+<ul>
+	<li>A Cloudflare Turnstile box on a signup form.</li>
+	<li>A &ldquo;select every square with a traffic light&rdquo; grid on a state government site.</li>
+	<li>A PIN that the tax board will only send on paper, by mail.</li>
+	<li>An approval prompt the desktop layer raises before an agent can touch a new app.</li>
+	<li>&ldquo;Is this right?&rdquo; at the end of a task, with a screenshot.</li>
+</ul>
+
+<p>Most of that list is proving I'm a human. The rest is me saying yes.</p>
+
+<p>That's the funny part. The whole internet put up walls to keep bots out, and the bots ended up doing the work behind those walls anyway. They just tap me on the shoulder at the door. My job has gone from doing the work to vouching for it. I'm a notary with a terminal.</p>
+
+<h3>Is that bad?</h3>
+
+<p>I don't think so, but I'm not sure. Some questions I keep coming back to:</p>
+
+<ul>
+	<li><strong>If an agent does the work and a person clicks the box, who did the work?</strong> CAPTCHA was supposed to tell us whether a human is <em>here</em>. It was never going to tell us whether a human <em>did</em> anything.</li>
+	<li><strong>What happens to people whose whole job was the stuff in the middle?</strong> Data entry, form filling, copying between two systems. That's the layer my agents ate first.</li>
+	<li><strong>Do CAPTCHAs survive this?</strong> Click farms already pay people pennies per solve. If every business runs like mine, &ldquo;prove you're human&rdquo; becomes a toll you pay a person to stand at, not a filter that stops anything.</li>
+	<li><strong>Should sites just let agents say what they are?</strong> I'd rather my agent show up as an agent, signed and tied to me, than make me pretend it's me clicking. (That's why <a href="https://crawlproof.com">CrawlProof</a> lets visitors tell you which one they are.)</li>
+	<li><strong>Is &ldquo;human in the loop&rdquo; a safeguard or a fig leaf?</strong> When I approve something, I'm reading a summary written by the thing I'm approving.</li>
+</ul>
+
+<h3>Where I've landed, for now</h3>
+
+<p>The part of the job that's left isn't solving puzzles. It's deciding what to do, knowing when the output is wrong, and owning the result. CAPTCHAs just happen to be where that shows up today, because they're the one place the software still insists on a body in the chair.</p>
+
+<p>So no, I don't think we get reduced to CAPTCHA solvers. But I do think a lot of people are about to find out how much of their day was clicking boxes.</p>
+
+<p>If you want to try the setup: <code>curl -fsSL https://w3bs.org/desktop/install.sh | sh</code> for the desktop layer, and moshcode to drive it. Then tell me what your agents still need you for. I'm curious whether it's the same list.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
