@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 17 Oct 2026 05:24:10 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 17 Oct 2026 07:24:15 GMT</lastBuildDate>
+
+		<item>
+			<title>CoinPay invoicing: reminders, late fees, a client portal and time tracking</title>
+			<link>https://dev.profullstack.com/~anthony/blog/239-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/239-post.html</guid>
+			<pubDate>Sat, 17 Oct 2026 07:24:15 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>CoinPay invoices now send scheduled reminders, charge late fees, carry your branding, and come with a client portal, projects, time tracking and an AR aging report.</description>
+		</item>
 
 		<item>
 			<title>CoinPay invoices now have line items, tax and discounts</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 14 Oct 2026 18:51:45 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>CoinPay Finances now lists what is due soon across every bank and card, with recurring charge detection, card due days, a daily summary email and MCP tools.</description>
-		</item>
-
-		<item>
-			<title>OutreachGraph now runs Hunter’s 12-month outreach planner by itself</title>
-			<link>https://dev.profullstack.com/~anthony/blog/229-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/229-post.html</guid>
-			<pubDate>Wed, 14 Oct 2026 00:23:28 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>OutreachGraph 0.10.0 runs Hunter's 12-month outreach planner on its own: verify before sending, a 2% bounce gate, one contact per company, A/B tests that end, business hours, and a play per month built from engagement.</description>
 		</item>
 	</channel>
 </rss>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoinPay invoicing: reminders, late fees, a client portal and time tracking &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/239-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-17T07:24:15Z">
+<meta name="description" content="CoinPay invoices now send scheduled reminders, charge late fees, carry your branding, and come with a client portal, projects, time tracking and an AR aging report.">
+</head>
+<body>
+
+<article>
+
+<h1>CoinPay invoicing: reminders, late fees, a client portal and time tracking</h1>
+
+<p><em>2026-10-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>This morning CoinPay invoices got line items. This afternoon they got everything around them that you need to get paid on time.</p>
+
+<h3>Reminders that run themselves</h3>
+
+<p>Pick the days, relative to the due date: three days before, on the day, a week late, every week after that. Each reminder goes out once, even if the job runs twice. Turning reminders on never emails every client who has owed you since spring; only fresh steps send.</p>
+
+<p>If you set nothing, you get what you had before: one email when an invoice goes overdue.</p>
+
+<h3>Late fees, without breaking a payment in flight</h3>
+
+<p>Set a percent or a fixed fee and a grace period. When it is due, CoinPay issues a separate invoice for the fee, linked to the original, and emails it with its own pay link.</p>
+
+<p>It does not raise the amount on the original invoice, on purpose. A crypto invoice carries a quote and an address your client may be paying right now. Re-quoting it would leave them paying an address nobody watches.</p>
+
+<h3>Your brand, a client portal</h3>
+
+<p>Add your logo, an accent colour and a footer, and clients see them on every invoice email, the pay page and the new client portal. The portal is one private link per client with every invoice you have sent them, what is still open and a pay button on each. Make a new link and the old one stops working.</p>
+
+<h3>Projects and time</h3>
+
+<p>Create a project with a client and an hourly rate, then log time or run a timer. When you are ready, &quot;Invoice unbilled time&quot; turns the billable hours into a draft invoice, one line per entry. Billed time is locked, so the same hour can never go on two invoices. The project page shows hours against budget and what is unbilled, billed and paid.</p>
+
+<h3>Who owes what</h3>
+
+<p>The new aging report puts every unpaid invoice you have sent into a bucket: not yet due, 1-30, 31-60, 61-90 or 90+ days late. It shows totals per currency and a row per client, biggest balance first.</p>
+
+<h3>From the CLI and your agent</h3>
+
+<pre><code>npm i -g @profullstack/coinpay@0.18.0
+
+coinpay invoice settings --reminders &quot;-3,0,7,14&quot; --late-fee 1.5% --late-fee-after 3
+coinpay client portal-link &lt;client-id&gt;
+coinpay project create --name &quot;Website rebuild&quot; --rate 120 --budget 40
+coinpay time start --project &lt;id&gt;
+coinpay time stop
+coinpay project invoice &lt;id&gt;
+coinpay invoice aging</code></pre>
+
+<p><code>coinpay mcp</code> gained eight tools: list, read and draft invoices, the aging report, projects, logging time and billing a project. None of them sends email or moves money. A person still presses Send.</p>
+
+<p>Docs: <a href="https://coinpayportal.com/docs/sdk#invoices">coinpayportal.com/docs/sdk#invoices</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
