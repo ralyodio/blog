@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 17 Oct 2026 08:51:48 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 17 Oct 2026 09:52:39 GMT</lastBuildDate>
+
+		<item>
+			<title>DiskPush 0.13 and 0.14: database backups and S3 buckets</title>
+			<link>https://dev.profullstack.com/~anthony/blog/242-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/242-post.html</guid>
+			<pubDate>Sat, 17 Oct 2026 09:52:38 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>DiskPush now dumps Postgres, Supabase, MySQL and SQLite to verified, tagged backups, and pushes to any S3-compatible bucket like it was a server.</description>
+		</item>
 
 		<item>
 			<title>Are we all just going to be human CAPTCHA solvers?</title>
@@ -90,15 +99,6 @@
 			<pubDate>Thu, 15 Oct 2026 04:51:18 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>w3bs.org accounts: passkeys or a password, an emailed link as the fallback, w3bs login for the CLI, and Sign in with W3BS for apps over OAuth 2.1.</description>
-		</item>
-
-		<item>
-			<title>w3bs: one command line for the open Web</title>
-			<link>https://dev.profullstack.com/~anthony/blog/232-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/232-post.html</guid>
-			<pubDate>Thu, 15 Oct 2026 02:23:47 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The w3bs CLI is live: one command line for the open Web. w3bs packages lists 65 dev and agentic CLIs, each installed with its publisher's curl | sh, and w3bs update keeps them current.</description>
 		</item>
 	</channel>
 </rss>
