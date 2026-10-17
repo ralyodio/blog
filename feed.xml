@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 17 Oct 2026 19:51:46 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 17 Oct 2026 21:05:28 GMT</lastBuildDate>
+
+		<item>
+			<title>Þrøngva Radio: an AI band on the air all day, now with the words on screen</title>
+			<link>https://dev.profullstack.com/~anthony/blog/248-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/248-post.html</guid>
+			<pubDate>Sat, 17 Oct 2026 21:05:27 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Þrøngva is a band we made. Every song was made with AI, and both albums now play around the clock on their own nixamp station:</description>
+		</item>
 
 		<item>
 			<title>pay.agent: get paid in crypto with one link</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 17 Oct 2026 07:24:15 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>CoinPay invoices now send scheduled reminders, charge late fees, carry your branding, and come with a client portal, projects, time tracking and an AR aging report.</description>
-		</item>
-
-		<item>
-			<title>CoinPay invoices now have line items, tax and discounts</title>
-			<link>https://dev.profullstack.com/~anthony/blog/238-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/238-post.html</guid>
-			<pubDate>Sat, 17 Oct 2026 05:24:10 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>CoinPay invoices now carry line items, per-line tax, discounts and a saved catalog of products and tax rates.</description>
 		</item>
 	</channel>
 </rss>
