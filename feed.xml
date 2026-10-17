@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 16 Oct 2026 02:24:03 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 17 Oct 2026 05:24:10 GMT</lastBuildDate>
+
+		<item>
+			<title>CoinPay invoices now have line items, tax and discounts</title>
+			<link>https://dev.profullstack.com/~anthony/blog/238-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/238-post.html</guid>
+			<pubDate>Sat, 17 Oct 2026 05:24:10 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>CoinPay invoices now carry line items, per-line tax, discounts and a saved catalog of products and tax rates.</description>
+		</item>
 
 		<item>
 			<title>W3BS Training: teach agents by doing the task yourself</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 14 Oct 2026 00:23:28 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>OutreachGraph 0.10.0 runs Hunter's 12-month outreach planner on its own: verify before sending, a 2% bounce gate, one contact per company, A/B tests that end, business hours, and a play per month built from engagement.</description>
-		</item>
-
-		<item>
-			<title>Real emoji and icons in your terminal, even over SSH and tmux</title>
-			<link>https://dev.profullstack.com/~anthony/blog/228-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/228-post.html</guid>
-			<pubDate>Tue, 13 Oct 2026 06:51:25 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>qc and hqtui 0.9.0 draw our OpenEmoji and OpenIcon artwork as real images in Kitty and Ghostty, even over SSH and tmux.</description>
 		</item>
 	</channel>
 </rss>

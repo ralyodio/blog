@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoinPay invoices now have line items, tax and discounts &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/238-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-17T05:24:10Z">
+<meta name="description" content="CoinPay invoices now carry line items, per-line tax, discounts and a saved catalog of products and tax rates.">
+</head>
+<body>
+
+<article>
+
+<h1>CoinPay invoices now have line items, tax and discounts</h1>
+
+<p><em>2026-10-17, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Until today a CoinPay invoice was one number. That works for a tip jar. It does not work for a freelancer billing three hours of design, a month of hosting and a sales tax that only applies to one of them.</p>
+
+<p>So invoices are itemised now.</p>
+
+<h3>What you get</h3>
+
+<ul>
+	<li><strong>Line items.</strong> Description, quantity and rate per line. Quantities can be fractional, so 1.5 hours bills correctly.</li>
+	<li><strong>Tax per line.</strong> Pick a saved rate on each line. The invoice shows the tax grouped by name, so a GST and a PST line show up separately.</li>
+	<li><strong>One discount.</strong> Percent or a fixed amount, applied before tax and split across the lines in proportion to their value.</li>
+	<li><strong>A saved catalog.</strong> Products, services and tax rates you bill often live under Invoices, Items and Taxes. Add one to an invoice from a dropdown. Set a default tax rate and new lines pick it up.</li>
+	<li><strong>The breakdown everywhere.</strong> Your client sees it on the pay page, in the invoice email and in the PDF.</li>
+</ul>
+
+<h3>The total is computed by the server</h3>
+
+<p>The browser shows a live total while you type, but the number your client pays is computed on our side in integer cents and stored as the invoice amount. A request that sends lines adding up to one figure and an amount saying another gets the lines' figure. Every payment rail reads that one amount, so crypto, card, PayPal and bank payments all work unchanged.</p>
+
+<h3>From the CLI and SDK</h3>
+
+<pre><code>npm i -g @profullstack/coinpay@0.17.0
+
+coinpay tax-rate create --name &quot;CA Sales Tax&quot; --rate 8.25 --default
+coinpay item create --name &quot;Design&quot; --price 100 --unit hour
+
+coinpay invoice create --business-id &lt;id&gt; \
+  --item &quot;Logo design|3|100&quot; \
+  --item &quot;Hosting (Oct)|1|19.99|8.25|CA Sales Tax&quot; \
+  --discount 5%</code></pre>
+
+<p>In code, <code>createInvoice</code> takes <code>lineItems</code> and <code>discount</code> and returns <code>subtotal</code>, <code>discountTotal</code>, <code>taxTotal</code> and <code>amount</code>. Recurring invoices copy their lines to every new occurrence.</p>
+
+<p>Next up: payment reminders and late fees, a client portal, and time tracking you can bill straight onto an invoice.</p>
+
+<p>Docs: <a href="https://coinpayportal.com/docs/sdk#invoices">coinpayportal.com/docs/sdk#invoices</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
