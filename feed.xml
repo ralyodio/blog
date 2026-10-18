@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sat, 17 Oct 2026 21:05:28 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 18 Oct 2026 02:33:58 GMT</lastBuildDate>
+
+		<item>
+			<title>Agents now ask before they drive your desktop</title>
+			<link>https://dev.profullstack.com/~anthony/blog/249-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/249-post.html</guid>
+			<pubDate>Sun, 18 Oct 2026 02:33:57 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>W3BS Desktop 0.5.0 asks the person before an AI agent takes the mouse and keyboard: Allow, Deny, Postpone or Always allow.</description>
+		</item>
 
 		<item>
 			<title>Þrøngva Radio: an AI band on the air all day, now with the words on screen</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 17 Oct 2026 07:52:20 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A search engine that keeps no logs, sets no cookies and works without JavaScript, and that also searches the Moshpit network: 17,609 endings outside ICANN's root.</description>
-		</item>
-
-		<item>
-			<title>CoinPay invoicing: reminders, late fees, a client portal and time tracking</title>
-			<link>https://dev.profullstack.com/~anthony/blog/239-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/239-post.html</guid>
-			<pubDate>Sat, 17 Oct 2026 07:24:15 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>CoinPay invoices now send scheduled reminders, charge late fees, carry your branding, and come with a client portal, projects, time tracking and an AR aging report.</description>
 		</item>
 	</channel>
 </rss>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agents now ask before they drive your desktop &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/249-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-18T02:33:57Z">
+<meta name="description" content="W3BS Desktop 0.5.0 asks the person before an AI agent takes the mouse and keyboard: Allow, Deny, Postpone or Always allow.">
+</head>
+<body>
+
+<article>
+
+<h1>Agents now ask before they drive your desktop</h1>
+
+<p><em>2026-10-18, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>W3BS Desktop 0.5.0 adds one question between an AI agent and your mouse and keyboard: <strong>&quot;claude-code wants to drive your desktop.&quot;</strong> It pops up as a notification with the task the agent is working on and four buttons.</p>
+
+<ul>
+	<li><strong>Allow</strong> lets it drive. The answer lasts while the agent keeps working and lapses after 10 idle minutes, so an agent that clicks step by step is asked once, not per click.</li>
+	<li><strong>Deny</strong> refuses it for 10 minutes.</li>
+	<li><strong>Postpone</strong> says not now. The agent is told to come back in 10 minutes (or whenever you pick, up to 4 hours).</li>
+	<li><strong>Always allow</strong> is for when you walk away from the desk. Every agent drives without asking until you turn it off.</li>
+</ul>
+
+<p>Only you can answer. An agent's own process tree cannot click its way past the prompt, and &quot;Stop all agent activity&quot; forgets every answer so agents have to ask again.</p>
+
+<p>The prompt shows up wherever you control the layer: a KDE or GNOME notification, the tray and GNOME panel menus, the macOS menu bar, the Windows tray, the local control app, and the terminal:</p>
+
+<pre><code class="language-bash">w3bs desktop drive list
+w3bs desktop drive allow &lt;id&gt;
+w3bs desktop drive always-allow on</code></pre>
+
+<p>Agents wait for your answer instead of failing: MCP <code>task_begin</code> and the CLI hold for up to two minutes.</p>
+
+<p>Install or update:</p>
+
+<pre><code class="language-bash">curl -fsSL https://w3bs.org/desktop/install.sh | sh</code></pre>
+
+<p>Docs: <a href="https://w3bs.org/desktop">https://w3bs.org/desktop</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
