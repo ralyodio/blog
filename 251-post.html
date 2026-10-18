@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>readm3 is now a plain text editor &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/251-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-18T23:05:50Z">
+<meta name="description" content="readm3.com is now a plain, Sublime-style text editor: multiple cursors, find and replace, Ctrl+P, a command palette, save back to disk, offline, and a Linux desktop app as Flatpak and AppImage.">
+</head>
+<body>
+
+<article>
+
+<h1>readm3 is now a plain text editor</h1>
+
+<p><em>2026-10-18, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I wanted Sublime Text without the plugin ecosystem, the license nag or the settings files. Just a quick window that opens a folder, lets me fix things, and saves. So readm3, which started as a terminal Markdown reader, now does that at <a href="https://readm3.com/viewer">readm3.com/viewer</a>.</p>
+
+<h3>What it does</h3>
+
+<ul>
+	<li><strong>Editing that feels right.</strong> Line numbers, syntax colors for about a hundred languages, multiple cursors (Ctrl+click, Ctrl+D for the next match, Alt+drag for a column), find and replace, folding, bracket matching, Ctrl+/ to comment.</li>
+	<li><strong>Ctrl+P</strong> to jump to any file by typing a few letters of its path, and <strong>Ctrl+Shift+P</strong> for every command: open, save, word wrap, the sidebar, any of the nine themes.</li>
+	<li><strong>Real files.</strong> In Chrome, Edge or the installed app, Open folder works on the files themselves. Ctrl+S writes the change back to disk, and a dot marks a file you have not saved yet. Firefox and Safari open a copy and Ctrl+S downloads it.</li>
+	<li><strong>Offline.</strong> Every grammar loads the first time you need it and is cached, so after one visit the whole editor works with no connection.</li>
+</ul>
+
+<p>Code opens straight into the editor. Markdown still opens rendered, the way readm3 always has, and <code>e</code> edits it.</p>
+
+<h3>On the desktop</h3>
+
+<p>There is a Linux desktop app too, on the <a href="https://github.com/profullstack/readm3/releases/latest">release page</a>: a Flatpak and an AppImage. Run <code>readm3-desktop notes.md src/app.ts</code> and the files open as tabs; Ctrl+S saves them back. Or install it with the CLI in one line:</p>
+
+<pre><code class="language-sh">curl -fsSL https://readm3.com/install.sh | sh -s -- --desktop</code></pre>
+
+<p>Prefer the Flatpak on Ubuntu 24.04 and newer. AppArmor there stops an AppImage from using Chromium's sandbox, so the AppImage starts without one and tells you so.</p>
+
+<p>It is MIT licensed and the code is on <a href="https://github.com/profullstack/readm3">GitHub</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
