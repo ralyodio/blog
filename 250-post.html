@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gemini is Snapple &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/250-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-18T18:42:48Z">
+<meta name="description" content="Coke, Pepsi, Snapple: how I rank the AI labs, and the morning every link in our model fallback chain failed at once.">
+</head>
+<body>
+
+<article>
+
+<h1>Gemini is Snapple</h1>
+
+<p><em>2026-10-18, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every office fridge has a pecking order. The Coke goes first. The Pepsi goes second. Snapple is what's still there at 4pm on a Friday, sweating quietly behind the oat milk.</p>
+
+<p>That's how I rank the AI labs. Anthropic is the Coke. OpenAI is the Pepsi. Gemini is the Snapple.</p>
+
+<p>Not because Snapple is bad. Snapple is fine. Nobody has ever walked to the fridge thinking about Snapple, that's all.</p>
+
+<p>OutreachGraph, the outreach tool we run, doesn't trust any single model company. It keeps a fallback chain: if one provider fails, it asks the next. This morning I watched every link in that chain fail at once:</p>
+
+<ul>
+	<li>OpenAI: <code>429 You have no credits remaining.</code></li>
+	<li>Gemini: <code>403 Your API key was reported as leaked.</code></li>
+	<li>Anthropic: <code>400 Your credit balance is too low.</code></li>
+</ul>
+
+<p>Two of those are on me. We ran out of money with two vendors, which is the most boring outage there is. The third one is pure Snapple.</p>
+
+<p>Snapple's whole gimmick is the &quot;Real Fact&quot; printed under the cap. Gemini's real fact under the cap was that Google had flagged our key as leaked. That's what locked in third place: our chain steps past billing errors (a 429 or a 400 means &quot;go ask someone else&quot;) but a 403 reads like &quot;go away,&quot; so the chain stopped dead on Gemini and never even reached the next provider. The backup's backup turned into the wall.</p>
+
+<p>Meanwhile 48 home builders in Los Gatos sat in a queue, waiting for any model at all to read their websites.</p>
+
+<p>The fix is one new key and one line in an env file. The lesson is older than AI: keep more than one brand in the fridge, keep every one of them stocked, and check the caps before you need them.</p>
+
+<p>Coke, Pepsi, Snapple. Rank them however you like. Just don't let the fridge go empty.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
