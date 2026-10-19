@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ch4nnels.com: a search engine for IPTV &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/252-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-19T02:34:21Z">
+<meta name="description" content="ch4nnels.com compares 37 IPTV and live TV services by price, devices and country, and searches channel lineups by name. Same query on the page, API, CLI, TUI and MCP.">
+</head>
+<body>
+
+<article>
+
+<h1>ch4nnels.com: a search engine for IPTV</h1>
+
+<p><em>2026-10-19, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Picking an IPTV or live TV service usually means a dozen tabs of pricing pages that all claim 20,000 channels. ch4nnels.com puts them in one place and lets you ask the question you actually have: which service carries the channels I watch, on how many devices, for how much.</p>
+
+<h3>Search the way you talk</h3>
+
+<p>Type what you want, for example <code>4k uk sports under €10 with trial</code>, and the page shows how it read you: resolution, country, price ceiling, trial. Whatever it does not recognise becomes a channel search. So <code>sky sports main event</code> or <code>bein sports france</code> finds the actual channels, their country and quality, and the service that carries them.</p>
+
+<p>37 services are in the register today. 15 are licensed live TV services (YouTube TV, Sling, Hulu + Live TV, Fubo, Philo, Zattoo, waipu.tv, NOW and the free ones like Pluto and Samsung TV Plus). 21 are independent IPTV providers. Every plan is converted to a per-month price in EUR, so a 12-month plan in dollars and a monthly plan in pounds rank on one number. Every row says the date it was read and which page it came from.</p>
+
+<h3>Where we stand</h3>
+
+<p>We resell ArgonTV. It is pinned first when it matches your search and is labelled as ours on every surface, including the JSON. Everything else is ranked by price, and we earn nothing from those links. ArgonTV's whole lineup is mirrored nightly, which is why channel search works so well for it.</p>
+
+<p>Buying from us is a crypto checkout through CoinPay (USDC, USDT, BTC, ETH, SOL and more). When the payment confirms, the line is created on our reseller account and the login shows on your order page and arrives by email. Plans are $5.99 for a month or $39.99 for a year, three devices on every plan.</p>
+
+<h3>Same query, five surfaces</h3>
+
+<p>The page, the JSON API, the CLI, a TUI and MCP all take the same parameters, so a search you build in the browser runs as a curl.</p>
+
+<pre><code>curl -s 'https://ch4nnels.com/api/v1/search?text=dazn+4k&amp;utm_source=htmlblog&amp;utm_medium=blog&amp;utm_campaign=launch-announcement'
+bunx ch4nnels search &quot;arabic channels epg&quot;
+claude mcp add --transport http ch4nnels https://ch4nnels.com/mcp?utm_source=htmlblog&amp;utm_medium=blog&amp;utm_campaign=launch-announcement</code></pre>
+
+<p>Agents get <code>search_iptv</code>, <code>search_channels</code>, <code>compare_providers</code> and <code>start_checkout</code>, plus <code>/llms.txt</code> and <code>/skill.md</code>. Reading is free and needs no key.</p>
+
+<p>Try it at <a href="https://ch4nnels.com/?utm_source=htmlblog&amp;utm_medium=blog&amp;utm_campaign=launch-announcement">ch4nnels.com</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
