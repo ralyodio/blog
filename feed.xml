@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 19 Oct 2026 18:43:12 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 19 Oct 2026 20:08:50 GMT</lastBuildDate>
+
+		<item>
+			<title>pwamart: every app is a PWA, CLI, API or MCP, and collections install in one command</title>
+			<link>https://dev.profullstack.com/~anthony/blog/255-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/255-post.html</guid>
+			<pubDate>Mon, 19 Oct 2026 20:08:50 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>pwamart now flags each listing's CLI, API and MCP server with install instructions, and adds one-command collections for agentic workflows.</description>
+		</item>
 
 		<item>
 			<title>CoinPay now runs contractor payroll in crypto</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 17 Oct 2026 18:42:33 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>An open-source, private family tree with GEDCOM, a friends network, an inbox, a CLI, an MCP server and a desktop app.</description>
-		</item>
-
-		<item>
-			<title>seo.rank: a free SEO audit, and business listings anyone can claim on pit.world</title>
-			<link>https://dev.profullstack.com/~anthony/blog/245-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/245-post.html</guid>
-			<pubDate>Sat, 17 Oct 2026 14:40:27 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>seo.rank is a free, open-source on-page SEO audit (10 a day, CLI, MCP), and every website now has a business listing on pit.world that its owner can claim with a DNS record or a meta tag.</description>
 		</item>
 	</channel>
 </rss>

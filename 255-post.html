@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pwamart: every app is a PWA, CLI, API or MCP, and collections install in one command &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/255-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-19T20:08:50Z">
+<meta name="description" content="pwamart now flags each listing's CLI, API and MCP server with install instructions, and adds one-command collections for agentic workflows.">
+</head>
+<body>
+
+<article>
+
+<h1>pwamart: every app is a PWA, CLI, API or MCP, and collections install in one command</h1>
+
+<p><em>2026-10-19, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>pwamart.com started as an app store for PWAs. Most of the apps we list are more than a web page, though. Many ship a CLI, an HTTP API or an MCP server too, and an agent would rather use those than click through a browser.</p>
+
+<p>So every listing on pwamart now says which of the four it is: <strong>PWA</strong>, <strong>CLI</strong>, <strong>API</strong>, <strong>MCP</strong>. Each one it has comes with copy-paste instructions on the app page.</p>
+
+<ul>
+	<li><strong>CLI</strong>: the publisher's own <code>curl -fsSL https://the.app/install.sh | sh</code>. If the tool is in the <a href="https://w3bs.org/packages">w3bs package catalog</a>, you also get <code>w3bs install host/name</code>, which keeps it current with <code>w3bs update</code>.</li>
+	<li><strong>MCP</strong>: a <code>claude mcp add --transport http …</code> line, the <code>npx</code> stdio command when there is one, and an <code>mcpServers</code> block for Claude Desktop or Cursor.</li>
+	<li><strong>API</strong>: the base URL and a link to the OpenAPI spec or llms.txt, so an agent can read the docs itself.</li>
+</ul>
+
+<p>Nobody fills in a form. Once a week the store looks at each app's own site for a shell script at <code>/install.sh</code>, an MCP server that answers <code>initialize</code> at <code>/mcp</code> or <code>/api/mcp</code> (or wherever its llms.txt says), and an OpenAPI file or documented <code>/api/</code> routes. A 200 is not enough: an SPA answers every path with its HTML shell, so the script needs a <code>#!</code> and the MCP server has to actually reply. Publishers can correct anything with <code>pwamart surfaces &lt;slug&gt;</code>.</p>
+
+<p>The first sweep of 431 listings found 39 CLIs, 80 APIs and 51 MCP servers, and it is still going.</p>
+
+<h3>Collections</h3>
+
+<p>The other half is <a href="https://pwamart.com/collections">collections</a>, borrowed from bundl.run's idea of installing a whole workflow at once, but for agents instead of Mac apps. There are six workflows (agentic coding, agents that get paid, ops and security, growth, research, talking to humans), plus every MCP server, every CLI and every API.</p>
+
+<p>Each collection installs in one line:</p>
+
+<pre><code class="language-sh">curl -fsSL https://pwamart.com/collections/agentic-coding/install.sh | sh</code></pre>
+
+<p>That script runs each app's own installer in turn and keeps going if one fails. The same page gives you every MCP server as <code>claude mcp add</code> lines or one <code>mcp.json</code>, and an iPhone profile that adds every app to the home screen. Untick an app and the commands drop it.</p>
+
+<p>Agents get it too: <code>GET /api/v1/collections</code>, the MCP tools <code>list_collections</code> and <code>get_collection</code>, and <code>pwamart collections</code> in the CLI (0.7.0).</p>
+
+<p>If you have a PWA with a CLI or an MCP server, <a href="https://pwamart.com/console/submit">list it free</a> and it shows up in the right collection on its own.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
