@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoinPay now runs contractor payroll in crypto &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/254-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-19T18:43:11Z">
+<meta name="description" content="CoinPay now does Deel-style contractor management paid in crypto: contracts, W-9/W-8 collection, approvals and one-click pay runs.">
+</head>
+<body>
+
+<article>
+
+<h1>CoinPay now runs contractor payroll in crypto</h1>
+
+<p><em>2026-10-19, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We looked at what Deel charges $49 per contractor per month for and asked which parts a crypto payment platform can do better. The answer was the contractor side: hiring people anywhere, contracting with them, collecting their tax forms and paying the whole team in one run. That is live on CoinPay today at <a href="https://coinpayportal.com/contractors">https://coinpayportal.com/contractors</a>.</p>
+
+<p>Employer of record, PEO, benefits and visas need a legal entity in every country, so we left them out on purpose.</p>
+
+<h3>How it works</h3>
+
+<ol>
+	<li>Invite a contractor by email. They get a private portal link. No account, no app, no KYC form for them to fill in on our side.</li>
+	<li>In the portal they add the wallet and coin they want to be paid in (USDC or USDT on Solana, Polygon or Ethereum, or BTC, ETH, SOL and others), fill in a W-9, W-8BEN or W-8BEN-E, and sign their contract.</li>
+	<li>Contracts come in three shapes: a fixed amount per week, two weeks, half month or month; pay as you go by the hour; or milestones with an amount each. You sign first, they countersign.</li>
+	<li>They log hours, mark milestones complete and claim expenses with a receipt link. You approve or reject each one, with a note they can see. You can add bonuses and reimbursements yourself.</li>
+	<li>A pay run collects every fixed fee that is due plus all approved work, one line per person. On a fixed contract's pay date CoinPay drafts the run and emails you.</li>
+	<li>You press Pay. CoinPay converts each amount at the live rate and sends it from your business payout wallet, or you pay from your own wallet and paste the transaction hash. Each contractor gets an email and an invoice generated from the work it paid.</li>
+	<li>At year end the Tax forms tab shows what each person was paid and who needs a 1099-NEC, with a CSV for filing.</li>
+</ol>
+
+<h3>What we were careful about</h3>
+
+<ul>
+	<li>Nothing pays by itself. The schedule only drafts; a signed-in owner sends. An API key can draft a run but cannot pay one.</li>
+	<li>Every payment is claimed before it is sent and settled exactly once, so a double click cannot pay someone twice. If a send times out after the network may have taken it, it is held as indeterminate and never retried until you have checked the chain.</li>
+	<li>A wallet change emails both of you and is flagged on the next pay run for 72 hours. Swapping the payout address is the oldest payroll fraud there is.</li>
+	<li>Tax ids are encrypted at rest. The business only ever sees the last four, except the owner's 1099 export.</li>
+</ul>
+
+<h3>From the terminal</h3>
+
+<p>The CLI and SDK are at 0.19.0:</p>
+
+<pre><code>npm i -g @profullstack/coinpay
+coinpay contractor add --name &quot;Ada&quot; --email ada@example.com --country DE
+coinpay contractor contract &lt;id&gt; --title &quot;Retainer&quot; --kind fixed --rate 2000 --frequency monthly
+coinpay contractor pending
+coinpay contractor approve &lt;work-id&gt;
+coinpay payrun create
+coinpay payrun pay &lt;run-id&gt; --yes</code></pre>
+
+<p><code>coinpay mcp</code> gains eight tools so an agent can list contractors, review submissions and draft a pay run. None of them can send money.</p>
+
+<p>There is no per-contractor fee.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

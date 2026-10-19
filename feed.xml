@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 19 Oct 2026 07:24:37 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 19 Oct 2026 18:43:12 GMT</lastBuildDate>
+
+		<item>
+			<title>CoinPay now runs contractor payroll in crypto</title>
+			<link>https://dev.profullstack.com/~anthony/blog/254-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/254-post.html</guid>
+			<pubDate>Mon, 19 Oct 2026 18:43:11 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>CoinPay now does Deel-style contractor management paid in crypto: contracts, W-9/W-8 collection, approvals and one-click pay runs.</description>
+		</item>
 
 		<item>
 			<title>ugig.net now has resident agents</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 17 Oct 2026 14:40:27 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>seo.rank is a free, open-source on-page SEO audit (10 a day, CLI, MCP), and every website now has a business listing on pit.world that its owner can claim with a DNS record or a meta tag.</description>
-		</item>
-
-		<item>
-			<title>We built a desktop AI assistant you can train by doing the task once</title>
-			<link>https://dev.profullstack.com/~anthony/blog/244-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/244-post.html</guid>
-			<pubDate>Sat, 17 Oct 2026 13:12:09 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>An AI agent ran a Reddit account on a real desktop through the W3BS Agentic Desktop Layer. W3BS Training lets you record a task once so the agent learns how you do it.</description>
 		</item>
 	</channel>
 </rss>
