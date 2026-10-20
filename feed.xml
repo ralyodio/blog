@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 19 Oct 2026 20:08:50 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 20 Oct 2026 02:34:41 GMT</lastBuildDate>
+
+		<item>
+			<title>built.indie: launch your indie product with one URL</title>
+			<link>https://dev.profullstack.com/~anthony/blog/256-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/256-post.html</guid>
+			<pubDate>Tue, 20 Oct 2026 02:34:40 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Paste your URL; built.indie reads the logo, screenshots, video, socials and llms.txt from your homepage. Free, no account, claim with DNS.</description>
+		</item>
 
 		<item>
 			<title>pwamart: every app is a PWA, CLI, API or MCP, and collections install in one command</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 17 Oct 2026 19:51:46 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>pay.agent gives you a link anyone, person or agent, can pay in crypto, straight to your CoinPay wallet or business. Two choices to set up.</description>
-		</item>
-
-		<item>
-			<title>family.ancestry: a private, open-source family tree with a friends network built in</title>
-			<link>https://dev.profullstack.com/~anthony/blog/246-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/246-post.html</guid>
-			<pubDate>Sat, 17 Oct 2026 18:42:33 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>An open-source, private family tree with GEDCOM, a friends network, an inbox, a CLI, an MCP server and a desktop app.</description>
 		</item>
 	</channel>
 </rss>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>built.indie: launch your indie product with one URL &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/256-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-20T02:34:40Z">
+<meta name="description" content="Paste your URL; built.indie reads the logo, screenshots, video, socials and llms.txt from your homepage. Free, no account, claim with DNS.">
+</head>
+<body>
+
+<article>
+
+<h1>built.indie: launch your indie product with one URL</h1>
+
+<p><em>2026-10-20, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Launching an indie product usually means filling in the same form on twenty directories: name, tagline, description, logo, three screenshots, a demo video, your socials. Your homepage already says all of that. So <a href="https://built.indie.pit.world">built.indie</a> asks for one thing, the URL, and reads the rest.</p>
+
+<h3>What it reads</h3>
+
+<p>Paste a URL and built.indie fetches the homepage the way a careful person would:</p>
+
+<ul>
+	<li>the name, tagline and description from the title, meta tags, Open Graph, Twitter cards and JSON-LD</li>
+	<li>the logo from your apple-touch-icon, manifest icons or JSON-LD, the card image from og:image</li>
+	<li>screenshots from the page, plus one we take of your homepage with headless Chrome</li>
+	<li>your demo video: YouTube, Vimeo, Loom or an mp4, embedded without trackers</li>
+	<li>your X, GitHub, Discord, LinkedIn, Bluesky, App Store and other accounts</li>
+	<li><code>llms.txt</code>, if you have one, for the description</li>
+</ul>
+
+<p>It also reads the files a site can serve about itself under the <a href="https://logicsrc.com/specs">LogicSRC</a> open specs. If you serve <code>/.well-known/opensite.json</code>, what you say about yourself wins over what we scrape. <code>openprofile.md</code> says who runs it. <code>openstack.md</code> becomes a &quot;Built with&quot; section. <code>opensaas.json</code> shows your plans and, just as prominently, your cancel page. If your robots.txt or your opensite.json says no, we stay out.</p>
+
+<h3>Free, and no account to launch</h3>
+
+<p>Anyone can launch any site, free, without signing up. That is the point: if you like something an indie built, put it on the board.</p>
+
+<p>To edit a listing, the owner signs in with an emailed link and claims it with one DNS record:</p>
+
+<pre><code>_built-indie.yourproduct.com  TXT  &quot;built-indie-verify=&lt;your token&gt;&quot;</code></pre>
+
+<h3>The board</h3>
+
+<p>Today's launches sit on one board that resets at midnight UTC. One upvote per visitor. Yesterday's top three get &quot;Product of the day&quot; on their page and their badge. The badge is an SVG with your live upvote count; put it on your homepage and your link here becomes a followed link with a check mark.</p>
+
+<h3>Everything is an API</h3>
+
+<ul>
+	<li>web: <a href="https://built.indie.pit.world">https://built.indie.pit.world</a> (installable as a PWA)</li>
+	<li>API: <code>POST /api/v1/products {&quot;url&quot;: &quot;yourproduct.com&quot;}</code></li>
+	<li>CLI and TUI: <code>curl -fsSL https://built.indie.pit.world/install.sh | sh</code>, then <code>builtindie launch yourproduct.com</code></li>
+	<li>MCP: <code>claude mcp add builtindie -- bunx @profullstack/builtindie mcp</code>, so your agent can launch, search and upvote</li>
+</ul>
+
+<p>Every product is published back as an OpenSite record and an OpenProfile, so any index can reuse what we read instead of scraping it again.</p>
+
+<p>built.indie runs on a Moshpit name, <code>built.indie</code>, and is part of the <a href="https://pit.world/ring">Moshpit ring</a>. The source is MIT: <a href="https://github.com/moshcoder/built.indie">https://github.com/moshcoder/built.indie</a></p>
+
+<p>Launch something: <a href="https://built.indie.pit.world/submit">https://built.indie.pit.world/submit</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
