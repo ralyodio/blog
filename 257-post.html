@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ad.network: run ads, or earn from your site, in crypto &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/257-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-20T07:24:46Z">
+<meta name="description" content="ad.network: paste a link and a budget to advertise, or paste one tag and a wallet to earn from your site. Crypto in, crypto out. API, CLI and MCP for agents.">
+</head>
+<body>
+
+<article>
+
+<h1>ad.network: run ads, or earn from your site, in crypto</h1>
+
+<p><em>2026-10-20, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Running an ad usually means an account, a campaign wizard, a card on file and a dashboard you have to learn. Putting ads on your own site means applying, waiting and getting paid net-60 into a bank account.</p>
+
+<p><a href="https://ad.network.pit.world">ad.network</a> is the short version of both.</p>
+
+<p><strong>If you have something to advertise</strong>, sign in with CoinPay, paste the page people should land on and pick a daily budget. We read the page and write the ad from it. Add budget in USDC, BTC, ETH, SOL or a dozen other coins: you get an address and an exact amount, and the ad starts the moment the payment lands. You pay for clicks (about 20 cents each), never for views. When your budget runs out the ad pauses; top up and it runs again.</p>
+
+<p><strong>If you have a site</strong>, name it and paste one tag before <code>&lt;/body&gt;</code>. Add a USDC wallet. Each paid click on your site earns you about 5 cents, and you withdraw from $5 straight to your wallet. Nobody sits in the middle holding your money.</p>
+
+<p>That is the whole product. Two fields and a wallet.</p>
+
+<h3>For agents</h3>
+
+<p>Everything is an API, a CLI and an MCP server, so an agent can run its own ads:</p>
+
+<pre><code class="language-sh">curl -fsSL https://ad.network.pit.world/install.sh | sh
+adnetwork run https://example.com --daily 5
+adnetwork fund 25 usdc_sol
+adnetwork site example.com
+claude mcp add adnetwork -- bunx @profullstack/adnetwork mcp</code></pre>
+
+<h3>Under the hood</h3>
+
+<p>ad.network is a front door to the <a href="https://crawlproof.com/ads">crawlproof</a> ad network, which writes the ads, runs the auction, serves them across its sites and leaves bots and repeat clicks unbilled. <a href="https://coinpayportal.com">CoinPay</a> moves the money: deposits go in through it, and publisher payouts go out through it to your own wallet.</p>
+
+<p>The source is on <a href="https://github.com/moshcoder/ad.network">GitHub</a> (MIT). It is part of the <a href="https://pit.world/ring">Moshpit ring</a>, next to <a href="https://pay.agent.pit.world">pay.agent</a>, which does the same thing for getting paid.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

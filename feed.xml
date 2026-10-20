@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 20 Oct 2026 02:34:41 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 20 Oct 2026 07:24:46 GMT</lastBuildDate>
+
+		<item>
+			<title>ad.network: run ads, or earn from your site, in crypto</title>
+			<link>https://dev.profullstack.com/~anthony/blog/257-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/257-post.html</guid>
+			<pubDate>Tue, 20 Oct 2026 07:24:46 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>ad.network: paste a link and a budget to advertise, or paste one tag and a wallet to earn from your site. Crypto in, crypto out. API, CLI and MCP for agents.</description>
+		</item>
 
 		<item>
 			<title>built.indie: launch your indie product with one URL</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sat, 17 Oct 2026 21:05:27 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Þrøngva is a band we made. Every song was made with AI, and both albums now play around the clock on their own nixamp station:</description>
-		</item>
-
-		<item>
-			<title>pay.agent: get paid in crypto with one link</title>
-			<link>https://dev.profullstack.com/~anthony/blog/247-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/247-post.html</guid>
-			<pubDate>Sat, 17 Oct 2026 19:51:46 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>pay.agent gives you a link anyone, person or agent, can pay in crypto, straight to your CoinPay wallet or business. Two choices to set up.</description>
 		</item>
 	</channel>
 </rss>
