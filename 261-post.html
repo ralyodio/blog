@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>We want 100,000 c0mpute nodes. We have fewer than 10. &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/261-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-21T13:34:55Z">
+<meta name="description" content="c0mpute is an open compute network. One curl line turns a spare box into a node. Why we want 100,000 of them, what a node earns today, and the headless install bug I fixed before asking.">
+</head>
+<body>
+
+<article>
+
+<h1>We want 100,000 c0mpute nodes. We have fewer than 10.</h1>
+
+<p><em>2026-10-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>c0mpute is the open compute network we have been building at Profullstack. Any machine can join it with one command, and once it is in, it serves AI inference, FFmpeg transcoding and storage jobs for whoever needs them. No account and no approval step, and you do not need to forward a port to join.</p>
+
+<p>The number we care about is 100,000 nodes. Pooled spare capacity at that size is enough to train and serve open-weight models in the open, on hardware owned by the people running it. Today the best models come from a few labs that own their own data centers. A volunteer network will not beat them next year, and I am not going to pretend it will. But it does not have to win on day one to be worth building. It has to get big enough to matter.</p>
+
+<p>Right now the live count is under 10 (7 this morning), and at least three of those are our own servers. That is the honest starting point, and the count is public at <a href="https://c0mpute.com/nodes">c0mpute.com/nodes</a>, so nobody has to take my word for it.</p>
+
+<h3>Run one</h3>
+
+<pre><code class="language-sh">curl -fsSL https://c0mpute.com/install.sh | sh</code></pre>
+
+<p>That installs <code>c0mpute</code>, plus <code>infernet</code> for inference and <code>coinpay</code> for payments, and starts the worker for you: a systemd service where it can, a background daemon where it can't. Then:</p>
+
+<pre><code class="language-sh">c0mpute worker status
+c0mpute bench   # one full run puts a score next to your node on the board</code></pre>
+
+<p>It runs on Linux (x86_64 and arm64) and macOS, and on Windows inside WSL2. A GPU is detected and advertised if you have one, but it is not required. CPU nodes serve small models like qwen2.5:0.5b.</p>
+
+<h3>What you get</h3>
+
+<p>Paid inference goes through <a href="https://infernetprotocol.com">Infernet</a>, the inference plugin that ships with c0mpute. Clients pay through CoinPay in 16 coins or with PayPal, and you choose where your share lands with <code>infernet payout set &lt;coin&gt; &lt;address&gt;</code>. Paid demand is early, so expect small and irregular earnings for now. I would rather say that than promise a number.</p>
+
+<p>You also get a spot on the board. And if you bring people, give them <code>https://c0mpute.com/r/&lt;your-handle&gt;</code>: every node installed from that link shows your handle next to it. It is a scoreboard, not a payout.</p>
+
+<h3>What I fixed while testing this</h3>
+
+<p>Before writing this I ran the installer on a clean Ubuntu 24.04 container as a normal user, the way a stranger would. It took about two minutes, and it failed. The transcode step redirects <code>apt-get</code> to <code>/dev/tty</code> so sudo can prompt you, and with no terminal (ssh without -t, cloud-init, a container) that redirect fails before apt even runs. Because the installer runs under <code>set -e</code> and that call was the last command in an <code>if</code> body, the whole script exited with status 1 before it started the worker. So on exactly the kind of headless box that makes a good node, you got binaries and no node.</p>
+
+<p>Now the package manager only gets the terminal when there is one, and a missing ffmpeg only turns off transcode jobs instead of the install. The installer also serves as <code>text/x-shellscript</code> now.</p>
+
+<p>The code is MIT and on <a href="https://github.com/profullstack/c0mpute">GitHub</a>. If the installer breaks on your machine, open an issue with the output and I will fix it.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
