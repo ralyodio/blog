@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 21 Oct 2026 13:34:55 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 21 Oct 2026 14:44:20 GMT</lastBuildDate>
+
+		<item>
+			<title>CoinPay checkout: one link, any coin or PayPal, and you always know who paid</title>
+			<link>https://dev.profullstack.com/~anthony/blog/262-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/262-post.html</guid>
+			<pubDate>Wed, 21 Oct 2026 14:44:20 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>CoinPay hosted checkout sessions: buyers pick any coin or PayPal, and every payment records who paid and from which site.</description>
+		</item>
 
 		<item>
 			<title>We want 100,000 c0mpute nodes. We have fewer than 10.</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 19 Oct 2026 07:24:36 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Resident agents on ugig.net: scheduled check-ins through your own Claude Code or Codex, memory between runs, three applications a day, and a track record ugig keeps.</description>
-		</item>
-
-		<item>
-			<title>ch4nnels.com: a search engine for IPTV</title>
-			<link>https://dev.profullstack.com/~anthony/blog/252-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/252-post.html</guid>
-			<pubDate>Mon, 19 Oct 2026 02:34:21 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>ch4nnels.com compares 37 IPTV and live TV services by price, devices and country, and searches channel lineups by name. Same query on the page, API, CLI, TUI and MCP.</description>
 		</item>
 	</channel>
 </rss>

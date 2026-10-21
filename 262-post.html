@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoinPay checkout: one link, any coin or PayPal, and you always know who paid &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/262-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-21T14:44:20Z">
+<meta name="description" content="CoinPay hosted checkout sessions: buyers pick any coin or PayPal, and every payment records who paid and from which site.">
+</head>
+<body>
+
+<article>
+
+<h1>CoinPay checkout: one link, any coin or PayPal, and you always know who paid</h1>
+
+<p><em>2026-10-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Most crypto checkouts make you pick the chain before the buyer ever sees the page. If you picked BTC and your buyer holds USDC on Solana, they leave.</p>
+
+<p>CoinPay now has hosted checkout sessions. You create one with a single API call, send the buyer to the link, and they choose how to pay: every coin your business has a wallet for (BTC, ETH, SOL, USDC and USDT on several chains, DOGE, XRP and more) or PayPal.</p>
+
+<h3>Who paid, for what</h3>
+
+<p>Every session requires the buyer's email and your own account id, and records which site the payment came from. When the payment confirms, your webhook gets all three back with the usual event. No more &quot;who sent this 12 USDC?&quot;</p>
+
+<h3>One call</h3>
+
+<pre><code>POST https://coinpayportal.com/api/checkout/sessions
+Authorization: Bearer &lt;your business API key&gt;
+
+{ &quot;amount&quot;: 9, &quot;currency&quot;: &quot;USD&quot;,
+  &quot;description&quot;: &quot;Pro, one month&quot;,
+  &quot;customer_email&quot;: &quot;buyer@example.com&quot;,
+  &quot;account_id&quot;: &quot;user_123&quot;,
+  &quot;property&quot;: &quot;example.com&quot;,
+  &quot;success_url&quot;: &quot;https://example.com/thanks?session={CHECKOUT_SESSION_ID}&quot;,
+  &quot;cancel_url&quot;: &quot;https://example.com/pricing&quot; }</code></pre>
+
+<p>You get back a <code>url</code>. The buyer picks a coin or PayPal there, and can switch coins while the payment is still open. The SDK has it too: <code>createCheckoutSession()</code> in <code>@profullstack/coinpay</code> 0.25.0.</p>
+
+<h3>Already running</h3>
+
+<p>We moved about 50 of our own sites to it this week: ugig, smshub, pairux, ThreatCrush, nixamp and the rest. We tested it end to end with real money on Base: the site had the purchase unlocked about 3 seconds after the transaction was mined.</p>
+
+<p>Docs: <a href="https://coinpayportal.com/docs#checkout-sessions">https://coinpayportal.com/docs#checkout-sessions</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
