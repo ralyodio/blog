@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>deadman.switch: so your crypto doesn&rsquo;t die with you &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/258-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-21T04:37:07Z">
+<meta name="description" content="A dead man's switch for your crypto: sealed in your browser, check in now and then, and if you stop, your family gets it.">
+</head>
+<body>
+
+<article>
+
+<h1>deadman.switch: so your crypto doesn&rsquo;t die with you</h1>
+
+<p><em>2026-10-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Most people who hold crypto have the same quiet problem. The coins are safe because only they know where the keys are. That is also exactly why the coins are gone the day something happens to them. The family knows there was &quot;some Bitcoin&quot;. Nobody knows there is a Ledger in the safe, or that the seed is split between a bank box and Mom's house, or which exchange the rest is on.</p>
+
+<p>So I built <a href="https://deadman.switch.pit.world">deadman.switch</a>.</p>
+
+<h3>How it works</h3>
+
+<ol>
+	<li><strong>Seal it.</strong> Write down what your people would need: which wallets, where the hardware is, how the seed is stored, the exchange logins, who to call. Add files if you like. It is encrypted in your browser (PBKDF2 into AES-256-GCM) with a passphrase you choose. We store the locked box, never the key.</li>
+	<li><strong>Give them the passphrase.</strong> In your will, on paper in the safe, in person. You can leave a hint that only they will understand.</li>
+	<li><strong>Check in.</strong> Every week, month or year we ask &quot;still here?&quot; by email and on your phone. One tap, and the clock starts again.</li>
+	<li><strong>If you stop.</strong> Three reminders spread across a grace period you pick, then, on the paid plan, a phone call. Only after all that, and at least a day after the last reminder, does each person you chose get their own link. They type the passphrase, and the bundle opens in their browser.</li>
+</ol>
+
+<p>Before it fires they have the key but no box. After it fires we have the box but still no key. There is nothing on our side for anyone to leak.</p>
+
+<h3>The details I cared about</h3>
+
+<ul>
+	<li>Missing a check-in never fires anything at once. A server outage can't skip the warnings either: reminders are at least 12 hours apart, and the release waits a full day after the last one.</li>
+	<li>Check-in links need a tap, so a mail scanner that opens links can't check in for you.</li>
+	<li>If a paid plan lapses, your switches keep running. Protection never switches off because a renewal was missed.</li>
+	<li>Going off-grid? Pause it.</li>
+</ul>
+
+<h3>For the terminal and for agents</h3>
+
+<pre><code class="language-sh">bunx @profullstack/deadman status
+bunx @profullstack/deadman checkin
+bunx @profullstack/deadman seal &quot;My crypto&quot; note.md --hint=&quot;first dog, then the year&quot;
+claude mcp add deadman -- bunx @profullstack/deadman mcp</code></pre>
+
+<p>There is a JSON API too. The MCP server can check in and manage switches, but sealing stays in your browser or the CLI, so an agent never touches the passphrase.</p>
+
+<h3>Price</h3>
+
+<p>One switch for up to two people is free, forever. Keeper is $49 a year or $149 for life: ten switches, ten people each, 5 MB bundles (photos of seed cards, PDFs, key files), and the phone call on the last reminder. Paid in crypto through <a href="https://coinpayportal.com">CoinPay</a>.</p>
+
+<p>The code is open: <a href="https://github.com/moshcoder/deadman.switch">github.com/moshcoder/deadman.switch</a>.</p>
+
+<p>Set one up: <a href="https://deadman.switch.pit.world">deadman.switch.pit.world</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

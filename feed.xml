@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Tue, 20 Oct 2026 07:24:46 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 21 Oct 2026 04:37:07 GMT</lastBuildDate>
+
+		<item>
+			<title>deadman.switch: so your crypto doesn’t die with you</title>
+			<link>https://dev.profullstack.com/~anthony/blog/258-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/258-post.html</guid>
+			<pubDate>Wed, 21 Oct 2026 04:37:07 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A dead man's switch for your crypto: sealed in your browser, check in now and then, and if you stop, your family gets it.</description>
+		</item>
 
 		<item>
 			<title>ad.network: run ads, or earn from your site, in crypto</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 18 Oct 2026 02:33:57 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>W3BS Desktop 0.5.0 asks the person before an AI agent takes the mouse and keyboard: Allow, Deny, Postpone or Always allow.</description>
-		</item>
-
-		<item>
-			<title>Þrøngva Radio: an AI band on the air all day, now with the words on screen</title>
-			<link>https://dev.profullstack.com/~anthony/blog/248-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/248-post.html</guid>
-			<pubDate>Sat, 17 Oct 2026 21:05:27 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Þrøngva is a band we made. Every song was made with AI, and both albums now play around the clock on their own nixamp station:</description>
 		</item>
 	</channel>
 </rss>
