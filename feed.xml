@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 21 Oct 2026 06:37:12 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 21 Oct 2026 12:03:56 GMT</lastBuildDate>
+
+		<item>
+			<title>Free ads for indie sites while we launch</title>
+			<link>https://dev.profullstack.com/~anthony/blog/260-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/260-post.html</guid>
+			<pubDate>Wed, 21 Oct 2026 12:03:55 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>ad.network is open and advertising is free during the launch. Publishers earn USDC from paid clicks and can advertise their own site free.</description>
+		</item>
 
 		<item>
 			<title>watch.wallet: know the second your wallet moves</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 18 Oct 2026 23:05:50 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>readm3.com is now a plain, Sublime-style text editor: multiple cursors, find and replace, Ctrl+P, a command palette, save back to disk, offline, and a Linux desktop app as Flatpak and AppImage.</description>
-		</item>
-
-		<item>
-			<title>Gemini is Snapple</title>
-			<link>https://dev.profullstack.com/~anthony/blog/250-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/250-post.html</guid>
-			<pubDate>Sun, 18 Oct 2026 18:42:48 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Coke, Pepsi, Snapple: how I rank the AI labs, and the morning every link in our model fallback chain failed at once.</description>
 		</item>
 	</channel>
 </rss>

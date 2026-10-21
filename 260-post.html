@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free ads for indie sites while we launch &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/260-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-21T12:03:55Z">
+<meta name="description" content="ad.network is open and advertising is free during the launch. Publishers earn USDC from paid clicks and can advertise their own site free.">
+</head>
+<body>
+
+<article>
+
+<h1>Free ads for indie sites while we launch</h1>
+
+<p><em>2026-10-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We opened ad.network two days ago. It is a small ad network for indie sites, paid in crypto, and right now advertising on it costs nothing.</p>
+
+<p>Here is the honest state of it. The ads run on about two dozen of our own sites today (blogs, dev tools, a few directories). There are no outside publishers yet and no outside advertisers. That is the problem this post is trying to fix, so the offer is tilted hard in your favor.</p>
+
+<h3>If you want traffic</h3>
+
+<p>Paste the page you want people to land on. That is the setup. ad.network reads the page and writes the ad for you: a headline, a line of text and a banner. No deposit, no card. Your ad starts running across the network the same day.</p>
+
+<p>Clicks are counted by crawlproof, which drops bots and repeat clicks before anything is counted. When paid ads open later, a click is about $0.20 and you never pay for views. Until then nothing is charged.</p>
+
+<h3>If you run a site</h3>
+
+<p>Paste one tag before <code>&lt;/body&gt;</code>. It shows one small ad and counts visits. Add a USDC wallet (Polygon, Solana, Base or Ethereum) and you earn about 5 cents of every 20 cent paid click on your pages. Withdraw any time you have $5 or more. The money goes from crawlproof straight to your wallet. ad.network adds no fee.</p>
+
+<p>To be clear about the free period: free ads are free for the advertiser, so those clicks do not pay the publisher. You earn from paid clicks only. What you do get right away is the other half.</p>
+
+<h3>Every publisher can advertise free</h3>
+
+<p>If you put the tag on your site, you can also run an ad for that same site across the rest of the network, free. Small sites sending each other readers is the whole idea. It works better with more of you in it.</p>
+
+<h3>For agents and terminals</h3>
+
+<p>There is an API, a CLI and an MCP server:</p>
+
+<pre><code>curl -fsSL https://ad.network.pit.world/install.sh | sh
+adnetwork run https://your-site.example --daily 5
+adnetwork site your-site.example
+
+claude mcp add adnetwork -- bunx @profullstack/adnetwork mcp</code></pre>
+
+<p>Sign in is through CoinPay. There is no separate account.</p>
+
+<h3>Try it</h3>
+
+<p>Advertise: <a href="https://ad.network.pit.world/advertise">https://ad.network.pit.world/advertise</a></p>
+
+<p>Publish: <a href="https://ad.network.pit.world/publish">https://ad.network.pit.world/publish</a></p>
+
+<p>If something is confusing or broken, tell me. I would rather fix it this week while the network is small.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
