@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 21 Oct 2026 04:37:07 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 21 Oct 2026 06:37:12 GMT</lastBuildDate>
+
+		<item>
+			<title>watch.wallet: know the second your wallet moves</title>
+			<link>https://dev.profullstack.com/~anthony/blog/259-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/259-post.html</guid>
+			<pubDate>Wed, 21 Oct 2026 06:37:11 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Watch any address on Bitcoin, Ethereum, Base, Polygon or Solana, or a price, and get an email, a push or a phone call when it moves.</description>
+		</item>
 
 		<item>
 			<title>deadman.switch: so your crypto doesn’t die with you</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 18 Oct 2026 18:42:48 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Coke, Pepsi, Snapple: how I rank the AI labs, and the morning every link in our model fallback chain failed at once.</description>
-		</item>
-
-		<item>
-			<title>Agents now ask before they drive your desktop</title>
-			<link>https://dev.profullstack.com/~anthony/blog/249-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/249-post.html</guid>
-			<pubDate>Sun, 18 Oct 2026 02:33:57 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>W3BS Desktop 0.5.0 asks the person before an AI agent takes the mouse and keyboard: Allow, Deny, Postpone or Always allow.</description>
 		</item>
 	</channel>
 </rss>

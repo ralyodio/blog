@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>watch.wallet: know the second your wallet moves &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/259-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-21T06:37:11Z">
+<meta name="description" content="Watch any address on Bitcoin, Ethereum, Base, Polygon or Solana, or a price, and get an email, a push or a phone call when it moves.">
+</head>
+<body>
+
+<article>
+
+<h1>watch.wallet: know the second your wallet moves</h1>
+
+<p><em>2026-10-21, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>If a wallet you never touch suddenly sends funds, you want to know right then, not when you happen to open an explorer. Most wallet apps only watch the wallets you hold in them, and a push you sleep through is a push you didn't get.</p>
+
+<p>So I built <a href="https://watch.wallet.pit.world">watch.wallet</a>.</p>
+
+<h3>What it does</h3>
+
+<ul>
+	<li><strong>Watch an address</strong> on Bitcoin, Ethereum, Base, Polygon or Solana. It reads the native coin plus USDC and USDT, and tells you when any of them changes. On Bitcoin a transaction counts the moment it hits the mempool.</li>
+	<li><strong>Watch a price.</strong> BTC above $100k, SOL below $120. It fires once, then re-arms when the price crosses back.</li>
+	<li><strong>Only big moves</strong>, if you like: set a dollar threshold so dust doesn't page you.</li>
+</ul>
+
+<p>Alerts come by email and web push for everyone. On the Watcher plan they can also come as a <strong>phone call</strong> (&quot;press 1 to acknowledge&quot;) and a <strong>signed webhook</strong> for your own bots and agents.</p>
+
+<h3>The rules it keeps</h3>
+
+<ul>
+	<li>A failed read never alerts and never moves the baseline. Public RPCs fail all the time; that should not look like your wallet emptied.</li>
+	<li>Each move alerts once, even with two workers racing.</li>
+	<li>A lapsed plan never deletes anything. Extra watches pause until you renew; the first three keep running.</li>
+</ul>
+
+<h3>Free lookup</h3>
+
+<p><a href="https://watch.wallet.pit.world/check">watch.wallet.pit.world/check</a> shows any address's balance on any of the five chains, no sign-in.</p>
+
+<h3>For the terminal and for agents</h3>
+
+<pre><code class="language-sh">npx @profullstack/watchwallet check bitcoin bc1q…
+npx @profullstack/watchwallet add ethereum 0x… --label &quot;cold wallet&quot; --min-usd 100
+npx @profullstack/watchwallet price BTC above 100000
+claude mcp add watchwallet -- npx @profullstack/watchwallet mcp</code></pre>
+
+<p>There is a JSON API too, and <code>check_address</code> in the MCP server needs no key at all.</p>
+
+<h3>Price</h3>
+
+<p>Three watches checked every 15 minutes are free. Watcher is $5 for 30 days or $39 a year: 50 watches checked every minute, phone calls, webhooks and dollar thresholds. Paid in crypto through <a href="https://coinpayportal.com">CoinPay</a>.</p>
+
+<p>Code: <a href="https://github.com/moshcoder/watch.wallet">github.com/moshcoder/watch.wallet</a>. Its sibling, <a href="https://deadman.switch.pit.world">deadman.switch</a>, makes sure your family can find your crypto if something happens to you.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
