@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 22 Oct 2026 06:37:39 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 22 Oct 2026 12:04:05 GMT</lastBuildDate>
+
+		<item>
+			<title>moshcode work: 50 agents, one verifier, and an inbox</title>
+			<link>https://dev.profullstack.com/~anthony/blog/264-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/264-post.html</guid>
+			<pubDate>Thu, 22 Oct 2026 12:04:04 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The people running thousands of AI agents on math proofs are not watching thousands of agents. The proof checker is. Lean says yes or no to every attempt, a wrong one gets thrown away, and the human…</description>
+		</item>
 
 		<item>
 			<title>Sign your releases with the SSH key you already have</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 19 Oct 2026 20:08:50 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>pwamart now flags each listing's CLI, API and MCP server with install instructions, and adds one-command collections for agentic workflows.</description>
-		</item>
-
-		<item>
-			<title>CoinPay now runs contractor payroll in crypto</title>
-			<link>https://dev.profullstack.com/~anthony/blog/254-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/254-post.html</guid>
-			<pubDate>Mon, 19 Oct 2026 18:43:11 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>CoinPay now does Deel-style contractor management paid in crypto: contracts, W-9/W-8 collection, approvals and one-click pay runs.</description>
 		</item>
 	</channel>
 </rss>

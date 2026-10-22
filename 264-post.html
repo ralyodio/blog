@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>moshcode work: 50 agents, one verifier, and an inbox &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/264-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-22T12:04:04Z">
+<meta name="description" content="The people running thousands of AI agents on math proofs are not watching thousands of agents. The proof checker is. Lean says yes or no to every attempt, a wrong one gets thrown away, and the human…">
+</head>
+<body>
+
+<article>
+
+<h1>moshcode work: 50 agents, one verifier, and an inbox</h1>
+
+<p><em>2026-10-22, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>The people running thousands of AI agents on math proofs are not watching thousands of agents. The proof checker is. Lean says yes or no to every attempt, a wrong one gets thrown away, and the human looks at two things: what passed, and what is stuck.</p>
+
+<p>Our agent tools were built the other way. The herd is a terminal pane per agent and a swarm is a handful of panes. That tops out at the number of panes one person can read, which is about ten.</p>
+
+<p>So moshcode 0.117.0 adds <code>moshcode work</code>. Every task carries a <code>verify</code> command, and exit 0 is the only definition of done. Workers are headless processes, each in its own git worktree. The engine's opinion of its own work is logged and never consulted.</p>
+
+<pre><code class="language-sh">moshcode work from-tests fix-tests                 # one task per failing test file
+moshcode work run fix-tests -n 50 --engine claude  # fifty workers
+moshcode work status fix-tests                     # numbers, not transcripts
+moshcode work inbox fix-tests                      # only what failed every attempt
+moshcode work apply fix-tests                      # land the passing patches</code></pre>
+
+<p>A failed attempt goes back in the queue with the verify output in its next prompt. After three it lands in the inbox with its worktree kept. A task that already passes costs one verify and no tokens. Claims are atomic file renames, so several runs on one queue split it. Every run is recorded as an OpenFleet swarm.</p>
+
+<h3>The first run, on moshcode itself</h3>
+
+<p>We had 139 tests that failed locally and passed in CI. <code>from-tests</code> ran every file on its own and found exactly one that really failed. The other 138 were PWA tests that crash when the PWA's own dependencies are not installed, instead of skipping like their neighbours do.</p>
+
+<p>That is 19 tasks. The verify for each PWA file ran it twice, without the dependencies (must skip) and with them (must pass). 50 Claude workers took them in parallel.</p>
+
+<p>19 of 19 passed on the first attempt. The inbox stayed empty. No assertion was added or removed. Local failures went from 139 to 0.</p>
+
+<p>The one real failure was the best find. A test of <code>moshcode mcp install</code> inherited the host's PATH and HOME, so any coding engine installed on the box joined the run and did a real <code>mcp add</code> against my own config. The worker made it use only the stub engines.</p>
+
+<p>The next queue needs a verifier other than tests: typecheck errors, a URL that must return 200, and eventually Lean.</p>
+
+<p><code>moshcode upgrade self</code> gets it. Source and PRD: <a href="https://github.com/moshcoder/moshcode/releases/tag/v0.117.0">https://github.com/moshcoder/moshcode/releases/tag/v0.117.0</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
