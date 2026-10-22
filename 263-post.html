@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign your releases with the SSH key you already have &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/263-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-22T06:37:39Z">
+<meta name="description" content="W3BS packages can now be signed by their publishers with plain OpenSSH, bound to their domain and checked before any installer runs.">
+</head>
+<body>
+
+<article>
+
+<h1>Sign your releases with the SSH key you already have</h1>
+
+<p><em>2026-10-22, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>W3BS packages can now be signed by their publishers, and the signature is made with plain OpenSSH. No new tool, no certificate authority, no key type you have to learn.</p>
+
+<h3>Why</h3>
+
+<p>Most developer tools install with <code>curl -fsSL https://example.com/install.sh | sh</code>. The W3BS registry already signs its catalog, so you know the listing came from w3bs.org. What it could not tell you is whether the installer is the one the publisher meant to ship. Now it can.</p>
+
+<h3>How it works</h3>
+
+<ol>
+	<li>Register a key for your domain. <code>w3bs publish key add example.com</code> signs a challenge with <code>~/.ssh/id_ed25519</code> and prints one line to publish at <code>https://example.com/.well-known/w3bs-publisher.txt</code> or as a TXT record on <code>_w3bs.example.com</code>. Proving the domain makes your account its publisher.</li>
+	<li>Publish a release. <code>w3bs publish release --package example.com/tool --version 1.2.0 --install &quot;curl -fsSL https://example.com/install.sh | sh&quot;</code> downloads your installer, records its sha256 in a small JSON statement and signs it with <code>ssh-keygen -Y sign -n w3bs-release@w3bs.org</code>.</li>
+	<li>Install it. <code>w3bs install example.com/tool</code> checks the signature, pins your key for your domain, and refuses to run an installer whose sha256 does not match what you signed. A later release signed by a different key, or with the signature stripped, is refused unless the user accepts it.</li>
+</ol>
+
+<p>Ed25519 and ECDSA keys work, including hardware FIDO keys. The signature namespace means a git commit signature can never be replayed as a release.</p>
+
+<h3>Check it without trusting us</h3>
+
+<p>Every signed package page shows the commands to verify the release offline with <code>ssh-keygen -Y verify</code>. The registry also re-verifies every signature before it lands in the catalog, so a compromised web server cannot add one.</p>
+
+<h3>First up: the hqtui demo, in 11 languages</h3>
+
+<p>The <a href="https://hqtui.com/?utm_source=htmlblog&amp;utm_medium=blog&amp;utm_campaign=launch-announcement">hqtui</a> ten-screen terminal dashboard is now on w3bs.org/packages once per language: TypeScript, Rust, Go, Python, Zig, C++, Ruby, PHP, Perl, Nim and COBOL, each signed by hqtui.com.</p>
+
+<pre><code class="language-sh">curl -fsSL https://w3bs.org/install.sh | sh
+w3bs install hqtui.com/hqtui-demo-rust
+hqtui-demo-rust --sim</code></pre>
+
+<p>Publish yours: <a href="https://w3bs.org/packages/publish">w3bs.org/packages/publish</a>. The format is an open draft, <a href="https://w3bs.org/specs/W3BS-SIGN-1">W3BS-SIGN-1</a>.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

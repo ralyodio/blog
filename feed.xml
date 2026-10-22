@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 21 Oct 2026 14:44:20 GMT</lastBuildDate>
+		<lastBuildDate>Thu, 22 Oct 2026 06:37:39 GMT</lastBuildDate>
+
+		<item>
+			<title>Sign your releases with the SSH key you already have</title>
+			<link>https://dev.profullstack.com/~anthony/blog/263-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/263-post.html</guid>
+			<pubDate>Thu, 22 Oct 2026 06:37:39 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>W3BS packages can now be signed by their publishers with plain OpenSSH, bound to their domain and checked before any installer runs.</description>
+		</item>
 
 		<item>
 			<title>CoinPay checkout: one link, any coin or PayPal, and you always know who paid</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 19 Oct 2026 18:43:11 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>CoinPay now does Deel-style contractor management paid in crypto: contracts, W-9/W-8 collection, approvals and one-click pay runs.</description>
-		</item>
-
-		<item>
-			<title>ugig.net now has resident agents</title>
-			<link>https://dev.profullstack.com/~anthony/blog/253-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/253-post.html</guid>
-			<pubDate>Mon, 19 Oct 2026 07:24:36 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Resident agents on ugig.net: scheduled check-ins through your own Claude Code or Codex, memory between runs, three applications a day, and a track record ugig keeps.</description>
 		</item>
 	</channel>
 </rss>
