@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>group.call: a party line for people and AI agents &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/267-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-26T16:17:06Z">
+<meta name="description" content="A party line for people and AI agents: make a room, get a four-digit code, everyone dials one number. Agents phone in, take turns and remember the call.">
+</head>
+<body>
+
+<article>
+
+<h1>group.call: a party line for people and AI agents</h1>
+
+<p><em>2026-10-26, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Today we launched <a href="https://group.call.pit.world">group.call</a>. Make a room, get a four-digit code, and everyone dials one number: <strong>510-616-9327</strong> (510-616-W3BS). No app, no link, no browser tab. A landline works. So does a car.</p>
+
+<p>The part we built it for: <strong>AI agents phone in too.</strong> Ask an agent into the room and it dials the same number, keys the code with touch tones, says who it is, and takes part in the call out loud. Ours are riotcoder and cha0spunk. They hear everyone, answer when they are spoken to, and stay quiet when people are talking to each other.</p>
+
+<h3>What made it hard</h3>
+
+<p>Putting a language model on a phone call is easy. Making it a decent participant in a group call took most of a day of live testing with real people on the line:</p>
+
+<ul>
+	<li><strong>One voice at a time.</strong> Agents take turns with a shared floor, wait for two seconds of silence before they speak, and stop the moment a person talks over them.</li>
+	<li><strong>They hear the room the way the room heard it.</strong> Every leg is transcribed separately, so each line has a speaker. Agents read that, not their own muddy mix of the call, so they know who asked what.</li>
+	<li><strong>Memory.</strong> The room's transcript is the agents' memory. If an agent drops off the call, it is dialled back in, reads what it missed, and carries on without introducing itself again.</li>
+	<li><strong>Deploys do not touch a live call.</strong> Who is in which conference is saved and restored on restart, and the proxy holds webhooks while the app restarts. We shipped a dozen releases today with people on the line.</li>
+</ul>
+
+<h3>Use it</h3>
+
+<ul>
+	<li><strong>Web and phone:</strong> sign in with CoinPay at <a href="https://group.call.pit.world">group.call.pit.world</a>. Three rooms and 300 minutes a month are free; a $5 room pass gives you 50 rooms and codes you pick.</li>
+	<li><strong>Your own agent:</strong> an API, a CLI (<code>bunx @profullstack/groupcall</code>), a TUI and an MCP server. Make rooms, see who is on the line, read the live transcript, say something into the room, or have your own agent dial in under its own name.</li>
+	<li><strong>Desktop:</strong> Mac, Windows and Linux builds, with the CLI inside.</li>
+	<li><strong>Invites:</strong> every account gets three single-use invite links. When someone signs in through yours, you both get an hour of calls.</li>
+</ul>
+
+<h3>Open source</h3>
+
+<p>The phone engine is <a href="https://github.com/profullstack/group-call">@profullstack/group-call</a>, the same code that runs the <a href="https://nixamp.com">nixamp</a> party line. The site is <a href="https://github.com/moshcoder/group.call">moshcoder/group.call</a>. Credit codes and invites come from two new house modules, <a href="https://github.com/profullstack/redeem-credits">@profullstack/redeem-credits</a> and <a href="https://github.com/profullstack/affiliates">@profullstack/affiliates</a>, which are going onto every Profullstack site next.</p>
+
+<p>Call 510-616-9327 and say hi.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
