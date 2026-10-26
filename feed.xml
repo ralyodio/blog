@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 26 Oct 2026 08:40:38 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 26 Oct 2026 13:39:53 GMT</lastBuildDate>
+
+		<item>
+			<title>Your marketing brain belongs in a git repo, so myna and OutreachGraph now read one</title>
+			<link>https://dev.profullstack.com/~anthony/blog/266-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/266-post.html</guid>
+			<pubDate>Mon, 26 Oct 2026 13:39:53 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A private git repo of positioning, voice, audience and objections files is the right home for a marketing team's AI setup. myna 0.47.0 and OutreachGraph 0.19.1 now read and write the same layout.</description>
+		</item>
 
 		<item>
 			<title>Teach an agent by doing the task yourself (and why the liquid net lost)</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 20 Oct 2026 07:24:46 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>ad.network: paste a link and a budget to advertise, or paste one tag and a wallet to earn from your site. Crypto in, crypto out. API, CLI and MCP for agents.</description>
-		</item>
-
-		<item>
-			<title>built.indie: launch your indie product with one URL</title>
-			<link>https://dev.profullstack.com/~anthony/blog/256-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/256-post.html</guid>
-			<pubDate>Tue, 20 Oct 2026 02:34:40 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Paste your URL; built.indie reads the logo, screenshots, video, socials and llms.txt from your homepage. Free, no account, claim with DNS.</description>
 		</item>
 	</channel>
 </rss>

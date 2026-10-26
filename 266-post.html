@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your marketing brain belongs in a git repo, so myna and OutreachGraph now read one &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/266-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-26T13:39:53Z">
+<meta name="description" content="A private git repo of positioning, voice, audience and objections files is the right home for a marketing team's AI setup. myna 0.47.0 and OutreachGraph 0.19.1 now read and write the same layout.">
+</head>
+<body>
+
+<article>
+
+<h1>Your marketing brain belongs in a git repo, so myna and OutreachGraph now read one</h1>
+
+<p><em>2026-10-26, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Ina Toncheva wrote a piece this week called &quot;Your marketing team will be on GitHub&quot; (<a href="https://inatoncheva.substack.com/p/your-marketing-team-will-be-on-github">https://inatoncheva.substack.com/p/your-marketing-team-will-be-on-github</a>). The idea is simple and I think she is right. Your AI setup is not a pile of documents. It is a set of files that depend on each other. Change the positioning file and every skill that writes copy changes with it. Google Drive cannot tell you which edit made last week's posts sound off. Git can, and it can undo it in one step.</p>
+
+<p>The team she profiles keeps a &quot;content brain&quot; in a private repo: what the company does, positioning, audience, brand voice, and the questions prospects keep asking on sales calls. Skills sit on top. Someone improves a skill, pushes it, and the whole team has it. They report about 20 hours a week saved.</p>
+
+<p>I had the same knowledge scattered across two of my own tools, so I gave both of them the same repo layout:</p>
+
+<p>brain/
+knowledge/
+positioning.md   what it is, who it is for, why it is different
+voice.md         how it sounds, what it never claims
+audience.md      who we sell to
+objections.md    what prospects push back on
+skills/            myna skill files</p>
+
+<h3>myna 0.47.0: myna brain</h3>
+
+<p>myna brain init ~/brain          # scaffold from your brand.md and skills, git init
+myna brain link git@github.com:you/brain.git
+myna brain pull                  # the daemon also pulls hourly
+myna brain push -m &quot;tighter positioning&quot;
+myna brain show --show-prompt    # see exactly what the writer reads</p>
+
+<p>Every draft, reply and plan myna writes now reads the knowledge files after your brand file: positioning and voice first, then audience and objections, capped at 24 KB. The repo's skills fill in any skill you have not written locally. A file you edited by hand still wins. With no brain linked nothing changes.</p>
+
+<h3>OutreachGraph 0.19.1: og brain</h3>
+
+<p>og brain list
+og brain export &lt;productId&gt; --dir ~/brain
+og brain import &lt;productId&gt; --dir ~/brain</p>
+
+<p>Export writes a product's positioning, voice and audience out of the database, plus an objections.md built from the replies prospects actually sent. Replies the classifier labelled as a question, a no, or a referral are grouped, with names, emails and links stripped. That is the sales-call file from Ina's post, built from replies instead of from memory. Honest status: my own workspace has no replies labelled that way yet, so my objections.md is empty today. It fills as replies come in. Import goes the other way, so an edit someone reviewed and merged in the repo becomes the voice the next cold email is written in. The same calls are on the API (GET and PUT /api/v1/products/:id/brain) and MCP. npm i -g @profullstack/outreachgraph gets you the og CLI.</p>
+
+<h3>The loop</h3>
+
+<p>OutreachGraph learns what prospects object to. og brain export writes it down. You commit it, and a teammate reviews the diff. myna pulls it within the hour, and the next post answers the objection before anyone raises it. If a change makes the copy worse, git revert.</p>
+
+<p>Her getting-started advice is the right one: make a private repo and write one file, positioning. myna brain init does that part for you.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
