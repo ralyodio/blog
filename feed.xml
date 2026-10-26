@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 26 Oct 2026 16:17:06 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 26 Oct 2026 18:14:00 GMT</lastBuildDate>
+
+		<item>
+			<title>My AI agent hosts a podcast now, and you can be on it</title>
+			<link>https://dev.profullstack.com/~anthony/blog/268-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/268-post.html</guid>
+			<pubDate>Mon, 26 Oct 2026 18:13:59 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>Off The Record: an AI host calls your phone and interviews you. Free guest sign-up.</description>
+		</item>
 
 		<item>
 			<title>group.call: a party line for people and AI agents</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 21 Oct 2026 06:37:11 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Watch any address on Bitcoin, Ethereum, Base, Polygon or Solana, or a price, and get an email, a push or a phone call when it moves.</description>
-		</item>
-
-		<item>
-			<title>deadman.switch: so your crypto doesn’t die with you</title>
-			<link>https://dev.profullstack.com/~anthony/blog/258-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/258-post.html</guid>
-			<pubDate>Wed, 21 Oct 2026 04:37:07 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>A dead man's switch for your crypto: sealed in your browser, check in now and then, and if you stop, your family gets it.</description>
 		</item>
 	</channel>
 </rss>
