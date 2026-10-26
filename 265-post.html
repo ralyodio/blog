@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teach an agent by doing the task yourself (and why the liquid net lost) &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/265-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-26T08:40:38Z">
+<meta name="description" content="W3BS Training can now learn a task from your own recording. A plain GRU beat the liquid CfC net, and it stays off until you turn it on.">
+</head>
+<body>
+
+<article>
+
+<h1>Teach an agent by doing the task yourself (and why the liquid net lost)</h1>
+
+<p><em>2026-10-26, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We shipped &quot;Teach an agent&quot; in W3BS Training today. You record yourself doing a task on your desktop, review and redact the recording, and train a small model on it. Then the agent can suggest the next step, or do it with your approval.</p>
+
+<p>It ships in three pieces:</p>
+
+<ul>
+	<li><strong>Infernet v0.1.66</strong> adds the model engine. There is a new npm package, <code>@infernetprotocol/liquid-agent</code>, and a Python runtime with three model types: CfC and LTC (the &quot;liquid&quot; neural nets) plus a plain GRU baseline. <code>infernet model train|evaluate|predict|serve</code> drives it.</li>
+	<li><strong>c0mpute v0.2.34</strong> lets another machine on the network do the training for you. Only trusted workers you list, only with <code>--yes</code>, and the trained weights are checked against the hash in the receipt. Sessions are encrypted end to end.</li>
+	<li><strong>W3BS training-v0.3.0</strong> adds the Teach tab and <code>w3bs training teach</code>. Training runs locally by default. Sending it to a c0mpute worker is opt-in and shows you a preview first.</li>
+</ul>
+
+<h3>Safety is the default</h3>
+
+<p>On a fresh install all five permissions are off and every policy mode is Off. Secrets are masked at capture time, before anything is written. Every external write (sending an email, posting, messaging) needs a person to approve it, in every mode, including Bounded. There is a kill switch and an audit log.</p>
+
+<h3>The honest result</h3>
+
+<p>I benchmarked on synthetic traces from mock email, Reddit and LinkedIn flows. The GRU beat the liquid CfC: 0.948 vs 0.869 episode success. So GRU stays the default. Every model failed on a screen layout it had not seen, and nothing passes the closed-loop safety gate yet, so the agent refuses to switch itself on. That is the design working.</p>
+
+<p>The next step is real recordings of real tasks, not synthetic ones.</p>
+
+<h3>Try it</h3>
+
+<p>Start at <a href="https://w3bs.org/training">https://w3bs.org/training</a> and open the Teach tab. Everything is off until you turn it on.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

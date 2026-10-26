@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 22 Oct 2026 12:04:05 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 26 Oct 2026 08:40:38 GMT</lastBuildDate>
+
+		<item>
+			<title>Teach an agent by doing the task yourself (and why the liquid net lost)</title>
+			<link>https://dev.profullstack.com/~anthony/blog/265-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/265-post.html</guid>
+			<pubDate>Mon, 26 Oct 2026 08:40:38 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>W3BS Training can now learn a task from your own recording. A plain GRU beat the liquid CfC net, and it stays off until you turn it on.</description>
+		</item>
 
 		<item>
 			<title>moshcode work: 50 agents, one verifier, and an inbox</title>
@@ -90,15 +99,6 @@
 			<pubDate>Tue, 20 Oct 2026 02:34:40 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Paste your URL; built.indie reads the logo, screenshots, video, socials and llms.txt from your homepage. Free, no account, claim with DNS.</description>
-		</item>
-
-		<item>
-			<title>pwamart: every app is a PWA, CLI, API or MCP, and collections install in one command</title>
-			<link>https://dev.profullstack.com/~anthony/blog/255-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/255-post.html</guid>
-			<pubDate>Mon, 19 Oct 2026 20:08:50 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>pwamart now flags each listing's CLI, API and MCP server with install instructions, and adds one-command collections for agentic workflows.</description>
 		</item>
 	</channel>
 </rss>
