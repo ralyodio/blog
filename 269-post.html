@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>We built a triage dashboard for security across our whole fleet &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/269-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-10-28T16:19:35Z">
+<meta name="description" content="ThreatCrush's dashboard now triages attacks, scan findings, patches and daemon versions across every server and device you run, from one page.">
+</head>
+<body>
+
+<article>
+
+<h1>We built a triage dashboard for security across our whole fleet</h1>
+
+<p><em>2026-10-28, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>I run about 300 repos on five bare metal boxes, and every one of them runs the ThreatCrush daemon. On a normal day the fleet logs around 4,000 attack events and bans about 1,800 addresses. The question was never "are we being attacked". It was "which of these things needs me today".</p>
+
+<p>So <a href="https://threatcrush.com/dashboard">threatcrush.com/dashboard</a> is now a triage page for the whole fleet, servers and devices together.</p>
+
+<p><strong>Every box in one list.</strong> Online or offline, daemon version, and pending security updates with the CVE count per server. Today it showed nginx and libbrotli fixes (6 CVEs) on three boxes. They had already been patched by unattended-upgrades at 06:00 UTC. The dashboard was showing the previous night's check, and the small "checked 20h ago" under the number was the only hint.</p>
+
+<p><strong>Update all.</strong> The fleet sat on one version through eight releases in a day, because auto-update waits for a release to be two hours old and only checks every six hours. Now there is a button. From 0.13.59 on, daemons install the newest release on the spot and restart onto it in a few seconds.</p>
+
+<p><strong>Findings you can close.</strong> When you are signed in, every <code>threatcrush scan</code>, pentest and AI red-team run lands in your org. A finding is tracked across runs: new, still open, or fixed automatically when a later run of the same scope stops seeing it. Code findings are matched on the rule and the line's text, not the line number, so editing a file does not reset your notes. You triage from the web (it installs as a PWA), the desktop app, the CLI (<code>threatcrush findings fix 3f2a9c1d</code>) or MCP. CI can upload with an agent key, and a run that raises something new sends one alert, not two hundred.</p>
+
+<p><strong>Next: our own IPs.</strong> Our boxes were tripping our own rules. dev3 got banned by the rest of the fleet three times last week. Every server's address now goes on a known list that daemons never ban, but known does not mean trusted: if one of our addresses starts running SQL injection, that alert says it is ours. That is the choke point for a compromised box.</p>
+
+<p>The CLI is free: <code>npm i -g @profullstack/threatcrush</code>, then <code>threatcrush login</code> and <code>threatcrush scan .</code></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

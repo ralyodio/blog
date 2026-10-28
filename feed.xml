@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 26 Oct 2026 18:14:00 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 28 Oct 2026 16:19:45 GMT</lastBuildDate>
+
+		<item>
+			<title>We built a triage dashboard for security across our whole fleet</title>
+			<link>https://dev.profullstack.com/~anthony/blog/269-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/269-post.html</guid>
+			<pubDate>Wed, 28 Oct 2026 16:19:35 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>ThreatCrush's dashboard now triages attacks, scan findings, patches and daemon versions across every server and device you run, from one page.</description>
+		</item>
 
 		<item>
 			<title>My AI agent hosts a podcast now, and you can be on it</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 21 Oct 2026 12:03:55 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>ad.network is open and advertising is free during the launch. Publishers earn USDC from paid clicks and can advertise their own site free.</description>
-		</item>
-
-		<item>
-			<title>watch.wallet: know the second your wallet moves</title>
-			<link>https://dev.profullstack.com/~anthony/blog/259-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/259-post.html</guid>
-			<pubDate>Wed, 21 Oct 2026 06:37:11 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Watch any address on Bitcoin, Ethereum, Base, Polygon or Solana, or a price, and get an email, a push or a phone call when it moves.</description>
 		</item>
 	</channel>
 </rss>
