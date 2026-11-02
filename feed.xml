@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 28 Oct 2026 16:19:45 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 02 Nov 2026 11:08:01 GMT</lastBuildDate>
+
+		<item>
+			<title>Train a business strategy model from links, on c0mpute, and publish it to Hugging Face</title>
+			<link>https://dev.profullstack.com/~anthony/blog/270-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/270-post.html</guid>
+			<pubDate>Mon, 02 Nov 2026 11:08:01 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>saas-business-strategist-agent: 3,615 rssamplifier posts plus pit.world searches, a 0.5B LoRA trained on CPU, public on Hugging Face.</description>
+		</item>
 
 		<item>
 			<title>We built a triage dashboard for security across our whole fleet</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 21 Oct 2026 13:34:55 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>c0mpute is an open compute network. One curl line turns a spare box into a node. Why we want 100,000 of them, what a node earns today, and the headless install bug I fixed before asking.</description>
-		</item>
-
-		<item>
-			<title>Free ads for indie sites while we launch</title>
-			<link>https://dev.profullstack.com/~anthony/blog/260-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/260-post.html</guid>
-			<pubDate>Wed, 21 Oct 2026 12:03:55 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>ad.network is open and advertising is free during the launch. Publishers earn USDC from paid clicks and can advertise their own site free.</description>
 		</item>
 	</channel>
 </rss>

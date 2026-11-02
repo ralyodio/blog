@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Train a business strategy model from links, on c0mpute, and publish it to Hugging Face &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/270-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-02T11:08:01Z">
+<meta name="description" content="saas-business-strategist-agent: 3,615 rssamplifier posts plus pit.world searches, a 0.5B LoRA trained on CPU, public on Hugging Face.">
+</head>
+<body>
+
+<article>
+
+<h1>Train a business strategy model from links, on c0mpute, and publish it to Hugging Face</h1>
+
+<p><em>2026-11-02, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We trained saas-business-strategist-agent today: a small business and SaaS strategy model, trained on a CPU from a list of links, and published it on Hugging Face. You can train your own the same way.</p>
+
+<p>Model: <a href="https://huggingface.co/profullstack/saas-business-strategist-agent">https://huggingface.co/profullstack/saas-business-strategist-agent</a></p>
+
+<h3>Links in, model out</h3>
+
+<p>The c0mpute example takes links and turns them into a training corpus:</p>
+
+<ul>
+	<li>rssamplifier.com topic pages, now with comma lists: <a href="https://rssamplifier.com/topics/business,saas,crypto">https://rssamplifier.com/topics/business,saas,crypto</a> pulls every blog and news feed filed under any of the three (2,087 blogs).</li>
+	<li>pit.world searches: <a href="https://pit.world/search?q=saas,business,crypto">https://pit.world/search?q=saas,business,crypto</a> runs each term on the web, news and scholar tabs and fetches every result page.</li>
+	<li>Single feeds, any web page, or a pasted list of links on stdin.</li>
+</ul>
+
+<p>No API keys. rssamplifier and pit.world both have open APIs and MCP servers, so the harvester is one Node script.</p>
+
+<pre><code class="language-bash">node harvest.mjs https://rssamplifier.com/topics/business,saas,crypto \
+  'https://pit.world/search?q=saas,business,crypto' --full --out data/saas-business.jsonl</code></pre>
+
+<h3>Train it on c0mpute, or on your own CPU</h3>
+
+<p>c0mpute 0.2.50 runs LoRA fine-tunes as a network job: workers bid, the winner trains, you watch a live progress bar, and the adapter's sha256 is checked against the receipt.</p>
+
+<pre><code class="language-bash">c0mpute infernet text train --job job-saas.json --dataset data/saas-business.jsonl \
+  --output out/saas-business-strategist-agent --yes</code></pre>
+
+<p>Or locally:</p>
+
+<pre><code class="language-bash">.venv/bin/python train.py job.json --name saas-business-strategist-agent --dataset data/saas-business.jsonl</code></pre>
+
+<h3>The numbers</h3>
+
+<ul>
+	<li>Base model: Qwen2.5-0.5B-Instruct, a rank 8 LoRA (about 1.1M trainable parameters), bf16.</li>
+	<li>Corpus: 3,615 posts (business 1,514, crypto 1,471, SaaS 630), 1,447 of them full articles.</li>
+	<li>400 steps on 4 CPU threads, 2.4 GB peak RAM. Held-out perplexity went from 44.5 to 28.6.</li>
+	<li>The adapter is 4.4 MB.</li>
+</ul>
+
+<p>The first version used a 135M model. It echoed questions back. 0.5B answers on topic: asked how a 3-person SaaS should price its first plan, it said &quot;one monthly price, one annual price at 10 times the monthly, and no other discounts&quot; and cited three SaaS pricing guides.</p>
+
+<p>A sub-1B model learns the voice, not the facts. So the agent searches pit.world for each question and puts the top pages in the prompt. The facts come from search and the tune supplies the register.</p>
+
+<h3>Two things that bit us</h3>
+
+<ul>
+	<li>torch uses one thread per core by default. On a busy 32-core box that ran at 22 tokens a second. Four threads ran at about 330.</li>
+	<li>earlyoom kills big processes on a shared box with exit code 143 and no traceback. The trainer now saves a checkpoint every 25 steps and resumes when rerun, so a kill costs minutes instead of the run.</li>
+</ul>
+
+<h3>Also shipped today</h3>
+
+<ul>
+	<li>pit.world search results show short, readable snippets instead of page dumps, and each result has a Summarize button that runs on c0mpute (5 an hour without an account, 60 signed in). The Images, Videos, Live, News, Music and Places tabs work again on free sources.</li>
+	<li>rssamplifier.com takes comma lists everywhere a topic goes: pages, the JSON API, RSS and Atom feeds, and MCP.</li>
+</ul>
+
+<h3>Try it</h3>
+
+<p>The example, with the harvester, trainer, chat and Hugging Face publisher: <a href="https://github.com/profullstack/c0mpute/tree/master/examples/business-strategist-agent">https://github.com/profullstack/c0mpute/tree/master/examples/business-strategist-agent</a></p>
+
+<p>Swap the links for your own topics and give it a name.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
