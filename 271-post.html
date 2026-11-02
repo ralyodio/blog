@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MeshHook now runs your workflows on c0mpute &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/271-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-02T14:49:35Z">
+<meta name="description" content="MeshHook workflow steps now run on the c0mpute peer network: AI on open models, transforms and HTTP calls auctioned to workers, credentials kept home.">
+</head>
+<body>
+
+<article>
+
+<h1>MeshHook now runs your workflows on c0mpute</h1>
+
+<p><em>2026-11-02, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>MeshHook is our MIT-licensed, webhook-first workflow engine: you drag nodes onto a canvas, wire them up, and a webhook starts a run. As of today the steps in those runs execute on <a href="https://c0mpute.com">c0mpute</a>, our peer-to-peer compute network. Think n8n, except the work happens on other people's machines instead of yours.</p>
+
+<p>Try it at <a href="https://meshhook.com">meshhook.com</a>.</p>
+
+<h3>What runs where</h3>
+
+<ul>
+	<li><strong>AI steps</strong> call open models on c0mpute nodes through the Infernet open market. They are peer-only: a step never falls back to a paid hosted model. The default is qwen2.5:1.5b, then 0.5b, because several nodes serve them and a JSON-shaped prompt comes back in about 10 seconds. You can pick a bigger model per node if you can wait for it.</li>
+	<li><strong>JMESPath transforms and HTTP calls</strong> are auctioned as <code>workflow.step</code> jobs. Any c0mpute worker on 0.2.56 or later bids on them by default. The winner runs the step and returns a result MeshHook checks by hash.</li>
+	<li><strong>Branches, loops, delays and template transforms</strong> stay on the MeshHook server. They are cheap, and they need the run's state.</li>
+</ul>
+
+<p>A real run from this afternoon: webhook, then an AI step on a node in Vienna, then a transform and an HTTP call on a c0mpute worker. 25 seconds end to end, and the run log records which worker ran each step and what it cost.</p>
+
+<h3>Your credentials stay home</h3>
+
+<p>A worker sees the whole step it runs, so MeshHook keeps an HTTP call on its own server whenever it carries anything secret: an <code>Authorization</code> or cookie header, anything that looks like a key or token, <code>user:pass@</code> in the URL, or a secret template. To send those steps to the network anyway, pin your own workers in the workflow settings.</p>
+
+<p>Workers refuse to fetch private, loopback, link-local and cloud metadata addresses. They pin the connection to the address they checked and re-check every redirect.</p>
+
+<p>If the network cannot do something (nobody bids, the bridge is down, or an API answers 402, which only MeshHook's x402 key can pay), the step runs on the server. The log says why.</p>
+
+<h3>Pick per workflow</h3>
+
+<p>The editor has a <strong>Runs on</strong> menu with four options: Auto, c0mpute network, This server, or Private. Private means nothing but AI steps leaves the server, whatever the default is.</p>
+
+<h3>Run a worker</h3>
+
+<p>Every c0mpute worker on 0.2.56 or later serves workflow steps. Install one with:</p>
+
+<pre><code>curl -fsSL https://c0mpute.com/install.sh | sh</code></pre>
+
+<p>Every node you add makes everyone's workflows faster. The protocol details are in DIP 0030, in the c0mpute repo.</p>
+
+<p>Source: <a href="https://github.com/profullstack/meshhook">github.com/profullstack/meshhook</a> and <a href="https://github.com/profullstack/c0mpute">github.com/profullstack/c0mpute</a>.</p>
+
+<p>How would you use a workflow engine whose steps run on a peer network instead of a server you pay for?</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

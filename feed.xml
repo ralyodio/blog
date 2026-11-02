@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Mon, 02 Nov 2026 11:08:01 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 02 Nov 2026 14:49:35 GMT</lastBuildDate>
+
+		<item>
+			<title>MeshHook now runs your workflows on c0mpute</title>
+			<link>https://dev.profullstack.com/~anthony/blog/271-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/271-post.html</guid>
+			<pubDate>Mon, 02 Nov 2026 14:49:35 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>MeshHook workflow steps now run on the c0mpute peer network: AI on open models, transforms and HTTP calls auctioned to workers, credentials kept home.</description>
+		</item>
 
 		<item>
 			<title>Train a business strategy model from links, on c0mpute, and publish it to Hugging Face</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 21 Oct 2026 14:44:20 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>CoinPay hosted checkout sessions: buyers pick any coin or PayPal, and every payment records who paid and from which site.</description>
-		</item>
-
-		<item>
-			<title>We want 100,000 c0mpute nodes. We have fewer than 10.</title>
-			<link>https://dev.profullstack.com/~anthony/blog/261-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/261-post.html</guid>
-			<pubDate>Wed, 21 Oct 2026 13:34:55 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>c0mpute is an open compute network. One curl line turns a spare box into a node. Why we want 100,000 of them, what a node earns today, and the headless install bug I fixed before asking.</description>
 		</item>
 	</channel>
 </rss>
