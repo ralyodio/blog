@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inference on Infernet is pay as you go, and the price follows the market &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/272-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-05T11:14:46Z">
+<meta name="description" content="Interactive inference now spends the same prepaid balance paid batches use, node earnings can pay for your own compute, and the price of a model moves with how busy the nodes serving it are.">
+</head>
+<body>
+
+<article>
+
+<h1>Inference on Infernet is pay as you go, and the price follows the market</h1>
+
+<p><em>2026-11-05, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Infernet inference used to be free and rate limited. You got 20 requests an hour per IP, and that was the whole billing system. Meanwhile the network had a real prepaid balance sitting right there, built for paid batch inference: money in micro dollars, a top up rail through CoinPay or x402, per model prices, and node earnings usable as a funding source. None of it was reachable unless you submitted a batch.</p>
+
+<p>So a customer with money on their account could not spend it on a chat message, and an operator who had earned money could not spend those earnings on anything except a batch. That is fixed now, and the price of a model is no longer a number somebody typed once.</p>
+
+<h3>Your balance pays for inference</h3>
+
+<p>Interactive inference now draws the same prepaid balance paid batches use. That covers the chat playground, the OpenAI compatible endpoint at /v1/chat/completions, the CLI, and c0mpute.com's chat.</p>
+
+<p>A request is charged once when it finishes, keyed on the job id, so a retried completion or two completion paths racing the same job charge exactly once. There is no hold taken up front. Tokens are only known after the work is done, so a thin balance can be overrun by a long answer; the charge is capped at whatever the balance holds and the remainder is recorded. The worst case is a fraction of a cent the house absorbs, instead of a customer in debt.</p>
+
+<p>The free tier did not go away. An anonymous caller is served free and rate limited exactly as before, and a signed in account with an empty balance falls back to that same free tier rather than getting a 402. Metering was never meant to shut the front door.</p>
+
+<h3>What your nodes earned can pay for what you use</h3>
+
+<p>If you run a node, the money it earned can pay for your own inference. No top up, no withdrawal, no round trip through an exchange.</p>
+
+<p>The important half of that is what stops it being a hole. When earnings move into a compute balance, the transfer writes a negative earnings row, so the same dollars drop out of what a payout can claim. A withdrawal request for money already spent on compute is refused by the database, not by a code path somebody might forget. We tested exactly that: a node with a cent earned, two tenths of a cent spent on inference, and a payout request for the full cent was refused while a request for the remainder went through.</p>
+
+<p><code>infernet billing spend-earnings</code> moves earnings across on demand, and metered requests pull from them automatically when the prepaid balance cannot cover a charge.</p>
+
+<h3>The price moves with supply and demand</h3>
+
+<p>This is a compute market, so a price nobody set should follow the market rather than sit still.</p>
+
+<p>Every model now resolves through three layers. An operator sets the price for the models their own node serves, and that number is never touched. Below that is the house rate card per model. Below that is a default, which exists so a model nobody has priced is never served for free. That last part was a real leak: nine of the twelve models the network was serving, including our own fine tuned agents, were being given away because they were missing from the rate card.</p>
+
+<p>Whichever of those two house layers applies gets scaled by the market:</p>
+
+<p>multiplier = 1 + sensitivity x (utilization - target)</p>
+
+<p>Utilization is how much of the capacity that can serve the model is busy right now. Under the target the model gets cheaper, over it the model gets dearer, and a model only one node can serve gets a nudge upward so a second node is worth bringing online.</p>
+
+<p>Here is the network a few minutes ago:</p>
+
+<p>model                nodes  util   mult   price per 1M output
+qwen2.5:7b               1   75%   1.65x  $0.33
+qwen3.5-abliterated:9b   3   25%   0.65x  $0.156
+qwen2.5:0.5b             6   17%   0.50x  $0.02</p>
+
+<p>A 7b served by one busy node costs more than its card price. A 0.5b served by six idle nodes costs less than half. A 9b still costs more than a 4b, because the market scales the card instead of replacing it, which is the mistake we made first and had to go back and fix. Applying the market only to unpriced models made the whole thing dead code the moment the rate card covered everything.</p>
+
+<h3>Bounded, stable, and checkable</h3>
+
+<p>A price that floats needs guardrails, or it is not fit to charge anyone with.</p>
+
+<p>It is bounded twice. The multiplier is clamped, and the resulting price is clamped again into the same band an operator price has to sit in. An operator price outside that band is refused when they set it, and clamped again when it is read, so narrowing the band later cannot leave a stale price outside it.</p>
+
+<p>It is stable. Multipliers are quantized to a step, so a hundred busy slots versus a hundred and one out of four hundred is noise rather than a price change, and the market snapshot is cached briefly so a burst of requests sees one price.</p>
+
+<p>It is checkable, and this is the part that matters most. The price list is public and needs no account:</p>
+
+<p>curl <a href="https://infernetprotocol.com/api/v1/pricing">https://infernetprotocol.com/api/v1/pricing</a></p>
+
+<p>Every row carries the base it was scaled from, the multiplier, how many nodes serve the model, their capacity, how much is busy, and why the price moved. Base times multiplier equals the published price, which is arithmetic anyone can do for themselves. A market whose price you can only discover by being charged is not a market anybody should trust.</p>
+
+<p>And every failure path lands on a price rather than on free. An unreadable market is one times the plain base. A malformed operator price falls back to the card. A billing outage serves the free tier instead of taking inference down.</p>
+
+<h3>Where to look</h3>
+
+<p>infernet billing balance            what you can spend
+infernet billing spend-earnings     move node earnings across
+infernet price list                 what your node charges
+infernet price set &lt;model&gt; --out    set your own price</p>
+
+<p>Operators: <code>infernet price list</code> shows your models, the band you have to price inside, and whether each price came from you, the card, or the market.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
