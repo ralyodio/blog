@@ -9,7 +9,25 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Thu, 05 Nov 2026 11:14:47 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 11 Nov 2026 06:09:37 GMT</lastBuildDate>
+
+		<item>
+			<title>c0mpute nodes now charge AI crawlers for the files they host</title>
+			<link>https://dev.profullstack.com/~anthony/blog/274-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/274-post.html</guid>
+			<pubDate>Wed, 11 Nov 2026 06:09:36 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>c0mpute nodes sell day passes to AI training crawlers over x402, paid through CoinPay to the operator's own wallet, plus ThreatCrush on every node and a CoinPay key-scope audit.</description>
+		</item>
+
+		<item>
+			<title>Join the revolution: your spare box can be a c0mpute node</title>
+			<link>https://dev.profullstack.com/~anthony/blog/273-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/273-post.html</guid>
+			<pubDate>Sun, 08 Nov 2026 15:38:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>c0mpute pools spare CPUs and GPUs from ordinary machines into one open network. One command turns your box into a node that serves inference, transcoding and storage jobs. Here is why that matters and what a node does today.</description>
+		</item>
 
 		<item>
 			<title>Inference on Infernet is pay as you go, and the price follows the market</title>
@@ -81,24 +99,6 @@
 			<pubDate>Mon, 26 Oct 2026 08:40:38 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>W3BS Training can now learn a task from your own recording. A plain GRU beat the liquid CfC net, and it stays off until you turn it on.</description>
-		</item>
-
-		<item>
-			<title>moshcode work: 50 agents, one verifier, and an inbox</title>
-			<link>https://dev.profullstack.com/~anthony/blog/264-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/264-post.html</guid>
-			<pubDate>Thu, 22 Oct 2026 12:04:04 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>The people running thousands of AI agents on math proofs are not watching thousands of agents. The proof checker is. Lean says yes or no to every attempt, a wrong one gets thrown away, and the human…</description>
-		</item>
-
-		<item>
-			<title>Sign your releases with the SSH key you already have</title>
-			<link>https://dev.profullstack.com/~anthony/blog/263-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/263-post.html</guid>
-			<pubDate>Thu, 22 Oct 2026 06:37:39 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>W3BS packages can now be signed by their publishers with plain OpenSSH, bound to their domain and checked before any installer runs.</description>
 		</item>
 	</channel>
 </rss>

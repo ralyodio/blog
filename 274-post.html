@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>c0mpute nodes now charge AI crawlers for the files they host &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/274-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-11T06:09:36Z">
+<meta name="description" content="c0mpute nodes sell day passes to AI training crawlers over x402, paid through CoinPay to the operator's own wallet, plus ThreatCrush on every node and a CoinPay key-scope audit.">
+</head>
+<body>
+
+<article>
+
+<h1>c0mpute nodes now charge AI crawlers for the files they host</h1>
+
+<p><em>2026-11-11, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Every c0mpute node runs a gateway that serves hosted sites to the public. Most of what fetches those files in bulk is AI training crawlers. As of c0mpute v0.3.33, a node can charge them.</p>
+
+<h3>How it works</h3>
+
+<p>A training crawler (GPTBot, ClaudeBot, CCBot, Bytespider and the rest) that asks a gateway for a hosted file gets HTTP 402 with an x402 offer. It pays USDC on Base, Polygon or Ethereum through CoinPay and gets back a signed day pass. People, search engines and assistant bots like ChatGPT-User and Claude-User are never charged.</p>
+
+<p>The money goes straight to the node operator. The node does not need a wallet in its config: it asks CoinPay which wallet the operator's account uses (a new <code>GET /api/x402/pay-to</code> endpoint) and checks again every hour, so changing the wallet in CoinPay changes it on every node.</p>
+
+<p>It is off by default:</p>
+
+<pre><code class="language-toml">[x402]
+enabled = true
+# CoinPay key (x402 scope) in $C0MPUTE_X402_COINPAY_KEY</code></pre>
+
+<p>It runs on our own nodes today. You can see the offer a bot gets at <a href="https://gateway.c0mpute.com/_x402/crawl">https://gateway.c0mpute.com/_x402/crawl</a></p>
+
+<h3>ThreatCrush on every node</h3>
+
+<p><code>c0mpute plugin install threatcrush</code> makes the gateway write an access log with the real client address and registers it with ThreatCrush, which scores requests against attack rules and bans repeat offenders. A test XSS probe against each of our three nodes showed up as a critical event within a second.</p>
+
+<p>Getting there turned up two ThreatCrush fixes. Its docs described extra log paths that the daemon never actually read (fixed in 0.13.77). And its 2 million row event cap had grown one node's database to 3.2 GB, which left the daemon stuck re-reading its own file. The default is now 250k rows (0.13.78).</p>
+
+<h3>A CoinPay audit along the way</h3>
+
+<p>Wiring the nodes to CoinPay showed that an x402 key, meant only to settle payments, could list every business on the account with its API key. That led to an audit of all 126 routes a business API key can reach. 28 let one business's key act as the whole account, including registering a passkey on the owner's login and creating the secrets vault. All 28 are fixed and deployed.</p>
+
+<p>Source: <a href="https://github.com/profullstack/c0mpute">c0mpute</a>, <a href="https://github.com/profullstack/threatcrush">ThreatCrush</a>, <a href="https://github.com/profullstack/coinpayportal">CoinPay</a>. Drafted with AI help, checked by me.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
