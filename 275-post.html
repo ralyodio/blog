@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How visible is YC&rsquo;s Fall 2026 batch to AI search? &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/275-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-18T14:37:23Z">
+<meta name="description" content="We audited all 235 YC Fall 2026 companies with websites for AI-search visibility. Median score 46/100, nobody above 63.">
+</head>
+<body>
+
+<article>
+
+<h1>How visible is YC&rsquo;s Fall 2026 batch to AI search?</h1>
+
+<p><em>2026-11-18, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>We ran the CrawlProof AI-visibility audit on every company in Y Combinator's Fall 2026 batch that lists a website: 235 of 236. The full ranking, with a public report for every site, is at <a href="https://crawlproof.com/rankings/yc-fall-2026-ai-visibility">https://crawlproof.com/rankings/yc-fall-2026-ai-visibility</a></p>
+
+<p>The short version: the median score is 46 out of 100, the best is 63, and nobody reached 80. 157 of the 235 score under 50.</p>
+
+<h3>What holds them back</h3>
+
+<p>The same few gaps show up again and again:</p>
+
+<ul>
+	<li>113 sites have no llms.txt, the file that tells an AI model what the site is and where the important pages are.</li>
+	<li>85 have no structured data (JSON-LD) at all, so a model has to guess the company name, what it sells and how to reach it.</li>
+	<li>56 have no list, table or other block a model can lift as an answer.</li>
+</ul>
+
+<p>None of these take long to fix. Most are a single file or a few lines in the page head.</p>
+
+<h3>How the score works</h3>
+
+<p>The audit reads public pages only, identifies itself, honours robots.txt and never logs in. It checks whether AI crawlers such as GPTBot and ClaudeBot are allowed in, what the raw HTML shows before JavaScript runs, structured data, the sitemap, llms.txt and how clearly the homepage says what the company does. Each check has a priority; the score is the share of points earned out of 100. It measures how easily AI search can read and cite a site, not the quality of the company.</p>
+
+<p>If your company is listed and something looks wrong, or you have fixed it, email hello@crawlproof.com and we re-run it.</p>
+
+<h3>Check your own site</h3>
+
+<p>The same audit is free with no signup: <a href="https://crawlproof.com">https://crawlproof.com</a> . If you want it re-run every week with an email when the score changes, monitoring is $49 a month for one site or $199 for up to 20: <a href="https://crawlproof.com/monitor">https://crawlproof.com/monitor</a></p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

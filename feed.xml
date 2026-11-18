@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 11 Nov 2026 06:09:37 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 18 Nov 2026 14:37:24 GMT</lastBuildDate>
+
+		<item>
+			<title>How visible is YC’s Fall 2026 batch to AI search?</title>
+			<link>https://dev.profullstack.com/~anthony/blog/275-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/275-post.html</guid>
+			<pubDate>Wed, 18 Nov 2026 14:37:23 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>We audited all 235 YC Fall 2026 companies with websites for AI-search visibility. Median score 46/100, nobody above 63.</description>
+		</item>
 
 		<item>
 			<title>c0mpute nodes now charge AI crawlers for the files they host</title>
@@ -90,15 +99,6 @@
 			<pubDate>Mon, 26 Oct 2026 13:39:53 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>A private git repo of positioning, voice, audience and objections files is the right home for a marketing team's AI setup. myna 0.47.0 and OutreachGraph 0.19.1 now read and write the same layout.</description>
-		</item>
-
-		<item>
-			<title>Teach an agent by doing the task yourself (and why the liquid net lost)</title>
-			<link>https://dev.profullstack.com/~anthony/blog/265-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/265-post.html</guid>
-			<pubDate>Mon, 26 Oct 2026 08:40:38 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>W3BS Training can now learn a task from your own recording. A plain GRU beat the liquid CfC net, and it stays off until you turn it on.</description>
 		</item>
 	</channel>
 </rss>
