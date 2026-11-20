@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Post-mortem: how an attacker got a shell through our Postgres &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/277-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-20T02:33:41Z">
+<meta name="description" content="A leaked SSH key, a Docker port that skipped the firewall, and a lockdown that did not survive a reboot. What happened on one of our build boxes and what we changed.">
+</head>
+<body>
+
+<article>
+
+<h1>Post-mortem: how an attacker got a shell through our Postgres</h1>
+
+<p><em>2026-11-20, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes and the incident log, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>On November 19 someone got into one of our shared build servers. It started as a boring alert: eleven containers went unhealthy at once and our autoheal watchdog refused to restart any of them, because that many failing together points at the host, not the apps. It was right. The shared Postgres had crashed and restarted itself twice in eight hours, and when I went looking for why, I found shell commands in the database container's log that we never ran.</p>
+
+<h3>What happened</h3>
+
+<ul>
+	<li>A private SSH key was committed to our dotfiles repo on November 14. The repo is private, but "private" means everyone with org read access, and that list had grown.</li>
+	<li>Our self-hosted Supabase stacks published Postgres on every interface. Docker writes its own iptables rules, so a published port skips ufw entirely.</li>
+	<li>We had already locked those ports down in October. The rules were never saved, so the box came back from a reboot on November 18 with the database open to the internet.</li>
+	<li>The attacker had the superuser password, a 48 character random string. It was not guessed. They logged in, used <code>COPY ... FROM PROGRAM</code> to run commands as the postgres user, port-scanned from inside the container, and used the stolen key to reach the host.</li>
+</ul>
+
+<p>The two crashes were their payloads dying. Postgres treats an abnormal backend exit as a reason to reset every connection, so each attempt knocked every app on that database offline for a minute or two.</p>
+
+<h3>What our tools missed</h3>
+
+<p>The database logged 10,150 failed logins in three days from about 60 addresses. Our intrusion daemon banned none of them. It reads the systemd journal, and Docker containers log to their own JSON files, so it never saw a single line. Those failures turned out to be internet background noise, not the attacker. The attacker logged in on the first try, and a throttler would not have stopped that. It still should have seen the noise.</p>
+
+<p>We also run Postgres with <code>log_min_messages=fatal</code> to keep logs quiet, which hid the one line that names the signal that killed a backend.</p>
+
+<h3>What we changed</h3>
+
+<ul>
+	<li>The DB ports are dropped in the <code>DOCKER-USER</code> chain, which is the chain Docker actually respects. A small unit rebuilds that chain every time Docker starts, so a reboot cannot quietly undo it.</li>
+	<li>The superuser can no longer log in from <code>0.0.0.0/0</code>. Only local Docker networks and our own servers.</li>
+	<li>Rotated the shared database password across 42 vaults and 71 containers, the database's JWT signing keys, the vault identity key (505 vaults re-keyed), the host SSH key on every server and on GitHub, console passwords per box instead of one fleet default, and 87 app secrets our vault rotates on its own.</li>
+	<li>Rebuilt the database container from its image so nothing they dropped in it survives.</li>
+	<li>The leaked key is out of every authorized_keys and is being purged from the repo history.</li>
+	<li>Our intrusion daemon, <a href="https://threatcrush.com">ThreatCrush</a>, now reads Docker container logs through the Docker API and bans an address after 5 failed Postgres logins in 10 minutes. It also preloads the Tor exit list for SSH instead of waiting for a bad login, because a stolen key never produces one.</li>
+</ul>
+
+<h3>What I would tell you to check today</h3>
+
+<p>Run <code>docker ps --format '{{.Ports}}' | grep 0.0.0.0</code> and look for any database port. Then check that your firewall rules for those ports exist right now, not just in a file. And grep your dotfiles repo for <code>PRIVATE KEY</code>, including history.</p>
+
+<p>If you run self-hosted Postgres behind Docker, how do you keep it off the internet across reboots? I would like to know what holds up for you.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
