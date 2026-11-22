@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I am now a button pusher &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/278-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-22T12:19:36Z">
+<meta name="description" content="An AI agent closed six issues, shipped three releases and fixed checkout while I clicked a CAPTCHA. The typing is gone. Knowing whether to push the button is the job now, and that comes from scar tissue.">
+</head>
+<body>
+
+<article>
+
+<h1>I am now a button pusher</h1>
+
+<p><em>2026-11-22, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes and today&rsquo;s session, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>This morning I typed eleven words to an AI agent: &ldquo;can you fix these?&rdquo; and a link to our GitHub issues.</p>
+
+<p>By lunch, six issues were closed. Four pull requests were merged. Three releases were on npm. Three production servers were upgraded and verified. A Next.js security patch was live. A payment bug that had been quietly breaking PayPal checkout across 47 PayPal accounts was fixed, migrated and proven with a live order. A desktop machine with two background services crash-looping a combined 450,000 times was cleaned up.</p>
+
+<p>I did not write a line of code.</p>
+
+<p>Here is the complete list of what I did:</p>
+
+<ul>
+	<li>Clicked a CAPTCHA.</li>
+	<li>Clicked a magic link in an email.</li>
+	<li>Pasted an API key.</li>
+	<li>Typed &ldquo;do it&rdquo;, &ldquo;do all 4&rdquo;, &ldquo;check now&rdquo;, &ldquo;we done?&rdquo;</li>
+	<li>Told it &ldquo;fix that shit its unusable&rdquo; when PayPal broke.</li>
+</ul>
+
+<p>That&rsquo;s it. That&rsquo;s the job now.</p>
+
+<h3>The human is the part the robots can&rsquo;t legally do</h3>
+
+<p>The funniest part of the day was where I actually got called in. The agent found that a threat intelligence provider had retired its free downloads and moved everything behind a free API key. It wrote the code to use the key, tested it against the live API with a fake key to prove the endpoints were right, and then stopped.</p>
+
+<p>Not because it didn&rsquo;t know what to do. Because signing up needed a Cloudflare Turnstile check, and it refused to bypass it.</p>
+
+<p>So my contribution to cybersecurity today was proving to Cloudflare that I am a human being. The agent read the sign-in link out of its own mailbox, logged in, tried to generate the key, hit a second CAPTCHA on the profile form, and handed me a link with step-by-step instructions. I clicked through, generated the key and pasted it back. It installed it on every server, verified the counts went from 5 indicators to thousands, and wrote down where the key lives so the next session knows.</p>
+
+<p>I was the CAPTCHA solver. A very expensive one.</p>
+
+<h3>It is not just typing faster</h3>
+
+<p>&ldquo;AI writes code now&rdquo; undersells what changed. The agent did not just write patches. It:</p>
+
+<ul>
+	<li>Read the issue tracker and noticed five of the six &ldquo;open&rdquo; feature requests had already shipped weeks ago and nobody closed them. It read the merged PRs, found what each one had actually left undone, and only built the gaps.</li>
+	<li>Split the work across parallel sub-agents, each in its own git worktree, then reviewed their PRs, rebased the one that conflicted, and ran the new eBPF code against a real kernel as root for nine seconds to prove it worked before merging.</li>
+	<li>Found that one production box had silently downgraded itself because an install directory had been root-owned since an incident response two days earlier, and went and read the incident notes to confirm that was benign.</li>
+	<li>Noticed a download was being cut off mid-transfer by the upstream server, proved it was the server and not us by testing from a second machine, then shipped retries and a 24-hour fallback so one bad download doesn&rsquo;t empty the list.</li>
+</ul>
+
+<p>That is not autocomplete. That is a senior engineer who doesn&rsquo;t get tired, doesn&rsquo;t get bored and doesn&rsquo;t need to be asked twice.</p>
+
+<h3>So what am I for?</h3>
+
+<p>Honestly, three things.</p>
+
+<p><strong>Judgment calls that are actually mine.</strong> When PayPal checkout kept dying because every deploy re-locked the merchant&rsquo;s encrypted vault, the agent knew why. I had set a rule after a wallet drain last month: no key sitting on a server may decrypt user secrets. It didn&rsquo;t override my rule. It explained the tradeoff and waited. I said &ldquo;do not require human intervention unless absolutely critical.&rdquo; It scoped that to the credentials that receive money, left the ones that spend money alone, wrote the decision down as a standing rule, and shipped it.</p>
+
+<p><strong>Being a legal person.</strong> CAPTCHAs, account signups, anything that needs a human who can be held responsible. The agent was careful about this all day.</p>
+
+<p><strong>Saying &ldquo;go&rdquo;.</strong> A lot of what I typed was permission. It asked when something was destructive, like deleting a 5.6 GB repo off my desktop, and checked that repo for unpushed work before it did.</p>
+
+<h3>Knowing whether to push it is the whole job</h3>
+
+<p>Here&rsquo;s the part that&rsquo;s easy to miss. Pushing the button is trivial. Knowing whether to push it is not, and that knowledge doesn&rsquo;t come from a model. It comes from getting burned.</p>
+
+<p>Every &ldquo;yes&rdquo; or &ldquo;no&rdquo; I typed today was backed by a scar.</p>
+
+<p><strong>The vault rule came from losing money.</strong> Last month a wallet got drained. Root on one box could read every environment file, so &ldquo;encrypted with a key in the env&rdquo; protected nothing. Today the agent ran straight into that rule with PayPal. Without that history I&rsquo;d either say &ldquo;just store the key, ship it&rdquo; and reopen the hole, or say &ldquo;never&rdquo; and leave checkout broken forever. I knew the difference between a credential that receives money and one that spends it, because I&rsquo;d watched what happens when the spending kind leaks. That one sentence of judgment was worth more than all the code it wrote.</p>
+
+<p><strong>&ldquo;Were we hacked?&rdquo; is a question you only ask calmly after you&rsquo;ve been hacked.</strong> When my antivirus quarantined a &ldquo;reverse shell&rdquo; on my desktop, my stomach dropped. We&rsquo;d had <a href="277-post.html">real intrusions</a> that same week. Experience is what told me to ask how it got there before wiping everything. It turned out to be a test string inside a security tool&rsquo;s self-test, in a 20,000-skill archive I&rsquo;d bulk-cloned months ago. Without the scars I&rsquo;d have panicked and nuked the machine, or shrugged and ignored a real one.</p>
+
+<p><strong>&ldquo;Don&rsquo;t reinstall that&rdquo; is a lesson, not a fact.</strong> The agent found a crash-looping gateway for an AI agent framework whose package had vanished. The mechanical fix was to reinstall it. It didn&rsquo;t, and I agreed, because that framework comes from the same ecosystem as the archive full of malicious skills. You don&rsquo;t learn that from a stack trace. You learn it from watching supply-chain attacks land.</p>
+
+<p><strong>&ldquo;Lock it to the private network&rdquo; is paranoia you earn.</strong> It found a remote-control service on my desktop listening on every interface, protected by a token in a URL. It works fine. It&rsquo;s also exactly what an attacker loves to find on a home network. After this week, the answer was obvious. A year ago I might have left it.</p>
+
+<p><strong>&ldquo;Check for unpushed work before you delete&rdquo; is a lesson everyone learns once.</strong> The agent did it on its own before removing that archive. It learned that from people like me who&rsquo;ve lost a week of commits to an <code>rm -rf</code>.</p>
+
+<p>That&rsquo;s where the power still is. The agent can do everything, and it increasingly asks when the consequences are real: deleting things, spending money, crossing a security rule. The quality of the answer depends entirely on who&rsquo;s answering. A junior engineer with this tool pushes every button it offers. Someone with twenty years of outages, breaches and 3 a.m. pages pushes the right ones, and says no to the rest.</p>
+
+<p>The AI took the typing. It didn&rsquo;t take the scar tissue. If anything, it made the scar tissue the only thing that matters.</p>
+
+<h3>Is this bad?</h3>
+
+<p>I don&rsquo;t know yet.</p>
+
+<p>It is clearly bad for the part of me that liked the craft. There&rsquo;s a specific satisfaction in tracking down why a systemd unit has restarted 280,589 times (the install script wrote an empty path into <code>ExecStart</code>, so it ran <code>node //src/index.js</code> forever). I didn&rsquo;t get that satisfaction today. I got a summary.</p>
+
+<p>It is clearly good for everything I actually care about. The servers are patched. Checkout works. The threat feeds are full. A service that was listening on every network interface is now locked to my private network, because the agent noticed while fixing something else and didn&rsquo;t like it.</p>
+
+<p>My value moved. It used to be in knowing how to do the thing. Now it&rsquo;s in knowing what&rsquo;s worth doing, which risks are acceptable, and when to say no. Those were always the important parts. I just used to get to hide behind the typing.</p>
+
+<h3>What I do now</h3>
+
+<p>I run a lot of these sessions in the background and check in. I write down decisions so the agent remembers them next time. I spend more time on policy (what should never be automated, what should never need me) than on code. I wrote more about working this way in <a href="276-post.html">Software Engineering in the Agentic Era</a>.</p>
+
+<p>I am a button pusher. But every button I push, and every one I refuse to, is a lesson I paid for. That&rsquo;s not something you can prompt your way into.</p>
+
+<p>So if you&rsquo;re early in your career and wondering what&rsquo;s left: go get burned. Run things in production. Break them. Get paged. Read the postmortems, especially your own. The machines can do the work now. What they can&rsquo;t do is know which work is worth the risk.</p>
+
+<p>That part is still ours. What&rsquo;s the last button you refused to push, and what taught you not to?</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

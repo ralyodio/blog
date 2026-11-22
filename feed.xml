@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Fri, 20 Nov 2026 02:33:48 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 22 Nov 2026 12:20:16 GMT</lastBuildDate>
+
+		<item>
+			<title>I am now a button pusher</title>
+			<link>https://dev.profullstack.com/~anthony/blog/278-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/278-post.html</guid>
+			<pubDate>Sun, 22 Nov 2026 12:19:36 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>An AI agent closed six issues, shipped three releases and fixed checkout while I clicked a CAPTCHA. The typing is gone. Knowing whether to push the button is the job now, and that comes from scar tissue.</description>
+		</item>
 
 		<item>
 			<title>Post-mortem: how an attacker got a shell through our Postgres</title>
@@ -90,15 +99,6 @@
 			<pubDate>Wed, 28 Oct 2026 16:19:35 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>ThreatCrush's dashboard now triages attacks, scan findings, patches and daemon versions across every server and device you run, from one page.</description>
-		</item>
-
-		<item>
-			<title>My AI agent hosts a podcast now, and you can be on it</title>
-			<link>https://dev.profullstack.com/~anthony/blog/268-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/268-post.html</guid>
-			<pubDate>Mon, 26 Oct 2026 18:13:59 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Off The Record: an AI host calls your phone and interviews you. Free guest sign-up.</description>
 		</item>
 	</channel>
 </rss>
