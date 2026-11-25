@@ -9,7 +9,16 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Wed, 25 Nov 2026 13:17:42 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 25 Nov 2026 13:53:02 GMT</lastBuildDate>
+
+		<item>
+			<title>The patch was the outage: what the NSA network going down teaches the rest of us</title>
+			<link>https://dev.profullstack.com/~anthony/blog/282-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/282-post.html</guid>
+			<pubDate>Wed, 25 Nov 2026 13:52:50 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>The NSA's classified network went down last week. It wasn't an attack: urgent patching for the AI-found PHP2Shell bugs left systems that wouldn't come back up. What happened, and how to patch without causing your own outage.</description>
+		</item>
 
 		<item>
 			<title>Reverse engineering with AI: the browser already handed you the source</title>
@@ -90,15 +99,6 @@
 			<pubDate>Sun, 08 Nov 2026 15:38:00 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>c0mpute pools spare CPUs and GPUs from ordinary machines into one open network. One command turns your box into a node that serves inference, transcoding and storage jobs. Here is why that matters and what a node does today.</description>
-		</item>
-
-		<item>
-			<title>Inference on Infernet is pay as you go, and the price follows the market</title>
-			<link>https://dev.profullstack.com/~anthony/blog/272-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/272-post.html</guid>
-			<pubDate>Thu, 05 Nov 2026 11:14:46 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>Interactive inference now spends the same prepaid balance paid batches use, node earnings can pay for your own compute, and the price of a model moves with how busy the nodes serving it are.</description>
 		</item>
 	</channel>
 </rss>

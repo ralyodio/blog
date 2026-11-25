@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The patch was the outage: what the NSA network going down teaches the rest of us &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/282-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-25T13:52:50Z">
+<meta name="description" content="The NSA's classified network went down last week. It wasn't an attack: urgent patching for the AI-found PHP2Shell bugs left systems that wouldn't come back up. What happened, and how to patch without causing your own outage.">
+</head>
+<body>
+
+<article>
+
+<h1>The patch was the outage: what the NSA network going down teaches the rest of us</h1>
+
+<p><em>2026-11-25, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from the CBS News report and my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Last Tuesday the NSA&rsquo;s internal network went down. This is the classified network the agency uses to store and share information. <a href="https://www.cbsnews.com/news/national-security-agency-network-outage-software-vulnerability/">CBS News reports</a> that it wasn&rsquo;t an attack. It was the fix.</p>
+
+<p>Several sources told CBS the outage came from urgent patching for PHP2Shell, a set of vulnerabilities in PHP that were found with help from AI. On October 21 the FBI, NSA and CISA put out a joint warning: patch now, and if you can&rsquo;t, take the system offline until you can. The NSA patched, and some of its systems didn&rsquo;t come back up.</p>
+
+<h3>What happened</h3>
+
+<ul>
+	<li><strong>The network went offline on Tuesday.</strong> By Wednesday two sources said NSA Net was &ldquo;back up and running.&rdquo;</li>
+	<li><strong>Staff at Fort Meade came in on staggered times</strong>, a schedule called &ldquo;Code Gray&rdquo;, because people feared the system couldn&rsquo;t handle everyone logging in at once. CBS said nobody knew yet how long that would last.</li>
+	<li><strong>Director of National Intelligence Jay Clayton</strong> said on Fox Business that the patching had &ldquo;caused some of these systems to not come back up when you patch them as expected. That is what has happened at the NSA today.&rdquo; He also said, &ldquo;This type of identification of vulnerabilities and patching goes on all the time.&rdquo;</li>
+	<li><strong>The NSA&rsquo;s own statement</strong> called it a &ldquo;temporary degradation during scheduled routine maintenance&rdquo; and said mission-critical capabilities stayed fully operational.</li>
+	<li><strong>An unnamed intelligence official</strong> told CBS that the number of changes, and how fast they come, can overwhelm old equipment built for an earlier internet.</li>
+</ul>
+
+<p>The same report mentions the FAA&rsquo;s nationwide ground stop the Friday before. That was hardware: routine telecom maintenance sent so much traffic through older routers that they fell over. It isn&rsquo;t clear yet whether the banking, airline and tech outages of the last week share a cause.</p>
+
+<h3>The patch was the outage</h3>
+
+<p>&ldquo;Patch or shut it off&rdquo; sounds like a choice between being safe and staying up. It isn&rsquo;t. Patching is also a change to production, and production changes break things. Most people only count the risk of not patching. The NSA found out about the other one in public.</p>
+
+<p>This is going to keep happening, and AI is the reason. PHP2Shell was found with help from AI, in a language that CBS says runs about 70% of websites. Models are good at reading code nobody has read properly in years, and the old corners of big projects are full of it. I wrote last time about <a href="281-post.html">agents reading minified code faster than you can open DevTools</a>. The same skill finds bugs. So expect more urgent advisories, closer together, against software you forgot you were running.</p>
+
+<p>That shifts the bottleneck. Finding bugs is getting cheap, and shipping the fix safely isn&rsquo;t. If a patch takes your systems down every time, you&rsquo;ll start putting patches off, and that&rsquo;s worse.</p>
+
+<h3>What I&rsquo;d take from it</h3>
+
+<ul>
+	<li><strong>Know where the vulnerable thing runs before the advisory comes out.</strong> &ldquo;Do we run PHP?&rdquo; shouldn&rsquo;t take a day to answer. Keep an inventory, or at least something you can search, of every box, container and dependency.</li>
+	<li><strong>Roll out in stages.</strong> Patch one machine, check it comes back and actually serves traffic, then do the next batch. We deploy across our fleet three at a time for exactly this reason. Everything at once means everything breaks at once.</li>
+	<li><strong>Test the restart, not just the patch.</strong> &ldquo;Didn&rsquo;t come back up&rdquo; is usually a boot or startup problem, not a code bug. Services that were running fine for two years have never actually been restarted in that time, and that&rsquo;s where the surprises are. Reboot on purpose, on a quiet day, so a patch day isn&rsquo;t the first time.</li>
+	<li><strong>Plan for everyone logging in at once.</strong> Code Gray is the NSA working around a thundering herd. After an outage, every user and every client retries at the same moment. Use backoff, jitter and queues, and rate-limit the login path.</li>
+	<li><strong>Take the old hardware seriously.</strong> The FAA routers and the NSA&rsquo;s &ldquo;aging equipment&rdquo; have the same problem. They were sized for a world with fewer changes and less traffic. If you can&rsquo;t replace something, at least know where it is, so it isn&rsquo;t the first thing that falls over.</li>
+	<li><strong>Know the fallback before you need it.</strong> CISA&rsquo;s advice was to take a system offline if you can&rsquo;t patch it. That only works if you already know what turning it off breaks.</li>
+</ul>
+
+<p>We&rsquo;ve had our own bad week this month. I wrote up <a href="277-post.html">how an attacker got a shell through our Postgres</a>. Most of the cleanup was the boring stuff on this list: finding everything, changing one thing at a time, and checking each one came back. None of it is exciting. It&rsquo;s the difference between a patch and an outage.</p>
+
+<p>When an urgent patch lands, how do you roll it out: all at once, in stages, or do you wait and see who breaks first?</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
