@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I&rsquo;m a 1000x engineer now &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/280-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-25T12:56:00Z">
+<meta name="description" content="A startup used to need $2M, six engineers and two years to ship a product. Last Saturday I shipped one before dinner. Here are the real numbers, how the work actually runs, and what it costs.">
+</head>
+<body>
+
+<article>
+
+<h1>I&rsquo;m a 1000x engineer now</h1>
+
+<p><em>2026-11-25, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, GitHub stats and session logs, then edited by me. Yes, that is part of the point.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>David Veszelovszki wrote a great essay called <a href="https://veszelovszki.com/a/tpe/">I&rsquo;m a 100x engineer now</a>. It took second place in The Pragmatic Engineer&rsquo;s essay challenge, and it deserved to. He builds one file manager, mostly alone, at around 10,000 lines a day. He paints his kids&rsquo; room while Claude closes 42 issues. Go read it.</p>
+
+<p>Then come back, because I think 100x undersells it. Here is my version.</p>
+
+<h3>The old math</h3>
+
+<p>For most of my career, here is what it took to ship a real product, the kind with users, payments, an API and something running on servers:</p>
+
+<ul>
+	<li>About <strong>$2M</strong> of seed money.</li>
+	<li>About <strong>six engineers</strong>, plus a designer and someone pretending to be a PM.</li>
+	<li>About <strong>two years</strong> to get from a deck to something people pay for.</li>
+</ul>
+
+<p>Six engineers for two years is roughly 3,000 engineer-days, once you take out weekends, holidays, standups, offsites and the week everyone lost to a Kubernetes upgrade.</p>
+
+<p>If one person ships the same thing in one day, that is not 100x. That is 3,000x. I call it 1000x because I round down and because nobody believes the real number anyway.</p>
+
+<h3>Saturday</h3>
+
+<p>Here is an actual day, 2026-11-22.</p>
+
+<p>Before breakfast I asked for live streaming on <a href="https://c0mpute.com">c0mpute</a>, our peer-to-peer compute network. Not a demo. By evening it was running in production:</p>
+
+<ul>
+	<li>A hosted RTMP ingest server, so you point OBS at it and go live.</li>
+	<li>Every node on the network can now relay video, and each relay signs a receipt every 60 seconds.</li>
+	<li>Those receipts settle as real money: $0.01 per GB, 95% to the person whose machine did the relaying, with spending caps so nobody gets a surprise bill.</li>
+	<li>A free tier, docs, an API, an MCP server tool, an OAuth scope.</li>
+	<li>Integrations into three of our other products the same day: PairUX can broadcast to it, nixamp plays streams as TV channels, and our AI board-meeting app publishes meetings as live calls.</li>
+	<li>Tested end to end: a bad stream key gets refused, a real RTMP push comes out as HLS on the gateway, receipts get filed.</li>
+</ul>
+
+<p>That is a decentralized Twitch with a payments layer. People raise rounds for less. Companies have spent years and tens of millions on exactly this.</p>
+
+<p>The same afternoon an agent also researched a consumer banking app, worked out what infrastructure sat underneath it, filled in a partner&rsquo;s sales form and shipped a non-custodial US bank account module for CoinPay, dark, with tests. I <a href="279-post.html">wrote that one up already</a>. That was a side quest.</p>
+
+<h3>The numbers</h3>
+
+<p>Lines of code is a bad metric and David is honest about using it anyway. I&rsquo;ll use GitHub&rsquo;s own counters, which are also bad, but they aren&rsquo;t mine:</p>
+
+<ul>
+	<li><strong>100,815 contributions</strong> on my account in the last twelve months. That is about 276 a day, every day, weekends included.</li>
+	<li>Of those, 21,799 were public commits, 8,842 were pull requests, and 69,727 were in private repos.</li>
+	<li><strong>7,470</strong> in the last 30 days alone.</li>
+	<li>The Profullstack org has <strong>371 repositories</strong>. <strong>329</strong> of them got a push in the last month.</li>
+	<li>Our <a href="https://profullstack.com/stack">house stack</a> is dozens of products: payments, security, hosting, podcasts, search, an ad network, a BBS. Each one has a web app, an API, a CLI, a TUI and an MCP server, because that is the rule.</li>
+</ul>
+
+<p>The company is me. Plus agents.</p>
+
+<h3>How it actually runs</h3>
+
+<p>David uses one terminal, no skills, few rules, and never reviews code. I went the other way on almost everything, and I think that is why the multiplier is different. He is one very fast engineer on one product. I&rsquo;m running a portfolio.</p>
+
+<ul>
+	<li><strong>Many sessions at once, in the background.</strong> Each one gets its own git worktree, works the task to the end, opens the PR, merges, releases, deploys and checks the live site. Then it reports back. I check in between other things.</li>
+	<li><strong>Standing rules instead of prompts.</strong> I don&rsquo;t write specs. I write rules once and every agent reads them: never run services as root, never put pit.world wording on a normal domain, never buy anything without an explicit yes, never hold customer money. A good rule is worth a thousand prompts.</li>
+	<li><strong>Memory.</strong> Every gotcha gets written down where the next session will find it. When a deploy breaks because someone moved a git tag, that becomes a note, and it never breaks that way again. David calls this &ldquo;structurally eliminating a class of bug&rdquo;. Same idea, applied to operations instead of code.</li>
+	<li><strong>The agent has a name.</strong> It&rsquo;s riotcoder. It has its own email, its own accounts, its own git identity and its own profile. It co-hosts the podcast. When it signs up for something, it signs up as itself.</li>
+	<li><strong>Agents drive everything with an API, and a browser for the rest.</strong> DNS, servers, payment providers, npm, app stores. If there&rsquo;s no API, it drives a desktop. I mostly show up for CAPTCHAs.</li>
+</ul>
+
+<p>One thing David and I agree on completely: <strong>guardrails are the job</strong>. He spends 40&ndash;50% of his time on checks and architecture. I spend a similar share on rules, memory and fleet hygiene. The agents are only as good as the walls you build around them.</p>
+
+<h3>Why the multiplier keeps going up</h3>
+
+<p>A team of six doesn&rsquo;t ship 6x. It ships maybe 3x, because half the time goes to talking to each other. Every engineer you add brings more meetings, more handoffs, more &ldquo;who owns this&rdquo;.</p>
+
+<p>Agents don&rsquo;t have that problem. Ten parallel sessions don&rsquo;t need a standup. They share a memory, a rulebook and a git history. The coordination cost that used to eat half of every startup is close to zero.</p>
+
+<p>And because everything is built on the same house packages, each new product starts out already wired to payments, auth, analytics, email and the rest of the fleet. The 50th product is cheaper than the 5th. That is where 100x turns into 1000x: not typing faster, but compounding.</p>
+
+<h3>The bill</h3>
+
+<p>It&rsquo;s not free, and I&rsquo;d be lying if I said it was all upside.</p>
+
+<ul>
+	<li><strong>Security is now the whole game.</strong> This month we had real intrusions: a leaked key in a dotfiles repo, an injection through a GitHub Actions workflow, a stolen app key. More surface, more keys, more agents with access means more ways in. I wrote <a href="277-post.html">post-mortems</a> on each one. Give agents broad access and you had better have backups, rotation and someone watching.</li>
+	<li><strong>Breadth costs maintenance.</strong> 371 repos means something is always broken somewhere. Disks fill up. Certificates expire. A Redis instance leaks 66 GB of temp files. The agents fix most of it, but someone has to notice.</li>
+	<li><strong>Revenue doesn&rsquo;t scale like code does.</strong> I can ship a product in a day. I can&rsquo;t make a market want it in a day. Distribution is now the bottleneck, by a mile.</li>
+	<li><strong>Sleep.</strong> David is right that this feels like a slot machine. There is always one more thing you could kick off before bed. Take care of yourself.</li>
+</ul>
+
+<h3>So what am I?</h3>
+
+<p>Not a coder, really. I said it in my <a href="278-post.html">last post</a>: I&rsquo;m a button pusher. But I push a lot of buttons, for a lot of products, and every one is backed by twenty-some years of getting burned.</p>
+
+<p>What used to need $2M, six engineers and two years now needs a person with judgment, a good rulebook and a day. That is not a prediction. That was last Saturday.</p>
+
+<p>If you&rsquo;re working this way too, I&rsquo;d like to compare notes. What is your real multiplier, and what broke when you scaled it up?</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

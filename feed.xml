@@ -9,7 +9,34 @@
 		<managingEditor>anthony@profullstack.com (Anthony Ettinger)</managingEditor>
 		<webMaster>anthony@profullstack.com (Anthony Ettinger)</webMaster>
 		<generator>build-feed.mjs</generator>
-		<lastBuildDate>Sun, 22 Nov 2026 12:20:16 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 25 Nov 2026 13:17:42 GMT</lastBuildDate>
+
+		<item>
+			<title>Reverse engineering with AI: the browser already handed you the source</title>
+			<link>https://dev.profullstack.com/~anthony/blog/281-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/281-post.html</guid>
+			<pubDate>Wed, 25 Nov 2026 13:15:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>An agent can read any website's minified code faster than you can open DevTools. Three real teardowns we did, what an AI read out of our own tracker, and an honest test of doing it on open models on c0mpute.</description>
+		</item>
+
+		<item>
+			<title>I’m a 1000x engineer now</title>
+			<link>https://dev.profullstack.com/~anthony/blog/280-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/280-post.html</guid>
+			<pubDate>Wed, 25 Nov 2026 12:56:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A startup used to need $2M, six engineers and two years to ship a product. Last Saturday I shipped one before dinner. Here are the real numbers, how the work actually runs, and what it costs.</description>
+		</item>
+
+		<item>
+			<title>A US bank account for everyone who isn’t American</title>
+			<link>https://dev.profullstack.com/~anthony/blog/279-post.html</link>
+			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/279-post.html</guid>
+			<pubDate>Sun, 22 Nov 2026 18:30:00 GMT</pubDate>
+			<dc:creator>Anthony Ettinger</dc:creator>
+			<description>A teammate in Nigeria gets paid in dollars through a consumer app that only works for one corridor. We are building the same thing into CoinPay for every country we can, without ever holding anyone's money.</description>
+		</item>
 
 		<item>
 			<title>I am now a button pusher</title>
@@ -72,33 +99,6 @@
 			<pubDate>Thu, 05 Nov 2026 11:14:46 GMT</pubDate>
 			<dc:creator>Anthony Ettinger</dc:creator>
 			<description>Interactive inference now spends the same prepaid balance paid batches use, node earnings can pay for your own compute, and the price of a model moves with how busy the nodes serving it are.</description>
-		</item>
-
-		<item>
-			<title>MeshHook now runs your workflows on c0mpute</title>
-			<link>https://dev.profullstack.com/~anthony/blog/271-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/271-post.html</guid>
-			<pubDate>Mon, 02 Nov 2026 14:49:35 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>MeshHook workflow steps now run on the c0mpute peer network: AI on open models, transforms and HTTP calls auctioned to workers, credentials kept home.</description>
-		</item>
-
-		<item>
-			<title>Train a business strategy model from links, on c0mpute, and publish it to Hugging Face</title>
-			<link>https://dev.profullstack.com/~anthony/blog/270-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/270-post.html</guid>
-			<pubDate>Mon, 02 Nov 2026 11:08:01 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>saas-business-strategist-agent: 3,615 rssamplifier posts plus pit.world searches, a 0.5B LoRA trained on CPU, public on Hugging Face.</description>
-		</item>
-
-		<item>
-			<title>We built a triage dashboard for security across our whole fleet</title>
-			<link>https://dev.profullstack.com/~anthony/blog/269-post.html</link>
-			<guid isPermaLink="true">https://dev.profullstack.com/~anthony/blog/269-post.html</guid>
-			<pubDate>Wed, 28 Oct 2026 16:19:35 GMT</pubDate>
-			<dc:creator>Anthony Ettinger</dc:creator>
-			<description>ThreatCrush's dashboard now triages attacks, scan findings, patches and daemon versions across every server and device you run, from one page.</description>
 		</item>
 	</channel>
 </rss>

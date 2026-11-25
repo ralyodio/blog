@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reverse engineering with AI: the browser already handed you the source &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/281-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-25T13:15:00Z">
+<meta name="description" content="An agent can read any website's minified code faster than you can open DevTools. Three real teardowns we did, what an AI read out of our own tracker, and an honest test of doing it on open models on c0mpute.">
+</head>
+<body>
+
+<article>
+
+<h1>Reverse engineering with AI: the browser already handed you the source</h1>
+
+<p><em>2026-11-25, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes and a test run today, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Builder.io just posted <a href="https://www.builder.io/blog/reverse-engineer-website">How to reverse engineer a website with AI</a>. They point a coding agent at the wave on Stripe&rsquo;s homepage, it reads the minified WebGL shaders, splits the effect into layers with knobs, and then rebuilds it in your own project with fresh code. It&rsquo;s a good walkthrough. Their tool is called /remix.</p>
+
+<p>It made me realise how much of what we do every day is reverse engineering, and that we never call it that.</p>
+
+<h3>The thing everyone forgets</h3>
+
+<p>Everything that runs in a browser has already been sent to you. The HTML, the CSS, the JavaScript, the shaders, the API calls. Minifying it was never protection, it was compression. The only thing stopping you from reading it was time: nobody wants to untangle 6,000 characters of <code>function(t,e){var a=...</code> by hand.</p>
+
+<p>An agent doesn&rsquo;t mind. It reads minified code like you read a menu.</p>
+
+<p>The one thing it can&rsquo;t see is the server. But the browser shows you every request the client makes, so you can usually work out what the server does from the outside too.</p>
+
+<h3>Teardown 1: a competitor&rsquo;s product, in one file</h3>
+
+<p>In August we looked at device-test.com, a free site that tests your camera, mic, keyboard, gamepad and so on. An agent pulled the page apart and found that one 129 KB <code>app.js</code> drove every test. From that one file it mapped every test to the browser API behind it, and found four holes:</p>
+
+<ul>
+	<li>It wasn&rsquo;t a PWA. A tool for diagnosing a broken machine needed a working network.</li>
+	<li>No Windows or Linux app.</li>
+	<li>Its &ldquo;network speed test&rdquo; timed five requests to a CSS file that returns 404, then measured download speed by fetching its own 129 KB script once. On any fast connection that&rsquo;s a latency reading with a megabits label on it.</li>
+	<li>Closed source, while asking for your camera, microphone, location and Bluetooth.</li>
+</ul>
+
+<p>That teardown became the spec for <a href="https://d3vices.pwa.pit.world/">d3vices</a>: open source, works offline, and a network test that actually tests the network. We didn&rsquo;t copy a line. We read how theirs worked, wrote down what was wrong with it, and built ours from the notes.</p>
+
+<h3>Teardown 2: a company, not a website</h3>
+
+<p>Last week I wanted CoinPay to offer what OneDosh, a consumer app, does: a US bank account for people outside the US. OneDosh has no API and no partner program, so there was nothing to integrate.</p>
+
+<p>The agent read their terms of service instead. Their legal pages linked to the banking-infrastructure company underneath them. That company sells exactly this as an API, in ninety countries. The agent filled in their sales form and built the module the same afternoon. I <a href="279-post.html">wrote that up here</a>.</p>
+
+<p>Same skill as reading a shader: the evidence was public, it just took patience nobody had before.</p>
+
+<h3>Teardown 3: our own tracker, minified</h3>
+
+<p>To show what this looks like, I took our own analytics script, <a href="https://crawlproof.com/stats.js">crawlproof.com/stats.js</a>, and minified it to 6,715 characters of soup. It&rsquo;s ours, so nobody has to wonder whose code it is, and you can check every claim below against the readable original.</p>
+
+<p>I asked the agent what it does. Here&rsquo;s what it read back from the minified version:</p>
+
+<ul>
+	<li><strong>It&rsquo;s a pageview and event tracker</strong> that posts JSON to <code>crawlproof.com/api/track</code> with <code>credentials: "omit"</code>, so no cookies go along.</li>
+	<li><strong>It stores two things in localStorage:</strong> a random visitor id (<code>crawlproof.visitor</code>) and a session id with a last-seen timestamp (<code>crawlproof.session</code>, stored as <code>id|time</code>).</li>
+	<li><strong>A session is 30 minutes of inactivity.</strong> The constant is <code>U=18e5</code> milliseconds. Every event pushes the timestamp forward.</li>
+	<li><strong>Each event sends</strong> the page URL, referrer, viewport, screen size, language and timezone. No IP fingerprinting in the client, no canvas tricks.</li>
+	<li><strong>It tracks</strong> pageviews (including single-page-app navigation, by wrapping <code>history.pushState</code> and <code>replaceState</code>), scroll depth at 25/50/75/100%, form submits, and clicks, which it sorts into downloads, outbound links, internal links and buttons.</li>
+	<li><strong>It can load more code:</strong> a careers widget, but only on a <code>/careers</code> page or one marked <code>data-cp-careers</code>, and a WebMCP module, but only if the browser exposes <code>navigator.modelContext</code> for AI agents.</li>
+	<li><strong>One sneaky bit:</strong> a <code>crp_actor</code> URL parameter gets saved as an &ldquo;actor&rdquo; id and then wiped from the address bar with <code>history.replaceState</code>. That&rsquo;s how a logged-in user from an email link gets tied to their visits.</li>
+</ul>
+
+<p>All correct. That last point is exactly what you want an auditor to notice, and I&rsquo;m glad it did. If you&rsquo;re ever wondering what a third-party script on your site is really doing, this is a two-minute job now.</p>
+
+<h3>And on c0mpute?</h3>
+
+<p>The obvious next step is to stop sending code to a frontier model and run the read on open models on <a href="https://c0mpute.com">c0mpute</a>, our peer-to-peer network. There are good reasons to want that. A security team auditing a vendor&rsquo;s script, or a lawyer&rsquo;s client&rsquo;s app, may not want to paste it into someone else&rsquo;s cloud. And c0mpute has coder models running right now: qwen3-coder 30B, qwen2.5-coder 14B and 7B, devstral 24B, deepseek-coder-v2.</p>
+
+<p>So I tried it today, with the same minified file. Honest result:</p>
+
+<ul>
+	<li>A one-line test prompt came back fine.</li>
+	<li>The full 6.7 KB file timed out on the 30B and the 14B coder models, through both the API and the CLI.</li>
+	<li>One run with chat plugins switched on went off to search Microsoft&rsquo;s docs for &ldquo;JavaScript minification&rdquo; and never came back to the question.</li>
+	<li>Even a 1.5 KB slice timed out on the 7B model.</li>
+</ul>
+
+<p>So today, the reading is done by a frontier agent, and c0mpute isn&rsquo;t ready for long code prompts yet. That&rsquo;s ours to fix. The network routes small chats well and long-context code badly. When it handles a whole bundle, I&rsquo;ll post the same test again with the numbers.</p>
+
+<h3>Rules I&rsquo;d keep</h3>
+
+<ul>
+	<li><strong>Learn from it, rebuild from your notes.</strong> Builder says the same: don&rsquo;t paste someone&rsquo;s minified code or shaders into your project. Write down how it works and build your own. It&rsquo;s cleaner, and it&rsquo;s yours.</li>
+	<li><strong>Logos, fonts, images and copy belong to them.</strong> Behaviour you can learn from. Assets you can&rsquo;t take.</li>
+	<li><strong>Read the terms.</strong> Reading what a site sends you is fine. Hammering private APIs, getting around logins or breaking rate limits is a different thing.</li>
+	<li><strong>Point it at yourself first.</strong> The most useful teardown I did this year was of our own script. You find out what you&rsquo;re actually shipping.</li>
+</ul>
+
+<p>What&rsquo;s the last thing you took apart to see how it worked, and did you rebuild it?</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
