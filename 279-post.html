@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A US bank account for everyone who isn&rsquo;t American &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/279-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-22T18:30:00Z">
+<meta name="description" content="A teammate in Nigeria gets paid in dollars through a consumer app that only works for one corridor. We are building the same thing into CoinPay for every country we can, without ever holding anyone's money.">
+</head>
+<body>
+
+<article>
+
+<h1>A US bank account for everyone who isn&rsquo;t American</h1>
+
+<p><em>2026-11-22, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes and today&rsquo;s session, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>One of the people I work with lives in Nigeria. To get paid in dollars he uses an app called OneDosh: it gives him a US account he can receive ACH into, holds dollars and stablecoins, and lets him convert to naira when he needs to. It works. It also only works for the US&ndash;Nigeria corridor, and it has no API, so nobody else can build on it.</p>
+
+<p>That is the whole problem in one sentence. If you live outside the US and get paid by US companies, the money is easy to earn and hard to receive.</p>
+
+<h3>Who this is for</h3>
+
+<p>We pay a lot of people outside the US. People run <a href="https://c0mpute.com">c0mpute</a> nodes from Lagos, Nairobi, Manila, Bangalore and all over Europe, and they earn for the inference and hosting those machines do. CoinPay merchants sell to US customers who want to pay by bank, not by crypto. Today the answer for all of them is &ldquo;take USDC and figure out the rest yourself&rdquo;. Some can. Most would rather have a routing number.</p>
+
+<h3>What we are building</h3>
+
+<p>A &ldquo;Get a US account&rdquo; button in <a href="https://coinpayportal.com">CoinPay</a>:</p>
+
+<ul>
+	<li>You get a real US routing and account number, <strong>in your own name</strong>, from a licensed US banking partner.</li>
+	<li>Anyone can send you money to it by ACH or wire, the same as paying an American.</li>
+	<li>It converts to USDC and lands in your own wallet. From there you keep it, spend it, or cash out to local currency through CoinPay&rsquo;s remittance routes, which already quote 43 countries.</li>
+	<li>Not one corridor. Every country the partner supports, which is around ninety.</li>
+</ul>
+
+<h3>The rule I would not bend</h3>
+
+<p>CoinPay never holds your money. Not for a second.</p>
+
+<p>The account is yours, held by the bank partner, who also does the identity checks. We are the interface. We store a reference, the last four digits, and the events the partner tells us about. The full account number is fetched from the partner when you look at it and never saved on our side. There is no CoinPay balance and no pooled account that money passes through.</p>
+
+<p>That is a legal line as much as a design one. The moment a company holds other people&rsquo;s money and moves it for them, it is a money transmitter, and that is a world of licences and lawyers I am not entering. My standing rule for the agents I work with is: if it needs a lawyer, hold. So the code was written around that rule from the first line.</p>
+
+<h3>Where it actually stands</h3>
+
+<p>Honestly:</p>
+
+<ul>
+	<li><strong>The code is written and shipped dark.</strong> An AI agent built it this afternoon, provider-neutral like our bank-transfer module, with tests, webhook signature checks and duplicate-event protection. It is off until a partner switches it on.</li>
+	<li><strong>We have applied to a licensed partner.</strong> No deal yet. The next step is KYB, &ldquo;know your business&rdquo;: they verify the company and me before anything goes live.</li>
+	<li><strong>Some of the partner&rsquo;s API is still a guess.</strong> The adapter is written from public docs, and every field we could not confirm is marked in the code to check against their sandbox. The last time we wrote a money adapter blind, two of them were wrong. Not doing that again.</li>
+</ul>
+
+<p>The funny part, in the spirit of my <a href="278-post.html">last post</a>: I said &ldquo;can you add a feature like this&rdquo; and pasted a link. The agent researched the app, found it had no API, worked out which infrastructure probably sits underneath it, filled in the partner&rsquo;s sales form, and built the module. My contribution was knowing why it must never touch the money.</p>
+
+<h3>If you want one</h3>
+
+<p>If you run a c0mpute node, sell on CoinPay, or just get paid in dollars from outside the US and want a US account in your own name, <a href="mailto:anthony@profullstack.com?subject=US%20account">email me</a> and tell me which country you are in. That list goes straight into the conversation with the partner, and countries with people waiting go first.</p>
+
+<p>Where do you live, and how do you get paid in dollars today?</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>

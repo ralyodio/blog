@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Join the revolution: your spare box can be a c0mpute node &mdash; Chovy's Blog</title>
+<link rel="canonical" href="https://dev.profullstack.com/~anthony/blog/273-post.html">
+<link rel="alternate" type="application/rss+xml" title="Chovy's Blog" href="feed.xml">
+<meta name="date" content="2026-11-08T15:38:00Z">
+<meta name="description" content="c0mpute pools spare CPUs and GPUs from ordinary machines into one open network. One command turns your box into a node that serves inference, transcoding and storage jobs. Here is why that matters and what a node does today.">
+</head>
+<body>
+
+<article>
+
+<h1>Join the revolution: your spare box can be a c0mpute node</h1>
+
+<p><em>2026-11-08, by Anthony &ldquo;chovy&rdquo; Ettinger.</em></p>
+
+<p><small><strong>How this was written:</strong> drafted with an AI assistant from my own notes, then edited by me.</small></p>
+
+<aside data-cp-ad data-slot="50ba73a3-22b6-4264-9b2d-7f866759e287" data-format="text_link"></aside>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Right now a few companies own the machines that frontier AI runs on. If you want to train a model, serve one, or just run a big job, you rent time from one of them, at their price, under their terms. Meanwhile millions of perfectly good CPUs and GPUs sit idle in closets, home labs and under desks.</p>
+
+<p><a href="https://c0mpute.com">c0mpute</a> is our answer to that. It pools spare CPUs and GPUs from ordinary machines into one open network. One command turns your box into a node that serves inference, transcoding and storage jobs.</p>
+
+<p>That is the whole pitch. The rest of this post is why I think it matters, what a node actually does today, and what it does not do yet.</p>
+
+<h3>One command</h3>
+
+<p><code>curl -fsSL https://c0mpute.com/install.sh | sh</code></p>
+
+<p>It runs on Linux and macOS, and on Windows inside WSL2, on x86_64 or arm64, with or without a GPU. The installer starts the worker for you, as a systemd service where it can and a background daemon where it cannot. You do not need an account or port forwarding to join. Check on it with:</p>
+
+<p><code>c0mpute worker status</code></p>
+
+<p>If you want the details on what installing involves, and the headless install bug I fixed before asking anyone to run it, that is in <a href="261-post.html">the first post about this</a>.</p>
+
+<h3>Why it is a revolution and not just another cloud</h3>
+
+<p>Nobody sits in the middle. Every record on the network, whether a node advert, a job manifest, an offer or a receipt, carries its own signature, so it stays verifiable after it leaves the wire. Your identity is a keypair you generate on your own machine. Indexers and gateways can cache, proxy and bill, but none of them is the authority. If c0mpute.com disappeared tomorrow, the network would keep computing.</p>
+
+<p>When you buy compute you describe the job, not the machine: the workload, a deadline, how much trust you need, how the result gets checked, and the most you will pay. Nodes that qualify make signed offers, your own client picks one, and you pay for accepted work against a receipt you can verify yourself.</p>
+
+<p>And the goal is bigger than cheap jobs. We want 100,000 nodes. At that size the network has enough capacity to train and serve open-weight models in the open, on hardware owned by the people running it. That is the mission, not a claim about today.</p>
+
+<h3>Where we actually are</h3>
+
+<p>When I wrote the first post on 2026-10-21 we had fewer than 10 nodes. As I write this, <a href="https://c0mpute.com/nodes">the board</a> shows 11 online, 3 of them with a GPU. Every one is counted from a signed node advert, not from a signup form. So yes, it is early. That is the point of this post.</p>
+
+<p>The network has done a lot more in the last three weeks, though. A node today can serve:</p>
+
+<ul>
+<li>chat and OpenAI-compatible inference, through <a href="https://c0mpute.com/chat">c0mpute.com/chat</a>, the <code>c0mpute chat</code> CLI and the API</li>
+<li>text fine-tunes, so you can <a href="https://c0mpute.com/train">train your own agent</a> on the network and publish it</li>
+<li>text to speech, with Kokoro voices on every node</li>
+<li>video transcoding to HLS</li>
+<li>steps of <a href="271-post.html">MeshHook workflows</a>, a peer-to-peer take on n8n</li>
+</ul>
+
+<p>Nodes also pull and serve the Infernet house models that fit their hardware. That is on by default and never touches your own models. Opt out with <code>--no-house-models</code> at install, or later with <code>infernet house-models off</code>.</p>
+
+<h3>What you get for running one</h3>
+
+<p>Paid inference runs through Infernet, the inference plugin that ships with c0mpute. Buyers pay through CoinPay, and you choose where your share lands with <code>infernet payout set &lt;coin&gt; &lt;address&gt;</code>. Prices <a href="272-post.html">follow supply and demand</a>, so a model that only one busy node can serve pays more, and that is exactly the signal that says a second node is worth bringing online.</p>
+
+<p>Your earnings can also pay for your own inference, with no withdrawal round trip. You can play with <a href="https://c0mpute.com/estimates">earning scenarios for your GPU</a> before installing anything.</p>
+
+<p>Here is the honest part. We ran a subsidy that paid nodes for free jobs, and on 2026-11-05 we turned it off, because nearly all of it was going to my own nodes. So today a node earns when paid work comes in, and paid demand is still early. Expect small, irregular earnings for now. I would rather tell you that than promise a number.</p>
+
+<h3>What you should know before you join</h3>
+
+<p>A node runs jobs from people you do not know, on your hardware. That is what a public compute network is. The worker only runs the job types its plugins support, and you can remove everything with <code>c0mpute uninstall --all</code>.</p>
+
+<p>It cuts the other way too. A prompt you send to the public network is processed by somebody else's node. If you want work to stay on machines you trust, private mode bids only to the identities you allowlist. Do not send secrets to the public network.</p>
+
+<h3>Join</h3>
+
+<p>Install a node, then bring people. Send them <code>https://c0mpute.com/r/&lt;your-handle&gt;</code>, and every node installed from your link shows your handle on the board. It is a scoreboard, not a payout.</p>
+
+<p>The code is MIT licensed and <a href="https://github.com/profullstack/c0mpute">on GitHub</a>. If the installer breaks on your machine, open an issue with the output and I will fix it. Questions go to <a href="https://discord.gg/U7dEXfBA3s">the Discord</a>.</p>
+
+<p>Eleven nodes down, 99,989 to go.</p>
+
+<nav>
+	<a href="../blog">back to my blog postings</a>
+</nav>
+
+<p>Find me: <a rel="me" href="https://defcon.social/@chovy">Mastodon</a> &middot;
+<a rel="me" href="https://github.com/ralyodio">GitHub</a> &middot;
+<a rel="me" href="mailto:anthony@profullstack.com">email</a></p>
+
+</article>
+
+<script data-site="099436d8-e1b1-4b4e-bc04-b3fbff5c4ead" src="https://crawlproof.com/stats.js" async></script>
+<script src="https://crawlproof.com/ad.js" async></script>
+
+</body>
+</html>
